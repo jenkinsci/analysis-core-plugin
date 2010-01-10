@@ -4,14 +4,12 @@ import hudson.model.AbstractBuild;
 import hudson.plugins.analysis.core.AbstractResultAction;
 import hudson.plugins.analysis.core.HealthDescriptor;
 import hudson.plugins.analysis.core.PluginDescriptor;
-import hudson.plugins.warnings.Messages;
-import hudson.plugins.warnings.WarningsHealthDescriptor;
 
 import java.util.NoSuchElementException;
 
 /**
  * Controls the live cycle of the analysis results. This action persists the
- * results of the warnings analysis of a build and displays the results on the
+ * results of the static analysis tools of a build and displays the results on the
  * build page. The actual visualization of the results is defined in the
  * matching <code>summary.jelly</code> file.
  * <p>
@@ -21,8 +19,6 @@ import java.util.NoSuchElementException;
  * @author Ulli Hafner
  */
 public class AnalysisResultAction extends AbstractResultAction<AnalysisResult> {
-    /** Unique identifier of this class. */
-
     /**
      * Creates a new instance of <code>WarningsResultAction</code>.
      *
@@ -46,12 +42,12 @@ public class AnalysisResultAction extends AbstractResultAction<AnalysisResult> {
      *            health descriptor to use
      */
     public AnalysisResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor) {
-        super(owner, new WarningsHealthDescriptor(healthDescriptor));
+        super(owner, new AnalysisHealthDescriptor(healthDescriptor));
     }
 
     /** {@inheritDoc} */
     public String getDisplayName() {
-        return Messages.Warnings_ProjectAction_Name();
+        return Messages.Analysis_ProjectAction_Name();
     }
 
     /** {@inheritDoc} */
@@ -78,12 +74,12 @@ public class AnalysisResultAction extends AbstractResultAction<AnalysisResult> {
     /** {@inheritDoc} */
     @Override
     public String getMultipleItemsTooltip(final int numberOfItems) {
-        return Messages.Warnings_ResultAction_MultipleWarnings(numberOfItems);
+        return Messages.Analysis_ResultAction_MultipleWarnings(numberOfItems);
     }
 
     /** {@inheritDoc} */
     @Override
     public String getSingleItemTooltip() {
-        return Messages.Warnings_ResultAction_OneWarning();
+        return Messages.Analysis_ResultAction_OneWarning();
     }
 }

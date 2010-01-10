@@ -4,8 +4,6 @@ import hudson.model.AbstractBuild;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.ResultAction;
-import hudson.plugins.warnings.Messages;
-import hudson.plugins.warnings.parser.Warning;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -54,7 +52,7 @@ public class AnalysisResult extends BuildResult {
     /** {@inheritDoc} */
     @Override
     protected void configure(final XStream xstream) {
-        xstream.alias("warning", Warning.class); // FIXME: a new type is required
+        xstream.alias("warning", Warning.class);
     }
 
     /**
@@ -71,7 +69,7 @@ public class AnalysisResult extends BuildResult {
     public String getDetails() {
         String message = AnalysisResultSummary.createDeltaMessage(this);
         if (getNumberOfAnnotations() == 0 && getDelta() == 0) {
-            message += "<li>" + Messages.Warnings_ResultAction_NoWarningsSince(getZeroWarningsSinceBuild()) + "</li>";
+            message += "<li>" + Messages.Analysis_ResultAction_NoWarningsSince(getZeroWarningsSinceBuild()) + "</li>";
             message += createHighScoreMessage();
         }
         return message;
@@ -86,19 +84,19 @@ public class AnalysisResult extends BuildResult {
         if (isNewZeroWarningsHighScore()) {
             long days = getDays(getZeroWarningsHighScore());
             if (days == 1) {
-                return "<li>" + Messages.Warnings_ResultAction_OneHighScore() + "</li>";
+                return "<li>" + Messages.Analysis_ResultAction_OneHighScore() + "</li>";
             }
             else {
-                return "<li>" + Messages.Warnings_ResultAction_MultipleHighScore(days) + "</li>";
+                return "<li>" + Messages.Analysis_ResultAction_MultipleHighScore(days) + "</li>";
             }
         }
         else {
             long days = getDays(getHighScoreGap());
             if (days == 1) {
-                return "<li>" + Messages.Warnings_ResultAction_OneNoHighScore() + "</li>";
+                return "<li>" + Messages.Analysis_ResultAction_OneNoHighScore() + "</li>";
             }
             else {
-                return "<li>" + Messages.Warnings_ResultAction_MultipleNoHighScore(days) + "</li>";
+                return "<li>" + Messages.Analysis_ResultAction_MultipleNoHighScore(days) + "</li>";
             }
         }
     }
@@ -106,12 +104,12 @@ public class AnalysisResult extends BuildResult {
     /** {@inheritDoc} */
     @Override
     protected String getSerializationFileName() {
-        return "warnings.xml";
+        return "analysis.xml";
     }
 
     /** {@inheritDoc} */
     public String getDisplayName() {
-        return Messages.Warnings_ProjectAction_Name();
+        return Messages.Analysis_ProjectAction_Name();
     }
 
     /** {@inheritDoc} */

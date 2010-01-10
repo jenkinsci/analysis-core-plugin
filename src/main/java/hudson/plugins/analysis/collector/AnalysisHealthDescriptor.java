@@ -3,7 +3,6 @@ package hudson.plugins.analysis.collector;
 import hudson.plugins.analysis.core.AbstractHealthDescriptor;
 import hudson.plugins.analysis.core.HealthDescriptor;
 import hudson.plugins.analysis.util.model.AnnotationProvider;
-import hudson.plugins.warnings.Messages;
 
 import org.jvnet.localizer.Localizable;
 
@@ -14,7 +13,7 @@ import org.jvnet.localizer.Localizable;
  */
 public class AnalysisHealthDescriptor extends AbstractHealthDescriptor {
     /** Unique ID of this class. */
-    private static final long serialVersionUID = -7034687914899821478L;
+    private static final long serialVersionUID = -4517492804694055774L;
 
     /**
      * Creates a new instance of {@link AnalysisHealthDescriptor} based on the
@@ -30,13 +29,13 @@ public class AnalysisHealthDescriptor extends AbstractHealthDescriptor {
     @Override
     protected Localizable createDescription(final AnnotationProvider result) {
         if (result.getNumberOfAnnotations() == 0) {
-            return Messages._Warnings_ResultAction_HealthReportNoItem();
+            return Messages._Analysis_ResultAction_HealthReportNoItem();
         }
         else if (result.getNumberOfAnnotations() == 1) {
-            return Messages._Warnings_ResultAction_HealthReportSingleItem();
+            return Messages._Analysis_ResultAction_HealthReportSingleItem();
         }
         else {
-            return Messages._Warnings_ResultAction_HealthReportMultipleItem(result.getNumberOfAnnotations());
+            return Messages._Analysis_ResultAction_HealthReportMultipleItem(result.getNumberOfAnnotations());
         }
     }
 }

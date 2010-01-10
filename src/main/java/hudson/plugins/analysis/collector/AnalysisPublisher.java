@@ -4,6 +4,7 @@ import hudson.Extension;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
+import hudson.model.Hudson;
 import hudson.model.Result;
 import hudson.plugins.analysis.core.AbstractResultAction;
 import hudson.plugins.analysis.core.BuildResult;
@@ -11,7 +12,11 @@ import hudson.plugins.analysis.core.HealthAwarePublisher;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.analysis.util.model.FileAnnotation;
-import hudson.plugins.warnings.WarningsProjectAction;
+import hudson.plugins.checkstyle.CheckStyleResultAction;
+import hudson.plugins.dry.DryResultAction;
+import hudson.plugins.findbugs.FindBugsResultAction;
+import hudson.plugins.pmd.PmdResultAction;
+import hudson.plugins.tasks.TasksResultAction;
 import hudson.plugins.warnings.WarningsResultAction;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
@@ -19,6 +24,7 @@ import hudson.tasks.Publisher;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
@@ -30,11 +36,10 @@ import org.kohsuke.stapler.DataBoundConstructor;
 // CHECKSTYLE:COUPLING-OFF
 public class AnalysisPublisher extends HealthAwarePublisher {
     /** Unique ID of this class. */
-    private static final long serialVersionUID = -488910725522218051L;
+    private static final long serialVersionUID = 5512072640635006098L;
 
     /** Descriptor of this publisher. */
-    // FIXME: check if larger or lower than 100
-    @Extension(ordinal = 1000)
+    @Extension(ordinal = 10)
     public static final AnalysisDescriptor DESCRIPTOR = new AnalysisDescriptor();
 
     /**
@@ -86,15 +91,37 @@ public class AnalysisPublisher extends HealthAwarePublisher {
         ArrayList<Class<? extends AbstractResultAction<? extends BuildResult>>> pluginResults;
         pluginResults = new ArrayList<Class<? extends AbstractResultAction<? extends BuildResult>>>();
 
-        pluginResults.add(WarningsResultAction.class);
+        addPlugin(pluginResults, "checkstyle", CheckStyleResultAction.class);
+        addPlugin(pluginResults, "dry", DryResultAction.class);
+        addPlugin(pluginResults, "findbugs", FindBugsResultAction.class);
+        addPlugin(pluginResults, "pmd", PmdResultAction.class);
+        addPlugin(pluginResults, "tasks", TasksResultAction.class);
+        addPlugin(pluginResults, "warnings", WarningsResultAction.class);
 
         return pluginResults;
+    }
+
+    /**
+     * Adds the specified plug-in to the list of actions.
+     *
+     * @param pluginResults
+     *            the list of actions this plug-in will be added to
+     * @param plugin
+     *            the plug-in to consider
+     * @param action
+     *            the action to add
+     */
+    private void addPlugin(final List<Class<? extends AbstractResultAction<? extends BuildResult>>> pluginResults, final String plugin,
+            final Class<? extends AbstractResultAction<? extends BuildResult>> action) {
+        if (Hudson.getInstance().getPlugin(plugin) != null) {
+            pluginResults.add(action);
+        }
     }
 
     /** {@inheritDoc} */
     @Override
     public Action getProjectAction(final AbstractProject<?, ?> project) {
-        return new WarningsProjectAction(project); // FIXME: replace
+        return new AnalysisProjectAction(project);
     }
 
     /** {@inheritDoc} */

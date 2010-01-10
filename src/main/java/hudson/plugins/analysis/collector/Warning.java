@@ -37,5 +37,14 @@ public class Warning extends AbstractAnnotation {
     public String getToolTip() {
         return StringUtils.EMPTY;
     }
+
+    /**
+     * Returns the origin of this warning.
+     *
+     * @return the origin of this warning
+     */
+    public String getOrigin() {
+        return origin;
+    }
 }
 

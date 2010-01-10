@@ -2,8 +2,6 @@ package hudson.plugins.analysis.collector;
 
 import hudson.model.AbstractProject;
 import hudson.plugins.analysis.core.PluginDescriptor;
-import hudson.plugins.warnings.Messages;
-import hudson.plugins.warnings.WarningsPublisher;
 
 /**
  * Descriptor for the class {@link AnalysisPublisher}. Used as a singleton. The
@@ -15,19 +13,19 @@ public final class AnalysisDescriptor extends PluginDescriptor {
     /** Plug-in name. */
     private static final String PLUGIN_NAME = "analysis";
     /** Icon to use for the result and project action. */
-    private static final String ACTION_ICON = "/plugin/warnings/icons/warnings-24x24.png"; // FIXME: a new icon?
+    private static final String ACTION_ICON = "/plugin/analysis-collector/icons/analysis-24x24.png";
 
     /**
      * Instantiates a new {@link AnalysisDescriptor}.
      */
     AnalysisDescriptor() {
-        super(WarningsPublisher.class);
+        super(AnalysisPublisher.class);
     }
 
     /** {@inheritDoc} */
     @Override
     public String getDisplayName() {
-        return Messages.Warnings_Publisher_Name();
+        return Messages.Analysis_Publisher_Name();
     }
 
     /** {@inheritDoc} */
