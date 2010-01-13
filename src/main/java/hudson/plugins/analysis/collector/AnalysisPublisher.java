@@ -39,7 +39,7 @@ public class AnalysisPublisher extends HealthAwarePublisher {
     private static final long serialVersionUID = 5512072640635006098L;
 
     /** Descriptor of this publisher. */
-    @Extension(ordinal = 10)
+    @Extension(ordinal = 1000)
     public static final AnalysisDescriptor DESCRIPTOR = new AnalysisDescriptor();
 
     /**
