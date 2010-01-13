@@ -4,7 +4,11 @@ import hudson.model.AbstractBuild;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.ResultAction;
+import hudson.plugins.analysis.util.model.FileAnnotation;
 
+import java.util.HashMap;
+
+import com.google.common.collect.Maps;
 import com.thoughtworks.xstream.XStream;
 
 /**
@@ -16,6 +20,8 @@ import com.thoughtworks.xstream.XStream;
 public class AnalysisResult extends BuildResult {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 847650789493429154L;
+    /** Number of annotations by origin mapping. */
+    private final HashMap<String, Integer> annotationsByOrigin = Maps.newHashMap();
 
     /**
      * Creates a new instance of {@link AnalysisResult}.
@@ -30,6 +36,21 @@ public class AnalysisResult extends BuildResult {
     public AnalysisResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
             final ParserResult result) {
         super(build, defaultEncoding, result);
+
+        countAnnotations();
+    }
+
+    /**
+     * Count the annotations by origin.
+     */
+    private void countAnnotations() {
+        for (FileAnnotation annotation : getAnnotations()) {
+            if (!annotationsByOrigin.containsKey(annotation.getOrigin())) {
+                annotationsByOrigin.put(annotation.getOrigin(), 0);
+            }
+            annotationsByOrigin.put(annotation.getOrigin(),
+                    annotationsByOrigin.get(annotation.getOrigin()) + 1);
+        }
     }
 
     /**
@@ -47,6 +68,8 @@ public class AnalysisResult extends BuildResult {
     public AnalysisResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
             final ParserResult result, final AnalysisResult previous) {
         super(build, defaultEncoding, result, previous);
+
+        countAnnotations();
     }
 
     /** {@inheritDoc} */
@@ -116,5 +139,19 @@ public class AnalysisResult extends BuildResult {
     @Override
     protected Class<? extends ResultAction<? extends BuildResult>> getResultActionType() {
         return AnalysisResultAction.class;
+    }
+
+    /**
+     * Returns the number of annotations from the specified origin. If there are no anntoations
+     *
+     * @param origin
+     *            the origin
+     * @return the number of annotations from the specified origin
+     */
+    public int getNumberOfAnnotationsByOrigin(final String origin) {
+        if (annotationsByOrigin.containsKey(origin)) {
+            return annotationsByOrigin.get(origin);
+        }
+        return 0;
     }
 }

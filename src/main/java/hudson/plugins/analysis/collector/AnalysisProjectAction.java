@@ -18,7 +18,7 @@ public class AnalysisProjectAction extends AbstractProjectAction<AnalysisResultA
      *            the project that owns this action
      */
     public AnalysisProjectAction(final AbstractProject<?, ?> project) {
-        super(project, AnalysisResultAction.class, AnalysisPublisher.DESCRIPTOR);
+        super(project, AnalysisResultAction.class, new AnalysisDescriptor());
     }
 
     /** {@inheritDoc} */

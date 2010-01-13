@@ -53,7 +53,7 @@ public class AnalysisResultAction extends AbstractResultAction<AnalysisResult> {
     /** {@inheritDoc} */
     @Override
     protected PluginDescriptor getDescriptor() {
-        return AnalysisPublisher.DESCRIPTOR;
+        return new AnalysisDescriptor();
     }
 
     /**

@@ -1,5 +1,6 @@
 package hudson.plugins.analysis.collector;
 
+import hudson.Extension;
 import hudson.model.AbstractProject;
 import hudson.plugins.analysis.core.PluginDescriptor;
 
@@ -9,6 +10,7 @@ import hudson.plugins.analysis.core.PluginDescriptor;
  *
  * @author Ulli Hafner
  */
+@Extension(ordinal = 1)
 public final class AnalysisDescriptor extends PluginDescriptor {
     /** Plug-in name. */
     private static final String PLUGIN_NAME = "analysis";
@@ -18,7 +20,7 @@ public final class AnalysisDescriptor extends PluginDescriptor {
     /**
      * Instantiates a new {@link AnalysisDescriptor}.
      */
-    AnalysisDescriptor() {
+    public AnalysisDescriptor() {
         super(AnalysisPublisher.class);
     }
 

@@ -1,6 +1,5 @@
 package hudson.plugins.analysis.collector;
 
-import hudson.Extension;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
@@ -37,10 +36,6 @@ import org.kohsuke.stapler.DataBoundConstructor;
 public class AnalysisPublisher extends HealthAwarePublisher {
     /** Unique ID of this class. */
     private static final long serialVersionUID = 5512072640635006098L;
-
-    /** Descriptor of this publisher. */
-    @Extension(ordinal = 1000)
-    public static final AnalysisDescriptor DESCRIPTOR = new AnalysisDescriptor();
 
     /**
      * Creates a new instance of {@link AnalysisPublisher}.
@@ -146,7 +141,7 @@ public class AnalysisPublisher extends HealthAwarePublisher {
     /** {@inheritDoc} */
     @Override
     public BuildStepDescriptor<Publisher> getDescriptor() {
-        return DESCRIPTOR;
+        return super.getDescriptor();
     }
 
     /** {@inheritDoc} */
