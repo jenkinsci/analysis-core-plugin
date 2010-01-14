@@ -1,14 +1,10 @@
 package hudson.plugins.analysis.collector;
 
-import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.graph.CategoryBuildResultGraph;
-import hudson.plugins.analysis.util.AreaRenderer;
-import hudson.plugins.analysis.util.CategoryUrlBuilder;
-import hudson.plugins.analysis.util.ToolTipBuilder;
 import hudson.plugins.analysis.util.ToolTipProvider;
-import hudson.plugins.analysis.util.model.Priority;
 import hudson.util.ColorPalette;
+import hudson.util.StackedAreaRenderer2;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -22,21 +18,38 @@ import org.jfree.data.category.CategoryDataset;
 
 import com.google.common.collect.Lists;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-
 /**
- * TODO: Document type OriginGraph.
+ * Builds a graph showing all warnings by their origin.
  *
  * @author Ulli Hafner
  */
 public class OriginGraph extends CategoryBuildResultGraph {
+    /** The origins to show in the graph. */
     private final ArrayList<String> origins;
+
+    /** {@inheritDoc} */
+    @Override
+    public String getId() {
+        return "ORIGIN";
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getLabel() {
+        return Messages.Trend_type_analysis();
+    }
 
     /**
      * Creates a new instance of {@link OriginGraph}.
      */
     public OriginGraph() {
-        origins = Lists.newArrayList("checkstyle", "findbugs");
+        origins = Lists.newArrayList(
+                hudson.plugins.checkstyle.parser.Warning.ORIGIN,
+                hudson.plugins.dry.parser.DuplicateCode.ORIGIN,
+                hudson.plugins.findbugs.parser.Bug.ORIGIN,
+                hudson.plugins.pmd.parser.Bug.ORIGIN,
+                hudson.plugins.tasks.parser.Task.ORIGIN,
+                hudson.plugins.warnings.parser.Warning.ORIGIN);
     }
 
     /** {@inheritDoc} */
@@ -75,46 +88,21 @@ public class OriginGraph extends CategoryBuildResultGraph {
     /** {@inheritDoc} */
     @Override
     protected Color[] getColors() {
-        return new Color[] {ColorPalette.BLUE, ColorPalette.YELLOW, ColorPalette.RED};
+        // TODO: filter number of plugins
+        return new Color[] {
+                ColorPalette.LINE_GRAPH.get(0),
+                ColorPalette.LINE_GRAPH.get(1),
+                ColorPalette.LINE_GRAPH.get(2),
+                ColorPalette.LINE_GRAPH.get(3),
+                ColorPalette.GREY,
+                ColorPalette.BLUE};
     }
 
     // CHECKSTYLE:OFF
     /** {@inheritDoc} */
-    @java.lang.SuppressWarnings("serial")
-    @SuppressWarnings("SIC")
     @Override
     protected CategoryItemRenderer createRenderer(final String pluginName, final ToolTipProvider toolTipProvider) {
-        CategoryUrlBuilder url = new CategoryUrlBuilder(getRootUrl(), pluginName) {
-            /** {@inheritDoc} */
-            @Override
-            protected String getDetailUrl(final int row) {
-                if (row == 0) {
-                    return Priority.LOW.name();
-                }
-                else if (row == 1) {
-                    return Priority.NORMAL.name();
-                }
-                else {
-                    return Priority.HIGH.name();
-                }
-            }
-        };
-        ToolTipBuilder toolTip = new ToolTipBuilder(toolTipProvider) {
-            /** {@inheritDoc} */
-            @Override
-            protected String getShortDescription(final int row) {
-                if (row == 0) {
-                    return Messages.Trend_PriorityLow();
-                }
-                else if (row == 1) {
-                    return Messages.Trend_PriorityNormal();
-                }
-                else {
-                    return Messages.Trend_PriorityHigh();
-                }
-            }
-        };
-        return new AreaRenderer(url, toolTip);
+        return new StackedAreaRenderer2();
     }
     // CHECKSTYLE:ON
 }

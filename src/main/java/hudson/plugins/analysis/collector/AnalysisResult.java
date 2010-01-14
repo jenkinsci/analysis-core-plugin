@@ -6,7 +6,7 @@ import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.ResultAction;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import com.google.common.collect.Maps;
 import com.thoughtworks.xstream.XStream;
@@ -20,8 +20,9 @@ import com.thoughtworks.xstream.XStream;
 public class AnalysisResult extends BuildResult {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 847650789493429154L;
+
     /** Number of annotations by origin mapping. */
-    private final HashMap<String, Integer> annotationsByOrigin = Maps.newHashMap();
+    private final Map<String, Integer> annotationsByOrigin = Maps.newHashMap();
 
     /**
      * Creates a new instance of {@link AnalysisResult}.
@@ -41,19 +42,6 @@ public class AnalysisResult extends BuildResult {
     }
 
     /**
-     * Count the annotations by origin.
-     */
-    private void countAnnotations() {
-        for (FileAnnotation annotation : getAnnotations()) {
-            if (!annotationsByOrigin.containsKey(annotation.getOrigin())) {
-                annotationsByOrigin.put(annotation.getOrigin(), 0);
-            }
-            annotationsByOrigin.put(annotation.getOrigin(),
-                    annotationsByOrigin.get(annotation.getOrigin()) + 1);
-        }
-    }
-
-    /**
      * Creates a new instance of {@link AnalysisResult}.
      *
      * @param build
@@ -70,6 +58,19 @@ public class AnalysisResult extends BuildResult {
         super(build, defaultEncoding, result, previous);
 
         countAnnotations();
+    }
+
+    /**
+     * Count the annotations by origin.
+     */
+    private void countAnnotations() {
+        for (FileAnnotation annotation : getAnnotations()) {
+            if (!annotationsByOrigin.containsKey(annotation.getOrigin())) {
+                annotationsByOrigin.put(annotation.getOrigin(), 0);
+            }
+            annotationsByOrigin.put(annotation.getOrigin(),
+                    annotationsByOrigin.get(annotation.getOrigin()) + 1);
+        }
     }
 
     /** {@inheritDoc} */
