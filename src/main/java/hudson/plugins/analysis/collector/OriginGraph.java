@@ -2,6 +2,7 @@ package hudson.plugins.analysis.collector;
 
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.graph.CategoryBuildResultGraph;
+import hudson.plugins.analysis.graph.GraphConfigurationDetail;
 import hudson.plugins.analysis.util.ToolTipProvider;
 import hudson.util.ColorPalette;
 import hudson.util.StackedAreaRenderer2;
@@ -41,8 +42,13 @@ public class OriginGraph extends CategoryBuildResultGraph {
 
     /**
      * Creates a new instance of {@link OriginGraph}.
+     *
+     * @param configuration
+     *            the configuration
      */
-    public OriginGraph() {
+    public OriginGraph(final GraphConfigurationDetail configuration) {
+        super(configuration);
+
         origins = Lists.newArrayList(
                 hudson.plugins.checkstyle.parser.Warning.ORIGIN,
                 hudson.plugins.dry.parser.DuplicateCode.ORIGIN,
