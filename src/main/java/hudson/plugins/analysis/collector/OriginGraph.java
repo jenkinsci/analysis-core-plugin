@@ -2,7 +2,6 @@ package hudson.plugins.analysis.collector;
 
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.graph.CategoryBuildResultGraph;
-import hudson.plugins.analysis.graph.GraphConfigurationDetail;
 import hudson.plugins.analysis.util.ToolTipProvider;
 import hudson.util.ColorPalette;
 import hudson.util.StackedAreaRenderer2;
@@ -28,6 +27,20 @@ public class OriginGraph extends CategoryBuildResultGraph {
     /** The origins to show in the graph. */
     private final ArrayList<String> origins;
 
+    /**
+     * Creates a new instance of {@link OriginGraph}.
+     *            the configuration
+     */
+    public OriginGraph() {
+        origins = Lists.newArrayList(
+                hudson.plugins.checkstyle.parser.Warning.ORIGIN,
+                hudson.plugins.dry.parser.DuplicateCode.ORIGIN,
+                hudson.plugins.findbugs.parser.Bug.ORIGIN,
+                hudson.plugins.pmd.parser.Bug.ORIGIN,
+                hudson.plugins.tasks.parser.Task.ORIGIN,
+                hudson.plugins.warnings.parser.Warning.ORIGIN);
+    }
+
     /** {@inheritDoc} */
     @Override
     public String getId() {
@@ -38,24 +51,6 @@ public class OriginGraph extends CategoryBuildResultGraph {
     @Override
     public String getLabel() {
         return Messages.Trend_type_analysis();
-    }
-
-    /**
-     * Creates a new instance of {@link OriginGraph}.
-     *
-     * @param configuration
-     *            the configuration
-     */
-    public OriginGraph(final GraphConfigurationDetail configuration) {
-        super(configuration);
-
-        origins = Lists.newArrayList(
-                hudson.plugins.checkstyle.parser.Warning.ORIGIN,
-                hudson.plugins.dry.parser.DuplicateCode.ORIGIN,
-                hudson.plugins.findbugs.parser.Bug.ORIGIN,
-                hudson.plugins.pmd.parser.Bug.ORIGIN,
-                hudson.plugins.tasks.parser.Task.ORIGIN,
-                hudson.plugins.warnings.parser.Warning.ORIGIN);
     }
 
     /** {@inheritDoc} */

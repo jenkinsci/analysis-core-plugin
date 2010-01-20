@@ -2,6 +2,9 @@ package hudson.plugins.analysis.collector;
 
 import hudson.model.AbstractProject;
 import hudson.plugins.analysis.core.AbstractProjectAction;
+import hudson.plugins.analysis.graph.BuildResultGraph;
+
+import java.util.HashSet;
 
 /**
  * Entry point to visualize the trend graph in the project screen.
@@ -30,6 +33,12 @@ public class AnalysisProjectAction extends AbstractProjectAction<AnalysisResultA
     @Override
     public String getTrendName() {
         return Messages.Analysis_Trend_Name();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected void registerAvailableGraphs(final HashSet<BuildResultGraph> availableGraphs) {
+        availableGraphs.add(new OriginGraph());
     }
 }
 
