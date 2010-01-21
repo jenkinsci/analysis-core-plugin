@@ -22,18 +22,18 @@ public class Main extends ApplicationFrame {
         super("Hello Graph");
 
         OriginGraph graph = new OriginGraph();
-        DataSetBuilder<Integer, String> builder = new DataSetBuilder<Integer, String>();
-        builder.add(100, 0, "#1");
-        builder.add(120, 0, "#2");
-        builder.add(50, 0, "#3");
+        DataSetBuilder<String, String> builder = new DataSetBuilder<String, String>();
+        builder.add(100, "Checkstyle", "#1");
+        builder.add(120, "Checkstyle", "#2");
+        builder.add(50, "Checkstyle", "#3");
 
-        builder.add(10, 1, "#1");
-        builder.add(20, 1, "#2");
-        builder.add(50, 1, "#3");
+        builder.add(10, "PMD", "#1");
+        builder.add(20, "PMD", "#2");
+        builder.add(50, "PMD", "#3");
 
-        builder.add(50, 2, "#1");
-        builder.add(90, 2, "#2");
-        builder.add(12, 2, "#3");
+        builder.add(50, "FindBugs", "#1");
+        builder.add(90, "FindBugs", "#2");
+        builder.add(12, "FindBugs", "#3");
 
         JFreeChart chart = graph.createChart(builder.build());
 

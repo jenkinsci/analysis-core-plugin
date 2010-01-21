@@ -26,7 +26,9 @@ import com.google.common.collect.Lists;
  */
 public class OriginGraph extends CategoryBuildResultGraph {
     /** The origins to show in the graph. */
-    private final ArrayList<String> origins;
+    private final List<String> origins;
+    /** The origins to show in the graph. */
+    private final List<String> originLabels;
 
     /**
      * Creates a new instance of {@link OriginGraph}.
@@ -40,6 +42,13 @@ public class OriginGraph extends CategoryBuildResultGraph {
                 hudson.plugins.pmd.parser.Bug.ORIGIN,
                 hudson.plugins.tasks.parser.Task.ORIGIN,
                 hudson.plugins.warnings.parser.Warning.ORIGIN);
+        originLabels = Lists.newArrayList(
+                Messages.Analysis_Checkstyle_Warning_Origin(),
+                Messages.Analysis_Dry_Warning_Origin(),
+                Messages.Analysis_FindBugs_Warning_Origin(),
+                Messages.Analysis_PMD_Warning_Origin(),
+                Messages.Analysis_Tasks_Warning_Origin(),
+                Messages.Analysis_Warnings_Warning_Origin());
     }
 
     /** {@inheritDoc} */
@@ -96,6 +105,12 @@ public class OriginGraph extends CategoryBuildResultGraph {
         colors.add(ColorPalette.RED);
         colors.add(ColorPalette.YELLOW);
         return colors.toArray(new Color[colors.size()]);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected String getRowId(final int level) {
+        return originLabels.get(level);
     }
 
     // CHECKSTYLE:OFF
