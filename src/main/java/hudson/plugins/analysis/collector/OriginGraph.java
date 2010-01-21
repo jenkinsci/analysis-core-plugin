@@ -4,8 +4,8 @@ import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.graph.CategoryBuildResultGraph;
 import hudson.plugins.analysis.util.ToolTipProvider;
 import hudson.util.ColorPalette;
-import hudson.util.StackedAreaRenderer2;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.CategoryDataset;
 
 import com.google.common.collect.Lists;
@@ -75,7 +76,7 @@ public class OriginGraph extends CategoryBuildResultGraph {
                 "count",                   // range axis label
                 dataSet,                   // data
                 PlotOrientation.VERTICAL,  // orientation
-                false,                     // include legend
+                true,                      // include legend
                 true,                      // tooltips
                 false                      // urls
             );
@@ -89,21 +90,21 @@ public class OriginGraph extends CategoryBuildResultGraph {
     /** {@inheritDoc} */
     @Override
     protected Color[] getColors() {
-        // TODO: filter number of plugins
-        return new Color[] {
-                ColorPalette.LINE_GRAPH.get(0),
-                ColorPalette.LINE_GRAPH.get(1),
-                ColorPalette.LINE_GRAPH.get(2),
-                ColorPalette.LINE_GRAPH.get(3),
-                ColorPalette.GREY,
-                ColorPalette.BLUE};
+        List<Color> colors = Lists.newArrayList(ColorPalette.LINE_GRAPH);
+        colors.add(ColorPalette.GREY);
+        colors.add(ColorPalette.BLUE);
+        colors.add(ColorPalette.RED);
+        colors.add(ColorPalette.YELLOW);
+        return colors.toArray(new Color[colors.size()]);
     }
 
     // CHECKSTYLE:OFF
     /** {@inheritDoc} */
     @Override
     protected CategoryItemRenderer createRenderer(final String pluginName, final ToolTipProvider toolTipProvider) {
-        return new StackedAreaRenderer2();
+        LineAndShapeRenderer render = new LineAndShapeRenderer(true, false);
+        render.setBaseStroke(new BasicStroke(2.0f));
+        return render;
     }
     // CHECKSTYLE:ON
 }
