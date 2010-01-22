@@ -86,31 +86,26 @@ public class AnalysisPublisher extends HealthAwarePublisher {
         ArrayList<Class<? extends AbstractResultAction<? extends BuildResult>>> pluginResults;
         pluginResults = new ArrayList<Class<? extends AbstractResultAction<? extends BuildResult>>>();
 
-        addPlugin(pluginResults, "checkstyle", CheckStyleResultAction.class);
-        addPlugin(pluginResults, "dry", DryResultAction.class);
-        addPlugin(pluginResults, "findbugs", FindBugsResultAction.class);
-        addPlugin(pluginResults, "pmd", PmdResultAction.class);
-        addPlugin(pluginResults, "tasks", TasksResultAction.class);
-        addPlugin(pluginResults, "warnings", WarningsResultAction.class);
+        if (Hudson.getInstance().getPlugin("checkstyle") != null) {
+            pluginResults.add(CheckStyleResultAction.class);
+        }
+        if (Hudson.getInstance().getPlugin("dry") != null) {
+            pluginResults.add(DryResultAction.class);
+        }
+        if (Hudson.getInstance().getPlugin("findbugs") != null) {
+            pluginResults.add(FindBugsResultAction.class);
+        }
+        if (Hudson.getInstance().getPlugin("pmd") != null) {
+            pluginResults.add(PmdResultAction.class);
+        }
+        if (Hudson.getInstance().getPlugin("tasks") != null) {
+            pluginResults.add(TasksResultAction.class);
+        }
+        if (Hudson.getInstance().getPlugin("warnings") != null) {
+            pluginResults.add(WarningsResultAction.class);
+        }
 
         return pluginResults;
-    }
-
-    /**
-     * Adds the specified plug-in to the list of actions.
-     *
-     * @param pluginResults
-     *            the list of actions this plug-in will be added to
-     * @param plugin
-     *            the plug-in to consider
-     * @param action
-     *            the action to add
-     */
-    private void addPlugin(final List<Class<? extends AbstractResultAction<? extends BuildResult>>> pluginResults, final String plugin,
-            final Class<? extends AbstractResultAction<? extends BuildResult>> action) {
-        if (Hudson.getInstance().getPlugin(plugin) != null) {
-            pluginResults.add(action);
-        }
     }
 
     /** {@inheritDoc} */
