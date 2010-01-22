@@ -26,29 +26,39 @@ import com.google.common.collect.Lists;
  */
 public class OriginGraph extends CategoryBuildResultGraph {
     /** The origins to show in the graph. */
-    private final List<String> origins;
+    private final List<String> origins  = Lists.newArrayList();
     /** The origins to show in the graph. */
-    private final List<String> originLabels;
+    private final List<String> originLabels = Lists.newArrayList();
 
     /**
      * Creates a new instance of {@link OriginGraph}.
-     *            the configuration
      */
     public OriginGraph() {
-        origins = Lists.newArrayList(
-                hudson.plugins.checkstyle.parser.Warning.ORIGIN,
-                hudson.plugins.dry.parser.DuplicateCode.ORIGIN,
-                hudson.plugins.findbugs.parser.Bug.ORIGIN,
-                hudson.plugins.pmd.parser.Bug.ORIGIN,
-                hudson.plugins.tasks.parser.Task.ORIGIN,
-                hudson.plugins.warnings.parser.Warning.ORIGIN);
-        originLabels = Lists.newArrayList(
-                Messages.Analysis_Checkstyle_Warning_Origin(),
-                Messages.Analysis_Dry_Warning_Origin(),
-                Messages.Analysis_FindBugs_Warning_Origin(),
-                Messages.Analysis_PMD_Warning_Origin(),
-                Messages.Analysis_Tasks_Warning_Origin(),
-                Messages.Analysis_Warnings_Warning_Origin());
+        if (AnalysisDescriptor.isCheckStyleInstalled()) {
+            origins.add(hudson.plugins.checkstyle.parser.Warning.ORIGIN);
+            originLabels.add(Messages.Analysis_Checkstyle_Warning_Origin());
+        }
+        if (AnalysisDescriptor.isDryInstalled()) {
+            origins.add(hudson.plugins.dry.parser.DuplicateCode.ORIGIN);
+            originLabels.add(Messages.Analysis_Dry_Warning_Origin());
+        }
+        if (AnalysisDescriptor.isFindBugsInstalled()) {
+            origins.add(hudson.plugins.findbugs.parser.Bug.ORIGIN);
+            originLabels.add(
+                    Messages.Analysis_FindBugs_Warning_Origin());
+        }
+        if (AnalysisDescriptor.isPmdInstalled()) {
+            origins.add(hudson.plugins.pmd.parser.Bug.ORIGIN);
+            originLabels.add(Messages.Analysis_PMD_Warning_Origin());
+        }
+        if (AnalysisDescriptor.isOpenTasksInstalled()) {
+            origins.add(hudson.plugins.tasks.parser.Task.ORIGIN);
+            originLabels.add(Messages.Analysis_Tasks_Warning_Origin());
+        }
+        if (AnalysisDescriptor.isWarningsInstalled()) {
+            origins.add(hudson.plugins.warnings.parser.Warning.ORIGIN);
+            originLabels.add(Messages.Analysis_Warnings_Warning_Origin());
+        }
     }
 
     /** {@inheritDoc} */

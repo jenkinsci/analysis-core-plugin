@@ -3,7 +3,6 @@ package hudson.plugins.analysis.collector;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
-import hudson.model.Hudson;
 import hudson.model.Result;
 import hudson.plugins.analysis.core.AbstractResultAction;
 import hudson.plugins.analysis.core.BuildResult;
@@ -23,7 +22,6 @@ import hudson.tasks.Publisher;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
@@ -86,22 +84,22 @@ public class AnalysisPublisher extends HealthAwarePublisher {
         ArrayList<Class<? extends AbstractResultAction<? extends BuildResult>>> pluginResults;
         pluginResults = new ArrayList<Class<? extends AbstractResultAction<? extends BuildResult>>>();
 
-        if (Hudson.getInstance().getPlugin("checkstyle") != null) {
+        if (AnalysisDescriptor.isCheckStyleInstalled()) {
             pluginResults.add(CheckStyleResultAction.class);
         }
-        if (Hudson.getInstance().getPlugin("dry") != null) {
+        if (AnalysisDescriptor.isDryInstalled()) {
             pluginResults.add(DryResultAction.class);
         }
-        if (Hudson.getInstance().getPlugin("findbugs") != null) {
+        if (AnalysisDescriptor.isFindBugsInstalled()) {
             pluginResults.add(FindBugsResultAction.class);
         }
-        if (Hudson.getInstance().getPlugin("pmd") != null) {
+        if (AnalysisDescriptor.isPmdInstalled()) {
             pluginResults.add(PmdResultAction.class);
         }
-        if (Hudson.getInstance().getPlugin("tasks") != null) {
+        if (AnalysisDescriptor.isOpenTasksInstalled()) {
             pluginResults.add(TasksResultAction.class);
         }
-        if (Hudson.getInstance().getPlugin("warnings") != null) {
+        if (AnalysisDescriptor.isWarningsInstalled()) {
             pluginResults.add(WarningsResultAction.class);
         }
 
@@ -134,6 +132,7 @@ public class AnalysisPublisher extends HealthAwarePublisher {
     }
 
     /** {@inheritDoc} */
+    @SuppressWarnings("unchecked")
     @Override
     public BuildStepDescriptor<Publisher> getDescriptor() {
         return super.getDescriptor();
