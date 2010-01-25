@@ -3,8 +3,11 @@ package hudson.plugins.analysis.collector;
 import hudson.model.AbstractProject;
 import hudson.plugins.analysis.core.AbstractProjectAction;
 import hudson.plugins.analysis.graph.BuildResultGraph;
+import hudson.plugins.analysis.graph.GraphConfigurationView;
 
 import java.util.List;
+
+import org.kohsuke.stapler.StaplerRequest;
 
 /**
  * Entry point to visualize the trend graph in the project screen.
@@ -37,8 +40,40 @@ public class AnalysisProjectAction extends AbstractProjectAction<AnalysisResultA
 
     /** {@inheritDoc} */
     @Override
-    protected void registerAvailableGraphs(final List<BuildResultGraph> availableGraphs) {
-        availableGraphs.add(new OriginGraph());
+    protected GraphConfigurationView createDefaultConfiguration() {
+        if (hasValidResults()) {
+            return new AnalysisDefaultGraphConfigurationView(createConfiguration(), getProject(),
+                    getUrlName(), getLastAction());
+        }
+        else {
+            return new AnalysisDefaultGraphConfigurationView(createConfiguration(), getProject(),
+                    getUrlName());
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected GraphConfigurationView createUserConfiguration(final StaplerRequest request) {
+        if (hasValidResults()) {
+            return new AnalysisUserGraphConfigurationView(createConfiguration(), getProject(),
+                    getUrlName(), request.getCookies(), getLastAction());
+        }
+        else {
+            return new AnalysisUserGraphConfigurationView(createConfiguration(), getProject(),
+                    getUrlName(), request.getCookies());
+        }
+    }
+
+    /**
+     * Creates the graph configuration.
+     *
+     * @return the graph configuration
+     */
+    protected AnalysisGraphConfiguration createConfiguration() {
+        List<BuildResultGraph> availableGraphs = getAvailableGraphs();
+        availableGraphs.add(0, new OriginGraph());
+
+        return new AnalysisGraphConfiguration(availableGraphs);
     }
 }
 

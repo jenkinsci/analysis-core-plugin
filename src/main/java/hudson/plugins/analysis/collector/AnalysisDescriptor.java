@@ -5,6 +5,11 @@ import hudson.model.AbstractProject;
 import hudson.model.Hudson;
 import hudson.plugins.analysis.core.PluginDescriptor;
 
+import java.util.Collection;
+import java.util.HashSet;
+
+import com.google.common.collect.Sets;
+
 /**
  * Descriptor for the class {@link AnalysisPublisher}. Used as a singleton. The
  * class is marked as public so that it can be accessed from views.
@@ -17,6 +22,35 @@ public final class AnalysisDescriptor extends PluginDescriptor {
     private static final String PLUGIN_NAME = "analysis";
     /** Icon to use for the result and project action. */
     private static final String ACTION_ICON = "/plugin/analysis-collector/icons/analysis-24x24.png";
+
+    /**
+     * Returns the activated plug-ins.
+     *
+     * @return the activated plug-ins
+     */
+    public static Collection<String> getPlugins() {
+        HashSet<String> plugins = Sets.newHashSet();
+
+        if (isCheckStyleInstalled()) {
+            plugins.add("checkstyle");
+        }
+        if (isDryInstalled()) {
+            plugins.add("dry");
+        }
+        if (isFindBugsInstalled()) {
+            plugins.add("findbugs");
+        }
+        if (isPmdInstalled()) {
+            plugins.add("pmd");
+        }
+        if (isOpenTasksInstalled()) {
+            plugins.add("tasks");
+        }
+        if (isWarningsInstalled()) {
+            plugins.add("warnings");
+        }
+        return null;
+    }
 
     /**
      * Returns whether the Checkstyle plug-in is installed.
