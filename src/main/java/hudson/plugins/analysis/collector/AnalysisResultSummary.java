@@ -56,7 +56,7 @@ public final class AnalysisResultSummary {
             summary.append("</a></li>");
         }
         if (result.getNumberOfFixedWarnings() > 0) {
-            summary.append("<li><a href=\"anlysisResult/fixed\">");
+            summary.append("<li><a href=\"analysisResult/fixed\">");
             if (result.getNumberOfFixedWarnings() == 1) {
                 summary.append(Messages.Analysis_ResultAction_OneFixedWarning());
             }

@@ -87,7 +87,11 @@ public final class AnalysisDescriptor extends PluginDescriptor {
      *         <code>false</code> if not.
      */
     private static boolean isPluginInstalled(final String shortName) {
-        return Hudson.getInstance().getPlugin(shortName) != null;
+        Hudson instance = Hudson.getInstance();
+        if (instance != null) {
+            return instance.getPlugin(shortName) != null;
+        }
+        return true;
     }
 
     /**

@@ -15,6 +15,9 @@ import org.jfree.ui.RefineryUtilities;
  * @author Ulli Hafner
  */
 public class Main extends ApplicationFrame {
+    /** Unique ID. */
+    private static final long serialVersionUID = -4097403148044461272L;
+
     /**
      * Creates a new instance of {@link Main}.
      */
@@ -48,8 +51,10 @@ public class Main extends ApplicationFrame {
     }
 
     /**
-     * TODO: Document method main
+     * Shows the graph.
+     *
      * @param args
+     *            not used
      */
     public static void main(final String[] args) {
         Main chart = new Main();
