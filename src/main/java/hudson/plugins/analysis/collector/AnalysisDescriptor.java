@@ -141,6 +141,16 @@ public final class AnalysisDescriptor extends PluginDescriptor {
         return Messages.Analysis_Publisher_Name();
     }
 
+    /**
+     * Returns the root folder of this plug-in.
+     *
+     * @return the name of the root folder of this plug-in
+     */
+    @Override
+    public String getPluginRoot() {
+        return "/plugin/analysis-collector/";
+    }
+
     /** {@inheritDoc} */
     @Override
     public String getPluginName() {

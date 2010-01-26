@@ -1,9 +1,7 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
   xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form"
-  xmlns:i="jelly:fmt" xmlns:u="/util">
+  xmlns:i="jelly:fmt" xmlns:g="/graph">
 
-  <f:entry title="${%disable.title}" description="${%disable.description}" >
-    <f:checkbox name="canDeacticateOtherTrendGraphs" checked="${instance.canDeacticateOtherTrendGraphs}"/>
-  </f:entry>
+    <g:deactivate />
 
 </j:jelly>
