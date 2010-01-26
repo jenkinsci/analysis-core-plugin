@@ -19,7 +19,7 @@ import com.google.common.collect.Sets;
 @Extension(ordinal = 1)
 public final class AnalysisDescriptor extends PluginDescriptor {
     /** Plug-in name. */
-    private static final String PLUGIN_NAME = "analysis";
+    private static final String PLUGIN_NAME = "analysis-collector";
     /** Icon to use for the result and project action. */
     private static final String ACTION_ICON = "/plugin/analysis-collector/icons/analysis-24x24.png";
 
