@@ -7,6 +7,7 @@ import hudson.util.ColorPalette;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,12 @@ public class OriginGraph extends CategoryBuildResultGraph {
     private final List<String> origins  = Lists.newArrayList();
     /** The origins to show in the graph. */
     private final List<String> originLabels = Lists.newArrayList();
+    /** Orange. */
+    public static final Color ORANGE = new Color(0xFF, 0xA5, 0x00);
+    /** Orange. */
+    public static final Color GRAY = new Color(0x4D, 0x4D, 0x4D);
+    /** Orange. */
+    public static final Color PINK = new Color(0xA0, 0x20, 0xF0);
 
     /**
      * Creates a new instance of {@link OriginGraph}.
@@ -102,6 +109,7 @@ public class OriginGraph extends CategoryBuildResultGraph {
         chart.setBackgroundPaint(Color.white);
         setCategoryPlotProperties(chart.getCategoryPlot());
         chart.getCategoryPlot().getDomainAxis().setCategoryMargin(0.0);
+        chart.getLegend().setItemFont(new Font("SansSerif", Font.PLAIN, 10));
 
         return chart;
     }
@@ -110,8 +118,12 @@ public class OriginGraph extends CategoryBuildResultGraph {
     @Override
     protected Color[] getColors() {
         List<Color> colors = Lists.newArrayList(ColorPalette.LINE_GRAPH);
-        colors.add(ColorPalette.GREY);
-        colors.add(ColorPalette.BLUE);
+        if (colors.size() > 3) {
+            colors.remove(3);
+        }
+        colors.add(ORANGE);
+        colors.add(GRAY);
+        colors.add(PINK);
         colors.add(ColorPalette.RED);
         colors.add(ColorPalette.YELLOW);
         return colors.toArray(new Color[colors.size()]);
