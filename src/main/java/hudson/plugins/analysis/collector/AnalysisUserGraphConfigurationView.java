@@ -2,6 +2,7 @@ package hudson.plugins.analysis.collector;
 
 import hudson.model.AbstractProject;
 import hudson.plugins.analysis.core.ResultAction;
+import hudson.plugins.analysis.graph.GraphConfiguration;
 import hudson.plugins.analysis.graph.UserGraphConfigurationView;
 
 import javax.servlet.http.Cookie;
@@ -66,10 +67,15 @@ public class AnalysisUserGraphConfigurationView extends UserGraphConfigurationVi
             final StaplerResponse response) {
         super.persistValue(value, pluginName, request, response);
 
+        GraphConfiguration configuration;
         if (analysisConfiguration.canDeacticateOtherTrendGraphs()) {
-            for (String plugin : AnalysisDescriptor.getPlugins()) {
-                super.persistValue(value, plugin, request, response);
-            }
+            configuration = GraphConfiguration.createDeactivated();
+        }
+        else {
+            configuration = GraphConfiguration.createDefault();
+        }
+        for (String plugin : AnalysisDescriptor.getPlugins()) {
+            super.persistValue(configuration.serializeToString(), plugin, request, response);
         }
     }
 

@@ -48,7 +48,7 @@ public class AnalysisGraphConfiguration extends GraphConfiguration {
     @Override
     protected boolean initializeLocal(final JSONObject localConfiguration) {
         try {
-            canDeactivateGraphs = localConfiguration.getBoolean("canDeactivateGraphs");
+            canDeactivateGraphs = localConfiguration.getBoolean("canDeacticateOtherTrendGraphs");
 
             return true;
         }
@@ -66,6 +66,21 @@ public class AnalysisGraphConfiguration extends GraphConfiguration {
      */
     public boolean canDeacticateOtherTrendGraphs() {
         return canDeactivateGraphs;
+    }
+
+    /**
+     * See {@link #canDeacticateOtherTrendGraphs()}.
+     *
+     * @return see {@link #canDeacticateOtherTrendGraphs()}.
+     */
+    public boolean getCanDeacticateOtherTrendGraphs() {
+        return canDeactivateGraphs;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String serializeToString() {
+        return super.serializeToString() + SEPARATOR + (canDeactivateGraphs ? "1" : "0");
     }
 }
 

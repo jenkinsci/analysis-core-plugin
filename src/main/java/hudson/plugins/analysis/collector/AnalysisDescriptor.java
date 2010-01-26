@@ -49,7 +49,7 @@ public final class AnalysisDescriptor extends PluginDescriptor {
         if (isWarningsInstalled()) {
             plugins.add("warnings");
         }
-        return null;
+        return plugins;
     }
 
     /**

@@ -3,7 +3,7 @@
   xmlns:i="jelly:fmt" xmlns:u="/util">
 
   <f:entry title="${%Disable analysis plug-ins trend graphs}">
-    <f:checkbox name="canDeacticateOtherTrendGraphs" checked="${instance.canDeacticateOtherTrendGraphs}"/>
+    <f:checkbox name="canDeacticateOtherTrendGraphs" checked="${instance.canDeacticateOtherTrendGraphs()}"/>
   </f:entry>
 
 </j:jelly>
