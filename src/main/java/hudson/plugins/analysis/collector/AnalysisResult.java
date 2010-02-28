@@ -42,25 +42,6 @@ public class AnalysisResult extends BuildResult {
     }
 
     /**
-     * Creates a new instance of {@link AnalysisResult}.
-     *
-     * @param build
-     *            the current build as owner of this action
-     * @param defaultEncoding
-     *            the default encoding to be used when reading and parsing files
-     * @param result
-     *            the parsed result with all annotations
-     * @param previous
-     *            the result of the previous build
-     */
-    public AnalysisResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
-            final ParserResult result, final AnalysisResult previous) {
-        super(build, defaultEncoding, result, previous);
-
-        countAnnotations();
-    }
-
-    /**
      * Count the annotations by origin.
      */
     private void countAnnotations() {

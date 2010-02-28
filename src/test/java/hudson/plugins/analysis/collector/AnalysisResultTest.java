@@ -18,12 +18,6 @@ public class AnalysisResultTest extends BuildResultTest<AnalysisResult> {
 
     /** {@inheritDoc} */
     @Override
-    protected AnalysisResult createBuildResult(final AbstractBuild<?, ?> build, final ParserResult project, final AnalysisResult previous) {
-        return new AnalysisResult(build, null, project, previous);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     protected void verifyHighScoreMessage(final int expectedZeroWarningsBuildNumber, final boolean expectedIsNewHighScore, final long expectedHighScore, final long gap, final AnalysisResult result) {
         if (result.hasNoAnnotations() && result.getDelta() == 0) {
             assertTrue(result.getDetails().contains(Messages.Analysis_ResultAction_NoWarningsSince(expectedZeroWarningsBuildNumber)));

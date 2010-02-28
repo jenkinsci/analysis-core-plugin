@@ -125,7 +125,7 @@ public class AnalysisPublisher extends HealthAwarePublisher {
             }
         }
 
-        AnalysisResult result = new AnalysisResultBuilder().build(build, overallResult, getDefaultEncoding());
+        AnalysisResult result = new AnalysisResult(build, getDefaultEncoding(), overallResult);
         build.getActions().add(new AnalysisResultAction(build, this, result));
 
         return result;
