@@ -2,6 +2,7 @@ package hudson.plugins.analysis.collector;
 
 import static junit.framework.Assert.*;
 import hudson.model.AbstractBuild;
+import hudson.plugins.analysis.core.BuildHistory;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.test.BuildResultTest;
@@ -12,8 +13,8 @@ import hudson.plugins.analysis.test.BuildResultTest;
 public class AnalysisResultTest extends BuildResultTest<AnalysisResult> {
     /** {@inheritDoc} */
     @Override
-    protected AnalysisResult createBuildResult(final AbstractBuild<?, ?> build, final ParserResult project) {
-        return new AnalysisResult(build, null, project);
+    protected AnalysisResult createBuildResult(final AbstractBuild<?, ?> build, final ParserResult project, final BuildHistory history) {
+        return new AnalysisResult(build, null, project, history);
     }
 
     /** {@inheritDoc} */

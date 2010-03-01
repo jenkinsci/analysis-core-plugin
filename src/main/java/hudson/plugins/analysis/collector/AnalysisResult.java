@@ -1,6 +1,7 @@
 package hudson.plugins.analysis.collector; // NOPMD
 
 import hudson.model.AbstractBuild;
+import hudson.plugins.analysis.core.BuildHistory;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.ResultAction;
@@ -23,6 +24,23 @@ public class AnalysisResult extends BuildResult {
 
     /** Number of annotations by origin mapping. */
     private final Map<String, Integer> annotationsByOrigin = Maps.newHashMap();
+
+    /**
+     * Creates a new instance of {@link AnalysisResult}.
+     *
+     * @param build
+     *            the current build as owner of this action
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
+     * @param result
+     *            the parsed result with all annotations
+     */
+    public AnalysisResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
+            final ParserResult result, final BuildHistory history) {
+        super(build, defaultEncoding, result, history);
+
+        countAnnotations();
+    }
 
     /**
      * Creates a new instance of {@link AnalysisResult}.
