@@ -34,6 +34,8 @@ public class AnalysisResult extends BuildResult {
      *            the default encoding to be used when reading and parsing files
      * @param result
      *            the parsed result with all annotations
+     * @param history
+     *            the plug-in history
      */
     public AnalysisResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
             final ParserResult result, final BuildHistory history) {
