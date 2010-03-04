@@ -91,39 +91,8 @@ public class AnalysisResult extends BuildResult {
 
     /** {@inheritDoc} */
     @Override
-    public String getDetails() {
-        String message = AnalysisResultSummary.createDeltaMessage(this);
-        if (getNumberOfAnnotations() == 0 && getDelta() == 0) {
-            message += "<li>" + Messages.Analysis_ResultAction_NoWarningsSince(getZeroWarningsSinceBuild()) + "</li>";
-            message += createHighScoreMessage();
-        }
-        return message;
-    }
-
-    /**
-     * Creates a high score message.
-     *
-     * @return a high score message
-     */
-    private String createHighScoreMessage() {
-        if (isNewZeroWarningsHighScore()) {
-            long days = getDays(getZeroWarningsHighScore());
-            if (days == 1) {
-                return "<li>" + Messages.Analysis_ResultAction_OneHighScore() + "</li>";
-            }
-            else {
-                return "<li>" + Messages.Analysis_ResultAction_MultipleHighScore(days) + "</li>";
-            }
-        }
-        else {
-            long days = getDays(getHighScoreGap());
-            if (days == 1) {
-                return "<li>" + Messages.Analysis_ResultAction_OneNoHighScore() + "</li>";
-            }
-            else {
-                return "<li>" + Messages.Analysis_ResultAction_MultipleNoHighScore(days) + "</li>";
-            }
-        }
+    protected String createDeltaMessage() {
+        return AnalysisResultSummary.createDeltaMessage(this);
     }
 
     /** {@inheritDoc} */
