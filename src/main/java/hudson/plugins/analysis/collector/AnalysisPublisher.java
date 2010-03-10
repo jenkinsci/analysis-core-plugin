@@ -68,9 +68,9 @@ public class AnalysisPublisher extends HealthAwarePublisher {
     public AnalysisPublisher(final String threshold, final String newThreshold,
             final String failureThreshold, final String newFailureThreshold,
             final String healthy, final String unHealthy, final String thresholdLimit,
-            final String defaultEncoding) {
+            final String defaultEncoding, final boolean useDeltaValues) {
         super(threshold, newThreshold, failureThreshold, newFailureThreshold,
-                healthy, unHealthy, thresholdLimit, defaultEncoding, "ANALYSIS-COLLECTOR");
+                healthy, unHealthy, thresholdLimit, defaultEncoding, useDeltaValues, "ANALYSIS-COLLECTOR");
     }
     // CHECKSTYLE:ON
 
