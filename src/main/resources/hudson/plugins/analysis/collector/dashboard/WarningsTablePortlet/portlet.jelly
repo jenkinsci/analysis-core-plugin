@@ -1,0 +1,48 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
+    xmlns:dp="/hudson/plugins/view/dashboard"
+    xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+  <dp:decorate portlet="${it}" width="1">
+    <tr>
+      <td>
+        <table class="pane sortable" id="warnings">
+          <tr>
+            <td width="40%" initialSortDir="down" class="pane-header">${%Job}</td>
+            <td width="10%" class="pane-header">Checkstyle</td>
+            <td width="10%" class="pane-header">${%Duplicate Code}</td>
+            <td width="10%" class="pane-header">FindBugs</td>
+            <td width="10%" class="pane-header">PMD</td>
+            <td width="10%" class="pane-header">${%Open Tasks}</td>
+            <td width="10%" class="pane-header">${%Compiler Warnings}</td>
+          </tr>
+          <tbody>
+            <j:forEach var="job" items="${jobs}">
+              <tr>
+                <td class="pane">
+                   <dp:jobLink job="${job}"/>
+                </td>
+                <td class="pane">
+                   ${it.getCheckStyle(job)}
+                </td>
+                <td class="pane">
+                   ${it.getDry(job)}
+                </td>
+                <td class="pane">
+                   ${it.getFindBugs(job)}
+                </td>
+                <td class="pane">
+                   ${it.getPmd(job)}
+                </td>
+                <td class="pane">
+                   ${it.getTasks(job)}
+                </td>
+                <td class="pane">
+                   ${it.getWarnings(job)}
+                </td>
+              </tr>
+            </j:forEach>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </dp:decorate>
+</j:jelly>
