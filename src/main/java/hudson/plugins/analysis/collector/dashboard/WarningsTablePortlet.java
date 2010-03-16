@@ -281,23 +281,6 @@ public class WarningsTablePortlet extends DashboardPortlet {
     }
 
     /**
-     * Returns the warnings for the specified action.
-     *
-     * @param job
-     *            the job to get the action from
-     * @param actionType
-     *            the type of the action
-     * @return the number of warnings
-     */
-    private String getIcon(final Job<?, ?> job, final Class<? extends AbstractProjectAction<?>> actionType) {
-        AbstractProjectAction<?> action = job.getAction(actionType);
-        if (action != null && action.hasValidResults()) {
-            return action.getLastAction().getResult().getResultIcon();
-        }
-        return StringUtils.EMPTY;
-    }
-
-    /**
      * Extension point registration.
      *
      * @author Ulli Hafner
