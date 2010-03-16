@@ -44,7 +44,7 @@
                 </td>
               </tr>
             </j:forEach>
-            <tr>
+            <tr class="sortbottom">
               <td class="pane-header">
                   ${%Total}
               </td>
