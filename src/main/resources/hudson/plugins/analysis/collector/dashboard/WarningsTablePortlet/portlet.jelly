@@ -44,6 +44,32 @@
                 </td>
               </tr>
             </j:forEach>
+            <tr>
+              <td class="pane-header">
+                  ${%Total}
+              </td>
+              <td class="pane-header">
+                  ${it.getCheckStyle(jobs)}
+              </td>
+              <td class="pane-header">
+                  ${it.getDry(jobs)}
+              </td>
+              <td class="pane-header">
+                  ${it.getFindBugs(jobs)}
+              </td>
+              <td class="pane-header">
+                  ${it.getPmd(jobs)}
+              </td>
+              <td class="pane-header">
+                  ${it.getTasks(jobs)}
+              </td>
+              <td class="pane-header">
+                  ${it.getWarnings(jobs)}
+              </td>
+              <td class="pane-header">
+                  ${it.getTotal(jobs)}
+              </td>
+            </tr>
           </tbody>
         </table>
       </td>

@@ -16,6 +16,8 @@ import hudson.plugins.tasks.TasksProjectAction;
 import hudson.plugins.view.dashboard.DashboardPortlet;
 import hudson.plugins.warnings.WarningsProjectAction;
 
+import java.util.Collection;
+
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 
@@ -141,6 +143,96 @@ public class WarningsTablePortlet extends DashboardPortlet {
     }
 
     /**
+     * Returns the number of Checkstyle warnings for the specified jobs.
+     *
+     * @param jobs
+     *            the jobs to get the warnings for
+     * @return the number of Checkstyle warnings
+     */
+    public String getCheckStyle(final Collection<Job<?, ?>> jobs) {
+        int sum = 0;
+        for (Job<?, ?> job : jobs) {
+            sum += toInt(getCheckStyle(job));
+        }
+        return String.valueOf(sum);
+    }
+
+    /**
+     * Returns the number of Dry warnings for the specified jobs.
+     *
+     * @param jobs
+     *            the jobs to get the warnings for
+     * @return the number of Dry warnings
+     */
+    public String getDry(final Collection<Job<?, ?>> jobs) {
+        int sum = 0;
+        for (Job<?, ?> job : jobs) {
+            sum += toInt(getDry(job));
+        }
+        return String.valueOf(sum);
+    }
+
+    /**
+     * Returns the number of FindBugs warnings for the specified jobs.
+     *
+     * @param jobs
+     *            the jobs to get the warnings for
+     * @return the number of FindBugs warnings
+     */
+    public String getFindBugs(final Collection<Job<?, ?>> jobs) {
+        int sum = 0;
+        for (Job<?, ?> job : jobs) {
+            sum += toInt(getFindBugs(job));
+        }
+        return String.valueOf(sum);
+    }
+
+    /**
+     * Returns the number of PMD warnings for the specified jobs.
+     *
+     * @param jobs
+     *            the jobs to get the warnings for
+     * @return the number of PMD warnings
+     */
+    public String getPmd(final Collection<Job<?, ?>> jobs) {
+        int sum = 0;
+        for (Job<?, ?> job : jobs) {
+            sum += toInt(getPmd(job));
+        }
+        return String.valueOf(sum);
+    }
+
+    /**
+     * Returns the number of open tasks for the specified jobs.
+     *
+     * @param jobs
+     *            the jobs to get the warnings for
+     * @return the number of open tasks warnings
+     */
+    public String getTasks(final Collection<Job<?, ?>> jobs) {
+        int sum = 0;
+        for (Job<?, ?> job : jobs) {
+            sum += toInt(getTasks(job));
+        }
+        return String.valueOf(sum);
+    }
+
+    /**
+     * Returns the number of compiler warnings for the specified jobs.
+     *
+     * @param jobs
+     *            the jobs to get the warnings for
+     * @return the number of compiler warnings
+     */
+    public String getWarnings(final Collection<Job<?, ?>> jobs) {
+        int sum = 0;
+        for (Job<?, ?> job : jobs) {
+            sum += toInt(getWarnings(job));
+        }
+        return String.valueOf(sum);
+    }
+
+    /**
      * Converts the string to an integer. If the string is not valid then 0
      * is returned.
      *
@@ -165,15 +257,22 @@ public class WarningsTablePortlet extends DashboardPortlet {
      * @param actionType
      *            the type of the action
      * @param plugin
-     *            the plugin that is target of the link
+     *            the plug-in that is target of the link
      * @return the number of warnings
      */
     private String getWarnings(final Job<?, ?> job, final Class<? extends AbstractProjectAction<?>> actionType, final String plugin) {
         AbstractProjectAction<?> action = job.getAction(actionType);
         if (action != null && action.hasValidResults()) {
             BuildResult result = action.getLastAction().getResult();
-            String value = String.format("<a href=\"%s%s\">%d</a>", job.getShortUrl(), plugin, result.getNumberOfAnnotations());
-            if (result.isSuccessfulTouched()) {
+            int numberOfAnnotations = result.getNumberOfAnnotations();
+            String value;
+            if (numberOfAnnotations > 0) {
+                value = String.format("<a href=\"%s%s\">%d</a>", job.getShortUrl(), plugin, numberOfAnnotations);
+            }
+            else {
+                value = String.valueOf(numberOfAnnotations);
+            }
+            if (result.isSuccessfulTouched() && !result.isSuccessful()) {
                 return value + result.getResultIcon();
             }
             return value;
