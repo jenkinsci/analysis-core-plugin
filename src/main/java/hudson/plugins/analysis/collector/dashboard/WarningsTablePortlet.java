@@ -29,16 +29,101 @@ import org.kohsuke.stapler.DataBoundConstructor;
 public class WarningsTablePortlet extends DashboardPortlet {
     /** Message to be shown if no result action is found. */
     private static final String NO_RESULTS_FOUND = "-";
+    /** Determines whether images should be used in the table header. */
+    private final boolean useImages;
 
     /**
      * Creates a new instance of {@link WarningsTablePortlet}.
      *
      * @param name
-     *            the name of the dashboard
+     *            the name of the portlet
+     * @param useImages
+     *            determines whether images should be used in the table header.
      */
     @DataBoundConstructor
-    public WarningsTablePortlet(final String name) {
+    public WarningsTablePortlet(final String name, final boolean useImages) {
         super(name);
+        this.useImages = useImages;
+    }
+
+    /**
+     * Returns whether images should be used in the table header.
+     *
+     * @return <code>true</code> if images should be used, <code>false</code> if
+     *         text shuld be used
+     */
+    public boolean getUseImages() {
+        return useImages;
+    }
+
+    /**
+     * Returns whether images should be used in the table header.
+     *
+     * @return <code>true</code> if images should be used, <code>false</code> if
+     *         text shuld be used
+     */
+    public boolean useImages() {
+        return useImages;
+    }
+
+    /**
+     * Returns whether the Checkstyle plug-in is installed.
+     *
+     * @return <code>true</code> if the Checkstyle plug-in is installed,
+     *         <code>false</code> if not.
+     */
+    public boolean isCheckStyleInstalled() {
+        return AnalysisDescriptor.isCheckStyleInstalled();
+    }
+
+    /**
+     * Returns whether the Dry plug-in is installed.
+     *
+     * @return <code>true</code> if the Dry plug-in is installed,
+     *         <code>false</code> if not.
+     */
+    public boolean isDryInstalled() {
+        return AnalysisDescriptor.isDryInstalled();
+    }
+
+    /**
+     * Returns whether the FindBugs plug-in is installed.
+     *
+     * @return <code>true</code> if the FindBugs plug-in is installed,
+     *         <code>false</code> if not.
+     */
+    public boolean isFindBugsInstalled() {
+        return AnalysisDescriptor.isFindBugsInstalled();
+    }
+
+    /**
+     * Returns whether the PMD plug-in is installed.
+     *
+     * @return <code>true</code> if the PMD plug-in is installed,
+     *         <code>false</code> if not.
+     */
+    public boolean isPmdInstalled() {
+        return AnalysisDescriptor.isPmdInstalled();
+    }
+
+    /**
+     * Returns whether the Open Tasks plug-in is installed.
+     *
+     * @return <code>true</code> if the Open Tasks plug-in is installed,
+     *         <code>false</code> if not.
+     */
+    public boolean isTasksInstalled() {
+        return AnalysisDescriptor.isOpenTasksInstalled();
+    }
+
+    /**
+     * Returns whether the Warnings plug-in is installed.
+     *
+     * @return <code>true</code> if the Warnings plug-in is installed,
+     *         <code>false</code> if not.
+     */
+    public boolean isWarningsInstalled() {
+        return AnalysisDescriptor.isWarningsInstalled();
     }
 
     /**
@@ -126,11 +211,11 @@ public class WarningsTablePortlet extends DashboardPortlet {
     }
 
     /**
-     * Returns the number of compiler warnings for the specified job.
+     * Returns the number of warnings for the specified job.
      *
      * @param job
      *            the job to get the warnings for
-     * @return the number of compiler warnings
+     * @return the number of warnings
      */
     public String getTotal(final Job<?, ?> job) {
         return String.valueOf(
@@ -230,6 +315,22 @@ public class WarningsTablePortlet extends DashboardPortlet {
             sum += toInt(getWarnings(job));
         }
         return String.valueOf(sum);
+    }
+
+    /**
+     * Returns the total number of warnings for all jobs.
+     *
+     * @param jobs
+     *            the jobs to get the warnings for
+     * @return the total number of warnings
+     */
+    public String getTotal(final Collection<Job<?, ?>> jobs) {
+        int sum = 0;
+        for (Job<?, ?> job : jobs) {
+            sum += Integer.parseInt(getTotal(job));
+        }
+        return String.valueOf(sum);
+
     }
 
     /**
