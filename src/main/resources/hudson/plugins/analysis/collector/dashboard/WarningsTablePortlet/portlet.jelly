@@ -4,13 +4,13 @@
   <dp:decorate portlet="${it}" width="1">
     <tr>
       <td>
-        <j:if test="${!it.useImages()}">
+        <j:if test="${!it.useIcons()}">
           <j:set var="sortable" value="sortable" />
         </j:if>
         <table class="pane ${sortable}" id="warnings">
           <tr>
             <td width="30%" initialSortDir="down" class="pane-header">${%Job}</td>
-            <j:if test="${!it.useImages()}">
+            <j:if test="${!it.useIcons()}">
               <j:if test="${it.isCheckStyleInstalled()}">
                 <td width="10%" class="pane-header">Checkstyle</td>
               </j:if>
@@ -30,7 +30,7 @@
                 <td width="10%" class="pane-header">${%Compiler Warnings}</td>
               </j:if>
             </j:if>
-            <j:if test="${it.useImages()}">
+            <j:if test="${it.useIcons()}">
               <j:if test="${it.isCheckStyleInstalled()}">
                 <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/checkstyle/icons/checkstyle-24x24.png" alt="Checkstyle" title="Checkstyle" /></td>
               </j:if>

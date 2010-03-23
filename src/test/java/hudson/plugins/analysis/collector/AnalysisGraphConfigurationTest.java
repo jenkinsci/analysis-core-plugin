@@ -17,6 +17,11 @@ import com.google.common.collect.Sets;
  * @author Ulli Hafner
  */
 public class AnalysisGraphConfigurationTest {
+    /** Error message. */
+    private static final String WRONG_VALUE_OF_DEACTIVATE_PROPERTY = "Wrong value of deactivate property";
+    /** Error message. */
+    private static final String VALID_CONFIGURATION_REJECTED = "Valid configuration rejected";
+
     /**
      * Asserts that the provided initialization value is correctly rejected and
      * the configuration is initialized by default values.
@@ -58,15 +63,15 @@ public class AnalysisGraphConfigurationTest {
     public void testValidConfiguations() {
         AnalysisGraphConfiguration configuration = createConfigurationUnderTest();
 
-        assertTrue("Valid configuration rejected", configuration.initializeFrom("50!50!12!13!ORIGIN!0"));
-        assertFalse("Wrong value of deactivate property", configuration.canDeacticateOtherTrendGraphs());
+        assertTrue(VALID_CONFIGURATION_REJECTED, configuration.initializeFrom("50!50!12!13!ORIGIN!0"));
+        assertFalse(WRONG_VALUE_OF_DEACTIVATE_PROPERTY, configuration.canDeacticateOtherTrendGraphs());
 
         AnalysisGraphConfiguration other = createConfigurationUnderTest();
-        assertTrue("Valid configuration rejected", other.initializeFrom(configuration.serializeToString()));
+        assertTrue(VALID_CONFIGURATION_REJECTED, other.initializeFrom(configuration.serializeToString()));
         assertEquals("Wrong serialization", configuration, other);
 
-        assertTrue("Valid configuration rejected", configuration.initializeFrom("50!50!12!13!ORIGIN!1"));
-        assertTrue("Wrong value of deactivate property", configuration.canDeacticateOtherTrendGraphs());
+        assertTrue(VALID_CONFIGURATION_REJECTED, configuration.initializeFrom("50!50!12!13!ORIGIN!1"));
+        assertTrue(WRONG_VALUE_OF_DEACTIVATE_PROPERTY, configuration.canDeacticateOtherTrendGraphs());
     }
 
     /**
@@ -79,14 +84,14 @@ public class AnalysisGraphConfigurationTest {
 
         AnalysisGraphConfiguration configuration = createConfigurationUnderTest();
 
-        assertTrue("Valid configuration rejected", configuration.initializeFrom(jsonObject));
-        assertTrue("Wrong value of deactivate property", configuration.canDeacticateOtherTrendGraphs());
+        assertTrue(VALID_CONFIGURATION_REJECTED, configuration.initializeFrom(jsonObject));
+        assertTrue(WRONG_VALUE_OF_DEACTIVATE_PROPERTY, configuration.canDeacticateOtherTrendGraphs());
 
         Object disabled = JSON.parse("{\"\":\"\",\"buildCountString\":\"\",\"canDeacticateOtherTrendGraphs\":false,\"dayCountString\":\"\",\"graphType\":\"ORIGIN\",\"height\":\"200\",\"width\":\"500\"}");
         jsonObject = JSONObject.fromObject(disabled);
 
-        assertTrue("Valid configuration rejected", configuration.initializeFrom(jsonObject));
-        assertFalse("Wrong value of deactivate property", configuration.canDeacticateOtherTrendGraphs());
+        assertTrue(VALID_CONFIGURATION_REJECTED, configuration.initializeFrom(jsonObject));
+        assertFalse(WRONG_VALUE_OF_DEACTIVATE_PROPERTY, configuration.canDeacticateOtherTrendGraphs());
     }
 }
 

@@ -1,9 +1,9 @@
 package hudson.plugins.analysis.collector;
 
-import hudson.model.AbstractBuild;
-import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.Result;
+import hudson.model.AbstractBuild;
+import hudson.model.AbstractProject;
 import hudson.plugins.analysis.core.AbstractResultAction;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.HealthAwarePublisher;
@@ -22,6 +22,7 @@ import hudson.tasks.Publisher;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
@@ -80,7 +81,7 @@ public class AnalysisPublisher extends HealthAwarePublisher {
      *
      * @return the plug-in actions to read the results from
      */
-    private ArrayList<Class<? extends AbstractResultAction<? extends BuildResult>>> getParticipatingPlugins() {
+    private List<Class<? extends AbstractResultAction<? extends BuildResult>>> getParticipatingPlugins() {
         ArrayList<Class<? extends AbstractResultAction<? extends BuildResult>>> pluginResults;
         pluginResults = new ArrayList<Class<? extends AbstractResultAction<? extends BuildResult>>>();
 

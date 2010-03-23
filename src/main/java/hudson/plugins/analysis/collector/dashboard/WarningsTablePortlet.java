@@ -6,8 +6,8 @@ import hudson.model.Hudson;
 import hudson.model.Job;
 import hudson.plugins.analysis.collector.AnalysisDescriptor;
 import hudson.plugins.analysis.collector.Messages;
-import hudson.plugins.analysis.core.AbstractProjectAction;
 import hudson.plugins.analysis.core.BuildResult;
+import hudson.plugins.analysis.core.AbstractProjectAction;
 import hudson.plugins.checkstyle.CheckStyleProjectAction;
 import hudson.plugins.dry.DryProjectAction;
 import hudson.plugins.findbugs.FindBugsProjectAction;
@@ -57,12 +57,12 @@ public class WarningsTablePortlet extends DashboardPortlet {
     }
 
     /**
-     * Returns whether images should be used in the table header.
+     * Returns whether icons should be used in the table header.
      *
-     * @return <code>true</code> if images should be used, <code>false</code> if
+     * @return <code>true</code> if icons should be used, <code>false</code> if
      *         text shuld be used
      */
-    public boolean useImages() {
+    public boolean useIcons() {
         return useImages;
     }
 

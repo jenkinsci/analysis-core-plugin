@@ -17,6 +17,9 @@ import org.jvnet.localizer.Localizable;
  * @author Ulli Hafner
  */
 public class AnalysisHealthDescriptorTest extends AbstractHealthDescriptorTest {
+    /** Error message. */
+    private static final String WRONG_DESCRIPTION = "Wrong description";
+
     /**
      * Verify number of items.
      */
@@ -26,15 +29,15 @@ public class AnalysisHealthDescriptorTest extends AbstractHealthDescriptorTest {
         AnalysisHealthDescriptor healthDescriptor = new AnalysisHealthDescriptor(NullHealthDescriptor.NULL_HEALTH_DESCRIPTOR);
 
         Localizable description = healthDescriptor.createDescription(provider);
-        assertEquals(Messages.Analysis_ResultAction_HealthReportNoItem(), description.toString());
+        assertEquals(WRONG_DESCRIPTION, Messages.Analysis_ResultAction_HealthReportNoItem(), description.toString());
 
         when(provider.getNumberOfAnnotations()).thenReturn(1);
         description = healthDescriptor.createDescription(provider);
-        assertEquals(Messages.Analysis_ResultAction_HealthReportSingleItem(), description.toString());
+        assertEquals(WRONG_DESCRIPTION, Messages.Analysis_ResultAction_HealthReportSingleItem(), description.toString());
 
         when(provider.getNumberOfAnnotations()).thenReturn(2);
         description = healthDescriptor.createDescription(provider);
-        assertEquals(Messages.Analysis_ResultAction_HealthReportMultipleItem(2), description.toString());
+        assertEquals(WRONG_DESCRIPTION, Messages.Analysis_ResultAction_HealthReportMultipleItem(2), description.toString());
     }
 
     /** {@inheritDoc} */

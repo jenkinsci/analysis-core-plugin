@@ -41,6 +41,8 @@ public class OriginGraph extends CategoryBuildResultGraph {
      * Creates a new instance of {@link OriginGraph}.
      */
     public OriginGraph() {
+        super();
+
         if (AnalysisDescriptor.isCheckStyleInstalled()) {
             origins.add(hudson.plugins.checkstyle.parser.Warning.ORIGIN);
             originLabels.add(Messages.Analysis_Checkstyle_Warning_Origin());
