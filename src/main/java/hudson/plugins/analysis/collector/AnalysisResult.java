@@ -10,7 +10,6 @@ import hudson.plugins.analysis.util.model.FileAnnotation;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
-import com.thoughtworks.xstream.XStream;
 
 /**
  * Stores the results of the analysis plug-ins. One instance of this class is
@@ -72,12 +71,6 @@ public class AnalysisResult extends BuildResult {
             annotationsByOrigin.put(annotation.getOrigin(),
                     annotationsByOrigin.get(annotation.getOrigin()) + 1);
         }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected void configure(final XStream xstream) {
-        xstream.alias("warning", Warning.class);
     }
 
     /**
