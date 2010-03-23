@@ -43,6 +43,7 @@ public class Warning extends AbstractAnnotation {
      *
      * @return the origin of this warning
      */
+    @Override
     public String getOrigin() {
         return origin;
     }
