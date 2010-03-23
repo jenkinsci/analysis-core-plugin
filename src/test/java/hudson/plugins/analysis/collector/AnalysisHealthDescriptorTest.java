@@ -17,9 +17,6 @@ import org.jvnet.localizer.Localizable;
  * @author Ulli Hafner
  */
 public class AnalysisHealthDescriptorTest extends AbstractHealthDescriptorTest {
-    /** Error message. */
-    private static final String WRONG_DESCRIPTION = "Wrong description";
-
     /**
      * Verify number of items.
      */
