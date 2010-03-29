@@ -116,7 +116,7 @@ public class AnalysisPublisher extends HealthAwarePublisher {
     /** {@inheritDoc} */
     @Override
     public BuildResult perform(final AbstractBuild<?, ?> build, final PluginLogger logger) throws InterruptedException, IOException {
-        ParserResult overallResult = new ParserResult();
+        ParserResult overallResult = new ParserResult(build.getWorkspace());
         for (Class<? extends AbstractResultAction<? extends BuildResult>> result : getParticipatingPlugins()) {
             AbstractResultAction<? extends BuildResult> action = build.getAction(result);
             if (action != null) {
