@@ -63,14 +63,14 @@ public class AnalysisGraphConfigurationTest {
     public void testValidConfiguations() {
         AnalysisGraphConfiguration configuration = createConfigurationUnderTest();
 
-        assertTrue(VALID_CONFIGURATION_REJECTED, configuration.initializeFrom("50!50!12!13!ORIGIN!0"));
+        assertTrue(VALID_CONFIGURATION_REJECTED, configuration.initializeFrom("50!50!12!13!ORIGIN!1!0"));
         assertFalse(WRONG_VALUE_OF_DEACTIVATE_PROPERTY, configuration.canDeacticateOtherTrendGraphs());
 
         AnalysisGraphConfiguration other = createConfigurationUnderTest();
         assertTrue(VALID_CONFIGURATION_REJECTED, other.initializeFrom(configuration.serializeToString()));
         assertEquals("Wrong serialization", configuration, other);
 
-        assertTrue(VALID_CONFIGURATION_REJECTED, configuration.initializeFrom("50!50!12!13!ORIGIN!1"));
+        assertTrue(VALID_CONFIGURATION_REJECTED, configuration.initializeFrom("50!50!12!13!ORIGIN!1!1"));
         assertTrue(WRONG_VALUE_OF_DEACTIVATE_PROPERTY, configuration.canDeacticateOtherTrendGraphs());
     }
 
@@ -79,7 +79,7 @@ public class AnalysisGraphConfigurationTest {
      */
     @Test
     public void testValidJSONConfiguations() {
-        Object enabled = JSON.parse("{\"\":\"\",\"buildCountString\":\"\",\"canDeacticateOtherTrendGraphs\":true,\"dayCountString\":\"\",\"graphType\":\"ORIGIN\",\"height\":\"200\",\"width\":\"500\"}");
+        Object enabled = JSON.parse("{\"\":\"\",\"buildCountString\":\"\",\"useBuildDateAsDomain\":true,\"canDeacticateOtherTrendGraphs\":true,\"dayCountString\":\"\",\"graphType\":\"ORIGIN\",\"height\":\"200\",\"width\":\"500\"}");
         JSONObject jsonObject = JSONObject.fromObject(enabled);
 
         AnalysisGraphConfiguration configuration = createConfigurationUnderTest();
@@ -87,7 +87,7 @@ public class AnalysisGraphConfigurationTest {
         assertTrue(VALID_CONFIGURATION_REJECTED, configuration.initializeFrom(jsonObject));
         assertTrue(WRONG_VALUE_OF_DEACTIVATE_PROPERTY, configuration.canDeacticateOtherTrendGraphs());
 
-        Object disabled = JSON.parse("{\"\":\"\",\"buildCountString\":\"\",\"canDeacticateOtherTrendGraphs\":false,\"dayCountString\":\"\",\"graphType\":\"ORIGIN\",\"height\":\"200\",\"width\":\"500\"}");
+        Object disabled = JSON.parse("{\"\":\"\",\"buildCountString\":\"\",\"useBuildDateAsDomain\":true,\"canDeacticateOtherTrendGraphs\":false,\"dayCountString\":\"\",\"graphType\":\"ORIGIN\",\"height\":\"200\",\"width\":\"500\"}");
         jsonObject = JSONObject.fromObject(disabled);
 
         assertTrue(VALID_CONFIGURATION_REJECTED, configuration.initializeFrom(jsonObject));

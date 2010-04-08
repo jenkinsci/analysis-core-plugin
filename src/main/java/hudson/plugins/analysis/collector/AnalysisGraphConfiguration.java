@@ -80,7 +80,7 @@ public class AnalysisGraphConfiguration extends GraphConfiguration {
     /** {@inheritDoc} */
     @Override
     public String serializeToString() {
-        return super.serializeToString() + SEPARATOR + (canDeactivateGraphs ? "1" : "0");
+        return super.serializeToString() + SEPARATOR + serializeBoolean(canDeactivateGraphs);
     }
 }
 

@@ -40,7 +40,7 @@ public class Main extends ApplicationFrame {
 
         JFreeChart chart = graph.createChart(builder.build());
 
-        CategoryItemRenderer renderer = graph.createRenderer("Hallo", null);
+        CategoryItemRenderer renderer = graph.createRenderer(null, "Hallo", null);
         CategoryPlot plot = chart.getCategoryPlot();
         plot.setRenderer(renderer);
         graph.setColors(chart, graph.getColors());

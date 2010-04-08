@@ -2,6 +2,7 @@ package hudson.plugins.analysis.collector;
 
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.graph.CategoryBuildResultGraph;
+import hudson.plugins.analysis.graph.GraphConfiguration;
 import hudson.plugins.analysis.util.ToolTipProvider;
 import hudson.util.ColorPalette;
 
@@ -140,7 +141,7 @@ public class OriginGraph extends CategoryBuildResultGraph {
     // CHECKSTYLE:OFF
     /** {@inheritDoc} */
     @Override
-    protected CategoryItemRenderer createRenderer(final String pluginName, final ToolTipProvider toolTipProvider) {
+    protected CategoryItemRenderer createRenderer(final GraphConfiguration configuration, final String pluginName, final ToolTipProvider toolTipProvider) {
         LineAndShapeRenderer render = new LineAndShapeRenderer(true, false);
         render.setBaseStroke(new BasicStroke(2.0f));
         return render;
