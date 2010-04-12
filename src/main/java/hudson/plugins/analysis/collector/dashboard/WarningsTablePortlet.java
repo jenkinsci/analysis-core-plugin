@@ -2,7 +2,6 @@ package hudson.plugins.analysis.collector.dashboard;
 
 import hudson.Extension;
 import hudson.model.Descriptor;
-import hudson.model.Hudson;
 import hudson.model.Job;
 import hudson.plugins.analysis.collector.AnalysisDescriptor;
 import hudson.plugins.analysis.collector.Messages;
@@ -26,7 +25,7 @@ import org.kohsuke.stapler.DataBoundConstructor;
  *
  * @author Ulli Hafner
  */
-public class WarningsTablePortlet extends DashboardPortlet {
+public class WarningsTablePortlet extends AnalysisPortlet {
     /** Message to be shown if no result action is found. */
     private static final String NO_RESULTS_FOUND = "-";
     /** Determines whether images should be used in the table header. */
@@ -394,7 +393,7 @@ public class WarningsTablePortlet extends DashboardPortlet {
          */
         @Extension
         public static WarningsPerJobDescriptor newInstance() {
-            if (Hudson.getInstance().getPlugin("dashboard-view") != null) {
+            if (isDashboardViewInstalled()) {
                 return new WarningsPerJobDescriptor();
             }
             return null;
