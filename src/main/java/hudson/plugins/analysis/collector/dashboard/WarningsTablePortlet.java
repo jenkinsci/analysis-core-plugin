@@ -4,9 +4,11 @@ import hudson.Extension;
 import hudson.model.Descriptor;
 import hudson.model.Job;
 import hudson.plugins.analysis.collector.AnalysisDescriptor;
+import hudson.plugins.analysis.collector.AnalysisProjectAction;
 import hudson.plugins.analysis.collector.Messages;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.AbstractProjectAction;
+import hudson.plugins.analysis.dashboard.AbstractWarningsTablePortlet;
 import hudson.plugins.checkstyle.CheckStyleProjectAction;
 import hudson.plugins.dry.DryProjectAction;
 import hudson.plugins.findbugs.FindBugsProjectAction;
@@ -25,7 +27,7 @@ import org.kohsuke.stapler.DataBoundConstructor;
  *
  * @author Ulli Hafner
  */
-public class WarningsTablePortlet extends AnalysisPortlet {
+public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
     /** Message to be shown if no result action is found. */
     private static final String NO_RESULTS_FOUND = "-";
     /** Determines whether images should be used in the table header. */
@@ -43,6 +45,18 @@ public class WarningsTablePortlet extends AnalysisPortlet {
     public WarningsTablePortlet(final String name, final boolean useImages) {
         super(name);
         this.useImages = useImages;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected Class<? extends AbstractProjectAction<?>> getAction() {
+        return AnalysisProjectAction.class;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected String getPluginName() {
+        return "analysis";
     }
 
     /**
@@ -202,6 +216,7 @@ public class WarningsTablePortlet extends AnalysisPortlet {
      *            the job to get the warnings for
      * @return the number of compiler warnings
      */
+    @Override
     public String getWarnings(final Job<?, ?> job) {
         if (AnalysisDescriptor.isWarningsInstalled()) {
             return getWarnings(job, WarningsProjectAction.class, "warnings");
@@ -308,6 +323,7 @@ public class WarningsTablePortlet extends AnalysisPortlet {
      *            the jobs to get the warnings for
      * @return the number of compiler warnings
      */
+    @Override
     public String getWarnings(final Collection<Job<?, ?>> jobs) {
         int sum = 0;
         for (Job<?, ?> job : jobs) {
