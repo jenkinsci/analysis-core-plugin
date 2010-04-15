@@ -6,7 +6,6 @@ import hudson.plugins.analysis.collector.AnalysisProjectAction;
 import hudson.plugins.analysis.collector.Messages;
 import hudson.plugins.analysis.core.AbstractProjectAction;
 import hudson.plugins.analysis.dashboard.AbstractWarningsGraphPortlet;
-import hudson.plugins.analysis.graph.BuildResultGraph;
 import hudson.plugins.view.dashboard.DashboardPortlet;
 
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -32,7 +31,7 @@ public class WarningsGraphPortlet extends AbstractWarningsGraphPortlet {
      *            type of graph to use
      */
     @DataBoundConstructor
-    public WarningsGraphPortlet(final String name, final String width, final String height, final String dayCountString, final BuildResultGraph graphType) {
+    public WarningsGraphPortlet(final String name, final String width, final String height, final String dayCountString, final String graphType) {
         super(name, width, height, dayCountString, graphType);
     }
 
