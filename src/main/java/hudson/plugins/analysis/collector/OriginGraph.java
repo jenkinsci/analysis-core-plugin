@@ -77,6 +77,16 @@ public class OriginGraph extends CategoryBuildResultGraph {
         return "ORIGIN";
     }
 
+    /**
+     * Returns the plug-in that owns this graph and provides an example image.
+     *
+     * @return the plug-in that owns this graph and provides an example image
+     */
+    @Override
+    protected String getPlugin() {
+        return "analysis-collector";
+    }
+
     /** {@inheritDoc} */
     @Override
     public String getLabel() {
