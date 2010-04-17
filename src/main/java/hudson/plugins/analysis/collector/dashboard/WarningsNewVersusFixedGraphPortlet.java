@@ -4,27 +4,22 @@ import hudson.Extension;
 import hudson.model.Descriptor;
 import hudson.plugins.analysis.collector.AnalysisProjectAction;
 import hudson.plugins.analysis.collector.Messages;
-import hudson.plugins.analysis.collector.OriginGraph;
 import hudson.plugins.analysis.core.AbstractProjectAction;
 import hudson.plugins.analysis.dashboard.AbstractWarningsGraphPortlet;
 import hudson.plugins.analysis.graph.BuildResultGraph;
+import hudson.plugins.analysis.graph.NewVersusFixedGraph;
 import hudson.plugins.view.dashboard.DashboardPortlet;
-
-import java.util.Collection;
-import java.util.List;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
-import com.google.common.collect.Lists;
-
 /**
- * A dashboard that shows a table with the number of warnings in a job.
+ * A portlet that shows the warnings trend graph of fixed versus new warnings.
  *
  * @author Ulli Hafner
  */
-public class WarningsGraphPortlet extends AbstractWarningsGraphPortlet {
+public class WarningsNewVersusFixedGraphPortlet extends AbstractWarningsGraphPortlet {
     /**
-     * Creates a new instance of {@link WarningsGraphPortlet}.
+     * Creates a new instance of {@link WarningsNewVersusFixedGraphPortlet}.
      *
      * @param name
      *            the name of the portlet
@@ -34,20 +29,10 @@ public class WarningsGraphPortlet extends AbstractWarningsGraphPortlet {
      *            height of the graph
      * @param dayCountString
      *            number of days to consider
-     * @param graphType
-     *            type of graph to use
      */
     @DataBoundConstructor
-    public WarningsGraphPortlet(final String name, final String width, final String height, final String dayCountString, final String graphType) {
-        super(name, width, height, dayCountString, graphType);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Collection<? extends BuildResultGraph> getRegisteredGraphs() {
-        List<BuildResultGraph> availableGraphs = Lists.newArrayList(super.getRegisteredGraphs());
-        availableGraphs.add(new OriginGraph());
-        return availableGraphs;
+    public WarningsNewVersusFixedGraphPortlet(final String name, final String width, final String height, final String dayCountString) {
+        super(name, width, height, dayCountString);
     }
 
     /** {@inheritDoc} */
@@ -60,6 +45,12 @@ public class WarningsGraphPortlet extends AbstractWarningsGraphPortlet {
     @Override
     protected String getPluginName() {
         return "analysis";
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected BuildResultGraph getGraphType() {
+        return new NewVersusFixedGraph();
     }
 
     /**
@@ -83,7 +74,7 @@ public class WarningsGraphPortlet extends AbstractWarningsGraphPortlet {
 
         @Override
         public String getDisplayName() {
-            return Messages.Portlet_WarningsGraph();
+            return Messages.Portlet_WarningsNewVsFixedGraph();
         }
     }
 }
