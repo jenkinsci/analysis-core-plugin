@@ -1,7 +1,6 @@
 package hudson.plugins.analysis.collector;
 
 import hudson.model.Action;
-import hudson.model.Result;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.plugins.analysis.core.AbstractResultAction;
@@ -71,7 +70,7 @@ public class AnalysisPublisher extends HealthAwarePublisher {
             final String healthy, final String unHealthy, final String thresholdLimit,
             final String defaultEncoding, final boolean useDeltaValues) {
         super(threshold, newThreshold, failureThreshold, newFailureThreshold,
-                healthy, unHealthy, thresholdLimit, defaultEncoding, useDeltaValues, "ANALYSIS-COLLECTOR");
+                healthy, unHealthy, thresholdLimit, defaultEncoding, useDeltaValues, true, "ANALYSIS-COLLECTOR");
     }
     // CHECKSTYLE:ON
 
@@ -137,11 +136,5 @@ public class AnalysisPublisher extends HealthAwarePublisher {
     @Override
     public BuildStepDescriptor<Publisher> getDescriptor() {
         return super.getDescriptor();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected boolean canContinue(final Result result) {
-        return true;
     }
 }
