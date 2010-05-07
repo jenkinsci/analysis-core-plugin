@@ -66,10 +66,7 @@ public class WarningsNewVersusFixedGraphPortlet extends AbstractWarningsGraphPor
          */
         @Extension
         public static WarningsGraphDescriptor newInstance() {
-            if (isDashboardViewInstalled()) {
-                return new WarningsGraphDescriptor();
-            }
-            return null;
+            return new WarningsGraphDescriptor();
         }
 
         @Override
