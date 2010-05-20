@@ -22,6 +22,7 @@ public class AnalysisResult extends BuildResult {
     private static final long serialVersionUID = 847650789493429154L;
 
     /** Number of annotations by origin mapping. */
+    // FIXME: check if we need a readResolve method?
     private final Map<String, Integer> annotationsByOrigin = Maps.newHashMap();
 
     /**
