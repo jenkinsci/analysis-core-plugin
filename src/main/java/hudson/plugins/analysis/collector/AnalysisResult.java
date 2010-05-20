@@ -22,8 +22,7 @@ public class AnalysisResult extends BuildResult {
     private static final long serialVersionUID = 847650789493429154L;
 
     /** Number of annotations by origin mapping. */
-    // FIXME: check if we need a readResolve method?
-    private final Map<String, Integer> annotationsByOrigin = Maps.newHashMap();
+    private Map<String, Integer> annotationsByOrigin = Maps.newHashMap();
 
     /**
      * Creates a new instance of {@link AnalysisResult}.
@@ -59,6 +58,19 @@ public class AnalysisResult extends BuildResult {
         super(build, defaultEncoding, result);
 
         countAnnotations();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected Object readResolve() {
+        super.readResolve();
+
+        if (annotationsByOrigin == null) {
+            annotationsByOrigin = Maps.newHashMap();
+            countAnnotations();
+        }
+
+        return this;
     }
 
     /**
