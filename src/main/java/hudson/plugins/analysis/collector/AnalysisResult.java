@@ -22,7 +22,7 @@ public class AnalysisResult extends BuildResult {
     private static final long serialVersionUID = 847650789493429154L;
 
     /** Number of annotations by origin mapping. */
-    private Map<String, Integer> annotationsByOrigin = Maps.newHashMap();
+    private transient Map<String, Integer> annotationsByOrigin = Maps.newHashMap();
 
     /**
      * Creates a new instance of {@link AnalysisResult}.
