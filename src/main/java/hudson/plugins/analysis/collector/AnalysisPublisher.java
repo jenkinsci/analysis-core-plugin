@@ -15,8 +15,6 @@ import hudson.plugins.findbugs.FindBugsResultAction;
 import hudson.plugins.pmd.PmdResultAction;
 import hudson.plugins.tasks.TasksResultAction;
 import hudson.plugins.warnings.WarningsResultAction;
-import hudson.tasks.BuildStepDescriptor;
-import hudson.tasks.Publisher;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -132,9 +130,8 @@ public class AnalysisPublisher extends HealthAwarePublisher {
     }
 
     /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
     @Override
-    public BuildStepDescriptor<Publisher> getDescriptor() {
-        return super.getDescriptor();
+    public AnalysisDescriptor getDescriptor() {
+        return (AnalysisDescriptor)super.getDescriptor();
     }
 }
