@@ -18,7 +18,7 @@ import hudson.plugins.analysis.core.PluginDescriptor;
  */
 public class AnalysisResultAction extends AbstractResultAction<AnalysisResult> {
     /**
-     * Creates a new instance of <code>WarningsResultAction</code>.
+     * Creates a new instance of {@link AbstractResultAction}.
      *
      * @param owner
      *            the associated build of this action
@@ -32,7 +32,7 @@ public class AnalysisResultAction extends AbstractResultAction<AnalysisResult> {
     }
 
     /**
-     * Creates a new instance of <code>WarningsResultAction</code>.
+     * Creates a new instance of {@link AbstractResultAction}.
      *
      * @param owner
      *            the associated build of this action
