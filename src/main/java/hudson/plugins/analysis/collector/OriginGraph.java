@@ -27,16 +27,16 @@ import com.google.common.collect.Lists;
  * @author Ulli Hafner
  */
 public class OriginGraph extends CategoryBuildResultGraph {
-    /** The origins to show in the graph. */
-    private final List<String> origins  = Lists.newArrayList();
-    /** The origins to show in the graph. */
+    /** Number of colors to use from Hudson's color table. */
+    private static final int HUDSON_GREEN_INDEX = 3;
+
+    private static final Font LEGEND_FONT = new Font("SansSerif", Font.PLAIN, 10); // NOCHECKSTYLE
+
+    private final List<String> originsKeys  = Lists.newArrayList();
     private final List<String> originLabels = Lists.newArrayList();
-    /** Orange. */
-    public static final Color ORANGE = new Color(0xFF, 0xA5, 0x00);
-    /** Orange. */
-    public static final Color GRAY = new Color(0x4D, 0x4D, 0x4D);
-    /** Orange. */
-    public static final Color PINK = new Color(0xA0, 0x20, 0xF0);
+    private static final Color ORANGE = new Color(0xFF, 0xA5, 0x00);
+    private static final Color GRAY = new Color(0x4D, 0x4D, 0x4D);
+    private static final Color PINK = new Color(0xA0, 0x20, 0xF0);
 
     /**
      * Creates a new instance of {@link OriginGraph}.
@@ -45,28 +45,27 @@ public class OriginGraph extends CategoryBuildResultGraph {
         super();
 
         if (AnalysisDescriptor.isCheckStyleInstalled()) {
-            origins.add(hudson.plugins.checkstyle.parser.Warning.ORIGIN);
+            originsKeys.add(hudson.plugins.checkstyle.parser.Warning.ORIGIN);
             originLabels.add(Messages.Analysis_Checkstyle_Warning_Origin());
         }
         if (AnalysisDescriptor.isDryInstalled()) {
-            origins.add(hudson.plugins.dry.parser.DuplicateCode.ORIGIN);
+            originsKeys.add(hudson.plugins.dry.parser.DuplicateCode.ORIGIN);
             originLabels.add(Messages.Analysis_Dry_Warning_Origin());
         }
         if (AnalysisDescriptor.isFindBugsInstalled()) {
-            origins.add(hudson.plugins.findbugs.parser.Bug.ORIGIN);
-            originLabels.add(
-                    Messages.Analysis_FindBugs_Warning_Origin());
+            originsKeys.add(hudson.plugins.findbugs.parser.Bug.ORIGIN);
+            originLabels.add(Messages.Analysis_FindBugs_Warning_Origin());
         }
         if (AnalysisDescriptor.isPmdInstalled()) {
-            origins.add(hudson.plugins.pmd.parser.Bug.ORIGIN);
+            originsKeys.add(hudson.plugins.pmd.parser.Bug.ORIGIN);
             originLabels.add(Messages.Analysis_PMD_Warning_Origin());
         }
         if (AnalysisDescriptor.isOpenTasksInstalled()) {
-            origins.add(hudson.plugins.tasks.parser.Task.ORIGIN);
+            originsKeys.add(hudson.plugins.tasks.parser.Task.ORIGIN);
             originLabels.add(Messages.Analysis_Tasks_Warning_Origin());
         }
         if (AnalysisDescriptor.isWarningsInstalled()) {
-            origins.add(hudson.plugins.warnings.parser.Warning.ORIGIN);
+            originsKeys.add(hudson.plugins.warnings.parser.Warning.ORIGIN);
             originLabels.add(Messages.Analysis_Warnings_Warning_Origin());
         }
     }
@@ -99,7 +98,7 @@ public class OriginGraph extends CategoryBuildResultGraph {
         List<Integer> series = new ArrayList<Integer>();
         if (current instanceof AnalysisResult) {
             AnalysisResult result = (AnalysisResult)current;
-            for (String origin : origins) {
+            for (String origin : originsKeys) {
                 series.add(result.getNumberOfAnnotationsByOrigin(origin));
             }
         }
@@ -122,7 +121,7 @@ public class OriginGraph extends CategoryBuildResultGraph {
         chart.setBackgroundPaint(Color.white);
         setCategoryPlotProperties(chart.getCategoryPlot());
         chart.getCategoryPlot().getDomainAxis().setCategoryMargin(0.0);
-        chart.getLegend().setItemFont(new Font("SansSerif", Font.PLAIN, 10));
+        chart.getLegend().setItemFont(LEGEND_FONT);
 
         return chart;
     }
@@ -131,8 +130,8 @@ public class OriginGraph extends CategoryBuildResultGraph {
     @Override
     protected Color[] getColors() {
         List<Color> colors = Lists.newArrayList(ColorPalette.LINE_GRAPH);
-        if (colors.size() > 3) {
-            colors.remove(3);
+        while (colors.size() > HUDSON_GREEN_INDEX) {
+            colors.remove(HUDSON_GREEN_INDEX);
         }
         colors.add(ORANGE);
         colors.add(GRAY);

@@ -43,6 +43,7 @@ public final class AnalysisResultSummary {
      *            the result
      * @return the message
      */
+    // CHECKSTYLE:CONSTANTS-OFF
     public static String createDeltaMessage(final AnalysisResult result) {
         StringBuilder summary = new StringBuilder();
         if (result.getNumberOfNewWarnings() > 0) {
@@ -68,6 +69,7 @@ public final class AnalysisResultSummary {
 
         return summary.toString();
     }
+    // CHECKSTYLE:CONSTANTS-ON
 
     /**
      * Instantiates a new result summary.

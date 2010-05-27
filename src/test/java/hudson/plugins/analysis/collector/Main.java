@@ -14,6 +14,7 @@ import org.jfree.ui.RefineryUtilities;
  *
  * @author Ulli Hafner
  */
+// CHECKSTYLE:OFF
 public class Main extends ApplicationFrame {
     /** Unique ID. */
     private static final long serialVersionUID = -4097403148044461272L;

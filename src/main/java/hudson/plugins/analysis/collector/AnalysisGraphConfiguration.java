@@ -83,6 +83,7 @@ public class AnalysisGraphConfiguration extends GraphConfiguration {
         return super.serializeToString() + SEPARATOR + serializeBoolean(canDeactivateGraphs);
     }
 
+    // CHECKSTYLE:OFF
     /** {@inheritDoc} */
     @Override
     public int hashCode() {
@@ -91,7 +92,9 @@ public class AnalysisGraphConfiguration extends GraphConfiguration {
         result = prime * result + (canDeactivateGraphs ? 1231 : 1237);
         return result;
     }
+    // CHECKSTYLE-ON
 
+    // CHECKSTYLE-OFF
     /** {@inheritDoc} */
     @Override
     public boolean equals(final Object obj) {
@@ -110,5 +113,6 @@ public class AnalysisGraphConfiguration extends GraphConfiguration {
         }
         return true;
     }
+    // CHECKSTYLE-ON
 }
 
