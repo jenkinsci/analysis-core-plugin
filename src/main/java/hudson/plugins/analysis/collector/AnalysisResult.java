@@ -7,6 +7,7 @@ import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.ResultAction;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 
+import java.lang.ref.WeakReference;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
@@ -22,7 +23,9 @@ public class AnalysisResult extends BuildResult {
     private static final long serialVersionUID = 847650789493429154L;
 
     /** Number of annotations by origin mapping. */
-    private transient Map<String, Integer> annotationsByOrigin = Maps.newHashMap();
+    private transient WeakReference<Map<String, Integer>> annotationsByOrigin;
+
+    private transient Object mappingLock = new Object();
 
     /**
      * Creates a new instance of {@link AnalysisResult}.
@@ -40,7 +43,7 @@ public class AnalysisResult extends BuildResult {
             final ParserResult result, final BuildHistory history) {
         super(build, defaultEncoding, result, history);
 
-        countAnnotations();
+        annotationsByOrigin = newReference(countAnnotations());
     }
 
     /**
@@ -57,7 +60,7 @@ public class AnalysisResult extends BuildResult {
             final ParserResult result) {
         super(build, defaultEncoding, result);
 
-        countAnnotations();
+        annotationsByOrigin = newReference(countAnnotations());
     }
 
     /** {@inheritDoc} */
@@ -65,25 +68,30 @@ public class AnalysisResult extends BuildResult {
     protected Object readResolve() {
         super.readResolve();
 
-        if (annotationsByOrigin == null) {
-            annotationsByOrigin = Maps.newHashMap();
-            countAnnotations();
-        }
+        mappingLock = new Object();
 
         return this;
     }
 
     /**
      * Count the annotations by origin.
+     *
+     * @return the mapping
      */
-    private void countAnnotations() {
+    private Map<String, Integer> countAnnotations() {
+        Map<String, Integer> mapping = Maps.newHashMap();
         for (FileAnnotation annotation : getAnnotations()) {
-            if (!annotationsByOrigin.containsKey(annotation.getOrigin())) {
-                annotationsByOrigin.put(annotation.getOrigin(), 0);
+            if (!mapping.containsKey(annotation.getOrigin())) {
+                mapping.put(annotation.getOrigin(), 0);
             }
-            annotationsByOrigin.put(annotation.getOrigin(),
-                    annotationsByOrigin.get(annotation.getOrigin()) + 1);
+            mapping.put(annotation.getOrigin(),
+                    mapping.get(annotation.getOrigin()) + 1);
         }
+        return mapping;
+    }
+
+    private WeakReference<Map<String, Integer>> newReference(final Map<String, Integer> mapping) {
+        return new WeakReference<Map<String, Integer>>(mapping);
     }
 
     /**
@@ -119,16 +127,28 @@ public class AnalysisResult extends BuildResult {
     }
 
     /**
-     * Returns the number of annotations from the specified origin. If there are no anntoations
+     * Returns the number of annotations from the specified origin. If there are no annotations
      *
      * @param origin
      *            the origin
      * @return the number of annotations from the specified origin
      */
     public int getNumberOfAnnotationsByOrigin(final String origin) {
-        if (annotationsByOrigin.containsKey(origin)) {
-            return annotationsByOrigin.get(origin);
+        Map<String, Integer> mapping = getMapping();
+        if (mapping.containsKey(origin)) {
+            return mapping.get(origin);
         }
         return 0;
+    }
+
+    private Map<String, Integer> getMapping() {
+        synchronized (mappingLock) {
+            if (annotationsByOrigin == null || annotationsByOrigin.get() == null) {
+                Map<String, Integer> mapping = countAnnotations();
+                annotationsByOrigin = newReference(mapping);
+                return mapping;
+            }
+            return annotationsByOrigin.get();
+        }
     }
 }
