@@ -1,6 +1,6 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
 	xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson"
-	xmlns:f="/lib/form" xmlns:i="jelly:fmt" xmlns:tab="/tab">
+	xmlns:f="/lib/form" xmlns:i="jelly:fmt" xmlns:result="/result">
 
       <l:layout norefresh="true">
 
@@ -10,11 +10,11 @@
 
 			<h1>${%Static Analysis Result}</h1>
 
-	        <tab:trend-summary />
+	        <result:trend-summary />
 
-	        <tab:priorities-summary />
+	        <result:priorities-summary />
 
-	        <tab:main />
+	        <result:main />
 
 		</l:main-panel>
 	</l:layout>
