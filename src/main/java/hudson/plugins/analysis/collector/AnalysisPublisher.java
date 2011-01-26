@@ -1,6 +1,10 @@
 package hudson.plugins.analysis.collector;
 
+import hudson.Launcher;
+import hudson.matrix.MatrixAggregator;
+import hudson.matrix.MatrixBuild;
 import hudson.model.Action;
+import hudson.model.BuildListener;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.plugins.analysis.core.AbstractResultAction;
@@ -163,5 +167,11 @@ public class AnalysisPublisher extends HealthAwarePublisher {
     @Override
     public AnalysisDescriptor getDescriptor() {
         return (AnalysisDescriptor)super.getDescriptor();
+    }
+
+    /** {@inheritDoc} */
+    public MatrixAggregator createAggregator(final MatrixBuild build, final Launcher launcher,
+            final BuildListener listener) {
+        return new AnalysisAnnotationsAggregator(build, launcher, listener, this, getDefaultEncoding());
     }
 }
