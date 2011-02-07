@@ -15,7 +15,6 @@ import hudson.plugins.analysis.core.ParserResult;
  *
  * @author Ulli Hafner
  */
-
 public class AnalysisAnnotationsAggregator extends AnnotationsAggregator {
     /**
      * Creates a new instance of {@link AnnotationsAggregator}.
