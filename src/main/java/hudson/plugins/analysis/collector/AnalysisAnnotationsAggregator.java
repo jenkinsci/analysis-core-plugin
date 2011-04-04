@@ -42,12 +42,18 @@ public class AnalysisAnnotationsAggregator extends AnnotationsAggregator {
                 new AnalysisResult(build, defaultEncoding, aggregatedResult));
     }
 
-    /** {@inheritDoc} */
+    @Override
+    protected boolean hasResult(final MatrixRun run) {
+        return getAction(run) != null;
+    }
+
     @Override
     protected AnalysisResult getResult(final MatrixRun run) {
-        AnalysisResultAction action = run.getAction(AnalysisResultAction.class);
+        return getAction(run).getResult();
+    }
 
-        return action.getResult();
+    private AnalysisResultAction getAction(final MatrixRun run) {
+        return run.getAction(AnalysisResultAction.class);
     }
 }
 
