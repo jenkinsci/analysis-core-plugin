@@ -102,7 +102,7 @@ public class AnalysisPublisher extends HealthAwarePublisher {
                 unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
                 failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow,
                 failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
-                true, "ANALYSIS-COLLECTOR");
+                true, false, "ANALYSIS-COLLECTOR");
     }
     // CHECKSTYLE:ON
 
