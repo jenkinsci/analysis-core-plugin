@@ -1,0 +1,8 @@
+<j:jelly xmlns:j="jelly:core">
+
+  <dt>$${ANALYSIS_RESULT}</dt>
+  <dd>
+    Expands to the build result of the analysis collector plug-in.
+  </dd>
+
+</j:jelly>
