@@ -1,10 +1,5 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
 	xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson"
-	xmlns:f="/lib/form" xmlns:i="jelly:fmt">
-	<t:summary icon="/plugin/analysis-collector/icons/analysis-48x48.png">
-		${it.result.summary}
-		<ul>
-		${it.result.details}
-		</ul>
-	</t:summary>
+	xmlns:f="/lib/form" xmlns:i="jelly:fmt" xmlns:u="/util">
+	<u:summary icon="/plugin/analysis-collector/icons/analysis-48x48.png"/>
 </j:jelly>
