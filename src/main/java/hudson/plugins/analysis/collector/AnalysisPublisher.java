@@ -7,16 +7,21 @@ import hudson.model.Action;
 import hudson.model.BuildListener;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
-import hudson.plugins.analysis.core.AbstractResultAction;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.HealthAwarePublisher;
 import hudson.plugins.analysis.core.ParserResult;
+import hudson.plugins.analysis.core.ResultAction;
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.analysis.util.model.FileAnnotation;
+import hudson.plugins.checkstyle.CheckStyleMavenResultAction;
 import hudson.plugins.checkstyle.CheckStyleResultAction;
+import hudson.plugins.dry.DryMavenResultAction;
 import hudson.plugins.dry.DryResultAction;
+import hudson.plugins.findbugs.FindBugsMavenResultAction;
 import hudson.plugins.findbugs.FindBugsResultAction;
+import hudson.plugins.pmd.PmdMavenResultAction;
 import hudson.plugins.pmd.PmdResultAction;
+import hudson.plugins.tasks.TasksMavenResultAction;
 import hudson.plugins.tasks.TasksResultAction;
 import hudson.plugins.warnings.WarningsResultAction;
 
@@ -112,24 +117,29 @@ public class AnalysisPublisher extends HealthAwarePublisher {
      *
      * @return the plug-in actions to read the results from
      */
-    private List<Class<? extends AbstractResultAction<? extends BuildResult>>> getParticipatingPlugins() {
-        ArrayList<Class<? extends AbstractResultAction<? extends BuildResult>>> pluginResults;
-        pluginResults = new ArrayList<Class<? extends AbstractResultAction<? extends BuildResult>>>();
+    private List<Class<? extends ResultAction<? extends BuildResult>>> getParticipatingPlugins() {
+        ArrayList<Class<? extends ResultAction<? extends BuildResult>>> pluginResults;
+        pluginResults = new ArrayList<Class<? extends ResultAction<? extends BuildResult>>>();
 
         if (AnalysisDescriptor.isCheckStyleInstalled()) {
             pluginResults.add(CheckStyleResultAction.class);
+            pluginResults.add(CheckStyleMavenResultAction.class);
         }
         if (AnalysisDescriptor.isDryInstalled()) {
             pluginResults.add(DryResultAction.class);
+            pluginResults.add(DryMavenResultAction.class);
         }
         if (AnalysisDescriptor.isFindBugsInstalled()) {
             pluginResults.add(FindBugsResultAction.class);
+            pluginResults.add(FindBugsMavenResultAction.class);
         }
         if (AnalysisDescriptor.isPmdInstalled()) {
             pluginResults.add(PmdResultAction.class);
+            pluginResults.add(PmdMavenResultAction.class);
         }
         if (AnalysisDescriptor.isOpenTasksInstalled()) {
             pluginResults.add(TasksResultAction.class);
+            pluginResults.add(TasksMavenResultAction.class);
         }
         if (AnalysisDescriptor.isWarningsInstalled()) {
             pluginResults.add(WarningsResultAction.class);
@@ -148,8 +158,8 @@ public class AnalysisPublisher extends HealthAwarePublisher {
     @Override
     public BuildResult perform(final AbstractBuild<?, ?> build, final PluginLogger logger) throws InterruptedException, IOException {
         ParserResult overallResult = new ParserResult(build.getWorkspace());
-        for (Class<? extends AbstractResultAction<? extends BuildResult>> result : getParticipatingPlugins()) {
-            AbstractResultAction<? extends BuildResult> action = build.getAction(result);
+        for (Class<? extends ResultAction<? extends BuildResult>> result : getParticipatingPlugins()) {
+            ResultAction<? extends BuildResult> action = build.getAction(result);
             if (action != null) {
                 BuildResult actualResult = action.getResult();
                 Collection<FileAnnotation> annotactualResultations = actualResult.getAnnotations();
