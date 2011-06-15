@@ -42,6 +42,19 @@ public class AnalysisPublisher extends HealthAwarePublisher {
     /** Unique ID of this class. */
     private static final long serialVersionUID = 5512072640635006098L;
 
+    /** @since 1.15. */
+    private final boolean isCheckStyleDeactivated;
+    /** @since 1.15. */
+    private final boolean isDryDeactivated;
+    /** @since 1.15. */
+    private final boolean isFindBugsDeactivated;
+    /** @since 1.15. */
+    private final boolean isPmdDeactivated;
+    /** @since 1.15. */
+    private final boolean isOpenTasksDeactivated;
+    /** @since 1.15. */
+    private final boolean isWarningsDeactivated;
+
     /**
      * Creates a new instance of {@link AnalysisPublisher}.
      *
@@ -92,6 +105,18 @@ public class AnalysisPublisher extends HealthAwarePublisher {
      *            annotation threshold
      * @param failedNewLow
      *            annotation threshold
+     * @param isCheckStyleActivated
+     *            determines whether to collect the warnings from Checkstyle
+     * @param isDryActivated
+     *            determines whether to collect the warnings from DRY
+     * @param isFindBugsActivated
+     *            determines whether to collect the warnings from FindBugs
+     * @param isPmdActivated
+     *            determines whether to collect the warnings from PMD
+     * @param isOpenTasksActivated
+     *            determines whether to collect open tasks
+     * @param isWarningsActivated
+     *            determines whether to collect compiler warnings
      */
     // CHECKSTYLE:OFF
     @SuppressWarnings("PMD.ExcessiveParameterList")
@@ -101,15 +126,78 @@ public class AnalysisPublisher extends HealthAwarePublisher {
             final String unstableTotalAll, final String unstableTotalHigh, final String unstableTotalNormal, final String unstableTotalLow,
             final String unstableNewAll, final String unstableNewHigh, final String unstableNewNormal, final String unstableNewLow,
             final String failedTotalAll, final String failedTotalHigh, final String failedTotalNormal, final String failedTotalLow,
-            final String failedNewAll, final String failedNewHigh, final String failedNewNormal, final String failedNewLow) {
+            final String failedNewAll, final String failedNewHigh, final String failedNewNormal, final String failedNewLow,
+            final boolean isCheckStyleActivated, final boolean isDryActivated,
+            final boolean isFindBugsActivated, final boolean isPmdActivated,
+            final boolean isOpenTasksActivated, final boolean isWarningsActivated) {
         super(healthy, unHealthy, thresholdLimit, defaultEncoding, useDeltaValues,
                 unstableTotalAll, unstableTotalHigh, unstableTotalNormal, unstableTotalLow,
                 unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
                 failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow,
                 failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
                 true, false, "ANALYSIS-COLLECTOR");
+        isDryDeactivated = !isDryActivated;
+        isFindBugsDeactivated = !isFindBugsActivated;
+        isPmdDeactivated = !isPmdActivated;
+        isOpenTasksDeactivated = !isOpenTasksActivated;
+        isWarningsDeactivated = !isWarningsActivated;
+        isCheckStyleDeactivated = !isCheckStyleActivated;
     }
     // CHECKSTYLE:ON
+
+    /**
+     * Returns whether CheckStyle results should be collected.
+     *
+     * @return <code>true</code> if CheckStyle results should be collected, <code>false</code> otherwise
+     */
+    public boolean isCheckStyleActivated() {
+        return !isCheckStyleDeactivated;
+    }
+
+    /**
+     * Returns whether DRY results should be collected.
+     *
+     * @return <code>true</code> if DRY results should be collected, <code>false</code> otherwise
+     */
+    public boolean isDryActivated() {
+        return !isDryDeactivated;
+    }
+
+    /**
+     * Returns whether FindBugs results should be collected.
+     *
+     * @return <code>true</code> if FindBugs results should be collected, <code>false</code> otherwise
+     */
+    public boolean isFindBugsActivated() {
+        return !isFindBugsDeactivated;
+    }
+
+    /**
+     * Returns whether PMD results should be collected.
+     *
+     * @return <code>true</code> if PMD results should be collected, <code>false</code> otherwise
+     */
+    public boolean isPmdActivated() {
+        return !isPmdDeactivated;
+    }
+
+    /**
+     * Returns whether open tasks should be collected.
+     *
+     * @return <code>true</code> if open tasks should be collected, <code>false</code> otherwise
+     */
+    public boolean isOpenTasksActivated() {
+        return !isOpenTasksDeactivated;
+    }
+
+    /**
+     * Returns whether compiler warnings results should be collected.
+     *
+     * @return <code>true</code> if compiler warnings results should be collected, <code>false</code> otherwise
+     */
+    public boolean isWarningsActivated() {
+        return !isWarningsDeactivated;
+    }
 
     /**
      * Initializes the plug-ins that should participate in the results of this
@@ -121,27 +209,27 @@ public class AnalysisPublisher extends HealthAwarePublisher {
         ArrayList<Class<? extends ResultAction<? extends BuildResult>>> pluginResults;
         pluginResults = new ArrayList<Class<? extends ResultAction<? extends BuildResult>>>();
 
-        if (AnalysisDescriptor.isCheckStyleInstalled()) {
+        if (AnalysisDescriptor.isCheckStyleInstalled() && isCheckStyleActivated()) {
             pluginResults.add(CheckStyleResultAction.class);
             pluginResults.add(CheckStyleMavenResultAction.class);
         }
-        if (AnalysisDescriptor.isDryInstalled()) {
+        if (AnalysisDescriptor.isDryInstalled() && isDryActivated()) {
             pluginResults.add(DryResultAction.class);
             pluginResults.add(DryMavenResultAction.class);
         }
-        if (AnalysisDescriptor.isFindBugsInstalled()) {
+        if (AnalysisDescriptor.isFindBugsInstalled() && isFindBugsActivated()) {
             pluginResults.add(FindBugsResultAction.class);
             pluginResults.add(FindBugsMavenResultAction.class);
         }
-        if (AnalysisDescriptor.isPmdInstalled()) {
+        if (AnalysisDescriptor.isPmdInstalled() && isPmdActivated()) {
             pluginResults.add(PmdResultAction.class);
             pluginResults.add(PmdMavenResultAction.class);
         }
-        if (AnalysisDescriptor.isOpenTasksInstalled()) {
+        if (AnalysisDescriptor.isOpenTasksInstalled() && isOpenTasksActivated()) {
             pluginResults.add(TasksResultAction.class);
             pluginResults.add(TasksMavenResultAction.class);
         }
-        if (AnalysisDescriptor.isWarningsInstalled()) {
+        if (AnalysisDescriptor.isWarningsInstalled() && isWarningsActivated()) {
             pluginResults.add(WarningsResultAction.class);
         }
 
