@@ -39,20 +39,13 @@ import org.kohsuke.stapler.DataBoundConstructor;
  */
 // CHECKSTYLE:COUPLING-OFF
 public class AnalysisPublisher extends HealthAwarePublisher {
-    /** Unique ID of this class. */
     private static final long serialVersionUID = 5512072640635006098L;
 
-    /** @since 1.15. */
     private final boolean isCheckStyleDeactivated;
-    /** @since 1.15. */
     private final boolean isDryDeactivated;
-    /** @since 1.15. */
     private final boolean isFindBugsDeactivated;
-    /** @since 1.15. */
     private final boolean isPmdDeactivated;
-    /** @since 1.15. */
     private final boolean isOpenTasksDeactivated;
-    /** @since 1.15. */
     private final boolean isWarningsDeactivated;
 
     /**
@@ -205,6 +198,7 @@ public class AnalysisPublisher extends HealthAwarePublisher {
      *
      * @return the plug-in actions to read the results from
      */
+    @SuppressWarnings({"PMD.NPathComplexity", "CyclomaticComplexity"})
     private List<Class<? extends ResultAction<? extends BuildResult>>> getParticipatingPlugins() {
         ArrayList<Class<? extends ResultAction<? extends BuildResult>>> pluginResults;
         pluginResults = new ArrayList<Class<? extends ResultAction<? extends BuildResult>>>();
