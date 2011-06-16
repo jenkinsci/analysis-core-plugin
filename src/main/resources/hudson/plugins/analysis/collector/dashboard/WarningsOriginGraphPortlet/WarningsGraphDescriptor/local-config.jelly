@@ -1,5 +1,5 @@
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
-	xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:u="/util">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+  
   <j:if test="${descriptor.isCheckStyleInstalled()}">
     <f:entry title="${%Checkstyle warnings}">
       <f:checkbox name="isCheckStyleActivated" checked="${h.defaultToTrue(instance.isCheckStyleActivated())}"/>
@@ -30,10 +30,4 @@
       <f:checkbox name="isWarningsActivated" checked="${h.defaultToTrue(instance.isWarningsActivated())}"/>
     </f:entry>
   </j:if>
-  <f:advanced>
-    <u:health id="analysis"/>
-    <u:thresholds id="analysis"/>
-    <u:defaultEncoding id="analysis"/>
-    <u:trend id="analysis"/>
-  </f:advanced>
 </j:jelly>
