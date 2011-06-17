@@ -6,7 +6,6 @@ import hudson.plugins.analysis.graph.GraphConfiguration;
 import hudson.plugins.analysis.util.ToolTipProvider;
 import hudson.util.ColorPalette;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
-import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.CategoryDataset;
 
 import com.google.common.collect.Lists;
@@ -163,20 +161,14 @@ public class OriginGraph extends CategoryBuildResultGraph {
         return colors.toArray(new Color[colors.size()]);
     }
 
-    /** {@inheritDoc} */
     @Override
     protected String getRowId(final int level) {
         return originLabels.get(level);
     }
 
-    // CHECKSTYLE:OFF
-    /** {@inheritDoc} */
     @Override
     protected CategoryItemRenderer createRenderer(final GraphConfiguration configuration, final String pluginName, final ToolTipProvider toolTipProvider) {
-        LineAndShapeRenderer render = new LineAndShapeRenderer(true, false);
-        render.setBaseStroke(new BasicStroke(2.0f));
-        return render;
+        return createLineRenderer();
     }
-    // CHECKSTYLE:ON
 }
 
