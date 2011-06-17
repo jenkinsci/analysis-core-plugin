@@ -64,6 +64,8 @@ public class WarningsOriginGraphPortlet extends AbstractWarningsGraphPortlet {
         isOpenTasksDeactivated = !isOpenTasksActivated;
         isWarningsDeactivated = !isWarningsActivated;
         isCheckStyleDeactivated = !isCheckStyleActivated;
+
+        configureGraph(getGraphType());
     }
     // CHECKSTYLE:ON
 
