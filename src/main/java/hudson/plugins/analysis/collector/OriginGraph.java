@@ -7,13 +7,10 @@ import hudson.plugins.analysis.util.ToolTipProvider;
 import hudson.util.ColorPalette;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.data.category.CategoryDataset;
 
@@ -27,8 +24,6 @@ import com.google.common.collect.Lists;
 public class OriginGraph extends CategoryBuildResultGraph {
     /** Number of colors to use from Hudson's color table. */
     private static final int HUDSON_GREEN_INDEX = 3;
-
-    private static final Font LEGEND_FONT = new Font("SansSerif", Font.PLAIN, 10); // NOCHECKSTYLE
 
     private final List<String> originsKeys  = Lists.newArrayList();
     private final List<String> originLabels = Lists.newArrayList();
@@ -128,22 +123,7 @@ public class OriginGraph extends CategoryBuildResultGraph {
     /** {@inheritDoc} */
     @Override
     protected JFreeChart createChart(final CategoryDataset dataSet) {
-        JFreeChart chart = ChartFactory.createLineChart(
-                null,                      // chart title
-                null,                      // unused
-                "count",                   // range axis label
-                dataSet,                   // data
-                PlotOrientation.VERTICAL,  // orientation
-                true,                      // include legend
-                true,                      // tooltips
-                false                      // urls
-            );
-        chart.setBackgroundPaint(Color.white);
-        setCategoryPlotProperties(chart.getCategoryPlot());
-        chart.getCategoryPlot().getDomainAxis().setCategoryMargin(0.0);
-        chart.getLegend().setItemFont(LEGEND_FONT);
-
-        return chart;
+        return createLineGraph(dataSet, true);
     }
 
     /** {@inheritDoc} */
