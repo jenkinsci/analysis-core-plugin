@@ -18,7 +18,7 @@ import org.kohsuke.stapler.DataBoundConstructor;
  *
  * @author Ulli Hafner
  */
-public class WarningsOriginGraphPortlet extends AbstractWarningsGraphPortlet {
+public final class WarningsOriginGraphPortlet extends AbstractWarningsGraphPortlet {
     private final boolean isCheckStyleDeactivated;
     private final boolean isDryDeactivated;
     private final boolean isFindBugsDeactivated;
