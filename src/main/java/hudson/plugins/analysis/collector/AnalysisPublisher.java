@@ -198,7 +198,7 @@ public class AnalysisPublisher extends HealthAwarePublisher {
      *
      * @return the plug-in actions to read the results from
      */
-    @SuppressWarnings({"PMD.NPathComplexity", "CyclomaticComplexity"})
+    @SuppressWarnings({"PMD.NPathComplexity", "PMD.CyclomaticComplexity"})
     private List<Class<? extends ResultAction<? extends BuildResult>>> getParticipatingPlugins() {
         ArrayList<Class<? extends ResultAction<? extends BuildResult>>> pluginResults;
         pluginResults = new ArrayList<Class<? extends ResultAction<? extends BuildResult>>>();

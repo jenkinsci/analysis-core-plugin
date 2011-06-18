@@ -59,6 +59,8 @@ public class OriginGraph extends CategoryBuildResultGraph {
     public OriginGraph(final boolean isCheckStyleActivated, final boolean isDryActivated,
             final boolean isFindBugsActivated, final boolean isPmdActivated,
             final boolean isOpenTasksActivated, final boolean isWarningsActivated) {
+        super();
+
         if (isCheckStyleActivated) {
             originsKeys.add(hudson.plugins.checkstyle.parser.Warning.ORIGIN);
             originLabels.add(Messages.Analysis_Checkstyle_Warning_Origin());
