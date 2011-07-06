@@ -1,8 +1,8 @@
 package hudson.plugins.analysis.collector.tokens;
 
 import hudson.Extension;
+import hudson.plugins.analysis.collector.AnalysisResultAction;
 import hudson.plugins.analysis.tokens.AbstractResultTokenMacro;
-import hudson.plugins.warnings.WarningsResultAction;
 
 /**
  * Provides a token that evaluates to the warnings collector build result.
@@ -14,8 +14,9 @@ public class WarningsResultTokenMacro extends AbstractResultTokenMacro {
     /**
      * Creates a new instance of {@link WarningsResultTokenMacro}.
      */
+    @SuppressWarnings("unchecked")
     public WarningsResultTokenMacro() {
-        super(WarningsResultAction.class, "ANALYSIS_RESULT");
+        super("ANALYSIS_RESULT", AnalysisResultAction.class);
     }
 }
 
