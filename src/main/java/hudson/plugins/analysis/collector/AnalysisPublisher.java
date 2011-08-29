@@ -110,6 +110,8 @@ public class AnalysisPublisher extends HealthAwarePublisher {
      *            determines whether to collect open tasks
      * @param isWarningsActivated
      *            determines whether to collect compiler warnings
+     * @param canRunOnFailed
+     *            determines whether the plug-in can run for failed builds, too
      */
     // CHECKSTYLE:OFF
     @SuppressWarnings("PMD.ExcessiveParameterList")
@@ -122,13 +124,14 @@ public class AnalysisPublisher extends HealthAwarePublisher {
             final String failedNewAll, final String failedNewHigh, final String failedNewNormal, final String failedNewLow,
             final boolean isCheckStyleActivated, final boolean isDryActivated,
             final boolean isFindBugsActivated, final boolean isPmdActivated,
-            final boolean isOpenTasksActivated, final boolean isWarningsActivated) {
+            final boolean isOpenTasksActivated, final boolean isWarningsActivated,
+            final boolean canRunOnFailed) {
         super(healthy, unHealthy, thresholdLimit, defaultEncoding, useDeltaValues,
                 unstableTotalAll, unstableTotalHigh, unstableTotalNormal, unstableTotalLow,
                 unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
                 failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow,
                 failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
-                true, false, "ANALYSIS-COLLECTOR");
+                canRunOnFailed, false, "ANALYSIS-COLLECTOR");
         isDryDeactivated = !isDryActivated;
         isFindBugsDeactivated = !isFindBugsActivated;
         isPmdDeactivated = !isPmdActivated;
