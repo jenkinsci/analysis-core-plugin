@@ -1,7 +1,7 @@
 package hudson.plugins.analysis.collector;
 
 import hudson.model.AbstractProject;
-import hudson.plugins.analysis.core.ResultAction;
+import hudson.plugins.analysis.core.BuildHistory;
 import hudson.plugins.analysis.graph.DefaultGraphConfigurationView;
 import hudson.plugins.analysis.graph.GraphConfiguration;
 
@@ -29,29 +29,12 @@ public class AnalysisDefaultGraphConfigurationView extends DefaultGraphConfigura
      *            the owning project to configure the graphs for
      * @param pluginName
      *            The name of the plug-in.
+     * @param buildHistory
+     *            the build history for this project
      */
     public AnalysisDefaultGraphConfigurationView(final AnalysisGraphConfiguration configuration, final AbstractProject<?, ?> project,
-            final String pluginName) {
-        super(configuration, project, pluginName);
-
-        analysisConfiguration = configuration;
-    }
-
-    /**
-     * Creates a new instance of {@link AnalysisDefaultGraphConfigurationView}.
-     *
-     * @param configuration
-     *            the graph configuration
-     * @param project
-     *            the owning project to configure the graphs for
-     * @param pluginName
-     *            The name of the plug-in.
-     * @param lastAction
-     *            the last valid action for this project
-     */
-    public AnalysisDefaultGraphConfigurationView(final AnalysisGraphConfiguration configuration, final AbstractProject<?, ?> project,
-            final String pluginName, final ResultAction<?> lastAction) {
-        super(configuration, project, pluginName, lastAction);
+            final String pluginName, final BuildHistory buildHistory) {
+        super(configuration, project, pluginName, buildHistory);
 
         analysisConfiguration = configuration;
     }

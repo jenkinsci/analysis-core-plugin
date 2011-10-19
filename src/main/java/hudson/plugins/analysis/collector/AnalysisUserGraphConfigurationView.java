@@ -1,7 +1,7 @@
 package hudson.plugins.analysis.collector;
 
 import hudson.model.AbstractProject;
-import hudson.plugins.analysis.core.ResultAction;
+import hudson.plugins.analysis.core.BuildHistory;
 import hudson.plugins.analysis.graph.GraphConfiguration;
 import hudson.plugins.analysis.graph.UserGraphConfigurationView;
 
@@ -31,32 +31,12 @@ public class AnalysisUserGraphConfigurationView extends UserGraphConfigurationVi
      *            name that is used to persist the configuration per user.
      * @param cookies
      *            the cookies containing the graph configuration
-     */
-    public AnalysisUserGraphConfigurationView(final AnalysisGraphConfiguration configuration,
-            final AbstractProject<?, ?> project, final String pluginName, final Cookie[] cookies) {
-        super(configuration, project, pluginName, cookies);
-
-        analysisConfiguration = configuration;
-    }
-
-    /**
-     * Creates a new instance of {@link AnalysisUserGraphConfigurationView}.
-     *
-     * @param configuration
-     *            the graph configuration
-     * @param project
-     *            the owning project to configure the graphs for
-     * @param pluginName
-     *            The name of the plug-in. Also used as the suffix of the cookie
-     *            name that is used to persist the configuration per user.
-     * @param cookies
-     *            the cookies containing the graph configuration
-     * @param resultAction
-     *            the last valid action for this project
+     * @param buildHistory
+     *            the build history for this project
      */
     public AnalysisUserGraphConfigurationView(final AnalysisGraphConfiguration configuration, final AbstractProject<?, ?> project,
-            final String pluginName, final Cookie[] cookies, final ResultAction<?> resultAction) {
-        super(configuration, project, pluginName, cookies, resultAction);
+            final String pluginName, final Cookie[] cookies, final BuildHistory buildHistory) {
+        super(configuration, project, pluginName, cookies, buildHistory);
 
         analysisConfiguration = configuration;
     }

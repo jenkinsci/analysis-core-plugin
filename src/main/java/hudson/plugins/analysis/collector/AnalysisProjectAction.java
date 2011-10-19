@@ -41,27 +41,15 @@ public class AnalysisProjectAction extends AbstractProjectAction<AnalysisResultA
     /** {@inheritDoc} */
     @Override
     protected GraphConfigurationView createDefaultConfiguration() {
-        if (hasValidResults()) {
-            return new AnalysisDefaultGraphConfigurationView(createConfiguration(), getProject(),
-                    getUrlName(), getLastAction());
-        }
-        else {
-            return new AnalysisDefaultGraphConfigurationView(createConfiguration(), getProject(),
-                    getUrlName());
-        }
+        return new AnalysisDefaultGraphConfigurationView(createConfiguration(), getProject(),
+                getUrlName(), createBuildHistory());
     }
 
     /** {@inheritDoc} */
     @Override
     protected GraphConfigurationView createUserConfiguration(final StaplerRequest request) {
-        if (hasValidResults()) {
-            return new AnalysisUserGraphConfigurationView(createConfiguration(), getProject(),
-                    getUrlName(), request.getCookies(), getLastAction());
-        }
-        else {
-            return new AnalysisUserGraphConfigurationView(createConfiguration(), getProject(),
-                    getUrlName(), request.getCookies());
-        }
+        return new AnalysisUserGraphConfigurationView(createConfiguration(), getProject(),
+                getUrlName(), request.getCookies(), createBuildHistory());
     }
 
     /**
