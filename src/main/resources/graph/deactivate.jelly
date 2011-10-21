@@ -5,7 +5,7 @@
   xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
 
   <f:entry title="${%disable.title}" description="${%disable.description}" >
-    <f:checkbox name="canDeacticateOtherTrendGraphs" checked="${instance.canDeacticateOtherTrendGraphs}"/>
+    <f:checkbox name="canDeacticateOtherTrendGraphs" checked="${instance.canDeacticateOtherTrendGraphs()}"/>
   </f:entry>
 
 </j:jelly>
