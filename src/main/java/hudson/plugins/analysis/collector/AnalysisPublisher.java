@@ -125,13 +125,13 @@ public class AnalysisPublisher extends HealthAwarePublisher {
             final boolean isCheckStyleActivated, final boolean isDryActivated,
             final boolean isFindBugsActivated, final boolean isPmdActivated,
             final boolean isOpenTasksActivated, final boolean isWarningsActivated,
-            final boolean canRunOnFailed) {
+            final boolean canRunOnFailed, final boolean canComputeNew) {
         super(healthy, unHealthy, thresholdLimit, defaultEncoding, useDeltaValues,
                 unstableTotalAll, unstableTotalHigh, unstableTotalNormal, unstableTotalLow,
                 unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
                 failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow,
                 failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
-                canRunOnFailed, false, "ANALYSIS-COLLECTOR");
+                canRunOnFailed, false, canComputeNew, "ANALYSIS-COLLECTOR");
         isDryDeactivated = !isDryActivated;
         isFindBugsDeactivated = !isFindBugsActivated;
         isPmdDeactivated = !isPmdActivated;
