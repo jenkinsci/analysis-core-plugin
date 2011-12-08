@@ -6,8 +6,8 @@ import hudson.model.Job;
 import hudson.plugins.analysis.collector.AnalysisDescriptor;
 import hudson.plugins.analysis.collector.AnalysisProjectAction;
 import hudson.plugins.analysis.collector.Messages;
-import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.AbstractProjectAction;
+import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.dashboard.AbstractWarningsTablePortlet;
 import hudson.plugins.checkstyle.CheckStyleProjectAction;
 import hudson.plugins.dry.DryProjectAction;
@@ -21,6 +21,8 @@ import java.util.Collection;
 
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
+
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 
 /**
  * A portlet that shows a table with the number of warnings in a job.
@@ -376,6 +378,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      *            the plug-in that is target of the link
      * @return the number of warnings
      */
+    @SuppressWarnings("NP")
     private String getWarnings(final Job<?, ?> job, final Class<? extends AbstractProjectAction<?>> actionType, final String plugin) {
         AbstractProjectAction<?> action = job.getAction(actionType);
         if (action != null && action.hasValidResults()) {
