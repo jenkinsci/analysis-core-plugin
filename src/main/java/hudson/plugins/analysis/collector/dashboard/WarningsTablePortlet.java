@@ -1,20 +1,17 @@
 package hudson.plugins.analysis.collector.dashboard;
 
 import hudson.Extension;
-import hudson.model.Descriptor;
 import hudson.model.Job;
-import hudson.plugins.analysis.collector.AnalysisDescriptor;
 import hudson.plugins.analysis.collector.AnalysisProjectAction;
 import hudson.plugins.analysis.collector.Messages;
-import hudson.plugins.analysis.core.AbstractProjectAction;
 import hudson.plugins.analysis.core.BuildResult;
+import hudson.plugins.analysis.core.AbstractProjectAction;
 import hudson.plugins.analysis.dashboard.AbstractWarningsTablePortlet;
 import hudson.plugins.checkstyle.CheckStyleProjectAction;
 import hudson.plugins.dry.DryProjectAction;
 import hudson.plugins.findbugs.FindBugsProjectAction;
 import hudson.plugins.pmd.PmdProjectAction;
 import hudson.plugins.tasks.TasksProjectAction;
-import hudson.plugins.view.dashboard.DashboardPortlet;
 import hudson.plugins.warnings.WarningsProjectAction;
 
 import java.util.Collection;
@@ -35,6 +32,13 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
     /** Determines whether images should be used in the table header. */
     private final boolean useImages;
 
+    private final boolean isCheckStyleDeactivated;
+    private final boolean isDryDeactivated;
+    private final boolean isFindBugsDeactivated;
+    private final boolean isPmdDeactivated;
+    private final boolean isOpenTasksDeactivated;
+    private final boolean isWarningsDeactivated;
+
     /**
      * Creates a new instance of {@link WarningsTablePortlet}.
      *
@@ -42,11 +46,34 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      *            the name of the portlet
      * @param useImages
      *            determines whether images should be used in the table header.
+     * @param isCheckStyleActivated
+     *            determines whether to show the warnings from Checkstyle
+     * @param isDryActivated
+     *            determines whether to show the warnings from DRY
+     * @param isFindBugsActivated
+     *            determines whether to show the warnings from FindBugs
+     * @param isPmdActivated
+     *            determines whether to show the warnings from PMD
+     * @param isOpenTasksActivated
+     *            determines whether to show open tasks
+     * @param isWarningsActivated
+     *            determines whether to show compiler warnings
      */
     @DataBoundConstructor
-    public WarningsTablePortlet(final String name, final boolean useImages) {
+    public WarningsTablePortlet(final String name, final boolean useImages,
+        final boolean isCheckStyleActivated, final boolean isDryActivated,
+        final boolean isFindBugsActivated, final boolean isPmdActivated,
+        final boolean isOpenTasksActivated, final boolean isWarningsActivated) {
         super(name);
+
         this.useImages = useImages;
+
+        isDryDeactivated = !isDryActivated;
+        isFindBugsDeactivated = !isFindBugsActivated;
+        isPmdDeactivated = !isPmdActivated;
+        isOpenTasksDeactivated = !isOpenTasksActivated;
+        isWarningsDeactivated = !isWarningsActivated;
+        isCheckStyleDeactivated = !isCheckStyleActivated;
     }
 
     /** {@inheritDoc} */
@@ -65,7 +92,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      * Returns whether images should be used in the table header.
      *
      * @return <code>true</code> if images should be used, <code>false</code> if
-     *         text shuld be used
+     *         text should be used
      */
     public boolean getUseImages() {
         return useImages;
@@ -75,70 +102,82 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      * Returns whether icons should be used in the table header.
      *
      * @return <code>true</code> if icons should be used, <code>false</code> if
-     *         text shuld be used
+     *         text should be used
      */
     public boolean useIcons() {
         return useImages;
     }
 
     /**
-     * Returns whether the Checkstyle plug-in is installed.
+     * Returns whether the totals column should be shown.
      *
-     * @return <code>true</code> if the Checkstyle plug-in is installed,
-     *         <code>false</code> if not.
+     * @return <code>true</code> if the totals column should be shown, <code>false</code> otherwise
      */
-    public boolean isCheckStyleInstalled() {
-        return AnalysisDescriptor.isCheckStyleInstalled();
+    public boolean isTotalsVisible() {
+        return toInt(isCheckStyleActivated())
+                + toInt(isDryActivated())
+                + toInt(isFindBugsActivated())
+                + toInt(isPmdActivated())
+                + toInt(isOpenTasksActivated())
+                + toInt(isWarningsActivated()) > 1;
+    }
+
+    protected int toInt(final boolean isActivated) {
+        return isActivated ? 1 : 0;
     }
 
     /**
-     * Returns whether the Dry plug-in is installed.
+     * Returns whether CheckStyle results should be shown.
      *
-     * @return <code>true</code> if the Dry plug-in is installed,
-     *         <code>false</code> if not.
+     * @return <code>true</code> if CheckStyle results should be shown, <code>false</code> otherwise
      */
-    public boolean isDryInstalled() {
-        return AnalysisDescriptor.isDryInstalled();
+    public boolean isCheckStyleActivated() {
+        return !isCheckStyleDeactivated;
     }
 
     /**
-     * Returns whether the FindBugs plug-in is installed.
+     * Returns whether DRY results should be shown.
      *
-     * @return <code>true</code> if the FindBugs plug-in is installed,
-     *         <code>false</code> if not.
+     * @return <code>true</code> if DRY results should be shown, <code>false</code> otherwise
      */
-    public boolean isFindBugsInstalled() {
-        return AnalysisDescriptor.isFindBugsInstalled();
+    public boolean isDryActivated() {
+        return !isDryDeactivated;
     }
 
     /**
-     * Returns whether the PMD plug-in is installed.
+     * Returns whether FindBugs results should be shown.
      *
-     * @return <code>true</code> if the PMD plug-in is installed,
-     *         <code>false</code> if not.
+     * @return <code>true</code> if FindBugs results should be shown, <code>false</code> otherwise
      */
-    public boolean isPmdInstalled() {
-        return AnalysisDescriptor.isPmdInstalled();
+    public boolean isFindBugsActivated() {
+        return !isFindBugsDeactivated;
     }
 
     /**
-     * Returns whether the Open Tasks plug-in is installed.
+     * Returns whether PMD results should be shown.
      *
-     * @return <code>true</code> if the Open Tasks plug-in is installed,
-     *         <code>false</code> if not.
+     * @return <code>true</code> if PMD results should be shown, <code>false</code> otherwise
      */
-    public boolean isTasksInstalled() {
-        return AnalysisDescriptor.isOpenTasksInstalled();
+    public boolean isPmdActivated() {
+        return !isPmdDeactivated;
     }
 
     /**
-     * Returns whether the Warnings plug-in is installed.
+     * Returns whether open tasks should be shown.
      *
-     * @return <code>true</code> if the Warnings plug-in is installed,
-     *         <code>false</code> if not.
+     * @return <code>true</code> if open tasks should be shown, <code>false</code> otherwise
      */
-    public boolean isWarningsInstalled() {
-        return AnalysisDescriptor.isWarningsInstalled();
+    public boolean isOpenTasksActivated() {
+        return !isOpenTasksDeactivated;
+    }
+
+    /**
+     * Returns whether compiler warnings results should be shown.
+     *
+     * @return <code>true</code> if compiler warnings results should be shown, <code>false</code> otherwise
+     */
+    public boolean isWarningsActivated() {
+        return !isWarningsDeactivated;
     }
 
     /**
@@ -149,7 +188,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      * @return the number of Checkstyle warnings
      */
     public String getCheckStyle(final Job<?, ?> job) {
-        if (AnalysisDescriptor.isCheckStyleInstalled()) {
+        if (isCheckStyleActivated()) {
             return getWarnings(job, CheckStyleProjectAction.class, "checkstyle");
         }
         return NO_RESULTS_FOUND;
@@ -163,7 +202,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      * @return the number of duplicate code warnings
      */
     public String getDry(final Job<?, ?> job) {
-        if (AnalysisDescriptor.isDryInstalled()) {
+        if (isDryActivated()) {
             return getWarnings(job, DryProjectAction.class, "dry");
         }
         return NO_RESULTS_FOUND;
@@ -177,7 +216,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      * @return the number of FindBugs warnings
      */
     public String getFindBugs(final Job<?, ?> job) {
-        if (AnalysisDescriptor.isFindBugsInstalled()) {
+        if (isFindBugsActivated()) {
             return getWarnings(job, FindBugsProjectAction.class, "findbugs");
         }
         return NO_RESULTS_FOUND;
@@ -191,7 +230,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      * @return the number of PMD warnings
      */
     public String getPmd(final Job<?, ?> job) {
-        if (AnalysisDescriptor.isPmdInstalled()) {
+        if (isPmdActivated()) {
             return getWarnings(job, PmdProjectAction.class, "pmd");
         }
         return NO_RESULTS_FOUND;
@@ -205,7 +244,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      * @return the number of open tasks
      */
     public String getTasks(final Job<?, ?> job) {
-        if (AnalysisDescriptor.isOpenTasksInstalled()) {
+        if (isOpenTasksActivated()) {
             return getWarnings(job, TasksProjectAction.class, "tasks");
         }
         return NO_RESULTS_FOUND;
@@ -220,7 +259,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      */
     @Override
     public String getWarnings(final Job<?, ?> job) {
-        if (AnalysisDescriptor.isWarningsInstalled()) {
+        if (isWarningsActivated()) {
             return getWarnings(job, WarningsProjectAction.class, "warnings");
         }
         return NO_RESULTS_FOUND;
@@ -405,7 +444,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      * @author Ulli Hafner
      */
     @Extension(optional = true)
-    public static class WarningsPerJobDescriptor extends Descriptor<DashboardPortlet> {
+    public static class WarningsPerJobDescriptor extends AnalysisGraphDescriptor {
         @Override
         public String getDisplayName() {
             return Messages.Portlet_WarningsTable();

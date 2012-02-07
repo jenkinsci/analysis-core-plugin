@@ -1,15 +1,12 @@
 package hudson.plugins.analysis.collector.dashboard;
 
 import hudson.Extension;
-import hudson.model.Descriptor;
-import hudson.plugins.analysis.collector.AnalysisDescriptor;
 import hudson.plugins.analysis.collector.AnalysisProjectAction;
 import hudson.plugins.analysis.collector.Messages;
 import hudson.plugins.analysis.collector.OriginGraph;
 import hudson.plugins.analysis.core.AbstractProjectAction;
 import hudson.plugins.analysis.dashboard.AbstractWarningsGraphPortlet;
 import hudson.plugins.analysis.graph.BuildResultGraph;
-import hudson.plugins.view.dashboard.DashboardPortlet;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
@@ -145,70 +142,10 @@ public final class WarningsOriginGraphPortlet extends AbstractWarningsGraphPortl
      * Extension point registration.
      */
     @Extension(optional = true)
-    public static class WarningsGraphDescriptor extends Descriptor<DashboardPortlet> {
+    public static class WarningsGraphDescriptor extends AnalysisGraphDescriptor {
         @Override
         public String getDisplayName() {
             return Messages.Portlet_WarningsOriginGraph();
-        }
-
-        /**
-         * Returns whether the Checkstyle plug-in is installed.
-         *
-         * @return <code>true</code> if the Checkstyle plug-in is installed,
-         *         <code>false</code> if not.
-         */
-        public boolean isCheckStyleInstalled() {
-            return AnalysisDescriptor.isCheckStyleInstalled();
-        }
-
-        /**
-         * Returns whether the Dry plug-in is installed.
-         *
-         * @return <code>true</code> if the Dry plug-in is installed,
-         *         <code>false</code> if not.
-         */
-        public static boolean isDryInstalled() {
-            return AnalysisDescriptor.isDryInstalled();
-        }
-
-        /**
-         * Returns whether the FindBugs plug-in is installed.
-         *
-         * @return <code>true</code> if the FindBugs plug-in is installed,
-         *         <code>false</code> if not.
-         */
-        public static boolean isFindBugsInstalled() {
-            return AnalysisDescriptor.isFindBugsInstalled();
-        }
-
-        /**
-         * Returns whether the PMD plug-in is installed.
-         *
-         * @return <code>true</code> if the PMD plug-in is installed,
-         *         <code>false</code> if not.
-         */
-        public static boolean isPmdInstalled() {
-            return AnalysisDescriptor.isPmdInstalled();
-        }
-
-        /**
-         * Returns whether the Open Tasks plug-in is installed.
-         *
-         * @return <code>true</code> if the Open Tasks plug-in is installed,
-         *         <code>false</code> if not.
-         */
-        public static boolean isOpenTasksInstalled() {
-            return AnalysisDescriptor.isOpenTasksInstalled();
-        }
-
-        /**
-         * Returns whether the Warnings plug-in is installed.
-         *
-         * @return <code>true</code> if the Warnings plug-in is installed,
-         *         <code>false</code> if not.
-         */
-        public static boolean isWarningsInstalled() {
-            return AnalysisDescriptor.isWarningsInstalled();
         }
     }
 }

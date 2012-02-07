@@ -1,0 +1,41 @@
+<!--
+  Section header
+  
+  <%@attribute name="descriptor" required="true" %>
+  <%@attribute name="instance" required="true" %>
+-->
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
+  xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+
+  <j:if test="${descriptor.isCheckStyleInstalled()}">
+    <f:entry title="${%Checkstyle warnings}">
+      <f:checkbox name="isCheckStyleActivated" checked="${h.defaultToTrue(instance.isCheckStyleActivated())}"/>
+    </f:entry>
+  </j:if>
+  <j:if test="${descriptor.isDryInstalled()}">
+    <f:entry title="${%Duplicate code warnings}">
+      <f:checkbox name="isDryActivated" checked="${h.defaultToTrue(instance.isDryActivated())}"/>
+    </f:entry>
+  </j:if>
+  <j:if test="${descriptor.isFindBugsInstalled()}">
+    <f:entry title="${%FindBugs warnings}">
+      <f:checkbox name="isFindBugsActivated" checked="${h.defaultToTrue(instance.isFindBugsActivated())}"/>
+    </f:entry>
+  </j:if>
+  <j:if test="${descriptor.isPmdInstalled()}">
+    <f:entry title="${%PMD warnings}">
+      <f:checkbox name="isPmdActivated" checked="${h.defaultToTrue(instance.isPmdActivated())}"/>
+    </f:entry>
+  </j:if>
+  <j:if test="${descriptor.isOpenTasksInstalled()}">
+    <f:entry title="${%Open tasks}">
+      <f:checkbox name="isOpenTasksActivated" checked="${h.defaultToTrue(instance.isOpenTasksActivated())}"/>
+    </f:entry>
+  </j:if>
+  <j:if test="${descriptor.isWarningsInstalled()}">
+    <f:entry title="${%Compiler warnings}">
+      <f:checkbox name="isWarningsActivated" checked="${h.defaultToTrue(instance.isWarningsActivated())}"/>
+    </f:entry>
+  </j:if>
+
+</j:jelly>

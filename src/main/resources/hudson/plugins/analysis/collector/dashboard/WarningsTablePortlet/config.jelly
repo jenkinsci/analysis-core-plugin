@@ -1,8 +1,12 @@
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
+  xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:g="/graph">
   <f:entry title="${%Name}" field="name">
-    <f:textbox default="${descriptor.getDisplayName()}"/>
+    <f:textbox default="${descriptor.getDisplayName()}" />
   </f:entry>
   <f:entry title="${%Show images in table header}" field="useImages">
-    <f:checkbox/>
+    <f:checkbox />
   </f:entry>
+
+  <g:tools instance="${instance}" descriptor="${descriptor}" />
+
 </j:jelly>

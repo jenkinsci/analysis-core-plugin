@@ -1,5 +1,5 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
-    xmlns:dp="/hudson/plugins/view/dashboard"
+    xmlns:dp="/hudson/plugins/view/dashboard" 
     xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
   <dp:decorate portlet="${it}" width="1">
     <tr>
@@ -11,46 +11,48 @@
           <tr>
             <td width="30%" initialSortDir="down" class="pane-header">${%Job}</td>
             <j:if test="${!it.useIcons()}">
-              <j:if test="${it.isCheckStyleInstalled()}">
+              <j:if test="${it.isCheckStyleActivated()}">
                 <td width="10%" class="pane-header">Checkstyle</td>
               </j:if>
-              <j:if test="${it.isDryInstalled()}">
+              <j:if test="${it.isDryActivated()}">
                 <td width="10%" class="pane-header">${%Duplicate Code}</td>
               </j:if>
-              <j:if test="${it.isFindBugsInstalled()}">
+              <j:if test="${it.isFindBugsActivated()}">
                 <td width="10%" class="pane-header">FindBugs</td>
               </j:if>
-              <j:if test="${it.isPmdInstalled()}">
+              <j:if test="${it.isPmdActivated()}">
                 <td width="10%" class="pane-header">PMD</td>
               </j:if>
-              <j:if test="${it.isTasksInstalled()}">
+              <j:if test="${it.isTasksActivated()}">
                 <td width="10%" class="pane-header">${%Open Tasks}</td>
               </j:if>
-              <j:if test="${it.isWarningsInstalled()}">
+              <j:if test="${it.isWarningsActivated()}">
                 <td width="10%" class="pane-header">${%Compiler Warnings}</td>
               </j:if>
             </j:if>
             <j:if test="${it.useIcons()}">
-              <j:if test="${it.isCheckStyleInstalled()}">
+              <j:if test="${it.isCheckStyleActivated()}">
                 <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/checkstyle/icons/checkstyle-24x24.png" alt="Checkstyle" title="Checkstyle" /></td>
               </j:if>
-              <j:if test="${it.isDryInstalled()}">
+              <j:if test="${it.isDryActivated()}">
                 <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/dry/icons/dry-24x24.png" alt="${%Duplicate Code}" title="${%Duplicate Code}" /></td>
               </j:if>
-              <j:if test="${it.isFindBugsInstalled()}">
+              <j:if test="${it.isFindBugsActivated()}">
                 <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/findbugs/icons/findbugs-32x32.png" alt="FindBugs" title="FindBugs" /></td>
               </j:if>
-              <j:if test="${it.isPmdInstalled()}">
+              <j:if test="${it.isPmdActivated()}">
                 <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/pmd/icons/pmd-24x24.gif" alt="PMD" title="PMD" /></td>
               </j:if>
-              <j:if test="${it.isTasksInstalled()}">
+              <j:if test="${it.isTasksActivated()}">
                 <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/tasks/icons/tasks-24x24.png" alt="${%Open Tasks}" title="${%Open Tasks}" /></td>
               </j:if>
-              <j:if test="${it.isWarningsInstalled()}">
+              <j:if test="${it.isWarningsActivated()}">
                 <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/warnings/icons/warnings-24x24.png" alt="${%Compiler Warnings}" title="${%Compiler Warnings}" /></td>
               </j:if>
             </j:if>
-            <td width="10%" class="pane-header">${%Total}</td>
+            <j:if test="${it.isTotalsVisible()}">
+              <td width="10%" class="pane-header">${%Total}</td>
+            </j:if>
           </tr>
           <tbody>
             <j:forEach var="job" items="${jobs}">
@@ -58,78 +60,82 @@
                 <td class="pane">
                     <dp:jobLink job="${job}"/>
                 </td>
-                <j:if test="${it.isCheckStyleInstalled()}">
+                <j:if test="${it.isCheckStyleActivated()}">
                   <td class="pane">
                        ${it.getCheckStyle(job)}
                   </td>
                 </j:if>
-                <j:if test="${it.isDryInstalled()}">
+                <j:if test="${it.isDryActivated()}">
                   <td class="pane">
                       ${it.getDry(job)}
                   </td>
                 </j:if>
-                <j:if test="${it.isFindBugsInstalled()}">
+                <j:if test="${it.isFindBugsActivated()}">
                   <td class="pane">
                       ${it.getFindBugs(job)}
                   </td>
                 </j:if>
-                <j:if test="${it.isPmdInstalled()}">
+                <j:if test="${it.isPmdActivated()}">
                   <td class="pane">
                       ${it.getPmd(job)}
                   </td>
                 </j:if>
-                <j:if test="${it.isTasksInstalled()}">
+                <j:if test="${it.isTasksActivated()}">
                   <td class="pane">
                       ${it.getTasks(job)}
                   </td>
                 </j:if>
-                <j:if test="${it.isWarningsInstalled()}">
+                <j:if test="${it.isWarningsActivated()}">
                   <td class="pane">
                       ${it.getWarnings(job)}
                   </td>
                 </j:if>
-                <td class="pane">
-                    ${it.getTotal(job)}
-                </td>
+                <j:if test="${it.isTotalsVisible()}">
+                  <td class="pane">
+                      ${it.getTotal(job)}
+                  </td>
+                </j:if>
               </tr>
             </j:forEach>
             <tr class="sortbottom">
               <td class="pane-header">
                   ${%Total}
               </td>
-              <j:if test="${it.isCheckStyleInstalled()}">
+              <j:if test="${it.isCheckStyleActivated()}">
                 <td class="pane-header">
                     ${it.getCheckStyle(jobs)}
                 </td>
               </j:if>
-              <j:if test="${it.isDryInstalled()}">
+              <j:if test="${it.isDryActivated()}">
                 <td class="pane-header">
                     ${it.getDry(jobs)}
                 </td>
               </j:if>
-              <j:if test="${it.isFindBugsInstalled()}">
+              <j:if test="${it.isFindBugsActivated()}">
                 <td class="pane-header">
                     ${it.getFindBugs(jobs)}
                 </td>
               </j:if>
-              <j:if test="${it.isPmdInstalled()}">
+              <j:if test="${it.isPmdActivated()}">
                 <td class="pane-header">
                     ${it.getPmd(jobs)}
                 </td>
               </j:if>
-              <j:if test="${it.isTasksInstalled()}">
+              <j:if test="${it.isTasksActivated()}">
                 <td class="pane-header">
                     ${it.getTasks(jobs)}
                 </td>
               </j:if>
-              <j:if test="${it.isWarningsInstalled()}">
+              <j:if test="${it.isWarningsActivated()}">
                 <td class="pane-header">
                     ${it.getWarnings(jobs)}
                 </td>
               </j:if>
-              <td class="pane-header">
-                  ${it.getTotal(jobs)}
-              </td>
+              <j:if test="${it.isTotalsVisible()}">
+                <td class="pane-header">
+                    ${it.getTotal(jobs)}
+                </td>
+              </j:if>
             </tr>
           </tbody>
         </table>
