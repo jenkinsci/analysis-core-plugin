@@ -60,10 +60,12 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      *            determines whether to show compiler warnings
      */
     @DataBoundConstructor
+    // CHECKSTYLE:OFF
     public WarningsTablePortlet(final String name, final boolean useImages,
         final boolean isCheckStyleActivated, final boolean isDryActivated,
         final boolean isFindBugsActivated, final boolean isPmdActivated,
         final boolean isOpenTasksActivated, final boolean isWarningsActivated) {
+        // CHECKSTYLE:ON
         super(name);
 
         this.useImages = useImages;
@@ -122,7 +124,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
                 + toInt(isWarningsActivated()) > 1;
     }
 
-    protected int toInt(final boolean isActivated) {
+    private int toInt(final boolean isActivated) {
         return isActivated ? 1 : 0;
     }
 
