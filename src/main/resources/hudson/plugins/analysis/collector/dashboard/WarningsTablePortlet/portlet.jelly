@@ -23,7 +23,7 @@
               <j:if test="${it.isPmdActivated()}">
                 <td width="10%" class="pane-header">PMD</td>
               </j:if>
-              <j:if test="${it.isTasksActivated()}">
+              <j:if test="${it.isOpenTasksActivated()}">
                 <td width="10%" class="pane-header">${%Open Tasks}</td>
               </j:if>
               <j:if test="${it.isWarningsActivated()}">
@@ -43,7 +43,7 @@
               <j:if test="${it.isPmdActivated()}">
                 <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/pmd/icons/pmd-24x24.gif" alt="PMD" title="PMD" /></td>
               </j:if>
-              <j:if test="${it.isTasksActivated()}">
+              <j:if test="${it.isOpenTasksActivated()}">
                 <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/tasks/icons/tasks-24x24.png" alt="${%Open Tasks}" title="${%Open Tasks}" /></td>
               </j:if>
               <j:if test="${it.isWarningsActivated()}">
@@ -80,7 +80,7 @@
                       ${it.getPmd(job)}
                   </td>
                 </j:if>
-                <j:if test="${it.isTasksActivated()}">
+                <j:if test="${it.isOpenTasksActivated()}">
                   <td class="pane">
                       ${it.getTasks(job)}
                   </td>
@@ -121,7 +121,7 @@
                     ${it.getPmd(jobs)}
                 </td>
               </j:if>
-              <j:if test="${it.isTasksActivated()}">
+              <j:if test="${it.isOpenTasksActivated()}">
                 <td class="pane-header">
                     ${it.getTasks(jobs)}
                 </td>
