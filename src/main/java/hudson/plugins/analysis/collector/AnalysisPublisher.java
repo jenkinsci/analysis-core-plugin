@@ -1,4 +1,4 @@
-package hudson.plugins.analysis.collector;
+package hudson.plugins.analysis.collector; // NOPMD
 
 import hudson.Launcher;
 import hudson.matrix.MatrixAggregator;
@@ -7,10 +7,10 @@ import hudson.model.Action;
 import hudson.model.BuildListener;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
-import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.HealthAwarePublisher;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.ResultAction;
+import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.checkstyle.CheckStyleMavenResultAction;
@@ -239,7 +239,6 @@ public class AnalysisPublisher extends HealthAwarePublisher {
         return new AnalysisProjectAction(project);
     }
 
-    /** {@inheritDoc} */
     @Override
     public BuildResult perform(final AbstractBuild<?, ?> build, final PluginLogger logger) throws InterruptedException, IOException {
         ParserResult overallResult = new ParserResult(build.getWorkspace());
@@ -258,7 +257,6 @@ public class AnalysisPublisher extends HealthAwarePublisher {
         return result;
     }
 
-    /** {@inheritDoc} */
     @Override
     public AnalysisDescriptor getDescriptor() {
         return (AnalysisDescriptor)super.getDescriptor();

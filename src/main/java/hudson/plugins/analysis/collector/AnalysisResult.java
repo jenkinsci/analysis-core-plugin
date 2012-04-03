@@ -2,9 +2,9 @@ package hudson.plugins.analysis.collector; // NOPMD
 
 import hudson.model.AbstractBuild;
 import hudson.plugins.analysis.core.BuildHistory;
-import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.ParserResult;
 import hudson.plugins.analysis.core.ResultAction;
+import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 
 import java.io.IOException;
@@ -36,34 +36,26 @@ public class AnalysisResult extends BuildResult {
      *            the default encoding to be used when reading and parsing files
      * @param result
      *            the parsed result with all annotations
-     * @param history
-     *            the plug-in history
      */
-    public AnalysisResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
-            final ParserResult result, final BuildHistory history) {
-        super(build, defaultEncoding, result, history);
-
-        annotationsByOrigin = countAnnotations();
+    public AnalysisResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result) {
+        this(build, new BuildHistory(build, AnalysisResultAction.class), result, defaultEncoding, true);
     }
 
-    /**
-     * Creates a new instance of {@link AnalysisResult}.
-     *
-     * @param build
-     *            the current build as owner of this action
-     * @param defaultEncoding
-     *            the default encoding to be used when reading and parsing files
-     * @param result
-     *            the parsed result with all annotations
-     */
-    public AnalysisResult(final AbstractBuild<?, ?> build, final String defaultEncoding,
-            final ParserResult result) {
-        super(build, defaultEncoding, result);
+    AnalysisResult(final AbstractBuild<?, ?> build, final BuildHistory history,
+            final ParserResult result, final String defaultEncoding, final boolean canSerialize) {
+        super(build, history, result, defaultEncoding);
 
         annotationsByOrigin = countAnnotations();
+        if (canSerialize) {
+            serializeAnnotations(result.getAnnotations());
+        }
     }
 
-    /** {@inheritDoc} */
+    @Override
+    public String getHeader() {
+        return Messages.Analysis_ResultAction_Header();
+    }
+
     @Override
     protected Object readResolve() {
         super.readResolve();
@@ -90,11 +82,7 @@ public class AnalysisResult extends BuildResult {
         return mapping;
     }
 
-    /**
-     * Returns a summary message for the summary.jelly file.
-     *
-     * @return the summary message
-     */
+    @Override
     public String getSummary() {
         return AnalysisResultSummary.createSummary(this);
     }
