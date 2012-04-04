@@ -1,17 +1,20 @@
 package hudson.plugins.analysis.collector.dashboard;
 
 import hudson.Extension;
+import hudson.model.Descriptor;
 import hudson.model.Job;
+import hudson.plugins.analysis.collector.AnalysisDescriptor;
 import hudson.plugins.analysis.collector.AnalysisProjectAction;
 import hudson.plugins.analysis.collector.Messages;
-import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.AbstractProjectAction;
+import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.dashboard.AbstractWarningsTablePortlet;
 import hudson.plugins.checkstyle.CheckStyleProjectAction;
 import hudson.plugins.dry.DryProjectAction;
 import hudson.plugins.findbugs.FindBugsProjectAction;
 import hudson.plugins.pmd.PmdProjectAction;
 import hudson.plugins.tasks.TasksProjectAction;
+import hudson.plugins.view.dashboard.DashboardPortlet;
 import hudson.plugins.warnings.WarningsProjectAction;
 
 import java.util.Collection;
@@ -82,12 +85,6 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
     @Override
     protected Class<? extends AbstractProjectAction<?>> getAction() {
         return AnalysisProjectAction.class;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected String getPluginName() {
-        return "analysis";
     }
 
     /**
@@ -446,7 +443,67 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      * @author Ulli Hafner
      */
     @Extension(optional = true)
-    public static class WarningsPerJobDescriptor extends AnalysisGraphDescriptor {
+    public static class WarningsPerJobDescriptor extends Descriptor<DashboardPortlet> {
+        /**
+         * Returns whether the Checkstyle plug-in is installed.
+         *
+         * @return <code>true</code> if the Checkstyle plug-in is installed,
+         *         <code>false</code> if not.
+         */
+        public boolean isCheckStyleInstalled() {
+            return AnalysisDescriptor.isCheckStyleInstalled();
+        }
+
+        /**
+         * Returns whether the Dry plug-in is installed.
+         *
+         * @return <code>true</code> if the Dry plug-in is installed,
+         *         <code>false</code> if not.
+         */
+        public boolean isDryInstalled() {
+            return AnalysisDescriptor.isDryInstalled();
+        }
+
+        /**
+         * Returns whether the FindBugs plug-in is installed.
+         *
+         * @return <code>true</code> if the FindBugs plug-in is installed,
+         *         <code>false</code> if not.
+         */
+        public boolean isFindBugsInstalled() {
+            return AnalysisDescriptor.isFindBugsInstalled();
+        }
+
+        /**
+         * Returns whether the PMD plug-in is installed.
+         *
+         * @return <code>true</code> if the PMD plug-in is installed,
+         *         <code>false</code> if not.
+         */
+        public boolean isPmdInstalled() {
+            return AnalysisDescriptor.isPmdInstalled();
+        }
+
+        /**
+         * Returns whether the Open Tasks plug-in is installed.
+         *
+         * @return <code>true</code> if the Open Tasks plug-in is installed,
+         *         <code>false</code> if not.
+         */
+        public boolean isOpenTasksInstalled() {
+            return AnalysisDescriptor.isOpenTasksInstalled();
+        }
+
+        /**
+         * Returns whether the Warnings plug-in is installed.
+         *
+         * @return <code>true</code> if the Warnings plug-in is installed,
+         *         <code>false</code> if not.
+         */
+        public boolean isWarningsInstalled() {
+            return AnalysisDescriptor.isWarningsInstalled();
+        }
+
         @Override
         public String getDisplayName() {
             return Messages.Portlet_WarningsTable();
