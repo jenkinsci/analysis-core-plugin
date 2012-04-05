@@ -18,10 +18,12 @@ import com.google.common.collect.Sets;
  */
 @Extension(ordinal = 1)
 public final class AnalysisDescriptor extends PluginDescriptor {
-    /** Plug-in name. */
-    private static final String PLUGIN_NAME = "analysis";
+    /** The ID of this plug-in is used as URL. */
+    static final String PLUGIN_ID = "analysis";
+    /** The URL of the result action. */
+    static final String RESULT_URL = PluginDescriptor.createResultUrlName(PLUGIN_ID);
     /** Icon to use for the result and project action. */
-    private static final String ACTION_ICON = "/plugin/analysis-collector/icons/analysis-24x24.png";
+    static final String ICON_URL = "/plugin/analysis-collector/icons/analysis-24x24.png";
 
     /**
      * Returns the activated plug-ins.
@@ -141,29 +143,21 @@ public final class AnalysisDescriptor extends PluginDescriptor {
         return Messages.Analysis_Publisher_Name();
     }
 
-    /**
-     * Returns the root folder of this plug-in.
-     *
-     * @return the name of the root folder of this plug-in
-     */
     @Override
     public String getPluginRoot() {
         return "/plugin/analysis-collector/";
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getPluginName() {
-        return PLUGIN_NAME;
+        return PLUGIN_ID;
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getIconUrl() {
-        return ACTION_ICON;
+        return ICON_URL;
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("rawtypes")
     @Override
     public boolean isApplicable(final Class<? extends AbstractProject> jobType) {

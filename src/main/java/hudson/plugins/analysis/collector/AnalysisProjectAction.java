@@ -18,34 +18,34 @@ import org.kohsuke.stapler.StaplerRequest;
  */
 public class AnalysisProjectAction extends AbstractProjectAction<AnalysisResultAction> {
     /**
-     * Instantiates a new find bugs project action.
+     * Instantiates a new {@link AnalysisProjectAction}.
      *
      * @param project
      *            the project that owns this action
      */
     public AnalysisProjectAction(final AbstractProject<?, ?> project) {
-        super(project, AnalysisResultAction.class, new AnalysisDescriptor());
+        this(project, AnalysisResultAction.class);
     }
 
-    /** {@inheritDoc} */
-    public String getDisplayName() {
-        return Messages.Analysis_ProjectAction_Name();
+    /**
+     * Instantiates a new {@link AnalysisProjectAction}.
+     *
+     * @param project
+     *            the project that owns this action
+     * @param type
+     *            the result action type
+     */
+    public AnalysisProjectAction(final AbstractProject<?, ?> project, final Class<? extends AnalysisResultAction> type) {
+        super(project, type, Messages._Analysis_ProjectAction_Name(), Messages._Analysis_Trend_Name(),
+                AnalysisDescriptor.PLUGIN_ID, AnalysisDescriptor.ICON_URL, AnalysisDescriptor.RESULT_URL);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public String getTrendName() {
-        return Messages.Analysis_Trend_Name();
-    }
-
-    /** {@inheritDoc} */
     @Override
     protected GraphConfigurationView createDefaultConfiguration() {
         return new AnalysisDefaultGraphConfigurationView(createConfiguration(), getProject(),
                 getUrlName(), createBuildHistory());
     }
 
-    /** {@inheritDoc} */
     @Override
     protected GraphConfigurationView createUserConfiguration(final StaplerRequest request) {
         return new AnalysisUserGraphConfigurationView(createConfiguration(), getProject(),
