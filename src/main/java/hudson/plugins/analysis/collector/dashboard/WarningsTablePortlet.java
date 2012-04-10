@@ -81,7 +81,6 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
         isCheckStyleDeactivated = !isCheckStyleActivated;
     }
 
-    /** {@inheritDoc} */
     @Override
     protected Class<? extends AbstractProjectAction<?>> getAction() {
         return AnalysisProjectAction.class;

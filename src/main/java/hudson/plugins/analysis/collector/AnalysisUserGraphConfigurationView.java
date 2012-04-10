@@ -41,7 +41,6 @@ public class AnalysisUserGraphConfigurationView extends UserGraphConfigurationVi
         analysisConfiguration = configuration;
     }
 
-    /** {@inheritDoc} */
     @Override
     protected void persistValue(final String value, final String pluginName, final StaplerRequest request,
             final StaplerResponse response) {

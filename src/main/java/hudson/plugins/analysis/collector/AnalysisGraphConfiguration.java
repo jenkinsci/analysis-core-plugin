@@ -28,7 +28,6 @@ public class AnalysisGraphConfiguration extends GraphConfiguration {
         super(availableGraphs);
     }
 
-    /** {@inheritDoc} */
     @Override
     protected boolean initializeLocal(final String[] localConfiguration) {
         if (localConfiguration.length == 1) {
@@ -44,7 +43,6 @@ public class AnalysisGraphConfiguration extends GraphConfiguration {
         return false;
     }
 
-    /** {@inheritDoc} */
     @Override
     protected boolean initializeLocal(final JSONObject localConfiguration) {
         try {
@@ -77,14 +75,12 @@ public class AnalysisGraphConfiguration extends GraphConfiguration {
         return canDeactivateGraphs;
     }
 
-    /** {@inheritDoc} */
     @Override
     public String serializeToString() {
         return super.serializeToString() + SEPARATOR + serializeBoolean(canDeactivateGraphs);
     }
 
     // CHECKSTYLE:OFF
-    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         int prime = 31;
@@ -95,7 +91,6 @@ public class AnalysisGraphConfiguration extends GraphConfiguration {
     // CHECKSTYLE-ON
 
     // CHECKSTYLE-OFF
-    /** {@inheritDoc} */
     @Override
     public boolean equals(final Object obj) {
         if (this == obj) {

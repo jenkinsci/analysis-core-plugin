@@ -233,7 +233,6 @@ public class AnalysisPublisher extends HealthAwarePublisher {
         return pluginResults;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Action getProjectAction(final AbstractProject<?, ?> project) {
         return new AnalysisProjectAction(project);

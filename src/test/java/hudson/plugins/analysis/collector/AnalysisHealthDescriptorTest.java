@@ -37,7 +37,6 @@ public class AnalysisHealthDescriptorTest extends AbstractHealthDescriptorTest {
         assertEquals(WRONG_DESCRIPTION, Messages.Analysis_ResultAction_HealthReportMultipleItem(2), description.toString());
     }
 
-    /** {@inheritDoc} */
     @Override
     protected AbstractHealthDescriptor createHealthDescriptor(final HealthDescriptor healthDescriptor) {
         return new AnalysisHealthDescriptor(healthDescriptor);

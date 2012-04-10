@@ -48,19 +48,16 @@ public class AnalysisResultAction extends AbstractResultAction<AnalysisResult> {
         return Messages.Analysis_ProjectAction_Name();
     }
 
-    /** {@inheritDoc} */
     @Override
     protected PluginDescriptor getDescriptor() {
         return new AnalysisDescriptor();
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getMultipleItemsTooltip(final int numberOfItems) {
         return Messages.Analysis_ResultAction_MultipleWarnings(numberOfItems);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getSingleItemTooltip() {
         return Messages.Analysis_ResultAction_OneWarning();

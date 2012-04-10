@@ -137,7 +137,6 @@ public final class AnalysisDescriptor extends PluginDescriptor {
         super(AnalysisPublisher.class);
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getDisplayName() {
         return Messages.Analysis_Publisher_Name();

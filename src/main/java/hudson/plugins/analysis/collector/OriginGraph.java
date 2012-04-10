@@ -87,7 +87,6 @@ public class OriginGraph extends CategoryBuildResultGraph {
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getId() {
         return "ORIGIN";
@@ -103,13 +102,11 @@ public class OriginGraph extends CategoryBuildResultGraph {
         return "analysis-collector";
     }
 
-    /** {@inheritDoc} */
     @Override
     public String getLabel() {
         return Messages.Trend_type_analysis();
     }
 
-    /** {@inheritDoc} */
     @Override
     protected List<Integer> computeSeries(final BuildResult current) {
         List<Integer> series = new ArrayList<Integer>();
@@ -122,13 +119,11 @@ public class OriginGraph extends CategoryBuildResultGraph {
         return series;
     }
 
-    /** {@inheritDoc} */
     @Override
     protected JFreeChart createChart(final CategoryDataset dataSet) {
         return createLineGraph(dataSet, true);
     }
 
-    /** {@inheritDoc} */
     @Override
     protected Color[] getColors() {
         List<Color> colors = Lists.newArrayList(ColorPalette.LINE_GRAPH);
