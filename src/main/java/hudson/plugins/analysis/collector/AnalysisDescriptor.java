@@ -2,7 +2,6 @@ package hudson.plugins.analysis.collector;
 
 import hudson.Extension;
 import hudson.model.AbstractProject;
-import hudson.model.Hudson;
 import hudson.plugins.analysis.core.PluginDescriptor;
 
 import java.util.Collection;
@@ -112,22 +111,6 @@ public final class AnalysisDescriptor extends PluginDescriptor {
      */
     public static boolean isWarningsInstalled() {
         return isPluginInstalled("warnings");
-    }
-
-    /**
-     * Returns whether the specified plug-in is installed.
-     *
-     * @param shortName
-     *            the plugin to check
-     * @return <code>true</code> if the specified plug-in is installed,
-     *         <code>false</code> if not.
-     */
-    private static boolean isPluginInstalled(final String shortName) {
-        Hudson instance = Hudson.getInstance();
-        if (instance != null) {
-            return instance.getPlugin(shortName) != null;
-        }
-        return true;
     }
 
     /**
