@@ -19,7 +19,6 @@ import hudson.plugins.warnings.WarningsProjectAction;
 
 import java.util.Collection;
 
-import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import edu.umd.cs.findbugs.annotations.SuppressWarnings;
@@ -61,15 +60,19 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      *            determines whether to show open tasks
      * @param isWarningsActivated
      *            determines whether to show compiler warnings
+     * @param canHideZeroWarningsProjects
+     *            determines if zero warnings projects should be hidden in the
+     *            table
      */
     @DataBoundConstructor
     // CHECKSTYLE:OFF
     public WarningsTablePortlet(final String name, final boolean useImages,
         final boolean isCheckStyleActivated, final boolean isDryActivated,
         final boolean isFindBugsActivated, final boolean isPmdActivated,
-        final boolean isOpenTasksActivated, final boolean isWarningsActivated) {
+        final boolean isOpenTasksActivated, final boolean isWarningsActivated,
+        final boolean canHideZeroWarningsProjects) {
         // CHECKSTYLE:ON
-        super(name);
+        super(name, canHideZeroWarningsProjects);
 
         this.useImages = useImages;
 
@@ -178,6 +181,12 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
         return !isWarningsDeactivated;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    protected boolean isVisibleJob(final Job<?, ?> job) {
+        return toInt(getTotal(job)) > 0;
+    }
+
     /**
      * Returns the number of Checkstyle warnings for the specified job.
      *
@@ -255,8 +264,8 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      *            the job to get the warnings for
      * @return the number of compiler warnings
      */
-    @Override
-    public String getWarnings(final Job<?, ?> job) {
+    // FIXME: this is not yet compatible to 4.0
+    public String getCompilerWarnings(final Job<?, ?> job) {
         if (isWarningsActivated()) {
             return getWarnings(job, WarningsProjectAction.class, "warnings");
         }
@@ -277,7 +286,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
                 + toInt(getFindBugs(job))
                 + toInt(getPmd(job))
                 + toInt(getTasks(job))
-                + toInt(getWarnings(job)));
+                + toInt(getCompilerWarnings(job)));
     }
 
     /**
@@ -366,7 +375,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
     public String getWarnings(final Collection<Job<?, ?>> jobs) {
         int sum = 0;
         for (Job<?, ?> job : jobs) {
-            sum += toInt(getWarnings(job));
+            sum += toInt(getCompilerWarnings(job));
         }
         return String.valueOf(sum);
     }
@@ -385,23 +394,6 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
         }
         return String.valueOf(sum);
 
-    }
-
-    /**
-     * Converts the string to an integer. If the string is not valid then 0
-     * is returned.
-     *
-     * @param value
-     *            the value to convert
-     * @return the integer value or 0
-     */
-    private int toInt(final String value) {
-        try {
-            return Integer.parseInt(StringUtils.substringBetween(value, ">", "<"));
-        }
-        catch (NumberFormatException exception) {
-            return 0;
-        }
     }
 
     /**

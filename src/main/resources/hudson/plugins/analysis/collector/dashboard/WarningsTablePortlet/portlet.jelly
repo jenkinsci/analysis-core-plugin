@@ -55,7 +55,7 @@
             </j:if>
           </tr>
           <tbody>
-            <j:forEach var="job" items="${jobs}">
+            <j:forEach var="job" items="${it.filterZeroWarningsJobs(jobs)}">
               <tr>
                 <td class="pane">
                     <dp:jobLink job="${job}"/>
