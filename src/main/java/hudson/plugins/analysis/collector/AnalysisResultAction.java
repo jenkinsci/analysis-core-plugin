@@ -52,14 +52,4 @@ public class AnalysisResultAction extends AbstractResultAction<AnalysisResult> {
     protected PluginDescriptor getDescriptor() {
         return new AnalysisDescriptor();
     }
-
-    @Override
-    public String getMultipleItemsTooltip(final int numberOfItems) {
-        return Messages.Analysis_ResultAction_MultipleWarnings(numberOfItems);
-    }
-
-    @Override
-    public String getSingleItemTooltip() {
-        return Messages.Analysis_ResultAction_OneWarning();
-    }
 }
