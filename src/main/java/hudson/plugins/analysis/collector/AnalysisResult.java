@@ -84,12 +84,13 @@ public class AnalysisResult extends BuildResult {
 
     @Override
     public String getSummary() {
-        return AnalysisResultSummary.createSummary(this);
+        return Messages.Analysis_ProjectAction_Name() + ": "
+                + createDefaultSummary(AnalysisDescriptor.RESULT_URL, getNumberOfAnnotations(), getNumberOfModules());
     }
 
     @Override
     protected String createDeltaMessage() {
-        return AnalysisResultSummary.createDeltaMessage(this);
+        return createDefaultDeltaMessage(AnalysisDescriptor.RESULT_URL, getNumberOfNewWarnings(), getNumberOfFixedWarnings());
     }
 
     @Override
