@@ -17,12 +17,13 @@ import com.google.common.collect.Sets;
  */
 @Extension(ordinal = 1)
 public final class AnalysisDescriptor extends PluginDescriptor {
+    private static final String ICONS_PREFIX = "/plugin/analysis-collector/icons/";
     /** The ID of this plug-in is used as URL. */
     static final String PLUGIN_ID = "analysis";
     /** The URL of the result action. */
     static final String RESULT_URL = PluginDescriptor.createResultUrlName(PLUGIN_ID);
     /** Icon to use for the result and project action. */
-    static final String ICON_URL = "/plugin/analysis-collector/icons/analysis-24x24.png";
+    static final String ICON_URL = ICONS_PREFIX + "analysis-24x24.png";
 
     /**
      * Returns the activated plug-ins.
@@ -138,6 +139,11 @@ public final class AnalysisDescriptor extends PluginDescriptor {
     @Override
     public String getIconUrl() {
         return ICON_URL;
+    }
+
+    @Override
+    public String getSummaryIconUrl() {
+        return ICONS_PREFIX + "analysis-48x48.png";
     }
 
     @SuppressWarnings("rawtypes")
