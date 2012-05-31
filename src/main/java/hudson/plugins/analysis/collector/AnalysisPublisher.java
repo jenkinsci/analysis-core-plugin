@@ -245,8 +245,8 @@ public class AnalysisPublisher extends HealthAwarePublisher {
             ResultAction<? extends BuildResult> action = build.getAction(result);
             if (action != null) {
                 BuildResult actualResult = action.getResult();
-                Collection<FileAnnotation> annotactualResultations = actualResult.getAnnotations();
-                overallResult.addAnnotations(annotactualResultations);
+                Collection<FileAnnotation> annotations = actualResult.getAnnotations();
+                overallResult.addAnnotations(annotations);
             }
         }
 
