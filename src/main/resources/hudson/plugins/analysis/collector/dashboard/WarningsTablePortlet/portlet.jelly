@@ -38,7 +38,7 @@
                 <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/dry/icons/dry-24x24.png" alt="${%Duplicate Code}" title="${%Duplicate Code}" /></td>
               </j:if>
               <j:if test="${it.isFindBugsActivated()}">
-                <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/findbugs/icons/findbugs-32x32.png" alt="FindBugs" title="FindBugs" /></td>
+                <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/findbugs/icons/findbugs-24x24.png" alt="FindBugs" title="FindBugs" /></td>
               </j:if>
               <j:if test="${it.isPmdActivated()}">
                 <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/pmd/icons/pmd-24x24.png" alt="PMD" title="PMD" /></td>
