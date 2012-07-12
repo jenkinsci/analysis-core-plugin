@@ -112,6 +112,9 @@ public class AnalysisPublisher extends HealthAwarePublisher {
      *            determines whether to collect compiler warnings
      * @param canRunOnFailed
      *            determines whether the plug-in can run for failed builds, too
+     * @param canComputeNew
+     *            determines whether new warnings should be computed (with
+     *            respect to baseline)
      */
     // CHECKSTYLE:OFF
     @SuppressWarnings("PMD.ExcessiveParameterList")
