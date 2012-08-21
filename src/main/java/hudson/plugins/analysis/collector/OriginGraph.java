@@ -2,9 +2,9 @@ package hudson.plugins.analysis.collector;
 
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.graph.CategoryBuildResultGraph;
+import hudson.plugins.analysis.graph.ColorPalette;
 import hudson.plugins.analysis.graph.GraphConfiguration;
 import hudson.plugins.analysis.util.ToolTipProvider;
-import hudson.util.ColorPalette;
 
 import java.awt.Color;
 import java.util.ArrayList;
