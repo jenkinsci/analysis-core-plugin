@@ -1,6 +1,6 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
-    xmlns:dp="/hudson/plugins/view/dashboard" 
+    xmlns:dp="/hudson/plugins/view/dashboard"
     xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
   <dp:decorate portlet="${it}" width="1">
     <tr>
@@ -63,32 +63,32 @@
                 </td>
                 <j:if test="${it.isCheckStyleActivated()}">
                   <td class="pane">
-                       ${it.getCheckStyle(job)}
+                       <j:out value="${it.getCheckStyle(job)} "/>
                   </td>
                 </j:if>
                 <j:if test="${it.isDryActivated()}">
                   <td class="pane">
-                      ${it.getDry(job)}
+                      <j:out value="${it.getDry(job)}" />
                   </td>
                 </j:if>
                 <j:if test="${it.isFindBugsActivated()}">
                   <td class="pane">
-                      ${it.getFindBugs(job)}
+                      <j:out value="${it.getFindBugs(job)}" />
                   </td>
                 </j:if>
                 <j:if test="${it.isPmdActivated()}">
                   <td class="pane">
-                      ${it.getPmd(job)}
+                      <j:out value="${it.getPmd(job)}" />
                   </td>
                 </j:if>
                 <j:if test="${it.isOpenTasksActivated()}">
                   <td class="pane">
-                      ${it.getTasks(job)}
+                      <j:out value="${it.getTasks(job)}" />
                   </td>
                 </j:if>
                 <j:if test="${it.isWarningsActivated()}">
                   <td class="pane">
-                      ${it.getWarnings(job)}
+                      <j:out value="${it.getWarnings(job)}" />
                   </td>
                 </j:if>
                 <j:if test="${it.isTotalsVisible()}">
