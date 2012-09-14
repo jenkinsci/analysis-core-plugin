@@ -160,7 +160,7 @@ public abstract class HealthAwareReporter<T extends BuildResult> extends MavenRe
         super();
         this.healthy = healthy;
         this.unHealthy = unHealthy;
-        this.thresholdLimit = thresholdLimit;
+        this.thresholdLimit = thresholdLimit != null ? thresholdLimit : DEFAULT_PRIORITY_THRESHOLD_LIMIT;
         this.canRunOnFailed = canRunOnFailed;
         this.dontComputeNew = !canComputeNew;
         this.pluginName = "[" + pluginName + "] ";
