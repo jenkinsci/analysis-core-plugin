@@ -337,8 +337,11 @@ public abstract class AbstractProjectAction<T extends ResultAction<?>> implement
      */
     public String getIconFileName() {
         ResultAction<?> lastAction = getLastAction();
-        if (lastAction != null && lastAction.getResult().hasAnnotations()) {
-            return iconUrl;
+        if (lastAction != null) {
+            BuildResult result = lastAction.getResult();
+            if (result != null && result.hasAnnotations()) {
+                return iconUrl;
+            }
         }
         return null;
     }
