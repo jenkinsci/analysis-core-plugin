@@ -36,9 +36,13 @@ public class AnalysisResult extends BuildResult {
      *            the default encoding to be used when reading and parsing files
      * @param result
      *            the parsed result with all annotations
+     * @param useStableBuildAsReference
+     *            determines whether only stable builds should be used as
+     *            reference builds or not
      */
-    public AnalysisResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result) {
-        this(build, new BuildHistory(build, AnalysisResultAction.class), result, defaultEncoding, true);
+    public AnalysisResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result,
+            final boolean useStableBuildAsReference) {
+        this(build, new BuildHistory(build, AnalysisResultAction.class, useStableBuildAsReference), result, defaultEncoding, true);
     }
 
     AnalysisResult(final AbstractBuild<?, ?> build, final BuildHistory history,

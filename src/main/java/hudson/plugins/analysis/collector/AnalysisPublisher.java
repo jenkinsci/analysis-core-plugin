@@ -112,6 +112,8 @@ public class AnalysisPublisher extends HealthAwarePublisher {
      *            determines whether to collect compiler warnings
      * @param canRunOnFailed
      *            determines whether the plug-in can run for failed builds, too
+     * @param useStableBuildAsReference
+     *            determines whether only stable builds should be used as reference builds or not
      * @param canComputeNew
      *            determines whether new warnings should be computed (with
      *            respect to baseline)
@@ -128,13 +130,13 @@ public class AnalysisPublisher extends HealthAwarePublisher {
             final boolean isCheckStyleActivated, final boolean isDryActivated,
             final boolean isFindBugsActivated, final boolean isPmdActivated,
             final boolean isOpenTasksActivated, final boolean isWarningsActivated,
-            final boolean canRunOnFailed, final boolean canComputeNew) {
+            final boolean canRunOnFailed, final boolean useStableBuildAsReference, final boolean canComputeNew) {
         super(healthy, unHealthy, thresholdLimit, defaultEncoding, useDeltaValues,
                 unstableTotalAll, unstableTotalHigh, unstableTotalNormal, unstableTotalLow,
                 unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
                 failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow,
                 failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
-                canRunOnFailed, false, canComputeNew, "ANALYSIS-COLLECTOR");
+                canRunOnFailed, useStableBuildAsReference, false, canComputeNew, false, "ANALYSIS-COLLECTOR");
         isDryDeactivated = !isDryActivated;
         isFindBugsDeactivated = !isFindBugsActivated;
         isPmdDeactivated = !isPmdActivated;
@@ -253,7 +255,7 @@ public class AnalysisPublisher extends HealthAwarePublisher {
             }
         }
 
-        AnalysisResult result = new AnalysisResult(build, getDefaultEncoding(), overallResult);
+        AnalysisResult result = new AnalysisResult(build, getDefaultEncoding(), overallResult, useOnlyStableBuildsAsReference());
         build.getActions().add(new AnalysisResultAction(build, this, result));
 
         return result;
@@ -267,6 +269,6 @@ public class AnalysisPublisher extends HealthAwarePublisher {
     /** {@inheritDoc} */
     public MatrixAggregator createAggregator(final MatrixBuild build, final Launcher launcher,
             final BuildListener listener) {
-        return new AnalysisAnnotationsAggregator(build, launcher, listener, this, getDefaultEncoding());
+        return new AnalysisAnnotationsAggregator(build, launcher, listener, this, getDefaultEncoding(), useOnlyStableBuildsAsReference());
     }
 }

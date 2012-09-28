@@ -1,9 +1,9 @@
 package hudson.plugins.analysis.collector;
 
 import hudson.model.AbstractBuild;
-import hudson.plugins.analysis.core.AbstractResultAction;
 import hudson.plugins.analysis.core.HealthDescriptor;
 import hudson.plugins.analysis.core.PluginDescriptor;
+import hudson.plugins.analysis.core.AbstractResultAction;
 
 /**
  * Controls the live cycle of the analysis results. This action persists the
@@ -29,18 +29,6 @@ public class AnalysisResultAction extends AbstractResultAction<AnalysisResult> {
      */
     public AnalysisResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor, final AnalysisResult result) {
         super(owner, new AnalysisHealthDescriptor(healthDescriptor), result);
-    }
-
-    /**
-     * Creates a new instance of {@link AbstractResultAction}.
-     *
-     * @param owner
-     *            the associated build of this action
-     * @param healthDescriptor
-     *            health descriptor to use
-     */
-    public AnalysisResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor) {
-        super(owner, new AnalysisHealthDescriptor(healthDescriptor));
     }
 
     /** {@inheritDoc} */

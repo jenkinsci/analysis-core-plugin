@@ -29,16 +29,20 @@ public class AnalysisAnnotationsAggregator extends AnnotationsAggregator {
      *            health descriptor
      * @param defaultEncoding
      *            the default encoding to be used when reading and parsing files
+     * @param useStableBuildAsReference
+     *            determines whether only stable builds should be used as
+     *            reference builds or not
      */
     public AnalysisAnnotationsAggregator(final MatrixBuild build, final Launcher launcher,
-            final BuildListener listener, final HealthDescriptor healthDescriptor, final String defaultEncoding) {
-        super(build, launcher, listener, healthDescriptor, defaultEncoding);
+            final BuildListener listener, final HealthDescriptor healthDescriptor, final String defaultEncoding,
+            final boolean useStableBuildAsReference) {
+        super(build, launcher, listener, healthDescriptor, defaultEncoding, useStableBuildAsReference);
     }
 
     @Override
     protected Action createAction(final HealthDescriptor healthDescriptor, final String defaultEncoding, final ParserResult aggregatedResult) {
         return new AnalysisResultAction(build, healthDescriptor,
-                new AnalysisResult(build, defaultEncoding, aggregatedResult));
+                new AnalysisResult(build, defaultEncoding, aggregatedResult, useOnlyStableBuildsAsReference()));
     }
 
     @Override
