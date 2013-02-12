@@ -33,22 +33,22 @@
             </j:if>
             <j:if test="${it.useIcons()}">
               <j:if test="${it.isCheckStyleActivated()}">
-                <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/checkstyle/icons/checkstyle-24x24.png" alt="Checkstyle" title="Checkstyle" /></td>
+                <td width="5%" class="pane-header"><img width="24" height="24" src="${resURL}/plugin/checkstyle/icons/checkstyle-24x24.png" alt="Checkstyle" title="Checkstyle" /></td>
               </j:if>
               <j:if test="${it.isDryActivated()}">
-                <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/dry/icons/dry-24x24.png" alt="${%Duplicate Code}" title="${%Duplicate Code}" /></td>
+                <td width="5%" class="pane-header"><img width="24" height="24" src="${resURL}/plugin/dry/icons/dry-24x24.png" alt="${%Duplicate Code}" title="${%Duplicate Code}" /></td>
               </j:if>
               <j:if test="${it.isFindBugsActivated()}">
-                <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/findbugs/icons/findbugs-24x24.png" alt="FindBugs" title="FindBugs" /></td>
+                <td width="5%" class="pane-header"><img width="24" height="24" src="${resURL}/plugin/findbugs/icons/findbugs-24x24.png" alt="FindBugs" title="FindBugs" /></td>
               </j:if>
               <j:if test="${it.isPmdActivated()}">
-                <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/pmd/icons/pmd-24x24.png" alt="PMD" title="PMD" /></td>
+                <td width="5%" class="pane-header"><img width="24" height="24" src="${resURL}/plugin/pmd/icons/pmd-24x24.png" alt="PMD" title="PMD" /></td>
               </j:if>
               <j:if test="${it.isOpenTasksActivated()}">
-                <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/tasks/icons/tasks-24x24.png" alt="${%Open Tasks}" title="${%Open Tasks}" /></td>
+                <td width="5%" class="pane-header"><img width="24" height="24" src="${resURL}/plugin/tasks/icons/tasks-24x24.png" alt="${%Open Tasks}" title="${%Open Tasks}" /></td>
               </j:if>
               <j:if test="${it.isWarningsActivated()}">
-                <td width="5%" class="pane-header"><img width="24" height="24" src="${rootURL}/plugin/warnings/icons/warnings-24x24.png" alt="${%Compiler Warnings}" title="${%Compiler Warnings}" /></td>
+                <td width="5%" class="pane-header"><img width="24" height="24" src="${resURL}/plugin/warnings/icons/warnings-24x24.png" alt="${%Compiler Warnings}" title="${%Compiler Warnings}" /></td>
               </j:if>
             </j:if>
             <j:if test="${it.isTotalsVisible()}">
