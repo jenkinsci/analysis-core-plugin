@@ -1,6 +1,6 @@
 package hudson.plugins.analysis.collector;
 
-import static junit.framework.Assert.*;
+import static org.junit.Assert.*;
 import hudson.plugins.analysis.graph.EmptyGraph;
 import hudson.plugins.analysis.graph.GraphConfiguration;
 import hudson.plugins.analysis.graph.PriorityGraph;
