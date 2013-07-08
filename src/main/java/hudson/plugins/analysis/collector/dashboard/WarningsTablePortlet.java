@@ -1,8 +1,15 @@
 package hudson.plugins.analysis.collector.dashboard;
 
+import java.util.Collection;
+
+import org.kohsuke.stapler.DataBoundConstructor;
+
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 import hudson.Extension;
+
 import hudson.model.Descriptor;
 import hudson.model.Job;
+
 import hudson.plugins.analysis.collector.AnalysisDescriptor;
 import hudson.plugins.analysis.collector.AnalysisProjectAction;
 import hudson.plugins.analysis.collector.Messages;
@@ -15,13 +22,7 @@ import hudson.plugins.findbugs.FindBugsProjectAction;
 import hudson.plugins.pmd.PmdProjectAction;
 import hudson.plugins.tasks.TasksProjectAction;
 import hudson.plugins.view.dashboard.DashboardPortlet;
-import hudson.plugins.warnings.WarningsProjectAction;
-
-import java.util.Collection;
-
-import org.kohsuke.stapler.DataBoundConstructor;
-
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import hudson.plugins.warnings.AggregatedWarningsProjectAction;
 
 /**
  * A portlet that shows a table with the number of warnings in a job.
@@ -264,10 +265,9 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      *            the job to get the warnings for
      * @return the number of compiler warnings
      */
-    // FIXME: this is not yet compatible to 4.0
     public String getCompilerWarnings(final Job<?, ?> job) {
         if (isWarningsActivated()) {
-            return getWarnings(job, WarningsProjectAction.class, "warnings");
+            return getWarnings(job, AggregatedWarningsProjectAction.class, "warnings");
         }
         return NO_RESULTS_FOUND;
     }
