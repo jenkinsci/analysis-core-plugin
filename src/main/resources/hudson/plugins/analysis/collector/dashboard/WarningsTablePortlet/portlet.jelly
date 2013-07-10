@@ -88,7 +88,7 @@
                 </j:if>
                 <j:if test="${it.isWarningsActivated()}">
                   <td class="pane">
-                      <j:out value="${it.getWarnings(job)}" />
+                      <j:out value="${it.getCompilerWarnings(job)}" />
                   </td>
                 </j:if>
                 <j:if test="${it.isTotalsVisible()}">
