@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 import hudson.Extension;
 
 import hudson.model.Descriptor;
@@ -13,16 +12,10 @@ import hudson.model.Job;
 import hudson.plugins.analysis.collector.AnalysisDescriptor;
 import hudson.plugins.analysis.collector.AnalysisProjectAction;
 import hudson.plugins.analysis.collector.Messages;
+import hudson.plugins.analysis.collector.WarningsAggregator;
 import hudson.plugins.analysis.core.AbstractProjectAction;
-import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.dashboard.AbstractWarningsTablePortlet;
-import hudson.plugins.checkstyle.CheckStyleProjectAction;
-import hudson.plugins.dry.DryProjectAction;
-import hudson.plugins.findbugs.FindBugsProjectAction;
-import hudson.plugins.pmd.PmdProjectAction;
-import hudson.plugins.tasks.TasksProjectAction;
 import hudson.plugins.view.dashboard.DashboardPortlet;
-import hudson.plugins.warnings.AggregatedWarningsProjectAction;
 
 /**
  * A portlet that shows a table with the number of warnings in a job.
@@ -30,17 +23,15 @@ import hudson.plugins.warnings.AggregatedWarningsProjectAction;
  * @author Ulli Hafner
  */
 public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
-    /** Message to be shown if no result action is found. */
-    private static final String NO_RESULTS_FOUND = "-";
     /** Determines whether images should be used in the table header. */
     private final boolean useImages;
 
-    private final boolean isCheckStyleDeactivated;
-    private final boolean isDryDeactivated;
-    private final boolean isFindBugsDeactivated;
-    private final boolean isPmdDeactivated;
-    private final boolean isOpenTasksDeactivated;
-    private final boolean isWarningsDeactivated;
+   /**
+     * Aggregates the warnings in participating analysis plug-ins.
+     *
+     * @since 1.37
+     */
+    private WarningsAggregator warningsAggregator;
 
     /**
      * Creates a new instance of {@link WarningsTablePortlet}.
@@ -62,27 +53,34 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      * @param isWarningsActivated
      *            determines whether to show compiler warnings
      * @param canHideZeroWarningsProjects
-     *            determines if zero warnings projects should be hidden in the
-     *            table
+     *            determines if zero warnings projects should be hidden in the table
      */
     @DataBoundConstructor
     // CHECKSTYLE:OFF
-    public WarningsTablePortlet(final String name, final boolean useImages,
-        final boolean isCheckStyleActivated, final boolean isDryActivated,
-        final boolean isFindBugsActivated, final boolean isPmdActivated,
-        final boolean isOpenTasksActivated, final boolean isWarningsActivated,
-        final boolean canHideZeroWarningsProjects) {
+    public WarningsTablePortlet(final String name, final boolean useImages, final boolean isCheckStyleActivated,
+            final boolean isDryActivated, final boolean isFindBugsActivated, final boolean isPmdActivated,
+            final boolean isOpenTasksActivated, final boolean isWarningsActivated,
+            final boolean canHideZeroWarningsProjects) {
         // CHECKSTYLE:ON
         super(name, canHideZeroWarningsProjects);
 
         this.useImages = useImages;
 
-        isDryDeactivated = !isDryActivated;
-        isFindBugsDeactivated = !isFindBugsActivated;
-        isPmdDeactivated = !isPmdActivated;
-        isOpenTasksDeactivated = !isOpenTasksActivated;
-        isWarningsDeactivated = !isWarningsActivated;
-        isCheckStyleDeactivated = !isCheckStyleActivated;
+        warningsAggregator = new WarningsAggregator(isCheckStyleActivated, isDryActivated, isFindBugsActivated,
+                isPmdActivated, isOpenTasksActivated, isWarningsActivated);
+    }
+
+    /**
+     * Upgrade for release 1.36 or older.
+     *
+     * @return this
+     */
+    protected Object readResolve() {
+        if (warningsAggregator == null) {
+            warningsAggregator = new WarningsAggregator(!isCheckStyleDeactivated, !isDryDeactivated,
+                    !isFindBugsDeactivated, !isPmdDeactivated, !isOpenTasksDeactivated, !isWarningsDeactivated);
+        }
+        return this;
     }
 
     @Override
@@ -134,7 +132,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      * @return <code>true</code> if CheckStyle results should be shown, <code>false</code> otherwise
      */
     public boolean isCheckStyleActivated() {
-        return !isCheckStyleDeactivated;
+        return warningsAggregator.isCheckStyleActivated();
     }
 
     /**
@@ -143,7 +141,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      * @return <code>true</code> if DRY results should be shown, <code>false</code> otherwise
      */
     public boolean isDryActivated() {
-        return !isDryDeactivated;
+        return warningsAggregator.isDryActivated();
     }
 
     /**
@@ -152,7 +150,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      * @return <code>true</code> if FindBugs results should be shown, <code>false</code> otherwise
      */
     public boolean isFindBugsActivated() {
-        return !isFindBugsDeactivated;
+        return warningsAggregator.isFindBugsActivated();
     }
 
     /**
@@ -161,7 +159,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      * @return <code>true</code> if PMD results should be shown, <code>false</code> otherwise
      */
     public boolean isPmdActivated() {
-        return !isPmdDeactivated;
+        return warningsAggregator.isPmdActivated();
     }
 
     /**
@@ -170,7 +168,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      * @return <code>true</code> if open tasks should be shown, <code>false</code> otherwise
      */
     public boolean isOpenTasksActivated() {
-        return !isOpenTasksDeactivated;
+        return warningsAggregator.isOpenTasksActivated();
     }
 
     /**
@@ -179,97 +177,13 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      * @return <code>true</code> if compiler warnings results should be shown, <code>false</code> otherwise
      */
     public boolean isWarningsActivated() {
-        return !isWarningsDeactivated;
+        return warningsAggregator.isWarningsActivated();
     }
 
     /** {@inheritDoc} */
     @Override
     protected boolean isVisibleJob(final Job<?, ?> job) {
         return toInt(getTotal(job)) > 0;
-    }
-
-    /**
-     * Returns the number of Checkstyle warnings for the specified job.
-     *
-     * @param job
-     *            the job to get the warnings for
-     * @return the number of Checkstyle warnings
-     */
-    public String getCheckStyle(final Job<?, ?> job) {
-        if (isCheckStyleActivated()) {
-            return getWarnings(job, CheckStyleProjectAction.class, "checkstyle");
-        }
-        return NO_RESULTS_FOUND;
-    }
-
-    /**
-     * Returns the number of duplicate code warnings for the specified job.
-     *
-     * @param job
-     *            the job to get the warnings for
-     * @return the number of duplicate code warnings
-     */
-    public String getDry(final Job<?, ?> job) {
-        if (isDryActivated()) {
-            return getWarnings(job, DryProjectAction.class, "dry");
-        }
-        return NO_RESULTS_FOUND;
-    }
-
-    /**
-     * Returns the number of FindBugs warnings for the specified job.
-     *
-     * @param job
-     *            the job to get the warnings for
-     * @return the number of FindBugs warnings
-     */
-    public String getFindBugs(final Job<?, ?> job) {
-        if (isFindBugsActivated()) {
-            return getWarnings(job, FindBugsProjectAction.class, "findbugs");
-        }
-        return NO_RESULTS_FOUND;
-    }
-
-    /**
-     * Returns the number of PMD warnings for the specified job.
-     *
-     * @param job
-     *            the job to get the warnings for
-     * @return the number of PMD warnings
-     */
-    public String getPmd(final Job<?, ?> job) {
-        if (isPmdActivated()) {
-            return getWarnings(job, PmdProjectAction.class, "pmd");
-        }
-        return NO_RESULTS_FOUND;
-    }
-
-    /**
-     * Returns the number of open tasks for the specified job.
-     *
-     * @param job
-     *            the job to get the tasks for
-     * @return the number of open tasks
-     */
-    public String getTasks(final Job<?, ?> job) {
-        if (isOpenTasksActivated()) {
-            return getWarnings(job, TasksProjectAction.class, "tasks");
-        }
-        return NO_RESULTS_FOUND;
-    }
-
-    /**
-     * Returns the total number of warnings for the specified job.
-     *
-     * @param job
-     *            the job to get the warnings for
-     * @return the number of compiler warnings
-     */
-    public String getCompilerWarnings(final Job<?, ?> job) {
-        if (isWarningsActivated()) {
-            return getWarnings(job, AggregatedWarningsProjectAction.class, "warnings");
-        }
-        return NO_RESULTS_FOUND;
     }
 
     /**
@@ -280,13 +194,73 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
      * @return the number of warnings
      */
     public String getTotal(final Job<?, ?> job) {
-        return String.valueOf(
-                toInt(getCheckStyle(job))
-                + toInt(getDry(job))
-                + toInt(getFindBugs(job))
-                + toInt(getPmd(job))
-                + toInt(getTasks(job))
-                + toInt(getCompilerWarnings(job)));
+        return warningsAggregator.getTotal(job);
+    }
+
+    /**
+     * Returns the number of Checkstyle warnings for the specified job.
+     *
+     * @param job
+     *            the job to get the warnings for
+     * @return the number of Checkstyle warnings
+     */
+    public String getCheckStyle(final Job<?, ?> job) {
+        return warningsAggregator.getCheckStyle(job);
+    }
+
+    /**
+     * Returns the number of duplicate code warnings for the specified job.
+     *
+     * @param job
+     *            the job to get the warnings for
+     * @return the number of duplicate code warnings
+     */
+    public String getDry(final Job<?, ?> job) {
+        return warningsAggregator.getDry(job);
+    }
+
+    /**
+     * Returns the number of FindBugs warnings for the specified job.
+     *
+     * @param job
+     *            the job to get the warnings for
+     * @return the number of FindBugs warnings
+     */
+    public String getFindBugs(final Job<?, ?> job) {
+        return warningsAggregator.getFindBugs(job);
+    }
+
+    /**
+     * Returns the number of PMD warnings for the specified job.
+     *
+     * @param job
+     *            the job to get the warnings for
+     * @return the number of PMD warnings
+     */
+    public String getPmd(final Job<?, ?> job) {
+        return warningsAggregator.getPmd(job);
+    }
+
+    /**
+     * Returns the number of open tasks for the specified job.
+     *
+     * @param job
+     *            the job to get the tasks for
+     * @return the number of open tasks
+     */
+    public String getTasks(final Job<?, ?> job) {
+        return warningsAggregator.getTasks(job);
+    }
+
+    /**
+     * Returns the total number of warnings for the specified job.
+     *
+     * @param job
+     *            the job to get the warnings for
+     * @return the number of compiler warnings
+     */
+    public String getCompilerWarnings(final Job<?, ?> job) {
+        return warningsAggregator.getCompilerWarnings(job);
     }
 
     /**
@@ -299,7 +273,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
     public String getCheckStyle(final Collection<Job<?, ?>> jobs) {
         int sum = 0;
         for (Job<?, ?> job : jobs) {
-            sum += toInt(getCheckStyle(job));
+            sum += toInt(warningsAggregator.getCheckStyle(job));
         }
         return String.valueOf(sum);
     }
@@ -314,7 +288,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
     public String getDry(final Collection<Job<?, ?>> jobs) {
         int sum = 0;
         for (Job<?, ?> job : jobs) {
-            sum += toInt(getDry(job));
+            sum += toInt(warningsAggregator.getDry(job));
         }
         return String.valueOf(sum);
     }
@@ -329,7 +303,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
     public String getFindBugs(final Collection<Job<?, ?>> jobs) {
         int sum = 0;
         for (Job<?, ?> job : jobs) {
-            sum += toInt(getFindBugs(job));
+            sum += toInt(warningsAggregator.getFindBugs(job));
         }
         return String.valueOf(sum);
     }
@@ -344,7 +318,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
     public String getPmd(final Collection<Job<?, ?>> jobs) {
         int sum = 0;
         for (Job<?, ?> job : jobs) {
-            sum += toInt(getPmd(job));
+            sum += toInt(warningsAggregator.getPmd(job));
         }
         return String.valueOf(sum);
     }
@@ -359,7 +333,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
     public String getTasks(final Collection<Job<?, ?>> jobs) {
         int sum = 0;
         for (Job<?, ?> job : jobs) {
-            sum += toInt(getTasks(job));
+            sum += toInt(warningsAggregator.getTasks(job));
         }
         return String.valueOf(sum);
     }
@@ -375,7 +349,7 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
     public String getWarnings(final Collection<Job<?, ?>> jobs) {
         int sum = 0;
         for (Job<?, ?> job : jobs) {
-            sum += toInt(getCompilerWarnings(job));
+            sum += toInt(warningsAggregator.getCompilerWarnings(job));
         }
         return String.valueOf(sum);
     }
@@ -390,45 +364,32 @@ public class WarningsTablePortlet extends AbstractWarningsTablePortlet {
     public String getTotal(final Collection<Job<?, ?>> jobs) {
         int sum = 0;
         for (Job<?, ?> job : jobs) {
-            sum += Integer.parseInt(getTotal(job));
+            sum += Integer.parseInt(warningsAggregator.getTotal(job));
         }
         return String.valueOf(sum);
 
     }
 
-    /**
-     * Returns the warnings for the specified action.
-     *
-     * @param job
-     *            the job to get the action from
-     * @param actionType
-     *            the type of the action
-     * @param plugin
-     *            the plug-in that is target of the link
-     * @return the number of warnings
-     */
-    @SuppressWarnings("NP")
-    private String getWarnings(final Job<?, ?> job, final Class<? extends AbstractProjectAction<?>> actionType, final String plugin) {
-        AbstractProjectAction<?> action = job.getAction(actionType);
-        if (action != null && action.hasValidResults()) {
-            BuildResult result = action.getLastAction().getResult();
-            int numberOfAnnotations = result.getNumberOfAnnotations();
-            String value;
-            if (numberOfAnnotations > 0) {
-                value = String.format("<a href=\"%s%s\">%d</a>", job.getShortUrl(), plugin, numberOfAnnotations);
-            }
-            else {
-                value = String.valueOf(numberOfAnnotations);
-            }
-            if (result.isSuccessfulTouched() && !result.isSuccessful()) {
-                return value + result.getResultIcon();
-            }
-            return value;
-        }
-        return NO_RESULTS_FOUND;
-    }
+    /** Backward compatibility. @deprecated replaced by {@link WarningsAggregator} */
+    @Deprecated
+    private transient boolean isCheckStyleDeactivated;
+    /** Backward compatibility. @deprecated replaced by {@link WarningsAggregator} */
+    @Deprecated
+    private transient boolean isDryDeactivated;
+    /** Backward compatibility. @deprecated replaced by {@link WarningsAggregator} */
+    @Deprecated
+    private transient boolean isFindBugsDeactivated;
+    /** Backward compatibility. @deprecated replaced by {@link WarningsAggregator} */
+    @Deprecated
+    private transient boolean isPmdDeactivated;
+    /** Backward compatibility. @deprecated replaced by {@link WarningsAggregator} */
+    @Deprecated
+    private transient boolean isOpenTasksDeactivated;
+    /** Backward compatibility. @deprecated replaced by {@link WarningsAggregator} */
+    @Deprecated
+    private transient boolean isWarningsDeactivated;
 
-    /**
+     /**
      * Extension point registration.
      *
      * @author Ulli Hafner
