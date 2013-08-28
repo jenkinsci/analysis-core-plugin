@@ -56,7 +56,7 @@ public abstract class PluginDescriptor extends BuildStepDescriptor<Publisher> {
         if (instance != null) {
             return instance.getPlugin(shortName) != null;
         }
-        return true;
+        return false;
     }
 
     /**
