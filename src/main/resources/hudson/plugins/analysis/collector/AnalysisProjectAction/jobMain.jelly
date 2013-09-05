@@ -1,0 +1,45 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+  xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt" xmlns:u="/util">
+    <h2>Analysis results</h2>
+
+    <ul>
+      <j:if test="${it.isCheckStyleActivated()}">
+        <li>
+          <img width="24" height="24" src="${resURL}/plugin/checkstyle/icons/checkstyle-24x24.png" alt="Checkstyle" title="Checkstyle" />
+          <st:nbsp/> ${%Checkstyle Warnings}: <j:out value="${it.getCheckStyle()} "/>
+        </li>
+      </j:if>
+      <j:if test="${it.isDryActivated()}">
+        <li>
+          <img width="24" height="24" src="${resURL}/plugin/dry/icons/dry-24x24.png" alt="${%Duplicate Code}" title="${%Duplicate Code}" />
+          <st:nbsp/> ${%Duplicate Code}: <j:out value="${it.getDry()} "/>
+        </li>
+      </j:if>
+      <j:if test="${it.isFindBugsActivated()}">
+        <li>
+          <img width="24" height="24" src="${resURL}/plugin/findbugs/icons/findbugs-24x24.png" alt="FindBugs" title="FindBugs" />
+          <st:nbsp/> ${%FindBugs Warnings}: <j:out value="${it.getFindBugs()} "/>
+        </li>
+      </j:if>
+      <j:if test="${it.isPmdActivated()}">
+        <li>
+          <img width="24" height="24" src="${resURL}/plugin/pmd/icons/pmd-24x24.png" alt="PMD" title="PMD" />
+          <st:nbsp/> ${%PMD Warnings}: <j:out value="${it.getPmd()} "/>
+        </li>
+      </j:if>
+      <j:if test="${it.isOpenTasksActivated()}">
+        <li>
+          <img width="24" height="24" src="${resURL}/plugin/tasks/icons/tasks-24x24.png" alt="${%Open Tasks}" title="${%Open Tasks}" />
+          <st:nbsp/> ${%Open Tasks}: <j:out value="${it.getTasks()} "/>
+        </li>
+      </j:if>
+      <j:if test="${it.isWarningsActivated()}">
+        <li>
+          <img width="24" height="24" src="${resURL}/plugin/warnings/icons/warnings-24x24.png" alt="${%Compiler Warnings}" title="${%Compiler Warnings}" />
+          <st:nbsp/> ${%Compiler Warnings}: <j:out value="${it.getCompilerWarnings()} "/>
+        </li>
+      </j:if>
+    </ul>
+
+</j:jelly>

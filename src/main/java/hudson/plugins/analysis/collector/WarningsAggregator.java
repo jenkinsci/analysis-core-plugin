@@ -32,6 +32,7 @@ public class WarningsAggregator {
     private final boolean isPmdActivated;
     private final boolean isOpenTasksActivated;
     private final boolean isWarningsActivated;
+    private boolean hideJobPrefix;
 
     /**
      * Creates a new instance of {@link WarningsAggregator}.
@@ -248,7 +249,7 @@ public class WarningsAggregator {
             int numberOfAnnotations = result.getNumberOfAnnotations();
             String value;
             if (numberOfAnnotations > 0) {
-                value = String.format("<a href=\"%s%s\">%d</a>", job.getShortUrl(), plugin, numberOfAnnotations);
+                value = String.format("<a href=\"%s%s\">%d</a>", getJobPrefix(job), plugin, numberOfAnnotations);
             }
             else {
                 value = String.valueOf(numberOfAnnotations);
@@ -259,5 +260,106 @@ public class WarningsAggregator {
             return value;
         }
         return NO_RESULTS_FOUND;
+    }
+
+    private String getJobPrefix(final Job<?, ?> job) {
+        return hideJobPrefix ? StringUtils.EMPTY : job.getShortUrl();
+    }
+
+    /**
+     * Returns whether Checkstyle results are available for the specified job.
+     *
+     * @param job
+     *            the job to get the warnings for
+     * @return <code>true</code> if there are results, false otherwise
+     */
+    public boolean hasCheckStyle(final Job<?, ?> job) {
+        if (isCheckStyleActivated()) {
+            return hasAction(job, CheckStyleProjectAction.class);
+        }
+        return false;
+    }
+
+    /**
+     * Returns whether DRY results are available for the specified job.
+     *
+     * @param job
+     *            the job to get the warnings for
+     * @return <code>true</code> if there are results, false otherwise
+     */
+    public boolean hasDry(final Job<?, ?> job) {
+        if (isDryActivated()) {
+            return hasAction(job, DryProjectAction.class);
+        }
+        return false;
+    }
+
+    /**
+     * Returns whether FindBugs results are available for the specified job.
+     *
+     * @param job
+     *            the job to get the warnings for
+     * @return <code>true</code> if there are results, false otherwise
+     */
+    public boolean hasFindBugs(final Job<?, ?> job) {
+        if (isFindBugsActivated()) {
+            return hasAction(job, FindBugsProjectAction.class);
+        }
+        return false;
+    }
+
+    /**
+     * Returns whether PMD results are available for the specified job.
+     *
+     * @param job
+     *            the job to get the warnings for
+     * @return <code>true</code> if there are results, false otherwise
+     */
+    public boolean hasPmd(final Job<?, ?> job) {
+        if (isPmdActivated()) {
+            return hasAction(job, PmdProjectAction.class);
+        }
+        return false;
+    }
+
+    /**
+     * Returns whether open tasks results are available for the specified job.
+     *
+     * @param job
+     *            the job to get the warnings for
+     * @return <code>true</code> if there are results, false otherwise
+     */
+    public boolean hasTasks(final Job<?, ?> job) {
+        if (isOpenTasksActivated()) {
+            return hasAction(job, TasksProjectAction.class);
+        }
+        return false;
+    }
+
+    /**
+     * Returns whether compiler warning results are available for the specified job.
+     *
+     * @param job
+     *            the job to get the warnings for
+     * @return <code>true</code> if there are results, false otherwise
+     */
+    public boolean hasCompilerWarnings(final Job<?, ?> job) {
+        if (isWarningsActivated()) {
+            return hasAction(job, AggregatedWarningsProjectAction.class);
+        }
+        return false;
+    }
+
+    private boolean hasAction(final Job<?, ?> job, final Class<? extends AbstractProjectAction<?>> actionType) {
+        AbstractProjectAction<?> action = job.getAction(actionType);
+
+        return action != null && action.hasValidResults();
+    }
+
+    /**
+     * Removes the job/job-name prefix in the URL.
+     */
+    public void hideJobPrefix() {
+        hideJobPrefix = true;
     }
 }
