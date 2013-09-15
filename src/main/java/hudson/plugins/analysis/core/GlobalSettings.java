@@ -1,17 +1,18 @@
 package hudson.plugins.analysis.core;
 
-import jenkins.model.Jenkins;
-import net.sf.json.JSONObject;
-
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.StaplerRequest;
 
-import hudson.Extension;
+import jenkins.model.Jenkins;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
+import hudson.Extension;
 import hudson.model.Describable;
 import hudson.model.Descriptor;
 import hudson.model.Run;
 import hudson.model.listeners.RunListener;
+import hudson.util.CopyOnWriteList;
 
 /**
  * Global settings common to all static analysis plug-ins. The actual extension point {@link RunListener} is not used
@@ -32,7 +33,7 @@ public class GlobalSettings extends RunListener<Run<?, ?>> implements Describabl
     }
 
     /**
-     * Returns the global settings.
+     * Returns the global settings of the static analysis plug-ins.
      *
      * @return the global settings
      */
@@ -50,6 +51,8 @@ public class GlobalSettings extends RunListener<Run<?, ?>> implements Describabl
         private Boolean isQuiet;
         private Boolean failOnCorrupt;
 
+        private final CopyOnWriteList<AnalysisConfiguration> configurations = new CopyOnWriteList<AnalysisConfiguration>();
+
         @Override
         public String getDisplayName() {
             return StringUtils.EMPTY;
@@ -59,20 +62,72 @@ public class GlobalSettings extends RunListener<Run<?, ?>> implements Describabl
          * Creates a new instance of {@link GlobalSettings.DescriptorImpl}.
          */
         public DescriptorImpl() {
-            super();
+            this(true);
 
             load();
         }
 
+        /**
+         * Creates a new instance of {@link GlobalSettings.DescriptorImpl}.
+         *
+         * @param loadFromDisk
+         *            determines whether the configurations should be loaded from disk
+         */
+        public DescriptorImpl(final boolean loadFromDisk) {
+            super();
+
+            if (loadFromDisk) {
+                load();
+            }
+        }
+
         @Override
         public boolean configure(final StaplerRequest req, final JSONObject json) throws FormException {
-            req.bindJSON(this, json);
+            bind(req, json);
             save();
 
             return true;
         }
 
-            @Override
+        /**
+         * Converts the array of configurations to a list of {@link AnalysisConfiguration} instances. Then the remaining
+         * values will be injected into this {@link Settings} instance.
+         *
+         * @param req
+         *            the request
+         * @param json
+         *            the JSON representation
+         */
+        void bind(final StaplerRequest req, final JSONObject json) {
+            Object array = json.remove("configurations");
+            if (array instanceof JSONArray) {
+                bindConfigurations(req, (JSONArray)array);
+            }
+            else if (array instanceof JSONObject) {
+                bindConfiguration(req, (JSONObject)array);
+            }
+            req.bindJSON(this, json);
+        }
+
+        private void bindConfiguration(final StaplerRequest req, final JSONObject array) {
+            JSONObject flat = PluginDescriptor.convertHierarchicalFormData(array);
+            configurations.replaceBy(req.bindJSON(AnalysisConfiguration.class, flat));
+        }
+
+        private void bindConfigurations(final StaplerRequest req, final JSONArray array) {
+            configurations.clear();
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject flat = PluginDescriptor.convertHierarchicalFormData(array.getJSONObject(i));
+                configurations.add(req.bindJSON(AnalysisConfiguration.class, flat));
+            }
+        }
+
+        @Override
+        public AnalysisConfiguration[] getConfigurations() {
+            return configurations.toArray(new AnalysisConfiguration[configurations.size()]);
+        }
+
+        @Override
         public Boolean getQuietMode() {
             return getValidBoolean(isQuiet);
         }
@@ -87,7 +142,7 @@ public class GlobalSettings extends RunListener<Run<?, ?>> implements Describabl
             isQuiet = value;
         }
 
-            @Override
+        @Override
         public Boolean getFailOnCorrupt() {
             return getValidBoolean(failOnCorrupt);
         }

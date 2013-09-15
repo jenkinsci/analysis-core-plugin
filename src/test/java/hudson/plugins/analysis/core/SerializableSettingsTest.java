@@ -17,11 +17,13 @@ public class SerializableSettingsTest {
     @Test
     public void testValues() {
         Settings original = mock(Settings.class);
+        when(original.getConfigurations()).thenReturn(new AnalysisConfiguration[1]);
         SerializableSettings copy;
 
         copy = new SerializableSettings(original);
         assertFalse("Wrong value for quiet: ", copy.getQuietMode());
         assertFalse("Wrong value for fail: ", copy.getFailOnCorrupt());
+        assertArrayEquals("Wrong value for configuration: ", new AnalysisConfiguration[1], copy.getConfigurations());
 
         when(original.getFailOnCorrupt()).thenReturn(true);
         when(original.getQuietMode()).thenReturn(true);

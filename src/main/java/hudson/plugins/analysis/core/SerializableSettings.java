@@ -12,6 +12,7 @@ public class SerializableSettings implements Settings, Serializable {
 
     private final boolean failOnCorrupt;
     private final boolean quietMode;
+    private final AnalysisConfiguration[] configurations;
 
     /**
      * Creates a new instance of {@link SerializableSettings}.
@@ -22,6 +23,13 @@ public class SerializableSettings implements Settings, Serializable {
     public SerializableSettings(final Settings original) {
         failOnCorrupt = original.getFailOnCorrupt();
         quietMode = original.getQuietMode();
+        configurations = copy(original.getConfigurations());
+    }
+
+    private AnalysisConfiguration[] copy(final AnalysisConfiguration[] source) {
+        AnalysisConfiguration[] copied = new AnalysisConfiguration[source.length];
+        System.arraycopy(source, 0, copied, 0, source.length);
+        return copied;
     }
 
     @Override
@@ -32,6 +40,11 @@ public class SerializableSettings implements Settings, Serializable {
     @Override
     public Boolean getFailOnCorrupt() {
         return failOnCorrupt;
+    }
+
+    @Override
+    public AnalysisConfiguration[] getConfigurations() {
+        return copy(configurations);
     }
 }
 

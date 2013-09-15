@@ -1,7 +1,11 @@
 package hudson.plugins.analysis.core; // NOPMD
 
 import javax.annotation.CheckForNull;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Collection;
 
 import org.apache.commons.io.IOUtils;
@@ -17,7 +21,12 @@ import hudson.model.Result;
 import hudson.plugins.analysis.util.EncodingValidator;
 import hudson.plugins.analysis.util.LoggerFactory;
 import hudson.plugins.analysis.util.PluginLogger;
-import hudson.plugins.analysis.util.model.*;
+import hudson.plugins.analysis.util.model.AbstractAnnotation;
+import hudson.plugins.analysis.util.model.AnnotationContainer;
+import hudson.plugins.analysis.util.model.DefaultAnnotationContainer;
+import hudson.plugins.analysis.util.model.FileAnnotation;
+import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.analysis.util.model.WorkspaceFile;
 import hudson.remoting.VirtualChannel;
 import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Builder;
@@ -25,15 +34,14 @@ import hudson.tasks.Maven;
 import hudson.tasks.Recorder;
 
 /**
- * A base class for publishers with the following two characteristics:
+ * A base class for publishers that create a report of warnings from a static code analysis:
  * <ul>
- * <li>It provides a unstable threshold, that could be enabled and set in the
- * configuration screen. If the number of annotations in a build exceeds this
- * value then the build is considered as {@link Result#UNSTABLE UNSTABLE}.</li>
- * <li>It provides thresholds for the build health, that could be adjusted in
- * the configuration screen. These values are used by the
- * {@link HealthReportBuilder} to compute the health and the health trend graph.
- * </li>
+ * <li>It provides thresholds, that could be enabled and set in the configuration screen. If the number of annotations
+ * in a build exceeds this value then the build is considered as {@link Result#UNSTABLE UNSTABLE} or
+ * {@link Result#FAILURE FAILURE}.</li>
+ * <li>It provides thresholds for the build health, that could be adjusted in the configuration screen. These values are
+ * used by the {@link HealthReportBuilder} to compute the health and the health trend graph.</li>
+ * <li>It provides support for matrix build by implementing the {@link MatrixAggregatable} interface.</li>
  * </ul>
  *
  * @author Ulli Hafner
@@ -43,62 +51,11 @@ import hudson.tasks.Recorder;
 public abstract class HealthAwareRecorder extends Recorder implements HealthDescriptor, MatrixAggregatable {
     private static final long serialVersionUID = 8892994325541840827L;
     private static final String SLASH = "/";
-
     /** Default threshold priority limit. */
     private static final String DEFAULT_PRIORITY_THRESHOLD_LIMIT = "low";
-    /** Report health as 100% when the number of warnings is less than this value. */
-    private final String healthy;
-    /** Report health as 0% when the number of warnings is greater than this value. */
-    private final String unHealthy;
-    /** Determines which warning priorities should be considered when evaluating the build health. */
-    private String thresholdLimit;
 
     /** The name of the plug-in. */
     private final String pluginName;
-    /** The default encoding to be used when reading and parsing files. */
-    private final String defaultEncoding;
-    /**
-     * Determines whether the plug-in should run for failed builds, too.
-     *
-     * @since 1.6
-     */
-    private final boolean canRunOnFailed;
-    /**
-     * Determines whether only stable builds should be used as reference builds
-     * or not.
-     *
-     * @since 1.48
-     */
-    private final boolean useStableBuildAsReference;
-    /**
-     * Determines whether the absolute annotations delta or the actual
-     * annotations set difference should be used to evaluate the build
-     * stability.
-     *
-     * @since 1.4
-     */
-    private final boolean useDeltaValues;
-    /**
-     * Thresholds for build status unstable and failed, resp. and priorities
-     * all, high, normal, and low, resp.
-     *
-     * @since 1.14
-     */
-    private Thresholds thresholds = new Thresholds();
-    /**
-     * Determines whether module names should be derived from Maven POM or Ant
-     * build files.
-     *
-     * @since 1.19
-     */
-    private final boolean shouldDetectModules;
-    /**
-     * Determines whether new warnings should be computed (with respect to
-     * baseline).
-     *
-     * @since 1.34
-     */
-    private final boolean dontComputeNew;
     /**
      * Determines whether relative paths in warnings should be resolved using a
      * time expensive operation that scans the whole workspace for matching
@@ -107,123 +64,15 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
      * @since 1.43
      */
     private final boolean doNotResolveRelativePaths;
-
     /**
-     * Creates a new instance of {@link HealthAwareRecorder}.
+     * Reference to all other configuration values, either from a job local or Jenkins global configuration.
      *
-     * @param healthy
-     *            Report health as 100% when the number of open tasks is less
-     *            than this value
-     * @param unHealthy
-     *            Report health as 0% when the number of open tasks is greater
-     *            than this value
-     * @param thresholdLimit
-     *            determines which warning priorities should be considered when
-     *            evaluating the build stability and health
-     * @param defaultEncoding
-     *            the default encoding to be used when reading and parsing files
-     * @param useDeltaValues
-     *            determines whether the absolute annotations delta or the
-     *            actual annotations set difference should be used to evaluate
-     *            the build stability
-     * @param unstableTotalAll
-     *            annotation threshold
-     * @param unstableTotalHigh
-     *            annotation threshold
-     * @param unstableTotalNormal
-     *            annotation threshold
-     * @param unstableTotalLow
-     *            annotation threshold
-     * @param unstableNewAll
-     *            annotation threshold
-     * @param unstableNewHigh
-     *            annotation threshold
-     * @param unstableNewNormal
-     *            annotation threshold
-     * @param unstableNewLow
-     *            annotation threshold
-     * @param failedTotalAll
-     *            annotation threshold
-     * @param failedTotalHigh
-     *            annotation threshold
-     * @param failedTotalNormal
-     *            annotation threshold
-     * @param failedTotalLow
-     *            annotation threshold
-     * @param failedNewAll
-     *            annotation threshold
-     * @param failedNewHigh
-     *            annotation threshold
-     * @param failedNewNormal
-     *            annotation threshold
-     * @param failedNewLow
-     *            annotation threshold
-     * @param canRunOnFailed
-     *            determines whether the plug-in can run for failed builds, too
-     * @param useStableBuildAsReference
-     *            determines whether only stable builds should be used as
-     *            reference builds or not
-     * @param shouldDetectModules
-     *            determines whether module names should be derived from Maven
-     *            POM or Ant build files
-     * @param canComputeNew
-     *            determines whether new warnings should be computed (with
-     *            respect to baseline)
-     * @param canResolveRelativePaths
-     *            determines whether relative paths in warnings should be
-     *            resolved using a time expensive operation that scans the whole
-     *            workspace for matching files.
-     * @param pluginName
-     *            the name of the plug-in
+     * @since 2.0
      */
-    // CHECKSTYLE:OFF
-    @SuppressWarnings("PMD")
-    public HealthAwareRecorder(final String healthy, final String unHealthy,
-            final String thresholdLimit, final String defaultEncoding,
-            final boolean useDeltaValues, final String unstableTotalAll,
-            final String unstableTotalHigh, final String unstableTotalNormal,
-            final String unstableTotalLow, final String unstableNewAll,
-            final String unstableNewHigh, final String unstableNewNormal,
-            final String unstableNewLow, final String failedTotalAll, final String failedTotalHigh,
-            final String failedTotalNormal, final String failedTotalLow, final String failedNewAll,
-            final String failedNewHigh, final String failedNewNormal, final String failedNewLow,
-            final boolean canRunOnFailed, final boolean useStableBuildAsReference,
-            final boolean shouldDetectModules, final boolean canComputeNew,
-            final boolean canResolveRelativePaths, final String pluginName) {
-        super();
-        this.healthy = healthy;
-        this.unHealthy = unHealthy;
-        this.thresholdLimit = StringUtils.defaultIfEmpty(thresholdLimit, DEFAULT_PRIORITY_THRESHOLD_LIMIT);
-        this.defaultEncoding = defaultEncoding;
-        this.useDeltaValues = useDeltaValues;
+    private ConfigurationReference configReference;
 
-        doNotResolveRelativePaths = !canResolveRelativePaths;
-        dontComputeNew = !canComputeNew;
-
-        thresholds.unstableTotalAll = unstableTotalAll;
-        thresholds.unstableTotalHigh = unstableTotalHigh;
-        thresholds.unstableTotalNormal = unstableTotalNormal;
-        thresholds.unstableTotalLow = unstableTotalLow;
-        thresholds.unstableNewAll = unstableNewAll;
-        thresholds.unstableNewHigh = unstableNewHigh;
-        thresholds.unstableNewNormal = unstableNewNormal;
-        thresholds.unstableNewLow = unstableNewLow;
-        thresholds.failedTotalAll = failedTotalAll;
-        thresholds.failedTotalHigh = failedTotalHigh;
-        thresholds.failedTotalNormal = failedTotalNormal;
-        thresholds.failedTotalLow = failedTotalLow;
-        thresholds.failedNewAll = failedNewAll;
-        thresholds.failedNewHigh = failedNewHigh;
-        thresholds.failedNewNormal = failedNewNormal;
-        thresholds.failedNewLow = failedNewLow;
-
-        this.canRunOnFailed = canRunOnFailed;
-        this.useStableBuildAsReference = useStableBuildAsReference;
-        this.shouldDetectModules = shouldDetectModules;
-        this.pluginName = "[" + pluginName + "] ";
-    }
-
-    // CHECKSTYLE:ON
+    /** Transient reference to speed up access to values. */
+    private transient AnalysisConfiguration configuration;
 
     /**
      * Returns whether relative paths in warnings should be resolved using a
@@ -260,18 +109,16 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
     }
 
     /**
-     * Determines whether only stable builds should be used as reference builds
-     * or not.
+     * Determines whether only stable builds should be used as reference builds or not.
      *
      * @return <code>true</code> if only stable builds should be used
      */
     public boolean getUseStableBuildAsReference() {
-        return useStableBuildAsReference;
+        return configuration.useOnlyStableBuildsAsReference();
     }
 
     /**
-     * Determines whether only stable builds should be used as reference builds
-     * or not.
+     * Determines whether only stable builds should be used as reference builds or not.
      *
      * @return <code>true</code> if only stable builds should be used
      */
@@ -280,35 +127,103 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
     }
 
     /**
-     * Initializes new fields that are not serialized yet.
+     * Returns whether new warnings should be computed (with respect to baseline).
      *
-     * @return the object
+     * @return <code>true</code> if new warnings should be computed (with respect to baseline), <code>false</code>
+     *         otherwise
      */
-    protected Object readResolve() {
-        if (thresholdLimit == null) {
-            thresholdLimit = DEFAULT_PRIORITY_THRESHOLD_LIMIT;
-        }
-        if (thresholds == null) {
-            thresholds = new Thresholds();
+    public boolean getCanComputeNew() {
+        return configuration.canComputeNew();
+    }
 
-            if (threshold != null) {
-                thresholds.unstableTotalAll = threshold;
-                threshold = null; // NOPMD
-            }
-            if (newThreshold != null) {
-                thresholds.unstableNewAll = newThreshold;
-                newThreshold = null; // NOPMD
-            }
-            if (failureThreshold != null) {
-                thresholds.failedTotalAll = failureThreshold;
-                failureThreshold = null; // NOPMD
-            }
-            if (newFailureThreshold != null) {
-                thresholds.failedNewAll = newFailureThreshold;
-                newFailureThreshold = null; // NOPMD
-            }
-        }
-        return this;
+    /**
+     * Returns whether new warnings should be computed (with respect to baseline).
+     *
+     * @return <code>true</code> if new warnings should be computed (with respect to baseline), <code>false</code>
+     *         otherwise
+     */
+    public boolean canComputeNew() {
+        return getCanComputeNew();
+    }
+
+    /**
+     * Returns whether this plug-in can run for failed builds, too.
+     *
+     * @return <code>true</code> if this plug-in can run for failed builds, <code>false</code> otherwise
+     */
+    public boolean getCanRunOnFailed() {
+        return configuration.canRunOnFailed();
+    }
+
+    /**
+     * Returns whether module names should be derived from Maven POM or Ant build files.
+     *
+     * @return the can run on failed
+     */
+    public boolean getShouldDetectModules() {
+        return configuration.shouldDetectModules();
+    }
+
+    /**
+     * Returns whether module names should be derived from Maven POM or Ant build files.
+     *
+     * @return the can run on failed
+     */
+    public boolean shouldDetectModules() {
+        return getShouldDetectModules();
+    }
+
+    /**
+     * Returns the threshold limit.
+     *
+     * @return the threshold limit
+     */
+    public String getThresholdLimit() {
+        return configuration.getThresholdLimit();
+    }
+
+    /**
+     * Returns whether absolute annotations delta or the actual annotations set difference should be used to evaluate
+     * the build stability.
+     *
+     * @return <code>true</code> if the annotation count should be used, <code>false</code> if the actual (set)
+     *         difference should be computed
+     */
+    public boolean getUseDeltaValues() {
+        return configuration.useDeltaValues();
+    }
+
+    /**
+     * Returns the healthy threshold, i.e. when health is reported as 100%.
+     *
+     * @return the 100% healthiness
+     */
+    public String getHealthy() {
+        return configuration.getHealthy();
+    }
+
+    /**
+     * Returns the unhealthy threshold, i.e. when health is reported as 0%.
+     *
+     * @return the 0% unhealthiness
+     */
+    public String getUnHealthy() {
+        return configuration.getUnHealthy();
+    }
+
+    /**
+     * Returns the defined default encoding.
+     *
+     * @return the default encoding
+     */
+    @CheckForNull
+    public String getDefaultEncoding() {
+        return configuration.getDefaultEncoding();
+    }
+
+    /** {@inheritDoc} */
+    public Thresholds getThresholds() {
+        return configuration.getThresholds();
     }
 
     @Override
@@ -446,59 +361,7 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
     private String getEncoding() {
         return EncodingValidator.getEncoding(getDefaultEncoding());
     }
-
-    /**
-     * Returns whether new warnings should be computed (with respect to
-     * baseline).
-     *
-     * @return <code>true</code> if new warnings should be computed (with
-     *         respect to baseline), <code>false</code> otherwise
-     */
-    public boolean getCanComputeNew() {
-        return canComputeNew();
-    }
-
-    /**
-     * Returns whether new warnings should be computed (with respect to
-     * baseline).
-     *
-     * @return <code>true</code> if new warnings should be computed (with
-     *         respect to baseline), <code>false</code> otherwise
-     */
-    public boolean canComputeNew() {
-        return !dontComputeNew;
-    }
-
-    /**
-     * Returns whether this plug-in can run for failed builds, too.
-     *
-     * @return <code>true</code> if this plug-in can run for failed builds,
-     *         <code>false</code> otherwise
-     */
-    public boolean getCanRunOnFailed() {
-        return canRunOnFailed;
-    }
-
-    /**
-     * Returns whether module names should be derived from Maven POM or Ant
-     * build files.
-     *
-     * @return the can run on failed
-     */
-    public boolean getShouldDetectModules() {
-        return shouldDetectModules;
-    }
-
-    /**
-     * Returns whether module names should be derived from Maven POM or Ant
-     * build files.
-     *
-     * @return the can run on failed
-     */
-    public boolean shouldDetectModules() {
-        return shouldDetectModules;
-    }
-
+    
     /**
      * Returns whether this publisher can continue processing. This default
      * implementation returns <code>true</code> if the property
@@ -510,59 +373,12 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
      * @return <code>true</code> if the build can continue
      */
     protected boolean canContinue(final Result result) {
-        if (canRunOnFailed) {
+        if (getCanRunOnFailed()) {
             return result != Result.ABORTED;
         }
         else {
             return result != Result.ABORTED && result != Result.FAILURE;
         }
-    }
-
-    @Override
-    public Thresholds getThresholds() {
-        return thresholds;
-    }
-
-    /**
-     * Returns whether absolute annotations delta or the actual annotations set
-     * difference should be used to evaluate the build stability.
-     *
-     * @return <code>true</code> if the annotation count should be used,
-     *         <code>false</code> if the actual (set) difference should be
-     *         computed
-     */
-    public boolean getUseDeltaValues() {
-        return useDeltaValues;
-    }
-
-    /**
-     * Returns the healthy threshold, i.e. when health is reported as 100%.
-     *
-     * @return the 100% healthiness
-     */
-    @Override
-    public String getHealthy() {
-        return healthy;
-    }
-
-    /**
-     * Returns the unhealthy threshold, i.e. when health is reported as 0%.
-     *
-     * @return the 0% unhealthiness
-     */
-    @Override
-    public String getUnHealthy() {
-        return unHealthy;
-    }
-
-    /**
-     * Returns the defined default encoding.
-     *
-     * @return the default encoding
-     */
-    @CheckForNull
-    public String getDefaultEncoding() {
-        return defaultEncoding;
     }
 
     /**
@@ -607,18 +423,52 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
         return Priority.valueOf(StringUtils.upperCase(getThresholdLimit()));
     }
 
-    /**
-     * Returns the threshold limit.
-     *
-     * @return the threshold limit
-     */
-    public String getThresholdLimit() {
-        return thresholdLimit;
-    }
-
     @Override
     public BuildStepMonitor getRequiredMonitorService() {
         return canComputeNew() ? BuildStepMonitor.STEP : BuildStepMonitor.NONE;
+    }
+
+    /**
+     * Preserves configurations from installations with old plug-in version: initializes new fields that are not
+     * serialized yet.
+     *
+     * @return the object
+     */
+    protected Object readResolve() {
+        if (thresholdLimit == null) {
+            thresholdLimit = DEFAULT_PRIORITY_THRESHOLD_LIMIT;
+        }
+        if (thresholds == null) {
+            thresholds = new Thresholds();
+
+            if (threshold != null) {
+                thresholds.unstableTotalAll = threshold;
+                threshold = null; // NOPMD
+            }
+            if (newThreshold != null) {
+                thresholds.unstableNewAll = newThreshold;
+                newThreshold = null; // NOPMD
+            }
+            if (failureThreshold != null) {
+                thresholds.failedTotalAll = failureThreshold;
+                failureThreshold = null; // NOPMD
+            }
+            if (newFailureThreshold != null) {
+                thresholds.failedNewAll = newFailureThreshold;
+                newFailureThreshold = null; // NOPMD
+            }
+        }
+        if (configReference == null) { // before 1.55
+            Thresholds t = thresholds;
+            configReference = new ConfigurationReference.LocalConfigurationReference(healthy, unHealthy,
+                    thresholdLimit, useDeltaValues, t.unstableTotalAll, t.unstableTotalHigh, t.unstableTotalNormal,
+                    t.unstableTotalLow, t.unstableNewAll, t.unstableNewHigh, t.unstableNewNormal, t.unstableNewLow,
+                    t.failedTotalAll, t.failedTotalHigh, t.failedTotalNormal, t.failedTotalLow, t.failedNewAll,
+                    t.failedNewHigh, t.failedNewNormal, t.failedNewLow, canRunOnFailed, useStableBuildAsReference,
+                    shouldDetectModules, !dontComputeNew, defaultEncoding);
+        }
+        configuration = configReference.getConfiguration();
+        return this;
     }
 
     // CHECKSTYLE:OFF
@@ -658,14 +508,44 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
     @SuppressWarnings("unused")
     @Deprecated
     private transient String height;
+    /** Backward compatibility. @deprecated */
+    @Deprecated
+    private transient String defaultEncoding;
+    /** Backward compatibility. @deprecated */
+    @Deprecated
+    private transient boolean canRunOnFailed;
+    /** Backward compatibility. @deprecated */
+    @Deprecated
+    private transient boolean useStableBuildAsReference;
+    /** Backward compatibility. @deprecated */
+    @Deprecated
+    private transient boolean useDeltaValues;
+    /** Backward compatibility. @deprecated */
+    @Deprecated
+    private transient Thresholds thresholds = new Thresholds();
+    /** Backward compatibility. @deprecated */
+    @Deprecated
+    private transient boolean shouldDetectModules;
+    /** Backward compatibility. @deprecated */
+    @Deprecated
+    private transient boolean dontComputeNew;
+    /** Backward compatibility. @deprecated */
+    @Deprecated
+    private transient String healthy;
+    /** Backward compatibility. @deprecated */
+    @Deprecated
+    private transient String unHealthy;
+    /** Backward compatibility. @deprecated */
+    @Deprecated
+    private transient String thresholdLimit;
 
     /** Backward compatibility. @deprecated */
     @SuppressWarnings({"PMD","javadoc"})
     @Deprecated
-    public HealthAwareRecorder(final String threshold, final String newThreshold,
-            final String failureThreshold, final String newFailureThreshold, final String healthy,
-            final String unHealthy, final String thresholdLimit, final String defaultEncoding,
-            final boolean useDeltaValues, final boolean canRunOnFailed, final String pluginName) {
+    public HealthAwareRecorder(final String threshold, final String newThreshold, final String failureThreshold,
+            final String newFailureThreshold, final String healthy, final String unHealthy,
+            final String thresholdLimit, final String defaultEncoding, final boolean useDeltaValues,
+            final boolean canRunOnFailed, final String pluginName) {
         super();
 
         thresholds.unstableTotalAll = threshold;
@@ -689,24 +569,65 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
     /** Backward compatibility. @deprecated */
     @SuppressWarnings({"PMD","javadoc"})
     @Deprecated
-    public HealthAwareRecorder(final String healthy, final String unHealthy,
-            final String thresholdLimit, final String defaultEncoding,
-            final boolean useDeltaValues, final String unstableTotalAll,
-            final String unstableTotalHigh, final String unstableTotalNormal,
-            final String unstableTotalLow, final String unstableNewAll,
-            final String unstableNewHigh, final String unstableNewNormal,
+    public HealthAwareRecorder(final String healthy, final String unHealthy, final String thresholdLimit,
+            final String defaultEncoding, final boolean useDeltaValues, final String unstableTotalAll,
+            final String unstableTotalHigh, final String unstableTotalNormal, final String unstableTotalLow,
+            final String unstableNewAll, final String unstableNewHigh, final String unstableNewNormal,
             final String unstableNewLow, final String failedTotalAll, final String failedTotalHigh,
             final String failedTotalNormal, final String failedTotalLow, final String failedNewAll,
             final String failedNewHigh, final String failedNewNormal, final String failedNewLow,
-            final boolean canRunOnFailed,
-            final boolean shouldDetectModules, final boolean canComputeNew,
+            final boolean canRunOnFailed, final boolean shouldDetectModules, final boolean canComputeNew,
             final boolean canResolveRelativePaths, final String pluginName) {
-        this(healthy, unHealthy, thresholdLimit, defaultEncoding, useDeltaValues,
-                unstableTotalAll, unstableTotalHigh, unstableTotalNormal, unstableTotalLow,
-                unstableNewAll, unstableNewHigh, unstableNewNormal, unstableNewLow,
-                failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow,
-                failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
-                canRunOnFailed, false, shouldDetectModules, canComputeNew, canResolveRelativePaths, pluginName);
+        this(healthy, unHealthy, thresholdLimit, defaultEncoding, useDeltaValues, unstableTotalAll, unstableTotalHigh,
+                unstableTotalNormal, unstableTotalLow, unstableNewAll, unstableNewHigh, unstableNewNormal,
+                unstableNewLow, failedTotalAll, failedTotalHigh, failedTotalNormal, failedTotalLow, failedNewAll,
+                failedNewHigh, failedNewNormal, failedNewLow, canRunOnFailed, false, shouldDetectModules,
+                canComputeNew, canResolveRelativePaths, pluginName);
+    }
+
+    /** Backward compatibility. @deprecated */
+    @SuppressWarnings({"PMD","javadoc"})
+    @Deprecated
+    public HealthAwareRecorder(final String healthy, final String unHealthy, final String thresholdLimit,
+            final String defaultEncoding, final boolean useDeltaValues, final String unstableTotalAll,
+            final String unstableTotalHigh, final String unstableTotalNormal, final String unstableTotalLow,
+            final String unstableNewAll, final String unstableNewHigh, final String unstableNewNormal,
+            final String unstableNewLow, final String failedTotalAll, final String failedTotalHigh,
+            final String failedTotalNormal, final String failedTotalLow, final String failedNewAll,
+            final String failedNewHigh, final String failedNewNormal, final String failedNewLow,
+            final boolean canRunOnFailed, final boolean useStableBuildAsReference, final boolean shouldDetectModules,
+            final boolean canComputeNew, final boolean canResolveRelativePaths, final String pluginName) {
+        super();
+        this.healthy = healthy;
+        this.unHealthy = unHealthy;
+        this.thresholdLimit = StringUtils.defaultIfEmpty(thresholdLimit, DEFAULT_PRIORITY_THRESHOLD_LIMIT);
+        this.defaultEncoding = defaultEncoding;
+        this.useDeltaValues = useDeltaValues;
+
+        doNotResolveRelativePaths = !canResolveRelativePaths;
+        dontComputeNew = !canComputeNew;
+
+        thresholds.unstableTotalAll = unstableTotalAll;
+        thresholds.unstableTotalHigh = unstableTotalHigh;
+        thresholds.unstableTotalNormal = unstableTotalNormal;
+        thresholds.unstableTotalLow = unstableTotalLow;
+        thresholds.unstableNewAll = unstableNewAll;
+        thresholds.unstableNewHigh = unstableNewHigh;
+        thresholds.unstableNewNormal = unstableNewNormal;
+        thresholds.unstableNewLow = unstableNewLow;
+        thresholds.failedTotalAll = failedTotalAll;
+        thresholds.failedTotalHigh = failedTotalHigh;
+        thresholds.failedTotalNormal = failedTotalNormal;
+        thresholds.failedTotalLow = failedTotalLow;
+        thresholds.failedNewAll = failedNewAll;
+        thresholds.failedNewHigh = failedNewHigh;
+        thresholds.failedNewNormal = failedNewNormal;
+        thresholds.failedNewLow = failedNewLow;
+
+        this.canRunOnFailed = canRunOnFailed;
+        this.useStableBuildAsReference = useStableBuildAsReference;
+        this.shouldDetectModules = shouldDetectModules;
+        this.pluginName = "[" + pluginName + "] ";
     }
     // CHECKSTYLE:OFF
 }

@@ -20,4 +20,12 @@ public interface Settings {
      * @return on <code>true</code> the build will be failed, on <code>false</code> an error message is reported
      */
     Boolean getFailOnCorrupt();
+
+    /**
+     * Returns the defined analysis configurations.
+     *
+     * @return the configurations
+     * @since 2.0
+     */
+    AnalysisConfiguration[] getConfigurations();
 }

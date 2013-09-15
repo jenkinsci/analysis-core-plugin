@@ -1,0 +1,23 @@
+<!-- Section header -->
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+  xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:u="/util">
+
+  <j:invokeStatic var="configs" className="hudson.plugins.analysis.core.ConfigurationReference"
+    method="getConfigurations" >
+    <j:arg value="${instance==null?null:instance.configuration}" />
+  </j:invokeStatic>
+  <j:set var="currentName" value="${instance==null?null:instance.configuration.name}" />
+  <f:dropdownList name="configuration" title="${%Thresholds Configuration:}">
+    <j:forEach var="configuration" items="${configs}" varStatus="loop">
+      <f:dropdownListBlock title="${configuration.name}" value="${loop.index}"
+        staplerClass="${configuration.descriptor.clazz.name}" selected="${configuration.name.equals(currentName)}">
+        <f:invisibleEntry>
+          <input type="hidden" name="name" value="${configuration.name}" />
+        </f:invisibleEntry>
+        <st:include page="${configuration.descriptor.configPage}" from="${descriptor}" />
+      </f:dropdownListBlock>
+    </j:forEach>
+  </f:dropdownList>
+
+</j:jelly>

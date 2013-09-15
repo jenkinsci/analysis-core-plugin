@@ -2,22 +2,19 @@ package hudson.plugins.analysis.core;
 
 import java.io.IOException;
 
-import net.sf.json.JSONObject;
-
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 
-import hudson.FilePath;
+import net.sf.json.JSONObject;
 
+import hudson.FilePath;
 import hudson.model.AbstractProject;
 import hudson.model.Hudson;
-
 import hudson.plugins.analysis.graph.GraphConfiguration;
 import hudson.plugins.analysis.util.EncodingValidator;
 import hudson.plugins.analysis.util.ThresholdValidator;
-
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
 import hudson.util.FormValidation;
@@ -31,7 +28,9 @@ public abstract class PluginDescriptor extends BuildStepDescriptor<Publisher> {
     /** Suffix of the URL of the plug-in result. */
     protected static final String RESULT_URL_SUFFIX = "Result";
     private static final String COMPUTE_NEW_SECTION_KEY = "canComputeNew";
-    private static final String CONFIGURATION_SECTION_KEY = "configuration"; // starting with 1.55
+
+    /** @since 2.0 */
+    private static final String CONFIGURATION_SECTION_KEY = "configuration";
 
     /**
      * Returns the result URL for the specified plug-in.
@@ -49,7 +48,8 @@ public abstract class PluginDescriptor extends BuildStepDescriptor<Publisher> {
      *
      * @param shortName
      *            the plug-in to check
-     * @return <code>true</code> if the specified plug-in is installed, <code>false</code> if not.
+     * @return <code>true</code> if the specified plug-in is installed,
+     *         <code>false</code> if not.
      */
     public static boolean isPluginInstalled(final String shortName) {
         Hudson instance = Hudson.getInstance();
@@ -60,6 +60,8 @@ public abstract class PluginDescriptor extends BuildStepDescriptor<Publisher> {
     }
 
     /**
+     * Converts the hierarchical JSON object that contains a sub-section for {@value #COMPUTE_NEW_SECTION_KEY} to a
+     * corresponding flat JSON object.
      * Returns whether the Maven plug-in is installed and enabled.
      *
      * @return <code>true</code> if the Maven plug-in is installed, <code>false</code> if not.
@@ -90,7 +92,7 @@ public abstract class PluginDescriptor extends BuildStepDescriptor<Publisher> {
      * @param section
      *            the section to flatten
      * @return the flat structure
-     * @since 1.55
+     * @since 2.0
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings("WMI")
     protected static JSONObject convertHierarchicalFormData(final JSONObject hierarchical, final String section) {
@@ -245,6 +247,6 @@ public abstract class PluginDescriptor extends BuildStepDescriptor<Publisher> {
     @Override
     @SuppressWarnings("rawtypes")
     public boolean isApplicable(final Class<? extends AbstractProject> jobType) {
-        return !(isMavenPluginInstalled() && MavenProjectChecker.isMavenProject(jobType));
+        return !(isPluginInstalled("maven-plugin") && MavenProjectChecker.isMavenProject(jobType));
     }
 }
