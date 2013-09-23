@@ -47,14 +47,12 @@ import hudson.tasks.Recorder;
  * @author Ulli Hafner
  */
 // CHECKSTYLE:COUPLING-OFF
-@SuppressWarnings("PMD.TooManyFields")
 public abstract class HealthAwareRecorder extends Recorder implements HealthDescriptor, MatrixAggregatable {
     private static final long serialVersionUID = 8892994325541840827L;
-    private static final String SLASH = "/";
-    /** Default threshold priority limit. */
-    private static final String DEFAULT_PRIORITY_THRESHOLD_LIMIT = "low";
 
-    /** The name of the plug-in. */
+    private static final String DEFAULT_PRIORITY_THRESHOLD_LIMIT = "low";
+    private static final String SLASH = "/";
+
     private final String pluginName;
     /**
      * Determines whether relative paths in warnings should be resolved using a
@@ -67,7 +65,7 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
     /**
      * Reference to all other configuration values, either from a job local or Jenkins global configuration.
      *
-     * @since 2.0
+     * @since 1.55
      */
     private ConfigurationReference configReference;
 
@@ -75,37 +73,65 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
     private transient AnalysisConfiguration configuration;
 
     /**
-     * Returns whether relative paths in warnings should be resolved using a
-     * time expensive operation that scans the whole workspace for matching
-     * files.
+     * Creates a new instance of {@link HealthAwareRecorder}.
      *
-     * @return <code>true</code> if relative paths can be resolved,
-     *         <code>false</code> otherwise
+     * @param configuration
+     *            the analysis configuration values
+     * @param pluginName
+     *            the name of the plug-in
      */
-    public boolean getCanResolveRelativePaths() {
-        return !doNotResolveRelativePaths;
+    // CHECKSTYLE:OFF
+    public HealthAwareRecorder(final ConfigurationReference configuration, final String pluginName) {
+        this(configuration, pluginName, false);
     }
 
     /**
-     * Returns whether relative paths in warnings should be resolved using a
-     * time expensive operation that scans the whole workspace for matching
-     * files.
+     * Creates a new instance of {@link HealthAwareRecorder}.
      *
-     * @return <code>true</code> if relative paths can be resolved,
-     *         <code>false</code> otherwise
+     * @param configuration
+     *            the analysis configuration values
+     * @param pluginName
+     *            the name of the plug-in
+     * @param canResolveRelativePaths
+     *            determines whether relative paths in warnings should be resolved using a time expensive operation that
+     *            scans the whole workspace for matching files.
+     */
+    // CHECKSTYLE:OFF
+    public HealthAwareRecorder(final ConfigurationReference configuration, final String pluginName, final boolean canResolveRelativePaths) {
+        this.pluginName = "[" + pluginName + "] ";
+
+        doNotResolveRelativePaths = !canResolveRelativePaths;
+        configReference = configuration;
+        this.configuration = configuration.getConfiguration();
+    }
+
+    /**
+     * Returns the analysis configuration values.
+     *
+     * @return the configuration
+     */
+    public ConfigurationReference getConfiguration() {
+        return configReference;
+    }
+
+    /**
+     * Returns whether relative paths in warnings should be resolved using a time expensive operation that scans the
+     * whole workspace for matching files.
+     *
+     * @return <code>true</code> if relative paths can be resolved, <code>false</code> otherwise
      */
     public boolean canResolveRelativePaths() {
         return getCanResolveRelativePaths();
     }
 
     /**
-     * Returns whether there is a health threshold enabled.
+     * Returns whether relative paths in warnings should be resolved using a time expensive operation that scans the
+     * whole workspace for matching files.
      *
-     * @return <code>true</code> if at least one threshold is enabled,
-     *         <code>false</code> otherwise
+     * @return <code>true</code> if relative paths can be resolved, <code>false</code> otherwise
      */
-    protected boolean isThresholdEnabled() {
-        return new NullHealthDescriptor(this).isThresholdEnabled();
+    public boolean getCanResolveRelativePaths() {
+        return !doNotResolveRelativePaths;
     }
 
     /**
@@ -174,6 +200,15 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
     }
 
     /**
+     * Returns whether there is a health threshold enabled.
+     *
+     * @return <code>true</code> if at least one threshold is enabled, <code>false</code> otherwise
+     */
+    protected boolean isThresholdEnabled() {
+        return new NullHealthDescriptor(this).isThresholdEnabled();
+    }
+
+    /**
      * Returns the threshold limit.
      *
      * @return the threshold limit
@@ -226,9 +261,10 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
         return configuration.getThresholds();
     }
 
+    /** {@inheritDoc} */
     @Override
-    public final boolean perform(final AbstractBuild<?, ?> build, final Launcher launcher,
-            final BuildListener listener) throws InterruptedException, IOException {
+    public final boolean perform(final AbstractBuild<?, ?> build, final Launcher launcher, final BuildListener listener)
+            throws InterruptedException, IOException {
         PluginLogger logger = new LoggerFactory().createLogger(listener.getLogger(), pluginName);
         if (canContinue(build.getResult())) {
             return perform(build, launcher, logger);
@@ -240,8 +276,7 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
     }
 
     /**
-     * Callback method that is invoked after the build where this recorder can
-     * collect the results.
+     * Callback method that is invoked after the build where this recorder can collect the results.
      *
      * @param build
      *            current build
@@ -249,15 +284,14 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
      *            the launcher for this build
      * @param logger
      *            the logger
-     * @return <code>true</code> if the build can continue, <code>false</code>
-     *         otherwise
+     * @return <code>true</code> if the build can continue, <code>false</code> otherwise
      * @throws IOException
      *             in case of problems during file copying
      * @throws InterruptedException
      *             if the user canceled the build
      */
-    protected abstract boolean perform(AbstractBuild<?, ?> build, Launcher launcher,
-            PluginLogger logger) throws InterruptedException, IOException;
+    protected abstract boolean perform(AbstractBuild<?, ?> build, Launcher launcher, PluginLogger logger)
+            throws InterruptedException, IOException;
 
     @Override
     public PluginDescriptor getDescriptor() {
@@ -280,14 +314,13 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
      * @throws InterruptedException
      *             if the user cancels the processing
      */
-    protected void copyFilesWithAnnotationsToBuildFolder(final File rootDir,
-            final VirtualChannel channel, final Collection<FileAnnotation> annotations)
-            throws IOException, FileNotFoundException, InterruptedException {
+    protected void copyFilesWithAnnotationsToBuildFolder(final File rootDir, final VirtualChannel channel,
+            final Collection<FileAnnotation> annotations) throws IOException, FileNotFoundException,
+            InterruptedException {
         File directory = new File(rootDir, AbstractAnnotation.WORKSPACE_FILES);
         if (!directory.exists() && !directory.mkdir()) {
-            throw new IOException(
-                    "Can't create directory for workspace files that contain annotations: "
-                            + directory.getAbsolutePath());
+            throw new IOException("Can't create directory for workspace files that contain annotations: "
+                    + directory.getAbsolutePath());
         }
         AnnotationContainer container = new DefaultAnnotationContainer(annotations);
         for (WorkspaceFile file : container.getFiles()) {
@@ -315,8 +348,7 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
      * @param slaveFileName
      *            the file name of the slave
      */
-    private void logExceptionToFile(final IOException exception, final File masterFile,
-            final String slaveFileName) {
+    private void logExceptionToFile(final IOException exception, final File masterFile, final String slaveFileName) {
         FileOutputStream outputStream = null;
         try {
             outputStream = new FileOutputStream(masterFile);
@@ -333,8 +365,7 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
                 else {
                     base = slaveFileName;
                 }
-                print(outputStream,
-                        "Is the file '%s' contained more than once in your workspace?%n", base);
+                print(outputStream, "Is the file '%s' contained more than once in your workspace?%n", base);
             }
             print(outputStream, "Is the file '%s' a valid filename?%n", slaveFileName);
             print(outputStream,
@@ -353,20 +384,18 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
         }
     }
 
-    private void print(final FileOutputStream outputStream, final String message,
-            final Object... arguments) throws IOException {
+    private void print(final FileOutputStream outputStream, final String message, final Object... arguments)
+            throws IOException {
         IOUtils.write(String.format(message, arguments), outputStream, getEncoding());
     }
 
     private String getEncoding() {
         return EncodingValidator.getEncoding(getDefaultEncoding());
     }
-    
+
     /**
-     * Returns whether this publisher can continue processing. This default
-     * implementation returns <code>true</code> if the property
-     * <code>canRunOnFailed</code> is set or if the build is not aborted or
-     * failed.
+     * Returns whether this publisher can continue processing. This default implementation returns <code>true</code> if
+     * the property <code>canRunOnFailed</code> is set or if the build is not aborted or failed.
      *
      * @param result
      *            build result
@@ -386,8 +415,7 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
      *
      * @param build
      *            the current build
-     * @return <code>true</code> if the current build uses maven,
-     *         <code>false</code> otherwise
+     * @return <code>true</code> if the current build uses maven, <code>false</code> otherwise
      */
     protected boolean isMavenBuild(final AbstractBuild<?, ?> build) {
         if (build.getProject() instanceof Project) {
@@ -406,8 +434,7 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
      *
      * @param build
      *            the current build
-     * @return <code>true</code> if the current build uses ant,
-     *         <code>false</code> otherwise
+     * @return <code>true</code> if the current build uses ant, <code>false</code> otherwise
      */
     protected boolean isAntBuild(final AbstractBuild<?, ?> build) {
         try {
@@ -418,12 +445,12 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
         }
     }
 
-    @Override
+    /** {@inheritDoc} */
     public Priority getMinimumPriority() {
         return Priority.valueOf(StringUtils.upperCase(getThresholdLimit()));
     }
 
-    @Override
+    /** {@inheritDoc} */
     public BuildStepMonitor getRequiredMonitorService() {
         return canComputeNew() ? BuildStepMonitor.STEP : BuildStepMonitor.NONE;
     }
