@@ -591,6 +591,14 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
         dontComputeNew = false;
         shouldDetectModules = false;
         this.pluginName = "[" + pluginName + "] ";
+        Thresholds t = thresholds;
+        configReference = new ConfigurationReference.LocalConfigurationReference(healthy, unHealthy,
+                thresholdLimit, useDeltaValues, t.unstableTotalAll, t.unstableTotalHigh, t.unstableTotalNormal,
+                t.unstableTotalLow, t.unstableNewAll, t.unstableNewHigh, t.unstableNewNormal, t.unstableNewLow,
+                t.failedTotalAll, t.failedTotalHigh, t.failedTotalNormal, t.failedTotalLow, t.failedNewAll,
+                t.failedNewHigh, t.failedNewNormal, t.failedNewLow, canRunOnFailed, useStableBuildAsReference,
+                shouldDetectModules, !dontComputeNew, defaultEncoding);
+        configuration = configReference.getConfiguration();
     }
 
     /** Backward compatibility. @deprecated */
@@ -655,6 +663,15 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
         this.useStableBuildAsReference = useStableBuildAsReference;
         this.shouldDetectModules = shouldDetectModules;
         this.pluginName = "[" + pluginName + "] ";
+
+        Thresholds t = thresholds;
+        configReference = new ConfigurationReference.LocalConfigurationReference(healthy, unHealthy,
+                thresholdLimit, useDeltaValues, t.unstableTotalAll, t.unstableTotalHigh, t.unstableTotalNormal,
+                t.unstableTotalLow, t.unstableNewAll, t.unstableNewHigh, t.unstableNewNormal, t.unstableNewLow,
+                t.failedTotalAll, t.failedTotalHigh, t.failedTotalNormal, t.failedTotalLow, t.failedNewAll,
+                t.failedNewHigh, t.failedNewNormal, t.failedNewLow, canRunOnFailed, useStableBuildAsReference,
+                shouldDetectModules, !dontComputeNew, defaultEncoding);
+        configuration = configReference.getConfiguration();
     }
     // CHECKSTYLE:OFF
 }
