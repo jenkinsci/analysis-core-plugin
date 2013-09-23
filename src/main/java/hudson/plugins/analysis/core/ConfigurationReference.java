@@ -22,45 +22,53 @@ import hudson.plugins.analysis.Messages;
  */
 public abstract class ConfigurationReference extends AbstractDescribableImpl<ConfigurationReference> {
     /**
-     * Returns the available configurations for the specified configurable object.
+     * Returns the available configurations for the specified configurable object. Note: this method is called by
+     * Stapler if a new publisher is created and the reference is <code>null</code>.
      *
      * @param reference
      *            the configuration reference instance (may be <code>null</code>)
      * @return the available configurations
      */
-    public static Collection<ConfigurationReference> getConfigurations(@CheckForNull final LocalConfigurationReference reference) {
-        return getConfigurations((ConfigurationReference)reference);
+    public static Collection<ConfigurationReference> getConfigurations(final Object reference) {
+        return getEmptyConfigurations();
     }
 
     /**
-     * Returns the available configurations for the specified configurable object.
+     * Returns the available configurations for the specified configurable object. Note: this method is called by
+     * Stapler if an existing publisher is changed and the publisher is using a local configuration.
      *
      * @param reference
      *            the configuration reference instance (may be <code>null</code>)
      * @return the available configurations
      */
-    public static Collection<ConfigurationReference> getConfigurations(@CheckForNull final GlobalConfigurationReference reference) {
-        return getConfigurations((ConfigurationReference)reference);
+    public static Collection<ConfigurationReference> getConfigurations(final LocalConfigurationReference reference) {
+        List<ConfigurationReference> references = createGlobalConfigurations();
+        references.add(reference);
+        return references;
     }
 
     /**
-     * Returns the available configurations for the specified configurable object.
+     * Returns the available configurations for the specified configurable object. Note: this method is called by
+     * Stapler if an existing publisher is changed and the publisher is referencing a global configuration.
      *
      * @param reference
      *            the configuration reference instance (may be <code>null</code>)
      * @return the available configurations
      */
-    public static Collection<ConfigurationReference> getConfigurations(@CheckForNull final ConfigurationReference reference) {
+     public static Collection<ConfigurationReference> getConfigurations(final GlobalConfigurationReference reference) {
+        return getEmptyConfigurations();
+    }
+
+    private static Collection<ConfigurationReference> getEmptyConfigurations() {
+        List<ConfigurationReference> references = createGlobalConfigurations();
+        references.add(new LocalConfigurationReference());
+        return references;
+    }
+
+    private static List<ConfigurationReference> createGlobalConfigurations() {
         List<ConfigurationReference> references = Lists.newArrayList();
-        AnalysisConfiguration[] analysisConfigurations = GlobalSettings.instance().getConfigurations();
-        for (AnalysisConfiguration analysisConfiguration : analysisConfigurations) {
+        for (AnalysisConfiguration analysisConfiguration : GlobalSettings.instance().getConfigurations()) {
             references.add(new GlobalConfigurationReference(analysisConfiguration.getName()));
-        }
-        if (reference == null || reference instanceof GlobalConfigurationReference) {
-            references.add(new LocalConfigurationReference());
-        }
-        else {
-            references.add(reference);
         }
         return references;
     }
@@ -80,7 +88,8 @@ public abstract class ConfigurationReference extends AbstractDescribableImpl<Con
     public abstract AnalysisConfiguration getConfiguration();
 
     /**
-     * Global configuration: the values are configured Jenkins configuration screen and will be shared across different jobs.
+     * Global configuration: the values are configured Jenkins configuration screen and will be shared across different
+     * jobs.
      */
     public static class GlobalConfigurationReference extends ConfigurationReference {
         private final String name;
