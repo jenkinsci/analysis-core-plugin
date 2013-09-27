@@ -8,7 +8,7 @@
     <j:arg value="${instance==null?null:instance.configuration}" />
   </j:invokeStatic>
   <j:set var="currentName" value="${instance==null?null:instance.configuration.name}" />
-  <f:dropdownList name="configuration" title="${%Thresholds Configuration:}">
+  <f:dropdownList name="configuration" title="${%selection.title}" description="${%selection.description(rootURL+'/configure')}">
     <j:forEach var="configuration" items="${configs}" varStatus="loop">
       <f:dropdownListBlock title="${configuration.name}" value="${loop.index}"
         staplerClass="${configuration.descriptor.clazz.name}" selected="${configuration.name.equals(currentName)}">
