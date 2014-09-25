@@ -1,15 +1,15 @@
 package hudson.plugins.analysis.collector;
 
-import hudson.model.AbstractProject;
-import hudson.plugins.analysis.core.BuildHistory;
-import hudson.plugins.analysis.graph.DefaultGraphConfigurationView;
-import hudson.plugins.analysis.graph.GraphConfiguration;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
+
+import hudson.model.AbstractProject;
+import hudson.plugins.analysis.core.BuildHistory;
+import hudson.plugins.analysis.graph.DefaultGraphConfigurationView;
+import hudson.plugins.analysis.graph.GraphConfiguration;
 
 /**
  * Adds some more parameters to the configuration view.
@@ -51,8 +51,9 @@ public class AnalysisDefaultGraphConfigurationView extends DefaultGraphConfigura
         else {
             configuration = GraphConfiguration.createDefault();
         }
-        for (String plugin : AnalysisDescriptor.getPlugins()) {
-            super.persistValue(configuration.serializeToString(), plugin, request, response);
+        for (AnalysisPlugin plugin : AnalysisPlugin.all()) {
+            super.persistValue(configuration.serializeToString(), plugin.getName(),
+                    request, response);
         }
     }
 

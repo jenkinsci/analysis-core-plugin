@@ -4,42 +4,12 @@
     <h2>Analysis results</h2>
 
     <ul>
-      <j:if test="${it.isCheckStyleActivated()}">
+      <j:forEach var="plugin" items="${plugins}">
         <li>
-          <img width="24" height="24" src="${resURL}/plugin/checkstyle/icons/checkstyle-24x24.png" alt="Checkstyle" title="Checkstyle" />
-          <st:nbsp/> ${%Checkstyle Warnings}: <j:out value="${it.getCheckStyle()} "/>
+          <img width="24" height="24" src="${resURL}/${plugin.iconUrl}" alt="${plugin.name}" title="${plugin.name}" />
+          <st:nbsp/> ${plugin.detailHeader}: <j:out value="${it.getWarnings(plugin)} "/>
         </li>
-      </j:if>
-      <j:if test="${it.isDryActivated()}">
-        <li>
-          <img width="24" height="24" src="${resURL}/plugin/dry/icons/dry-24x24.png" alt="${%Duplicate Code}" title="${%Duplicate Code}" />
-          <st:nbsp/> ${%Duplicate Code}: <j:out value="${it.getDry()} "/>
-        </li>
-      </j:if>
-      <j:if test="${it.isFindBugsActivated()}">
-        <li>
-          <img width="24" height="24" src="${resURL}/plugin/findbugs/icons/findbugs-24x24.png" alt="FindBugs" title="FindBugs" />
-          <st:nbsp/> ${%FindBugs Warnings}: <j:out value="${it.getFindBugs()} "/>
-        </li>
-      </j:if>
-      <j:if test="${it.isPmdActivated()}">
-        <li>
-          <img width="24" height="24" src="${resURL}/plugin/pmd/icons/pmd-24x24.png" alt="PMD" title="PMD" />
-          <st:nbsp/> ${%PMD Warnings}: <j:out value="${it.getPmd()} "/>
-        </li>
-      </j:if>
-      <j:if test="${it.isOpenTasksActivated()}">
-        <li>
-          <img width="24" height="24" src="${resURL}/plugin/tasks/icons/tasks-24x24.png" alt="${%Open Tasks}" title="${%Open Tasks}" />
-          <st:nbsp/> ${%Open Tasks}: <j:out value="${it.getTasks()} "/>
-        </li>
-      </j:if>
-      <j:if test="${it.isWarningsActivated()}">
-        <li>
-          <img width="24" height="24" src="${resURL}/plugin/warnings/icons/warnings-24x24.png" alt="${%Compiler Warnings}" title="${%Compiler Warnings}" />
-          <st:nbsp/> ${%Compiler Warnings}: <j:out value="${it.getCompilerWarnings()} "/>
-        </li>
-      </j:if>
+      </j:forEach>
     </ul>
 
 </j:jelly>

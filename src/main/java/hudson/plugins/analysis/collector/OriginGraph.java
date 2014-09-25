@@ -1,20 +1,21 @@
 package hudson.plugins.analysis.collector;
 
-import hudson.plugins.analysis.core.BuildResult;
-import hudson.plugins.analysis.graph.CategoryBuildResultGraph;
-import hudson.plugins.analysis.graph.ColorPalette;
-import hudson.plugins.analysis.graph.GraphConfiguration;
-import hudson.plugins.analysis.util.ToolTipProvider;
-
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.data.category.CategoryDataset;
+import org.jvnet.localizer.Localizable;
 
 import com.google.common.collect.Lists;
+
+import hudson.plugins.analysis.core.BuildResult;
+import hudson.plugins.analysis.graph.CategoryBuildResultGraph;
+import hudson.plugins.analysis.graph.ColorPalette;
+import hudson.plugins.analysis.graph.GraphConfiguration;
+import hudson.plugins.analysis.util.ToolTipProvider;
 
 /**
  * Builds a graph showing all warnings by their origin.
@@ -26,64 +27,24 @@ public class OriginGraph extends CategoryBuildResultGraph {
     private static final int HUDSON_GREEN_INDEX = 3;
 
     private final List<String> originsKeys  = Lists.newArrayList();
-    private final List<String> originLabels = Lists.newArrayList();
+    private final List<Localizable> originLabels = Lists.newArrayList();
+
     private static final Color ORANGE = new Color(0xFF, 0xA5, 0x00);
     private static final Color GRAY = new Color(0x4D, 0x4D, 0x4D);
     private static final Color PINK = new Color(0xA0, 0x20, 0xF0);
 
     /**
      * Creates a new instance of {@link OriginGraph}.
+     * @param plugins the active plugins
      */
-    public OriginGraph() {
-        this(AnalysisDescriptor.isCheckStyleInstalled(), AnalysisDescriptor.isDryInstalled(),
-                AnalysisDescriptor.isFindBugsInstalled(), AnalysisDescriptor.isPmdInstalled(),
-                AnalysisDescriptor.isOpenTasksInstalled(), AnalysisDescriptor.isWarningsInstalled());
-    }
-
-    /**
-     * Creates a new instance of {@link OriginGraph}.
-     *
-     * @param isCheckStyleActivated
-     *            determines whether to show the warnings from Checkstyle
-     * @param isDryActivated
-     *            determines whether to show the warnings from DRY
-     * @param isFindBugsActivated
-     *            determines whether to show the warnings from FindBugs
-     * @param isPmdActivated
-     *            determines whether to show the warnings from PMD
-     * @param isOpenTasksActivated
-     *            determines whether to show open tasks
-     * @param isWarningsActivated
-     *            determines whether to show compiler warnings
-     */
-    public OriginGraph(final boolean isCheckStyleActivated, final boolean isDryActivated,
-            final boolean isFindBugsActivated, final boolean isPmdActivated,
-            final boolean isOpenTasksActivated, final boolean isWarningsActivated) {
+    public OriginGraph(final String... plugins) {
         super();
 
-        if (isCheckStyleActivated) {
-            originsKeys.add(hudson.plugins.checkstyle.parser.Warning.ORIGIN);
-            originLabels.add(Messages.Analysis_Checkstyle_Warning_Origin());
-        }
-        if (isDryActivated) {
-            originsKeys.add(hudson.plugins.dry.parser.DuplicateCode.ORIGIN);
-            originLabels.add(Messages.Analysis_Dry_Warning_Origin());
-        }
-        if (isFindBugsActivated) {
-            originsKeys.add(hudson.plugins.findbugs.parser.Bug.ORIGIN);
-            originLabels.add(Messages.Analysis_FindBugs_Warning_Origin());
-        }
-        if (isPmdActivated) {
-            originsKeys.add(hudson.plugins.pmd.parser.Bug.ORIGIN);
-            originLabels.add(Messages.Analysis_PMD_Warning_Origin());
-        }
-        if (isOpenTasksActivated) {
-            originsKeys.add(hudson.plugins.tasks.parser.Task.ORIGIN);
-            originLabels.add(Messages.Analysis_Tasks_Warning_Origin());
-        }
-        if (isWarningsActivated) {
-            originsKeys.add(hudson.plugins.warnings.parser.Warning.ORIGIN);
-            originLabels.add(Messages.Analysis_Warnings_Warning_Origin());
+        // FIXME: check that origin actually is the id
+        for (String name : plugins) {
+            AnalysisPlugin plugin = AnalysisPlugin.getPlugin(name);
+            originsKeys.add(plugin.getId());
+            originLabels.add(plugin.getDetailHeader());
         }
     }
 
@@ -140,7 +101,7 @@ public class OriginGraph extends CategoryBuildResultGraph {
 
     @Override
     protected String getRowId(final int level) {
-        return originLabels.get(level);
+        return originLabels.get(level).toString();
     }
 
     @Override

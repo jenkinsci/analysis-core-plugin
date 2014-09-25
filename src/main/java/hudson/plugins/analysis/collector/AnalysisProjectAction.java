@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.kohsuke.stapler.StaplerRequest;
 
-import hudson.model.AbstractProject;
+import com.google.common.collect.Lists;
 
+import hudson.model.AbstractProject;
 import hudson.plugins.analysis.core.AbstractProjectAction;
 import hudson.plugins.analysis.graph.BuildResultGraph;
 import hudson.plugins.analysis.graph.GraphConfigurationView;
@@ -45,7 +46,7 @@ public class AnalysisProjectAction extends AbstractProjectAction<AnalysisResultA
     }
 
     private void createAggregator() {
-        warningsAggregator = new WarningsAggregator(true, true, true, true, true, true);
+        warningsAggregator = new WarningsAggregator();
         warningsAggregator.hideJobPrefix();
     }
 
@@ -84,111 +85,21 @@ public class AnalysisProjectAction extends AbstractProjectAction<AnalysisResultA
         return new AnalysisGraphConfiguration(availableGraphs);
     }
 
-    /**
-     * Returns whether CheckStyle results should be shown.
-     *
-     * @return <code>true</code> if CheckStyle results should be shown, <code>false</code> otherwise
-     */
-    public boolean isCheckStyleActivated() {
-        return warningsAggregator.hasCheckStyle(getProject());
+    public List<AnalysisPlugin> getPlugins() {
+        List<AnalysisPlugin> active = Lists.newArrayList();
+        for (AnalysisPlugin plugin : AnalysisPlugin.all()) {
+            if (plugin.hasResultsFor(getProject())) {
+                active.add(plugin);
+            }
+        }
+        return active;
     }
 
-    /**
-     * Returns whether DRY results should be shown.
-     *
-     * @return <code>true</code> if DRY results should be shown, <code>false</code> otherwise
-     */
-    public boolean isDryActivated() {
-        return warningsAggregator.hasDry(getProject());
+    public String getIconUrl(final String name) {
+        return AnalysisPlugin.getPlugin(name).getIconUrl();
     }
 
-    /**
-     * Returns whether FindBugs results should be shown.
-     *
-     * @return <code>true</code> if FindBugs results should be shown, <code>false</code> otherwise
-     */
-    public boolean isFindBugsActivated() {
-        return warningsAggregator.hasFindBugs(getProject());
-    }
-
-    /**
-     * Returns whether PMD results should be shown.
-     *
-     * @return <code>true</code> if PMD results should be shown, <code>false</code> otherwise
-     */
-    public boolean isPmdActivated() {
-        return warningsAggregator.hasPmd(getProject());
-    }
-
-    /**
-     * Returns whether open tasks should be shown.
-     *
-     * @return <code>true</code> if open tasks should be shown, <code>false</code> otherwise
-     */
-    public boolean isOpenTasksActivated() {
-        return warningsAggregator.hasPmd(getProject());
-    }
-
-    /**
-     * Returns whether compiler warnings results should be shown.
-     *
-     * @return <code>true</code> if compiler warnings results should be shown, <code>false</code> otherwise
-     */
-    public boolean isWarningsActivated() {
-        return warningsAggregator.hasCompilerWarnings(getProject());
-    }
-
-    /**
-     * Returns the number of Checkstyle warnings for this action.
-     *
-     * @return the number of Checkstyle warnings
-     */
-    public String getCheckStyle() {
-        return warningsAggregator.getCheckStyle(getProject());
-    }
-
-    /**
-     * Returns the number of duplicate code warnings for this action.
-     *
-     * @return the number of duplicate code warnings
-     */
-    public String getDry() {
-        return warningsAggregator.getDry(getProject());
-    }
-
-    /**
-     * Returns the number of FindBugs warnings for this action.
-     *
-     * @return the number of FindBugs warnings
-     */
-    public String getFindBugs() {
-        return warningsAggregator.getFindBugs(getProject());
-    }
-
-    /**
-     * Returns the number of PMD warnings for this action.
-     *
-     * @return the number of PMD warnings
-     */
-    public String getPmd() {
-        return warningsAggregator.getPmd(getProject());
-    }
-
-    /**
-     * Returns the number of open tasks for this action.
-     *
-     * @return the number of open tasks
-     */
-    public String getTasks() {
-        return warningsAggregator.getTasks(getProject());
-    }
-
-    /**
-     * Returns the total number of warnings for this action.
-     *
-     * @return the number of compiler warnings
-     */
-    public String getCompilerWarnings() {
-        return warningsAggregator.getCompilerWarnings(getProject());
+    public String getWarnings(final AnalysisPlugin plugin) {
+        return warningsAggregator.getWarnings(getProject(), plugin);
     }
 }
