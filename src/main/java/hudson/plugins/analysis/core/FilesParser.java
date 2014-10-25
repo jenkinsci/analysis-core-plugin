@@ -321,10 +321,12 @@ public class FilesParser implements FileCallable<ParserResult> {
             throws InterruptedException {
         try {
             Collection<FileAnnotation> annotations = parser.parse(file, module);
+
+            int duplicateCount = result.getNumberOfAnnotations();
             result.addAnnotations(annotations);
+            duplicateCount = annotations.size() - (result.getNumberOfAnnotations() - duplicateCount);
 
             final int moduleCount = StringUtils.isBlank(module) ? 0 : 1;
-            final int duplicateCount = annotations.size() - result.getNumberOfAnnotations();
             log("Successfully parsed file " + file + p(moduleCount, " of module " + module) + " with "
                     + p(result.getNumberOfAnnotations(), "%d unique warning") + p(duplicateCount, " and %d duplicate") + ".");
         }
