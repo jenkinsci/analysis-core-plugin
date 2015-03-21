@@ -366,15 +366,15 @@ public abstract class Ast {
      * @return the hashcode
      */
     public String createContextHashCode() {
-        boolean lockedNextElement;
+        List<DetailAST> list = chooseArea();
         StringBuilder astElements = new StringBuilder();
         children.clear();
-        for (DetailAST element : chooseArea()) {
-            lockedNextElement = false;
-            int type = element.getType();
+        for (int i = 0; i < list.size(); i++) {
+            boolean lockedNextElement = false;
+            int type = list.get(i).getType();
 
             if (type == TokenTypes.TYPE) {
-                children = calcAllChildren(element.getFirstChild());
+                children = calcAllChildren(list.get(i).getFirstChild());
                 for (DetailAST child : children) {
                     astElements.append(child.getText());
                     astElements.append(DELIMITER);
@@ -383,7 +383,7 @@ public abstract class Ast {
             }
             if (!constants.isEmpty()) {
                 for (DetailAST ast : constants.keySet()) {
-                    if (ast.getType() == TokenTypes.IDENT && ast.getText().equals(element.getText())) {
+                    if (ast.getType() == TokenTypes.IDENT && ast.getText().equals(list.get(i).getText())) {
                         astElements.append(TokenTypes.getTokenName(constants.get(ast).getType()));
                         astElements.append(DELIMITER);
                         lockedNextElement = true;
@@ -395,6 +395,7 @@ public abstract class Ast {
                 astElements.append(DELIMITER);
             }
         }
+
         if (getName() != null) {
             astElements.append(name);
         }
