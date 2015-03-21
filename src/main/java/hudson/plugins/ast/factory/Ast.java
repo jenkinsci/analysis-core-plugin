@@ -48,7 +48,7 @@ public abstract class Ast {
      * @param fileName   the name of the Java file
      * @param lineNumber the line number that contains the warning
      */
-    // TODO: check if we need to provide the line range?
+    // FIXME: check if we need to provide the line range?
     public Ast(final String fileName, final int lineNumber) {
         this.fileName = fileName;
         this.lineNumber = lineNumber;
@@ -199,15 +199,14 @@ public abstract class Ast {
             return TreeWalker.parse(new FileContents(new FileText(new File(file), CHARSET)));
         }
         catch (RecognitionException exception) {
-            exception.printStackTrace();
+            throw new IllegalArgumentException(exception);
         }
         catch (TokenStreamException exception) {
-            exception.printStackTrace();
+            throw new IllegalArgumentException(exception);
         }
         catch (IOException exception) {
-            exception.printStackTrace();
+            throw new IllegalArgumentException(exception);
         }
-        return null;
     }
 
     /**
@@ -234,7 +233,6 @@ public abstract class Ast {
      */
     public void runThroughAST(final DetailAST root, final int line) {
         if (root != null) {
-            // System.out.println(TokenTypes.getTokenName(root.getType()));
             if (root.getLineNo() == line) {
                 elementsInSameLine.add(root);
             }

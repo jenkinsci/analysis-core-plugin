@@ -29,12 +29,20 @@ public class MethodAst extends Ast {
     @Override
     public List<DetailAST> chooseArea() {
         List<DetailAST> elementsInLine = getElementsInSameLine();
-        DetailAST methodStart = getRootOfMethod(elementsInLine.get(0));
 
-        List<DetailAST> chosenArea = new ArrayList<DetailAST>();
-        chosenArea.add(methodStart);
-        chosenArea.addAll(calcAllChildren(methodStart.getFirstChild()));
-        return chosenArea;
+        if (!elementsInLine.isEmpty()) {
+            DetailAST methodStart = getRootOfMethod(elementsInLine.get(0));
+
+            List<DetailAST> chosenArea = new ArrayList<DetailAST>();
+            chosenArea.add(methodStart);
+            chosenArea.addAll(calcAllChildren(methodStart.getFirstChild()));
+            return chosenArea;
+        }
+        else {
+            // FIXME: what should be chosen if nothing found in that line
+            return elementsInLine;
+        }
+
     }
 
     private DetailAST getRootOfMethod(final DetailAST elementInMethod) {
