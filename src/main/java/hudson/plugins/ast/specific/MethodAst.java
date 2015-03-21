@@ -14,16 +14,14 @@ import hudson.plugins.ast.factory.Ast;
  * @author Christian Möstl
  */
 public class MethodAst extends Ast {
-
     /**
      * Creates a new instance of {@link MethodAst}.
      *
-     * @param filename
-     *            The filename
-     * @param lineNumber
+     * @param fileName   the name of the Java file
+     * @param lineNumber the line number that contains the warning
      */
-    public MethodAst(final String filename, final int lineNumber) {
-        super(filename, lineNumber);
+    public MethodAst(final String fileName, final int lineNumber) {
+        super(fileName, lineNumber);
     }
 
     @Override

@@ -9,20 +9,19 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import hudson.plugins.ast.factory.Ast;
 
 /**
- * Depicts the Elements from the abstract syntax tree which are object-variables.
+ * Depicts the elements from the abstract syntax tree which are object-variables.
  *
  * @author Christian Möstl
  */
-public class InstancevariableAst extends Ast {
-
+public class InstanceVariableAst extends Ast {
     /**
-     * Creates a new instance of {@link InstancevariableAst}.
+     * Creates a new instance of {@link InstanceVariableAst}.
      *
      * @param filename
      *            The filename
      * @param lineNumber
      */
-    public InstancevariableAst(final String filename, final int lineNumber) {
+    public InstanceVariableAst(final String filename, final int lineNumber) {
         super(filename, lineNumber);
     }
 

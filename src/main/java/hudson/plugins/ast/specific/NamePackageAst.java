@@ -8,21 +8,19 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import hudson.plugins.ast.factory.Ast;
 
 /**
- * Displays all informations about the package in the abstract syntax tree.
+ * Displays all information about the package in the abstract syntax tree.
  *
  * @author Christian Möstl
  */
 public class NamePackageAst extends Ast {
-
     /**
      * Creates a new instance of {@link NamePackageAst}.
      *
-     * @param filename
-     *            The filename
-     * @param lineNumber
+     * @param fileName   the name of the Java file
+     * @param lineNumber the line number that contains the warning
      */
-    public NamePackageAst(final String filename, final int lineNumber) {
-        super(filename, lineNumber);
+    public NamePackageAst(final String fileName, final int lineNumber) {
+        super(fileName, lineNumber);
     }
 
     @Override

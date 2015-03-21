@@ -9,26 +9,23 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import hudson.plugins.ast.factory.Ast;
 
 /**
- * Creates the abstract syntax tree for a specific environment. It takes a specific number of rows before and after the
- * warning.
+ * Creates the abstract syntax tree for the surrounding AST elements. It takes a specific number of lines before and
+ * after the actual warning.
  *
  * @author Christian Möstl
  */
-public class EnvironmentAst extends Ast {
-
+public class SurroundingElementsAst extends Ast {
     private final int surrounding;
 
     /**
-     * Creates a new instance of {@link EnvironmentAst}.
-     *
-     * @param filename
-     *            The filename
+     * Creates a new instance of {@link SurroundingElementsAst}.
+     * @param fileName   the name of the Java file
+     * @param lineNumber the line number that contains the warning
      * @param surrounding
-     *            The surrounded element each above and below.
-     * @param lineNumber
+ *            The surrounded element each above and below.
      */
-    public EnvironmentAst(final String filename, final int surrounding, final int lineNumber) {
-        super(filename, lineNumber);
+    public SurroundingElementsAst(final String fileName, final int lineNumber, final int surrounding) {
+        super(fileName, lineNumber);
         this.surrounding = surrounding;
     }
 

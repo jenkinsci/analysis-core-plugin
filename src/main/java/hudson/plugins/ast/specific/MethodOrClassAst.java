@@ -17,19 +17,17 @@ import hudson.plugins.ast.factory.Ast;
  * @author Christian Möstl
  */
 public class MethodOrClassAst extends Ast {
-
     private final int[] excludeTypes = new int[]{TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF, TokenTypes.ENUM_DEF,
             TokenTypes.ANNOTATION_DEF};
 
     /**
      * Creates a new instance of {@link MethodOrClassAst}.
      *
-     * @param filename
-     *            The filename
-     * @param lineNumber
+     * @param fileName   the name of the Java file
+     * @param lineNumber the line number that contains the warning
      */
-    public MethodOrClassAst(final String filename, final int lineNumber) {
-        super(filename, lineNumber);
+    public MethodOrClassAst(final String fileName, final int lineNumber) {
+        super(fileName, lineNumber);
     }
 
     @Override

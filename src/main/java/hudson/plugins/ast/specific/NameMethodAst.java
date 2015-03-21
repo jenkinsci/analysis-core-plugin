@@ -13,18 +13,16 @@ import hudson.plugins.ast.factory.Ast;
  * @author Christian Möstl
  */
 public class NameMethodAst extends Ast {
-
     private DetailAST ident;
 
     /**
      * Creates a new instance of {@link NameMethodAst}.
      *
-     * @param filename
-     *            The filename
-     * @param lineNumber
+     * @param fileName   the name of the Java file
+     * @param lineNumber the line number that contains the warning
      */
-    public NameMethodAst(final String filename, final int lineNumber) {
-        super(filename, lineNumber);
+    public NameMethodAst(final String fileName, final int lineNumber) {
+        super(fileName, lineNumber);
     }
 
     @Override
@@ -54,21 +52,4 @@ public class NameMethodAst extends Ast {
             }
         }
     }
-
-    // private void executeMethod(final DetailAST method, final int counter) {
-    // String type = getFileAnnotation().getType();
-    // String checkstyleModulName = StringUtils.removeEnd(type, "Check");
-    //
-    // checkstyleModulName = checkstyleModulName.toUpperCase(Locale.GERMAN);
-    //
-    // if (checkstyleModulName.equals(WarningType.METHODNAME.toString())) {
-    // calcMethodName(method, counter);
-    // }
-    // else if (checkstyleModulName.equals(WarningType.PARAMETERNAME.toString())) {
-    //
-    // }
-    // else if (checkstyleModulName.equals(WarningType.METHODTYPEPARAMETERNAME.toString())) {
-    //
-    // }
-    // }
 }

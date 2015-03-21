@@ -7,21 +7,19 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import hudson.plugins.ast.factory.Ast;
 
 /**
- * Document type FileAst.
+ * Creates the abstract syntax tree for the whole file.
  *
  * @author Christian Möstl
  */
 public class FileAst extends Ast {
-
     /**
      * Creates a new instance of {@link FileAst}.
      *
-     * @param filename
-     *            The filename
-     * @param lineNumber
+     * @param fileName   the name of the Java file
+     * @param lineNumber the line number that contains the warning
      */
-    public FileAst(final String filename, final int lineNumber) {
-        super(filename, lineNumber);
+    public FileAst(final String fileName, final int lineNumber) {
+        super(fileName, lineNumber);
     }
 
     @Override

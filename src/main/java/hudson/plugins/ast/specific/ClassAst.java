@@ -12,7 +12,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import hudson.plugins.ast.factory.Ast;
 
 /**
- * Creates the abstract syntax tree for the complete class except inner types.
+ * Creates the abstract syntax tree for the whole class except inner types.
  *
  * @author Christian Möstl
  */
@@ -26,12 +26,11 @@ public class ClassAst extends Ast {
     /**
      * Creates a new instance of {@link ClassAst}.
      *
-     * @param filename
-     *            The filename
-     * @param lineNumber
+     * @param fileName   the name of the Java file
+     * @param lineNumber the line number that contains the warning
      */
-    public ClassAst(final String filename, final int lineNumber) {
-        super(filename, lineNumber);
+    public ClassAst(final String fileName, final int lineNumber) {
+        super(fileName, lineNumber);
     }
 
     @Override
