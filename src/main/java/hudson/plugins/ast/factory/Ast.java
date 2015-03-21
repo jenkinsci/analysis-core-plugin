@@ -361,27 +361,12 @@ public abstract class Ast {
     }
 
     /**
-     * Calculates the Hashcode (SHA-1) for the list.
+     * Creates the hash code for the chosen area.
      *
-     * @param list
-     *            the list.
      * @return the hashcode
      */
-    public String calcSha(final List<DetailAST> list) {
-        return calcSha(list, getName());
-    }
-
-    /**
-     * Calculates the Hashcode (SHA-1) for the list.
-     *
-     * @param list
-     *            the list.
-     * @param nameParam
-     *            the name
-     * @return the hashcode
-     */
-    @SuppressWarnings("PMD.CyclomaticComplexity")
-    public String calcSha(final List<DetailAST> list, final String nameParam) {
+    public String createContextHashCode() {
+        List<DetailAST> list = chooseArea();
         boolean lockedNextElement;
         try {
             if (list != null) {
@@ -416,7 +401,7 @@ public abstract class Ast {
                         astElements.append(DELIMITER);
                     }
                 }
-                if (nameParam != null) {
+                if (getName() != null) {
                     astElements.append(name);
                 }
                 byte[] digest = messageDigest.digest(astElements.toString().getBytes(Charset.forName(CHARSET)));
