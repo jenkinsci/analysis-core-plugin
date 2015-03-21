@@ -19,22 +19,18 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
 
-import hudson.plugins.analysis.util.model.FileAnnotation;
-
 /**
- * Class represents the Abstract Syntax Tree (AST) and operates with it.
+ * Base class for the Abstract Syntax Tree (AST) of the Java files containing a warning.
  *
  * @author Christian Möstl
  */
 public abstract class Ast {
-
+    private final int lineNumber;
     private DetailAST abstractSyntaxTree;
 
-    private String filename;
+    private String fileName;
 
     private List<DetailAST> elementsInSameLine;
-
-    private FileAnnotation fileAnnotation;
 
     private List<DetailAST> children = new ArrayList<DetailAST>();
 
@@ -47,18 +43,27 @@ public abstract class Ast {
     /**
      * Creates a new instance of {@link Ast}.
      *
-     * @param filename
-     *            the filename
-     * @param fileAnnotation
-     *            the FileAnnotation
+     * @param fileName   the name of the Java file
+     * @param lineNumber the line number that contains the warning
      */
-    public Ast(final String filename, final FileAnnotation fileAnnotation) {
-        this.filename = filename;
-        abstractSyntaxTree = createAst(filename);
+    // TODO: check if we need to provide the line range?
+    public Ast(final String fileName, final int lineNumber) {
+        this.fileName = fileName;
+        this.lineNumber = lineNumber;
+
+        abstractSyntaxTree = createAst(fileName);
         elementsInSameLine = new ArrayList<DetailAST>();
-        this.fileAnnotation = fileAnnotation;
-        runThroughAST(abstractSyntaxTree, fileAnnotation.getPrimaryLineNumber());
+        runThroughAST(abstractSyntaxTree, lineNumber);
         calcConstants(abstractSyntaxTree);
+    }
+
+    /**
+     * Returns the primary line number of the warning.
+     *
+     * @return the line number of the warning
+     */
+    protected int getLineNumber() {
+        return lineNumber;
     }
 
     /**
@@ -83,11 +88,11 @@ public abstract class Ast {
     /**
      * Sets the filename to the specified value.
      *
-     * @param filename
+     * @param fileName
      *            the value to set
      */
-    public void setFilename(final String filename) {
-        this.filename = filename;
+    public void setFileName(final String fileName) {
+        this.fileName = fileName;
     }
 
     /**
@@ -95,8 +100,8 @@ public abstract class Ast {
      *
      * @return the filename
      */
-    public String getFilename() {
-        return filename;
+    public String getFileName() {
+        return fileName;
     }
 
     /**
@@ -123,25 +128,6 @@ public abstract class Ast {
      */
     public List<DetailAST> getElementsInSameLine() {
         return elementsInSameLine;
-    }
-
-    /**
-     * Sets the fileAnnotation to the specified value.
-     *
-     * @param fileAnnotation
-     *            the value to set
-     */
-    public void setFileAnnotation(final FileAnnotation fileAnnotation) {
-        this.fileAnnotation = fileAnnotation;
-    }
-
-    /**
-     * Returns the fileAnnotation.
-     *
-     * @return the fileAnnotation
-     */
-    public FileAnnotation getFileAnnotation() {
-        return fileAnnotation;
     }
 
     /**

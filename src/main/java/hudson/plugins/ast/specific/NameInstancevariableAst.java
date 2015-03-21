@@ -10,7 +10,7 @@ import hudson.plugins.ast.factory.Ast;
 /**
  * Document type NameInstancevariableAst.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class NameInstancevariableAst extends Ast {
 
@@ -20,7 +20,7 @@ public class NameInstancevariableAst extends Ast {
      * @param fileAnnotation
      */
     public NameInstancevariableAst(final String filename, final FileAnnotation fileAnnotation) {
-        super(filename, fileAnnotation);
+        super(filename, fileAnnotation.getPrimaryLineNumber());
         // FIXME Auto-generated constructor stub
     }
 

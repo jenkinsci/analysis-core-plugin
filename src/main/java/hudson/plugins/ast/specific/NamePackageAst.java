@@ -5,13 +5,12 @@ import java.util.List;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 
-import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.ast.factory.Ast;
 
 /**
  * Displays all informations about the package in the abstract syntax tree.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class NamePackageAst extends Ast {
 
@@ -20,11 +19,10 @@ public class NamePackageAst extends Ast {
      *
      * @param filename
      *            The filename
-     * @param fileAnnotation
-     *            the fileAnnotation
+     * @param lineNumber
      */
-    public NamePackageAst(final String filename, final FileAnnotation fileAnnotation) {
-        super(filename, fileAnnotation);
+    public NamePackageAst(final String filename, final int lineNumber) {
+        super(filename, lineNumber);
     }
 
     @Override

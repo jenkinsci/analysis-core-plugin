@@ -5,13 +5,12 @@ import java.util.List;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.ast.factory.Ast;
 
 /**
  * Creates the abstract syntax tree (AST).
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class NameMethodAst extends Ast {
 
@@ -22,16 +21,15 @@ public class NameMethodAst extends Ast {
      *
      * @param filename
      *            The filename
-     * @param fileAnnotation
-     *            the fileAnnotation
+     * @param lineNumber
      */
-    public NameMethodAst(final String filename, final FileAnnotation fileAnnotation) {
-        super(filename, fileAnnotation);
+    public NameMethodAst(final String filename, final int lineNumber) {
+        super(filename, lineNumber);
     }
 
     @Override
     public List<DetailAST> chooseArea() {
-        Ast ast = new MethodAst(getFilename(), getFileAnnotation());
+        Ast ast = new MethodAst(getFileName(), getLineNumber());
         List<DetailAST> chosenArea = ast.chooseArea();
         DetailAST first = chosenArea.get(0).getFirstChild();
 

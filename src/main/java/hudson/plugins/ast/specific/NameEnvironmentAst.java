@@ -10,7 +10,7 @@ import hudson.plugins.ast.factory.Ast;
 /**
  * FIXME: Document type NameEnvironmentAst.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class NameEnvironmentAst extends Ast {
 
@@ -27,7 +27,7 @@ public class NameEnvironmentAst extends Ast {
      *            The surrounded element each above and below.
      */
     public NameEnvironmentAst(final String filename, final FileAnnotation fileAnnotation, final int surrounding) {
-        super(filename, fileAnnotation);
+        super(filename, fileAnnotation.getPrimaryLineNumber());
         this.surrounding = surrounding;
     }
 

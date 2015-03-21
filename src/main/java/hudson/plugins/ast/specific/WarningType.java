@@ -3,7 +3,7 @@ package hudson.plugins.ast.specific;
 /**
  * Depicts the warning types which need to include the name e.g. the methodname for calculating the hashcode.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public enum WarningType {
     /** The local final variablename. */

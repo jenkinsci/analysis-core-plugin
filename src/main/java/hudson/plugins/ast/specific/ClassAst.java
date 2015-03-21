@@ -9,13 +9,12 @@ import org.apache.commons.lang3.ArrayUtils;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.ast.factory.Ast;
 
 /**
  * Creates the abstract syntax tree for the complete class except inner types.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 // FIXME: Regard concerned java-class (at OBJBLOCK) and not inherently the top of all classes!
 public class ClassAst extends Ast {
@@ -29,11 +28,10 @@ public class ClassAst extends Ast {
      *
      * @param filename
      *            The filename
-     * @param fileAnnotation
-     *            the fileAnnotation
+     * @param lineNumber
      */
-    public ClassAst(final String filename, final FileAnnotation fileAnnotation) {
-        super(filename, fileAnnotation);
+    public ClassAst(final String filename, final int lineNumber) {
+        super(filename, lineNumber);
     }
 
     @Override

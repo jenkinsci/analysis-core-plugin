@@ -6,13 +6,12 @@ import java.util.List;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.ast.factory.Ast;
 
 /**
  * Depicts the Elements from the abstract syntax tree which are object-variables.
  *
- * @author Christian M&ouml;stl
+ * @author Christian Möstl
  */
 public class InstancevariableAst extends Ast {
 
@@ -21,11 +20,10 @@ public class InstancevariableAst extends Ast {
      *
      * @param filename
      *            The filename
-     * @param fileAnnotation
-     *            the fileAnnotation
+     * @param lineNumber
      */
-    public InstancevariableAst(final String filename, final FileAnnotation fileAnnotation) {
-        super(filename, fileAnnotation);
+    public InstancevariableAst(final String filename, final int lineNumber) {
+        super(filename, lineNumber);
     }
 
     @Override
