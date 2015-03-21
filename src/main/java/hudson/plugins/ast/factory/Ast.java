@@ -366,56 +366,60 @@ public abstract class Ast {
      * @return the hashcode
      */
     public String createContextHashCode() {
-        List<DetailAST> list = chooseArea();
         boolean lockedNextElement;
-        try {
-            if (list != null) {
-                MessageDigest messageDigest = MessageDigest.getInstance(HASH_ALGORITHM);
-                StringBuilder astElements = new StringBuilder();
-                StringBuilder result = new StringBuilder();
-                int type;
+        StringBuilder astElements = new StringBuilder();
+        children.clear();
+        for (DetailAST element : chooseArea()) {
+            lockedNextElement = false;
+            int type = element.getType();
+
+            if (type == TokenTypes.TYPE) {
+                children = calcAllChildren(element.getFirstChild());
+                for (DetailAST child : children) {
+                    astElements.append(child.getText());
+                    astElements.append(DELIMITER);
+                }
                 children.clear();
-                for (int i = 0; i < list.size(); i++) {
-                    lockedNextElement = false;
-                    type = list.get(i).getType();
-
-                    if (type == TokenTypes.TYPE) {
-                        children = calcAllChildren(list.get(i).getFirstChild());
-                        for (DetailAST child : children) {
-                            astElements.append(child.getText());
-                            astElements.append(DELIMITER);
-                        }
-                        children.clear();
-                    }
-                    if (!constants.isEmpty()) {
-                        for (DetailAST ast : constants.keySet()) {
-                            if (ast.getType() == TokenTypes.IDENT && ast.getText().equals(list.get(i).getText())) {
-                                astElements.append(TokenTypes.getTokenName(constants.get(ast).getType()));
-                                astElements.append(DELIMITER);
-                                lockedNextElement = true;
-                            }
-                        }
-                    }
-                    if (type != TokenTypes.TYPE && !lockedNextElement) {
-                        astElements.append(TokenTypes.getTokenName(type));
+            }
+            if (!constants.isEmpty()) {
+                for (DetailAST ast : constants.keySet()) {
+                    if (ast.getType() == TokenTypes.IDENT && ast.getText().equals(element.getText())) {
+                        astElements.append(TokenTypes.getTokenName(constants.get(ast).getType()));
                         astElements.append(DELIMITER);
+                        lockedNextElement = true;
                     }
                 }
-                if (getName() != null) {
-                    astElements.append(name);
-                }
-                byte[] digest = messageDigest.digest(astElements.toString().getBytes(Charset.forName(CHARSET)));
-
-                for (byte b : digest) {
-                    result.append(String.format("%02x", b));
-                }
-                return result.toString();
+            }
+            if (type != TokenTypes.TYPE && !lockedNextElement) {
+                astElements.append(TokenTypes.getTokenName(type));
+                astElements.append(DELIMITER);
             }
         }
-        catch (NoSuchAlgorithmException exception) {
-            exception.printStackTrace();
+        if (getName() != null) {
+            astElements.append(name);
         }
-        return null;
+
+        return createHashCodeFromAst(astElements);
+    }
+
+    private String createHashCodeFromAst(final StringBuilder astElements) {
+        MessageDigest messageDigest = createMessageDigest();
+        byte[] digest = messageDigest.digest(astElements.toString().getBytes(Charset.forName(CHARSET)));
+
+        StringBuilder result = new StringBuilder();
+        for (byte b : digest) {
+            result.append(String.format("%02x", b));
+        }
+        return result.toString();
+    }
+
+    private MessageDigest createMessageDigest() {
+        try {
+            return MessageDigest.getInstance(HASH_ALGORITHM);
+        }
+        catch (NoSuchAlgorithmException e) {
+            throw new IllegalArgumentException("Requested algorithm not found: " + HASH_ALGORITHM);
+        }
     }
 
     private DetailAST objBlock;
