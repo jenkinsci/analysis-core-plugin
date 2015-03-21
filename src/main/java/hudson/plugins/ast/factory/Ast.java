@@ -25,6 +25,8 @@ import antlr.TokenStreamException;
  * @author Christian Möstl
  */
 public abstract class Ast {
+    private static final Sha1ToLongConverter SHA_1_TO_LONG_CONVERTER = new Sha1ToLongConverter();
+
     private final int lineNumber;
     private DetailAST abstractSyntaxTree;
 
@@ -361,29 +363,39 @@ public abstract class Ast {
     }
 
     /**
-     * Creates the hash code for the chosen area.
+     * Returns the hash code of the selected part of the AST. The hash code is derived from the SHA1 digest.
      *
-     * @return the hashcode
+     * @return hash code of the AST
      */
-    public String createContextHashCode() {
-        List<DetailAST> list = chooseArea();
+    public long getContextHashCode() {
+        return SHA_1_TO_LONG_CONVERTER.toLong(getDigest());
+    }
+
+    /**
+     * Returns a digest of the selected part of the AST.
+     *
+     * @return the digest of the AST, represented as SHA1 hash code
+     */
+    public String getDigest() {
+        List<DetailAST> elements = chooseArea();
         StringBuilder astElements = new StringBuilder();
         children.clear();
-        for (int i = 0; i < list.size(); i++) {
-            boolean lockedNextElement = false;
-            int type = list.get(i).getType();
+        for (DetailAST astElement : elements) {
+            int type = astElement.getType();
 
             if (type == TokenTypes.TYPE) {
-                children = calcAllChildren(list.get(i).getFirstChild());
+                children = calcAllChildren(astElement.getFirstChild());
                 for (DetailAST child : children) {
                     astElements.append(child.getText());
                     astElements.append(DELIMITER);
                 }
                 children.clear();
             }
+
+            boolean lockedNextElement = false;
             if (!constants.isEmpty()) {
                 for (DetailAST ast : constants.keySet()) {
-                    if (ast.getType() == TokenTypes.IDENT && ast.getText().equals(list.get(i).getText())) {
+                    if (ast.getType() == TokenTypes.IDENT && ast.getText().equals(astElement.getText())) {
                         astElements.append(TokenTypes.getTokenName(constants.get(ast).getType()));
                         astElements.append(DELIMITER);
                         lockedNextElement = true;
