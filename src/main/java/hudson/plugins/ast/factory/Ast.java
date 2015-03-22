@@ -128,6 +128,7 @@ public abstract class Ast {
      *
      * @return the elementsInSameLine
      */
+    // FIXME: we need a fallback if that list is empty
     public List<DetailAST> getElementsInSameLine() {
         return elementsInSameLine;
     }

@@ -1,7 +1,6 @@
 package hudson.plugins.ast.specific;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -15,31 +14,35 @@ import hudson.plugins.ast.factory.Ast;
  * @author Christian Möstl
  */
 public class SurroundingElementsAst extends Ast {
-    private final int surrounding;
+    /** Number of lines before and after current line to consider. */
+    private static final int LINES_LOOK_AHEAD = 3;
+
+    private final int surroundingLines;
 
     /**
      * Creates a new instance of {@link SurroundingElementsAst}.
-     * @param fileName   the name of the Java file
-     * @param lineNumber the line number that contains the warning
-     * @param surrounding
- *            The surrounded element each above and below.
+     *
+     * @param fileName         the name of the Java file
+     * @param lineNumber       the line number that contains the warning
+     * @param surroundingLines the number of lines before and after the affected line
      */
-    public SurroundingElementsAst(final String fileName, final int lineNumber, final int surrounding) {
+    public SurroundingElementsAst(final String fileName, final int lineNumber, final int surroundingLines) {
         super(fileName, lineNumber);
-        this.surrounding = surrounding;
+
+        this.surroundingLines = surroundingLines;
     }
 
     @Override
     public List<DetailAST> chooseArea() {
         List<DetailAST> elementsInLine = getElementsInSameLine();
         List<DetailAST> tmp = new ArrayList<DetailAST>(elementsInLine);
-        Collections.copy(tmp, elementsInLine);
 
         List<DetailAST> chosen = new ArrayList<DetailAST>();
-
-        chosen.addAll(elementsInLine);
-        chosen.addAll(elementsBefore(elementsInLine.get(0)));
-        chosen.addAll(elementsAfter(tmp.get(tmp.size() - 1)));
+        if (!elementsInLine.isEmpty()) {
+            chosen.addAll(elementsInLine);
+            chosen.addAll(elementsBefore(elementsInLine.get(0)));
+            chosen.addAll(elementsAfter(tmp.get(tmp.size() - 1)));
+        }
 
         return chosen;
     }
@@ -68,7 +71,7 @@ public class SurroundingElementsAst extends Ast {
             limit = getLastLineNumber() - startLine + 1;
         }
         for (int i = 1; i < limit; i++) {
-            if (counter < surrounding) {
+            if (counter < surroundingLines) {
                 if (before) {
                     nextLine = startLine - i;
                 }

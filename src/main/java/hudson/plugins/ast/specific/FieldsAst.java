@@ -9,7 +9,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import hudson.plugins.ast.factory.Ast;
 
 /**
- * Depicts the elements from the abstract syntax tree which are object-variables.
+ * Depicts the elements from the abstract syntax tree which are instance variables (i.e., fields).
  *
  * @author Christian Möstl
  */
@@ -27,17 +27,19 @@ public class FieldsAst extends Ast {
     @Override
     public List<DetailAST> chooseArea() {
         List<DetailAST> elementsInSameLine = getElementsInSameLine();
-        DetailAST objBlock = getObjBlockAsParent(elementsInSameLine.get(0));
-
-        getInstanceVariables(objBlock.getFirstChild());
         List<DetailAST> chosenArea = new ArrayList<DetailAST>();
 
-        chosenArea.add(objBlock);
-        for (int i = 0; i < instanceVariables.size(); i++) {
-            clear();
-            if (!isConstant(instanceVariables.get(i))) {
-                chosenArea.add(instanceVariables.get(i));
-                chosenArea.addAll(calcAllChildren(instanceVariables.get(i).getFirstChild()));
+        if (!elementsInSameLine.isEmpty()) {
+            DetailAST objBlock = getObjBlockAsParent(elementsInSameLine.get(0));
+            getInstanceVariables(objBlock.getFirstChild());
+
+            chosenArea.add(objBlock);
+            for (int i = 0; i < instanceVariables.size(); i++) {
+                clear();
+                if (!isConstant(instanceVariables.get(i))) {
+                    chosenArea.add(instanceVariables.get(i));
+                    chosenArea.addAll(calcAllChildren(instanceVariables.get(i).getFirstChild()));
+                }
             }
         }
 

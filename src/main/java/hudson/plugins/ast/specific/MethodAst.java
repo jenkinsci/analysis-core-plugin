@@ -36,11 +36,8 @@ public class MethodAst extends Ast {
             chosenArea.addAll(calcAllChildren(methodStart.getFirstChild()));
             return chosenArea;
         }
-        else {
-            // FIXME: what should be chosen if nothing found in that line
-            return elementsInLine;
-        }
 
+        return elementsInLine;
     }
 
     private DetailAST getRootOfMethod(final DetailAST elementInMethod) {
