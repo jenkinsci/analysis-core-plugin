@@ -13,16 +13,15 @@ import hudson.plugins.ast.factory.Ast;
  *
  * @author Christian Möstl
  */
-public class InstanceVariableAst extends Ast {
+public class FieldsAst extends Ast {
     /**
-     * Creates a new instance of {@link InstanceVariableAst}.
+     * Creates a new instance of {@link FieldsAst}.
      *
-     * @param filename
-     *            The filename
-     * @param lineNumber
+     * @param fileName   the name of the Java file
+     * @param lineNumber the line number that contains the warning
      */
-    public InstanceVariableAst(final String filename, final int lineNumber) {
-        super(filename, lineNumber);
+    public FieldsAst(final String fileName, final int lineNumber) {
+        super(fileName, lineNumber);
     }
 
     @Override
