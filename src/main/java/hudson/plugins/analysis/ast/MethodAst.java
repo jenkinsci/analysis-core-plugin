@@ -1,12 +1,10 @@
-package hudson.plugins.ast.specific;
+package hudson.plugins.analysis.ast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-
-import hudson.plugins.ast.factory.Ast;
 
 /**
  * Is responsible for methods and constructors.

@@ -1,4 +1,4 @@
-package hudson.plugins.ast.specific;
+package hudson.plugins.analysis.ast;
 
 import java.util.Arrays;
 import java.util.List;
@@ -7,8 +7,6 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-
-import hudson.plugins.ast.factory.Ast;
 
 /**
  * Depicts the MethodOrClassAst. If the warning is on method-level the {@link MethodAst#chooseArea()} would be called,

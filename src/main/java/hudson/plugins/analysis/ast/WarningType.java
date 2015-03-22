@@ -1,4 +1,4 @@
-package hudson.plugins.ast.specific;
+package hudson.plugins.analysis.ast;
 
 /**
  * Depicts the warning types which need to include the name e.g. the methodname for calculating the hashcode.

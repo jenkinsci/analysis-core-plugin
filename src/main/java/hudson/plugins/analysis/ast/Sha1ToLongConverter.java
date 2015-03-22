@@ -1,4 +1,4 @@
-package hudson.plugins.ast.factory;
+package hudson.plugins.analysis.ast;
 
 /**
  * Converts SHA1 hash codes to long values.

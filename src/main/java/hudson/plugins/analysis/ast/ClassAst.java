@@ -1,4 +1,4 @@
-package hudson.plugins.ast.specific;
+package hudson.plugins.analysis.ast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,8 +8,6 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-
-import hudson.plugins.ast.factory.Ast;
 
 /**
  * Creates the abstract syntax tree for the whole class except inner types.

@@ -1,4 +1,4 @@
-package hudson.plugins.ast.factory;
+package hudson.plugins.analysis.ast;
 
 import java.io.File;
 import java.io.IOException;
