@@ -25,8 +25,8 @@ public class NamePackageAst extends Ast {
     public List<DetailAST> chooseArea() {
         List<DetailAST> chosen = new ArrayList<DetailAST>();
 
-        chosen.add(getAbstractSyntaxTree());
-        chosen.addAll(calcAllChildren(getAbstractSyntaxTree().getFirstChild()));
+        chosen.add(getRoot());
+        chosen.addAll(calcAllChildren(getRoot().getFirstChild()));
 
         StringBuilder stringBuilder = new StringBuilder();
         for (DetailAST element : chosen) {

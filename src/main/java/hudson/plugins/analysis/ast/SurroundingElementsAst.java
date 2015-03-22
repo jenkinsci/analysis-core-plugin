@@ -57,7 +57,7 @@ public class SurroundingElementsAst extends Ast {
         int startLine = start.getLineNo();
         int nextLine;
         int counter = 0;
-        DetailAST completeAst = getAbstractSyntaxTree();
+        DetailAST completeAst = getRoot();
 
         List<DetailAST> environment = new ArrayList<DetailAST>();
 

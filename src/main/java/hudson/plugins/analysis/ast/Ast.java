@@ -26,11 +26,11 @@ import antlr.TokenStreamException;
  */
 public abstract class Ast {
     private static final Sha1ToLongConverter SHA_1_TO_LONG_CONVERTER = new Sha1ToLongConverter();
+    private static final String HASH_ALGORITHM = "SHA-1";
 
     private final int lineNumber;
-    private DetailAST abstractSyntaxTree;
-
-    private String fileName;
+    private final DetailAST root;
+    private final String fileName;
 
     private List<DetailAST> elementsInSameLine;
 
@@ -39,8 +39,7 @@ public abstract class Ast {
     private final List<DetailAST> allElements = new ArrayList<DetailAST>();
 
     private static final String DELIMITER = " ";
-    private static final String CHARSET = "UTF-8";
-    private static final String HASH_ALGORITHM = "SHA-1";
+    private static final String CHARSET = "UTF-8"; // FIXME: use user value
 
     /**
      * Creates a new instance of {@link Ast}.
@@ -53,10 +52,10 @@ public abstract class Ast {
         this.fileName = fileName;
         this.lineNumber = lineNumber;
 
-        abstractSyntaxTree = createAst(fileName);
+        root = createAst(fileName);
         elementsInSameLine = new ArrayList<DetailAST>();
-        runThroughAST(abstractSyntaxTree, lineNumber);
-        calcConstants(abstractSyntaxTree);
+        runThroughAST(root, lineNumber);
+        calcConstants(root);
     }
 
     /**
@@ -69,32 +68,12 @@ public abstract class Ast {
     }
 
     /**
-     * Sets the ast to the specified value.
+     * Returns the root of the AST.
      *
-     * @param abstractSyntaxTree
-     *            the value to set
+     * @return the root of the AST
      */
-    public void setAbstractSyntaxTree(final DetailAST abstractSyntaxTree) {
-        this.abstractSyntaxTree = abstractSyntaxTree;
-    }
-
-    /**
-     * Returns the DetailAST.
-     *
-     * @return the DetailAST
-     */
-    public DetailAST getAbstractSyntaxTree() {
-        return abstractSyntaxTree;
-    }
-
-    /**
-     * Sets the filename to the specified value.
-     *
-     * @param fileName
-     *            the value to set
-     */
-    public void setFileName(final String fileName) {
-        this.fileName = fileName;
+    public DetailAST getRoot() {
+        return root;
     }
 
     /**
@@ -104,16 +83,6 @@ public abstract class Ast {
      */
     public String getFileName() {
         return fileName;
-    }
-
-    /**
-     * Sets the elementsInSameLine to the specified value.
-     *
-     * @param elementsInSameLine
-     *            the value to set
-     */
-    public void setElementsInSameLine(final List<DetailAST> elementsInSameLine) {
-        this.elementsInSameLine = elementsInSameLine;
     }
 
     /**
@@ -208,20 +177,6 @@ public abstract class Ast {
         catch (IOException exception) {
             throw new IllegalArgumentException(exception);
         }
-    }
-
-    /**
-     * Tests, if two AST are equal. For example permutations of methods are indifferent and therefore the ast returns
-     * true.
-     *
-     * @param ast1
-     *            The first AST.
-     * @param ast2
-     *            The second AST.
-     * @return <code>true</code>, if both ast are equal, otherwise return <code>false</code>.
-     */
-    public boolean isEqualAST(final DetailAST ast1, final DetailAST ast2) {
-        return ast1.equalsTree(ast2);
     }
 
     /**
@@ -493,7 +448,7 @@ public abstract class Ast {
      * @return Returns the last linenumber of the ast.
      */
     public int getLastLineNumber() {
-        return getLastSibling(getObjBlock(abstractSyntaxTree).getFirstChild()).getLineNo();
+        return getLastSibling(getObjBlock(root).getFirstChild()).getLineNo();
     }
 
     // Map<nameOfConstant, value>

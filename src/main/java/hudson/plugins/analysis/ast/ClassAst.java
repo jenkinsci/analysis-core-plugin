@@ -33,13 +33,13 @@ public class ClassAst extends Ast {
 
     @Override
     public List<DetailAST> chooseArea() {
-        DetailAST objBlock = getObjBlock(getAbstractSyntaxTree());
+        DetailAST objBlock = getObjBlock(getRoot());
 
         getSpecialSiblings(objBlock.getFirstChild());
 
         List<DetailAST> chosenArea = new ArrayList<DetailAST>();
 
-        chosenArea.addAll(elementsToObjBlock(getAbstractSyntaxTree()));
+        chosenArea.addAll(elementsToObjBlock(getRoot()));
         chosenArea.add(objBlock);
 
         for (int i = 0; i < siblings.size(); i++) {

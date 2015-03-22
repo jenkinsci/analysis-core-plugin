@@ -22,7 +22,7 @@ public class FileAst extends Ast {
 
     @Override
     public List<DetailAST> chooseArea() {
-        runThroughAST(getAbstractSyntaxTree());
+        runThroughAST(getRoot());
 
         return getAllElements();
     }
