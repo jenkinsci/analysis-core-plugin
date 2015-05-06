@@ -1,6 +1,5 @@
 package hudson.plugins.analysis.ast;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -15,8 +14,8 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * @author Christian Möstl
  */
 public class MethodOrClassAst extends Ast {
-    private final int[] excludeTypes = new int[]{TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF, TokenTypes.ENUM_DEF,
-            TokenTypes.ANNOTATION_DEF};
+    private static final int[] nonMethodTypes
+            = {TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF, TokenTypes.ENUM_DEF, TokenTypes.ANNOTATION_DEF};
 
     /**
      * Creates a new instance of {@link MethodOrClassAst}.
@@ -43,11 +42,11 @@ public class MethodOrClassAst extends Ast {
             if (element.getType() == TokenTypes.METHOD_DEF || element.getType() == TokenTypes.CTOR_DEF) {
                 return true;
             }
-            else if (!Arrays.asList(ArrayUtils.toObject(excludeTypes)).contains(element.getType())) {
+            else if (ArrayUtils.contains(nonMethodTypes, element.getType())) {
                 return false;
             }
             else {
-                isLevelOfMethod(element.getParent());
+                return isLevelOfMethod(element.getParent());
             }
         }
         return false;

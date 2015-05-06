@@ -18,6 +18,17 @@ public class SurroundingElementsAst extends Ast {
     private final int surroundingLines;
 
     /**
+     * Creates a new instance of {@link SurroundingElementsAst}. Uses the predefined number of lines ({@link
+     * #LINES_LOOK_AHEAD} as look ahead.
+     *
+     * @param fileName   the name of the Java file
+     * @param lineNumber the line number that contains the warning
+     */
+    public SurroundingElementsAst(final String fileName, final int lineNumber) {
+        this(fileName, lineNumber, LINES_LOOK_AHEAD);
+    }
+
+    /**
      * Creates a new instance of {@link SurroundingElementsAst}.
      *
      * @param fileName         the name of the Java file
