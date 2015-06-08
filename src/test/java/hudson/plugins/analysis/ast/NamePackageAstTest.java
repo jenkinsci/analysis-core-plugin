@@ -18,6 +18,6 @@ public class NamePackageAstTest extends AbstractAstTest {
 
         Ast ast = new NamePackageAst(createJavaSourceTemporaryFile("PackageName_Newline.java"), 7);
 
-        checkAst(expectedResult, ast);
+        assertThatAstIs(ast, expectedResult);
     }
 }

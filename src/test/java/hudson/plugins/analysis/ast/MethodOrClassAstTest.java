@@ -18,7 +18,7 @@ public class MethodOrClassAstTest extends AbstractAstTest {
 
         Ast ast = new MethodOrClassAst(createJavaSourceTemporaryFile("RedundantModifier_Newline.java"), 25);
 
-        checkAst(expectedResult, ast);
+        assertThatAstIs(ast, expectedResult);
     }
 
     /**
@@ -30,6 +30,6 @@ public class MethodOrClassAstTest extends AbstractAstTest {
 
         Ast ast = new MethodOrClassAst(createJavaSourceTemporaryFile("JavadocStyle_Newline.java"), 9);
 
-        checkAst(expectedResult, ast);
+        assertThatAstIs(ast, expectedResult);
     }
 }

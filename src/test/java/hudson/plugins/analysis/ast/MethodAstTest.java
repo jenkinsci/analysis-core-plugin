@@ -18,6 +18,6 @@ public class MethodAstTest extends AbstractAstTest {
 
         Ast ast = new MethodAst(createJavaSourceTemporaryFile("MethodName_Newline.java"), 21);
 
-        checkAst(expectedResult, ast);
+        assertThatAstIs(ast, expectedResult);
     }
 }

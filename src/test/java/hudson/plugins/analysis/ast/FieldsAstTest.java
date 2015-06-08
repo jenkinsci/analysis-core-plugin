@@ -18,6 +18,6 @@ public class FieldsAstTest extends AbstractAstTest {
 
         Ast ast = new FieldsAst(createJavaSourceTemporaryFile("ExplicitInitialization_Newline.java"), 17);
 
-        checkAst(expectedResult, ast);
+        assertThatAstIs(ast, expectedResult);
     }
 }

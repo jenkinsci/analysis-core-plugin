@@ -18,6 +18,6 @@ public class FileAstTest extends AbstractAstTest {
 
         Ast ast = new FileAst(createJavaSourceTemporaryFile("InterfaceIsType_Newline.java"), 15);
 
-        checkAst(expectedResult, ast);
+        assertThatAstIs(ast, expectedResult);
     }
 }

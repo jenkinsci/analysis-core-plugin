@@ -32,7 +32,7 @@ public abstract class Ast {
     private final DetailAST root;
     private final String fileName;
 
-    private List<DetailAST> elementsInSameLine;
+    private final List<DetailAST> elementsInSameLine = new ArrayList<DetailAST>();
 
     private List<DetailAST> children = new ArrayList<DetailAST>();
 
@@ -53,8 +53,8 @@ public abstract class Ast {
         this.lineNumber = lineNumber;
 
         root = createAst(fileName);
-        elementsInSameLine = new ArrayList<DetailAST>();
-        runThroughAST(root, lineNumber);
+
+        collectElementsOfLine(root, lineNumber, elementsInSameLine);
         calcConstants(root);
     }
 
@@ -86,18 +86,10 @@ public abstract class Ast {
     }
 
     /**
-     * Clears the elements in same line.
-     */
-    public void clearElementsInSameLine() {
-        elementsInSameLine.clear();
-    }
-
-    /**
      * Returns the elementsInSameLine.
      *
      * @return the elementsInSameLine
      */
-    // FIXME: we need a fallback if that list is empty
     public List<DetailAST> getElementsInSameLine() {
         return elementsInSameLine;
     }
@@ -109,16 +101,6 @@ public abstract class Ast {
      */
     public List<DetailAST> getAllElements() {
         return allElements;
-    }
-
-    /**
-     * Adds the child to the children.
-     *
-     * @param child
-     *            the child
-     */
-    public void addChildren(final DetailAST child) {
-        children.add(child);
     }
 
     /**
@@ -180,23 +162,22 @@ public abstract class Ast {
     }
 
     /**
-     * Runs through the AST.
+     * Runs through the AST and collects all elements that are part of the selected line.
      *
-     * @param root
-     *            Expects the root of the AST which is run through
-     * @param line
-     *            the linenumber
+     * @param root     the root of the AST
+     * @param line     the line where the elements are picked from
+     * @param elements the elements of the selected line
      */
-    public void runThroughAST(final DetailAST root, final int line) {
+    protected void collectElementsOfLine(final DetailAST root, final int line, final List<DetailAST> elements) {
         if (root != null) {
             if (root.getLineNo() == line) {
-                elementsInSameLine.add(root);
+                elements.add(root);
             }
             if (root.getFirstChild() != null) {
-                runThroughAST(root.getFirstChild(), line);
+                collectElementsOfLine(root.getFirstChild(), line, elements);
             }
             if (root.getNextSibling() != null) {
-                runThroughAST(root.getNextSibling(), line);
+                collectElementsOfLine(root.getNextSibling(), line, elements);
             }
         }
     }
@@ -242,23 +223,6 @@ public abstract class Ast {
     }
 
     /**
-     * Prints the list.
-     *
-     * @param list
-     *            List which should be printed.
-     */
-    public void printList(final List<DetailAST> list) {
-        if (list != null) {
-            for (DetailAST ast : list) {
-                System.out.println(TokenTypes.getTokenName(ast.getType()));
-            }
-        }
-        else {
-            System.out.println("Keine Elemente...");
-        }
-    }
-
-    /**
      * Choose the Area around the warning.
      *
      * @return the Area
@@ -282,16 +246,6 @@ public abstract class Ast {
         }
 
         return stringBuilder.toString();
-    }
-
-    /**
-     * Prints the result of the chooseArea() on the console.
-     *
-     * @param delimiter
-     *            the delimiter
-     */
-    public void printChosenArea(final char delimiter) {
-        System.out.println(chosenAreaAsString(delimiter));
     }
 
     /** Necessary for ASTs with name. */

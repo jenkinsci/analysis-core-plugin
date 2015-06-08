@@ -2,6 +2,7 @@ package hudson.plugins.analysis.ast;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
 
@@ -13,7 +14,7 @@ import static org.junit.Assert.*;
  * @author Ullrich Hafner
  */
 public abstract class AbstractAstTest {
-    protected void checkAst(final String expectedResult, final Ast ast) {
+    protected void assertThatAstIs(final Ast ast, final String expectedResult) {
         String realResult = ast.chosenAreaAsString(' ');
 
         compareString(expectedResult, realResult);
@@ -34,7 +35,11 @@ public abstract class AbstractAstTest {
             File warnings = File.createTempFile("ast", ".java");
             warnings.deleteOnExit();
 
-            FileUtils.copyInputStreamToFile(AbstractAstTest.class.getResourceAsStream(fileName), warnings);
+            InputStream stream = AbstractAstTest.class.getResourceAsStream(fileName);
+            if (stream == null) {
+                throw new IllegalArgumentException("File not found: " + fileName);
+            }
+            FileUtils.copyInputStreamToFile(stream, warnings);
             return warnings;
         }
         catch (IOException cause) {

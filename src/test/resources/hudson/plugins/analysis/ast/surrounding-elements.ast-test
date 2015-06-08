@@ -43,51 +43,56 @@ public class SurroundingElementsAst extends Ast {
 
     @Override
     public List<DetailAST> chooseArea() {
+        List<DetailAST> elementsInLine = getElementsInSameLine();
+        List<DetailAST> tmp = new ArrayList<DetailAST>(elementsInLine);
+
         List<DetailAST> chosen = new ArrayList<DetailAST>();
-        chosen.addAll(getElementsInSameLine());
-        chosen.addAll(getElementsBeforeAffectedLine());
-        chosen.addAll(getElementsAfterAffectedLine());
+        if (!elementsInLine.isEmpty()) {
+            chosen.addAll(elementsInLine);
+            chosen.addAll(elementsBefore(elementsInLine.get(0)));
+            chosen.addAll(elementsAfter(tmp.get(tmp.size() - 1)));
+        }
 
         return chosen;
     }
 
-    private List<DetailAST> getElementsBeforeAffectedLine() {
-        return getSurroundingElements(true);
+    private List<DetailAST> elementsBefore(final DetailAST start) {
+        return calcEnvironment(start, true);
     }
 
-    private List<DetailAST> getElementsAfterAffectedLine() {
-        return getSurroundingElements(false);
+    private List<DetailAST> elementsAfter(final DetailAST start) {
+        return calcEnvironment(start, false);
     }
 
-    private List<DetailAST> getSurroundingElements(final boolean isMovingUp) {
+    private List<DetailAST> calcEnvironment(final DetailAST start, final boolean before) {
+        int startLine = start.getLineNo();
+        int nextLine;
+        int counter = 0;
         DetailAST completeAst = getRoot();
 
         List<DetailAST> environment = new ArrayList<DetailAST>();
 
         int limit;
-        int startLine = getLineNumber();
-        if (isMovingUp) {
+        if (before) {
             limit = startLine;
         }
         else {
             limit = getLastLineNumber() - startLine + 1;
         }
-
-        int nextLine;
-        int counter = 0;
         for (int i = 1; i < limit; i++) {
             if (counter < surroundingLines) {
-                if (isMovingUp) {
+                if (before) {
                     nextLine = startLine - i;
                 }
                 else {
                     nextLine = startLine + i;
                 }
-                List<DetailAST> elementsInCurrentLine = new ArrayList<DetailAST>();
-                collectElementsOfLine(completeAst, nextLine, elementsInCurrentLine);
-                if (!elementsInCurrentLine.isEmpty()) {
+                clearElementsInSameLine();
+                runThroughAST(completeAst, nextLine);
+                if (!getElementsInSameLine().isEmpty()) {
                     counter++;
-                    environment.addAll(elementsInCurrentLine);
+                    environment.addAll(getElementsInSameLine());
+                    clearElementsInSameLine();
                 }
             }
             else {
