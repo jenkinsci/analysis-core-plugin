@@ -9,15 +9,28 @@ import org.junit.Test;
  * @author Ullrich Hafner
  */
 public class MethodAstTest extends AbstractAstTest {
+    protected MethodAst createAst(final int lineNumber, final String fileName) {
+        return new MethodAst(fileName, lineNumber);
+    }
+
     /**
-     * Verifies that the MethodAst works right.
+     * Verifies the AST contains the elements of the whole method and the affected line.
      */
     @Test
-    public void testMethodAst() {
-        String expectedResult = "METHOD_DEF MODIFIERS LITERAL_PUBLIC LITERAL_STATIC TYPE LITERAL_VOID IDENT LPAREN PARAMETERS RPAREN SLIST EXPR METHOD_CALL DOT DOT IDENT IDENT IDENT ELIST EXPR STRING_LITERAL RPAREN SEMI RCURLY ";
+    public void shouldPickWholeMethod() {
+        assertThatAstIs(createAst(37), LINE67_METHOD + WHOLE_METHOD);
+        assertThatAstIs(createAst(38), LINE68_VAR + WHOLE_METHOD);
+        assertThatAstIs(createAst(61), LINE91_CALL + WHOLE_METHOD);
+        assertThatAstIs(createAst(73), LINE103_RETURN + WHOLE_METHOD);
+    }
 
-        Ast ast = new MethodAst(createJavaSourceTemporaryFile("MethodName_Newline.java"), 21);
-
-        assertThatAstIs(ast, expectedResult);
+    /**
+     * Verifies the AST contains the elements of the whole method.
+     */
+    @Test
+    public void shouldHandleBlankLines() {
+        assertThatAstIs(createAst(42), WHOLE_METHOD);
+        assertThatAstIs(createAst(44), WHOLE_METHOD);
+        assertThatAstIs(createAst(72), WHOLE_METHOD);
     }
 }

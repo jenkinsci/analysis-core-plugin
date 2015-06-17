@@ -8,8 +8,9 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 /**
- * Depicts the MethodOrClassAst. If the warning is on method-level the {@link MethodAst#chooseArea()} would be called,
- * otherwise if it is on class-level the {@link ClassAst#chooseArea()}.
+ * Extracts the abstract syntax tree either of the affected method or whole class. If the warning is within a method
+ * body, then the AST is computed by an instance of {@link MethodAst}. Otherwise the AST of the whole class is used
+ * (see {@link ClassAst}.
  *
  * @author Christian Möstl
  */
@@ -29,7 +30,11 @@ public class MethodOrClassAst extends Ast {
 
     @Override
     public List<DetailAST> chooseArea() {
-        if (getElementsInSameLine().size() != 0 && isLevelOfMethod(getElementsInSameLine().get(0))) {
+        List<DetailAST> elementsInCurrentLine = getElementsInSameLine();
+        if (elementsInCurrentLine.isEmpty()) {
+            elementsInCurrentLine = findPreviousElements(getLineNumber());
+        }
+        if (!elementsInCurrentLine.isEmpty() && isLevelOfMethod(elementsInCurrentLine.get(0))) {
             return new MethodAst(getFileName(), getLineNumber()).chooseArea();
         }
         else {

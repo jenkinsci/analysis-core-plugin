@@ -3,33 +3,46 @@ package hudson.plugins.analysis.ast;
 import org.junit.Test;
 
 /**
- * Tests the class {@link MethodOrClassAstTest}.
+ * Tests the class {@link MethodOrClassAst}.
  *
  * @author Christian Möstl
  * @author Ullrich Hafner
  */
 public class MethodOrClassAstTest extends AbstractAstTest {
-    /**
-     * Verifies that the MethodOrClassAst works right.
-     */
-    @Test
-    public void testMethodOrClassAstInMethodlevel() {
-        String expectedResult = "METHOD_DEF MODIFIERS LITERAL_PUBLIC TYPE LITERAL_INT IDENT LPAREN PARAMETERS PARAMETER_DEF MODIFIERS TYPE LITERAL_INT IDENT COMMA PARAMETER_DEF MODIFIERS TYPE LITERAL_INT IDENT RPAREN SEMI ";
-
-        Ast ast = new MethodOrClassAst(createJavaSourceTemporaryFile("RedundantModifier_Newline.java"), 25);
-
-        assertThatAstIs(ast, expectedResult);
+    protected MethodOrClassAst createAst(final int lineNumber, final String fileName) {
+        return new MethodOrClassAst(fileName, lineNumber);
     }
 
     /**
-     * Verifies that the MethodOrClassAst works right.
+     * Verifies the AST contains the elements of the whole method and the affected line.
      */
     @Test
-    public void testMethodOrClassAstInClasslevel() {
-        String expectedResult = "PACKAGE_DEF ANNOTATIONS DOT DOT IDENT IDENT IDENT SEMI CLASS_DEF MODIFIERS LITERAL_PUBLIC LITERAL_CLASS IDENT OBJBLOCK LCURLY CTOR_DEF MODIFIERS LITERAL_PUBLIC IDENT LPAREN PARAMETERS RPAREN SLIST RCURLY RCURLY ";
+    public void shouldPickWholeMethod() {
+        assertThatAstIs(createAst(37), LINE67_METHOD + WHOLE_METHOD);
+        assertThatAstIs(createAst(38), LINE68_VAR + WHOLE_METHOD);
+        assertThatAstIs(createAst(61), LINE91_CALL + WHOLE_METHOD);
+        assertThatAstIs(createAst(73), LINE103_RETURN + WHOLE_METHOD);
+    }
 
-        Ast ast = new MethodOrClassAst(createJavaSourceTemporaryFile("JavadocStyle_Newline.java"), 9);
+    /**
+     * Verifies the AST contains the elements of the whole method.
+     */
+    @Test
+    public void shouldHandleBlankLines() {
+        assertThatAstIs(createAst(36), WHOLE_METHOD);
+        assertThatAstIs(createAst(42), WHOLE_METHOD);
+        assertThatAstIs(createAst(44), WHOLE_METHOD);
+        assertThatAstIs(createAst(72), WHOLE_METHOD);
 
-        assertThatAstIs(ast, expectedResult);
+        assertThatAstIs(createAst(17), WHOLE_CLASS);
+    }
+
+    /**
+     * Verifies the AST contains the elements of the whole class and the affected line.
+     */
+    @Test
+    public void shouldPickWholeClass() {
+        assertThatAstIs(createAst(14), LINE14_CLASS + WHOLE_CLASS);
+        assertThatAstIs(createAst(16), LINE16_FIELD + WHOLE_CLASS);
     }
 }

@@ -457,4 +457,55 @@ public abstract class Ast {
     protected Map<DetailAST, DetailAST> getConstants() {
         return constants;
     }
+
+    /**
+     * Returns the abstract syntax tree of the elements in a non blank line that is located right before the specified line.
+     *
+     * @param lineNumber the maximum line number
+     * @return the elements of the previous non-blank line
+     */
+    protected List<DetailAST> findPreviousElements(final int lineNumber) {
+        List<DetailAST> elements = new ArrayList<DetailAST>();
+        int currentLine = lineNumber - 1;
+        while (elements.isEmpty() && currentLine >= 0) {
+            collectElementsOfLine(getRoot(), currentLine, elements);
+
+            currentLine--;
+        }
+        return elements;
+    }
+
+    /**
+     * Returns the abstract syntax tree of the elements in a non blank line that is located right after the specified line.
+     *
+     * @param lineNumber the maximum line number
+     * @return the elements of the next non-blank line
+     */
+    protected List<DetailAST> findNextElements(final int lineNumber) {
+        List<DetailAST> elements = new ArrayList<DetailAST>();
+        int currentLine = lineNumber + 1;
+        while (elements.isEmpty() && currentLine <= getLastLineNumber()) {
+            collectElementsOfLine(getRoot(), currentLine, elements);
+
+            currentLine++;
+        }
+        return elements;
+    }
+
+    /**
+     * Returns the AST elements in the affected line (or if this line does not contain statements), above or before that
+     * line.
+     *
+     * @return the AST elements in the affected line
+     */
+    protected List<DetailAST> getElementsNearAffectedLine() {
+        List<DetailAST> elements = getElementsInSameLine();
+        if (elements.isEmpty()) {
+            elements = findNextElements(getLineNumber());
+        }
+        if (elements.isEmpty()) {
+            elements = findPreviousElements(getLineNumber());
+        }
+        return elements;
+    }
 }

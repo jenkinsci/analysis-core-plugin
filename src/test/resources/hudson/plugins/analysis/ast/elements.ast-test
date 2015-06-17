@@ -21,39 +21,9 @@ public class SurroundingElementsAst extends Ast {
      * Creates a new instance of {@link SurroundingElementsAst}. Uses the predefined number of lines ({@link
      * #LINES_LOOK_AHEAD} as look ahead.
      *
-     * @param fileName   the name of the Java file
-     * @param lineNumber the line number that contains the warning
      */
     public SurroundingElementsAst(final String fileName, final int lineNumber) {
         this(fileName, lineNumber, LINES_LOOK_AHEAD);
-    }
-
-    /**
-     * Creates a new instance of {@link SurroundingElementsAst}.
-     *
-     * @param fileName         the name of the Java file
-     * @param lineNumber       the line number that contains the warning
-     * @param surroundingLines the number of lines before and after the affected line
-     */
-    public SurroundingElementsAst(final String fileName, final int lineNumber, final int surroundingLines) {
-        super(fileName, lineNumber);
-
-        this.surroundingLines = surroundingLines;
-    }
-
-    @Override
-    public List<DetailAST> chooseArea() {
-        List<DetailAST> elementsInLine = getElementsInSameLine();
-        List<DetailAST> tmp = new ArrayList<DetailAST>(elementsInLine);
-
-        List<DetailAST> chosen = new ArrayList<DetailAST>();
-        if (!elementsInLine.isEmpty()) {
-            chosen.addAll(elementsInLine);
-            chosen.addAll(elementsBefore(elementsInLine.get(0)));
-            chosen.addAll(elementsAfter(tmp.get(tmp.size() - 1)));
-        }
-
-        return chosen;
     }
 
     private List<DetailAST> elementsBefore(final DetailAST start) {
@@ -101,5 +71,11 @@ public class SurroundingElementsAst extends Ast {
         }
 
         return environment;
+    }
+
+    private static class Nested {
+        private void nested() {
+            System.out.println("Hello, I'm a nested class");
+        }
     }
 }

@@ -8,7 +8,13 @@ import org.junit.Test;
  * @author Christian Möstl
  * @author Ullrich Hafner
  */
+// FIXME: update test using the base class methods and resources
 public class FileAstTest extends AbstractAstTest {
+    @Override
+    protected Ast createAst(final int lineNumber, final String fileName) {
+        return new FileAst(fileName, lineNumber);
+    }
+
     /**
      * Verifies that the FileAst works right.
      */

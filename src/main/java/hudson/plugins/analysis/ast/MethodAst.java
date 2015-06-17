@@ -7,7 +7,7 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 /**
- * Is responsible for methods and constructors.
+ * Extracts the abstract syntax tree of the method that contains the warning.
  *
  * @author Christian Möstl
  */
@@ -24,26 +24,40 @@ public class MethodAst extends Ast {
 
     @Override
     public List<DetailAST> chooseArea() {
-        List<DetailAST> elementsInLine = getElementsInSameLine();
+        List<DetailAST> chosenArea = new ArrayList<DetailAST>(getElementsInSameLine());
+        DetailAST methodStart = findMethodStart();
+        chosenArea.add(methodStart);
+        chosenArea.addAll(calcAllChildren(methodStart.getFirstChild()));
+        return chosenArea;
+    }
 
-        if (!elementsInLine.isEmpty()) {
-            DetailAST methodStart = getRootOfMethod(elementsInLine.get(0));
+    private DetailAST findMethodStart() {
+        List<DetailAST> elements = getElementsNearAffectedLine();
 
-            List<DetailAST> chosenArea = new ArrayList<DetailAST>();
-            chosenArea.add(methodStart);
-            chosenArea.addAll(calcAllChildren(methodStart.getFirstChild()));
-            return chosenArea;
+        DetailAST root = null;
+        if (!elements.isEmpty()) {
+            root = getRootOfMethod(elements.get(0));
+            if (root == null) {
+                root = findNextElements(getLineNumber()).get(0);
+            }
         }
-
-        return elementsInLine;
+        if (root == null) {
+            return getRoot();
+        }
+        else {
+            return root;
+        }
     }
 
     private DetailAST getRootOfMethod(final DetailAST elementInMethod) {
         if (elementInMethod.getType() == TokenTypes.METHOD_DEF || elementInMethod.getType() == TokenTypes.CTOR_DEF) {
             return elementInMethod;
         }
-        else {
+        else if (elementInMethod.getParent() != null) {
             return getRootOfMethod(elementInMethod.getParent());
+        }
+        else {
+            return null;
         }
     }
 }

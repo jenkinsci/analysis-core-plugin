@@ -6,7 +6,7 @@ import java.util.List;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 
 /**
- * Creates the abstract syntax tree for the surrounding AST elements. It takes a specific number of lines before and
+ * Extracts the abstract syntax tree of the surrounding elements. It takes a specific number of lines before and
  * after the actual warning.
  *
  * @author Christian Möstl

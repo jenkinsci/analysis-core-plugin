@@ -1,7 +1,6 @@
 package hudson.plugins.analysis.ast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -14,12 +13,9 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  *
  * @author Christian Möstl
  */
-// FIXME: Regard concerned java-class (at OBJBLOCK) and not inherently the top of all classes!
 public class ClassAst extends Ast {
-
-    private final List<DetailAST> siblings = new ArrayList<DetailAST>();
-    private final int[] excludeTypes = new int[]{TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF, TokenTypes.ENUM_DEF,
-            TokenTypes.ANNOTATION_DEF};
+    private final int[] excludeTypes = {TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF, TokenTypes.ENUM_DEF,
+            TokenTypes.ANNOTATION_DEF, TokenTypes.IMPORT, TokenTypes.PACKAGE_DEF};
 
     /**
      * Creates a new instance of {@link ClassAst}.
@@ -33,50 +29,43 @@ public class ClassAst extends Ast {
 
     @Override
     public List<DetailAST> chooseArea() {
-        DetailAST objBlock = getObjBlock(getRoot());
-
-        getSpecialSiblings(objBlock.getFirstChild());
-
+        List<DetailAST> line = getElementsNearAffectedLine();
         List<DetailAST> chosenArea = new ArrayList<DetailAST>();
-
-        chosenArea.addAll(elementsToObjBlock(getRoot()));
-        chosenArea.add(objBlock);
-
-        for (int i = 0; i < siblings.size(); i++) {
-            clear();
-            chosenArea.add(siblings.get(i));
-            chosenArea.addAll(calcAllChildren(siblings.get(i).getFirstChild()));
+        chosenArea.addAll(getElementsInSameLine());
+        DetailAST classAst = getRootOfClass(line.get(0));
+        if (classAst != null) {
+            chosenArea.add(classAst);
+            chosenArea.addAll(getAllButNestedElements(classAst.getFirstChild()));
         }
 
         return chosenArea;
     }
 
-    private void getSpecialSiblings(final DetailAST element) {
-        if (!Arrays.asList(ArrayUtils.toObject(excludeTypes)).contains(element.getType())) {
-            siblings.add(element);
+    private List<DetailAST> getAllButNestedElements(final DetailAST start) {
+        List<DetailAST> chosenArea = new ArrayList<DetailAST>();
+        if (!ArrayUtils.contains(excludeTypes, start.getType())) {
+            chosenArea.add(start);
+            DetailAST child = start.getFirstChild();
+            if (child != null) {
+                chosenArea.addAll(getAllButNestedElements(child));
+            }
         }
-        if (element.getNextSibling() != null) {
-            getSpecialSiblings(element.getNextSibling());
+        DetailAST sibling = start.getNextSibling();
+        if (sibling != null) {
+            chosenArea.addAll(getAllButNestedElements(sibling));
         }
+        return chosenArea;
     }
 
-    private List<DetailAST> elementsToObjBlock(final DetailAST root) {
-        List<DetailAST> elementsToObjBlock = new ArrayList<DetailAST>();
-
-        elementsToObjBlock(elementsToObjBlock, root);
-
-        return elementsToObjBlock;
-    }
-
-    private void elementsToObjBlock(final List<DetailAST> list, final DetailAST root) {
-        if (root.getType() != TokenTypes.OBJBLOCK) {
-            list.add(root);
-            if (root.getFirstChild() != null) {
-                elementsToObjBlock(list, root.getFirstChild());
-            }
-            if (root.getNextSibling() != null) {
-                elementsToObjBlock(list, root.getNextSibling());
-            }
+    private DetailAST getRootOfClass(final DetailAST elementInCLass) {
+        if (elementInCLass.getType() == TokenTypes.CLASS_DEF) {
+            return elementInCLass;
+        }
+        else if (elementInCLass.getParent() != null) {
+            return getRootOfClass(elementInCLass.getParent());
+        }
+        else {
+            return null;
         }
     }
 }
