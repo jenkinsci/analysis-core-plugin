@@ -1,10 +1,11 @@
 package hudson.plugins.analysis.core;
 
-import java.util.Collection;
-
 import static hudson.plugins.analysis.util.ThresholdValidator.*;
 
+import java.util.Collection;
+
 import hudson.model.Result;
+
 import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.analysis.util.model.FileAnnotation;
@@ -74,17 +75,17 @@ public class BuildResultEvaluator {
      */
     public Result evaluateBuildResult(final StringBuilder logger, final Thresholds t,
             final Collection<? extends FileAnnotation> allAnnotations,
-            final int delta, final int highDelta, final int normalDelta, final int lowDelta) {
+            final int delta, final int highDelta, final int normalDelta, final int lowDelta, final int noneDelta) {
         if (checkAllWarningsForFailure(logger, t, allAnnotations)) {
             return Result.FAILURE;
         }
-        if (checkFailedNew(logger, delta, highDelta, normalDelta, lowDelta, t)) {
+        if (checkFailedNew(logger, delta, highDelta, normalDelta, lowDelta,noneDelta, t)) {
             return Result.FAILURE;
         }
         if (checkAllWarningsForUnstable(logger, t, allAnnotations)) {
             return Result.UNSTABLE;
         }
-        if (checkUnstableNew(logger, delta, highDelta, normalDelta, lowDelta, t)) {
+        if (checkUnstableNew(logger, delta, highDelta, normalDelta, lowDelta,noneDelta, t)) {
             return Result.UNSTABLE;
         }
 
@@ -162,7 +163,7 @@ public class BuildResultEvaluator {
         return false;
     }
 
-    private boolean checkFailedNew(final StringBuilder logger, final int delta, final int highDelta, final int normalDelta, final int lowDelta, final Thresholds t) {
+    private boolean checkFailedNew(final StringBuilder logger, final int delta, final int highDelta, final int normalDelta, final int lowDelta, final int noneDelta, final Thresholds t) {
         if (checkThresholds(logger, delta, t.failedNewAll, false, Priority.HIGH, Priority.NORMAL, Priority.LOW)) {
             return true;
         }
@@ -175,10 +176,13 @@ public class BuildResultEvaluator {
         if (checkThresholds(logger, lowDelta, t.failedNewLow, false, Priority.LOW)) {
             return true;
         }
+        if (checkThresholds(logger, noneDelta, t.failedNewLow, false, Priority.NONE)) {
+            return true;
+        }
         return false;
     }
 
-    private boolean checkUnstableNew(final StringBuilder logger, final int delta, final int highDelta, final int normalDelta, final int lowDelta, final Thresholds t) {
+    private boolean checkUnstableNew(final StringBuilder logger, final int delta, final int highDelta, final int normalDelta, final int lowDelta, final int noneDelta, final Thresholds t) {
         if (checkThresholds(logger, delta, t.unstableNewAll, false, Priority.HIGH, Priority.NORMAL, Priority.LOW)) {
             return true;
         }
@@ -189,6 +193,9 @@ public class BuildResultEvaluator {
             return true;
         }
         if (checkThresholds(logger, lowDelta, t.unstableNewLow, false, Priority.LOW)) {
+            return true;
+        }
+        if (checkThresholds(logger, noneDelta, t.unstableNewLow, false, Priority.NONE)) {
             return true;
         }
         return false;
@@ -356,9 +363,9 @@ public class BuildResultEvaluator {
     @Deprecated
     public Result evaluateBuildResult(final PluginLogger logger, final Thresholds t,
             final Collection<? extends FileAnnotation> allAnnotations,
-            final int delta, final int highDelta, final int normalDelta, final int lowDelta) {
+            final int delta, final int highDelta, final int normalDelta, final int lowDelta, final int noneDelta) {
         StringBuilder log = new StringBuilder();
-        Result result = evaluateBuildResult(log, t, allAnnotations, delta, highDelta, normalDelta, lowDelta);
+        Result result = evaluateBuildResult(log, t, allAnnotations, delta, highDelta, normalDelta, lowDelta, noneDelta);
         logger.log(log.toString());
         return result;
     }

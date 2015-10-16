@@ -21,7 +21,9 @@ public enum Priority {
     /** Normal priority. */
     NORMAL,
     /** Low priority. */
-    LOW;
+    LOW,
+    /** No priority. Informational annotations */
+    NONE;
 
     /**
      * Converts a String priority to an actual enumeration value.
@@ -62,6 +64,9 @@ public enum Priority {
         if (this == LOW) {
             return Messages.Priority_Low();
         }
+        if (this == NONE) {
+            return Messages.Priority_None();
+        }
         return Messages.Priority_Normal();
     }
 
@@ -76,6 +81,9 @@ public enum Priority {
         }
         if (this == Priority.LOW) {
             return Messages.LowPriority();
+        }
+        if (this == Priority.NONE) {
+            return Messages.NonePriority();
         }
         return Messages.NormalPriority();
     }
@@ -97,6 +105,11 @@ public enum Priority {
         if (minimumPriority == Priority.LOW) {
             priorities.add(Priority.NORMAL);
             priorities.add(Priority.LOW);
+        }
+        if (minimumPriority == Priority.NONE) {
+            priorities.add(Priority.NORMAL);
+            priorities.add(Priority.LOW);
+            priorities.add(Priority.NONE);
         }
         return priorities;
     }

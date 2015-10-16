@@ -8,6 +8,7 @@
   <j:set var="high" value="${container.numberOfHighAnnotations}" />
   <j:set var="normal" value="${container.numberOfNormalAnnotations}" />
   <j:set var="low" value="${container.numberOfLowAnnotations}" />
+   <j:set var="none" value="${container.numberOfNoAnnotations}" />
 
   <table cellpadding="0" cellspacing="0" width="100%" tooltip="${container.toolTip}">
     <tr style="height:10;padding:0">
@@ -23,7 +24,11 @@
         <td class="priority-low" style="width:${low / max * 100}%">
         </td>
       </j:if>
-      <td style="width:${ (max - high - normal - low) / max * 100}%">
+      <j:if test="${none > 0}">
+        <td class="priority-none" style="width:${none / max * 100}%">
+        </td>
+      </j:if>
+      <td style="width:${ (max - high - normal - low - none) / max * 100}%">
       </td>
     </tr>
   </table>

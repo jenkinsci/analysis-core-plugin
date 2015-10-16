@@ -1,6 +1,5 @@
 package hudson.plugins.analysis.core; // NOPMD
 
-import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -13,6 +12,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.annotation.Nonnull;
+
+import jenkins.model.Jenkins;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
@@ -28,14 +31,14 @@ import com.infradna.tool.bridge_method_injector.WithBridgeMethods;
 import com.thoughtworks.xstream.XStream;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import jenkins.model.Jenkins;
-
 import hudson.XmlFile;
-import hudson.model.AbstractBuild;
-import hudson.model.Api;
+
 import hudson.model.ModelObject;
 import hudson.model.Result;
+import hudson.model.AbstractBuild;
+import hudson.model.Api;
 import hudson.model.Run;
+
 import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.util.HtmlPrinter;
 import hudson.plugins.analysis.util.PluginLogger;
@@ -111,6 +114,8 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
 
     /** Difference between this and the previous build. */
     private int delta;
+    /** Difference between this and the previous build (Priority none). */
+    private int noneDelta;
     /** Difference between this and the previous build (Priority low). */
     private int lowDelta;
     /** Difference between this and the previous build (Priority normal). */
@@ -118,6 +123,8 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     /** Difference between this and the previous build (Priority high). */
     private int highDelta;
 
+    /** The number of no priority warnings in this build. */
+    private int noneWarnings;
     /** The number of low priority warnings in this build. */
     private int lowWarnings;
     /** The number of normal priority warnings in this build. */
@@ -277,6 +284,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
         AnnotationContainer referenceResult = history.getReferenceAnnotations();
 
         delta = result.getNumberOfAnnotations() - referenceResult.getNumberOfAnnotations();
+        noneDelta = computeDelta(result, referenceResult, Priority.NONE);
         lowDelta = computeDelta(result, referenceResult, Priority.LOW);
         normalDelta = computeDelta(result, referenceResult, Priority.NORMAL);
         highDelta = computeDelta(result, referenceResult, Priority.HIGH);
@@ -295,6 +303,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
         highWarnings = result.getNumberOfAnnotations(Priority.HIGH);
         normalWarnings = result.getNumberOfAnnotations(Priority.NORMAL);
         lowWarnings = result.getNumberOfAnnotations(Priority.LOW);
+        noneWarnings = result.getNumberOfAnnotations(Priority.NONE);
 
         JavaProject container = new JavaProject();
         container.addAnnotations(result.getAnnotations());
@@ -353,11 +362,11 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     /**
      * Added for backward compatibility. It generates <pre>AbstractBuild getReferenceBuild()</pre> bytecode during the build
      * process, so old implementations can use that signature.
-     * 
+     *
      * @see {@link WithBridgeMethods}
      */
     @Deprecated
-    private final Object getReferenceAbstractBuild(Run owner, Class targetClass) {
+    private final Object getReferenceAbstractBuild(final Run owner, final Class targetClass) {
       return owner instanceof AbstractBuild ? ((AbstractBuild) owner).getProject().getBuildByNumber(referenceBuild) : null;
     }
 
@@ -590,7 +599,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     /**
      * Added for backward compatibility. It generates <pre>AbstractBuild getOwner()</pre> bytecode during the build
      * process, so old implementations can use that signature.
-     * 
+     *
      * @see {@link WithBridgeMethods}
      */
     @Deprecated
@@ -642,6 +651,15 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     @Override
     public FileAnnotation getAnnotation(final String key) {
         return getContainer().getAnnotation(key);
+    }
+
+    /**
+     * Sets the number of none warnings to the specified value.
+     *
+     * @param noneWarnings the value to set
+     */
+    protected void setNoneWarnings(final int noneWarnings) {
+        this.noneWarnings = noneWarnings;
     }
 
     /**
@@ -841,6 +859,9 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
         else if (priority == Priority.NORMAL) {
             return normalWarnings;
         }
+        else if (priority == Priority.NONE) {
+            return noneWarnings;
+        }
         else {
             return lowWarnings;
         }
@@ -873,6 +894,15 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      */
     public int getDelta() {
         return delta;
+    }
+
+    /**
+     * Returns the none delta.
+     *
+     * @return the delta
+     */
+    public int getNoneDelta() {
+        return noneDelta;
     }
 
     /**
@@ -910,6 +940,16 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     @Exported
     public int getWarningsDelta() {
         return delta;
+    }
+
+    /**
+     * Returns the number of warnings with none priority.
+     *
+     * @return the number of warnings with none priority
+     */
+    @Exported
+    public int getNumberOfNoPriorityWarnings() {
+        return noneWarnings;
     }
 
     /**
@@ -1230,7 +1270,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
         }
         else if (useDeltaValues) {
             buildResult = resultEvaluator.evaluateBuildResult(messages, thresholds, getAnnotations(),
-                    getDelta(), getHighDelta(), getNormalDelta(), getLowDelta());
+                    getDelta(), getHighDelta(), getNormalDelta(), getLowDelta(), getNoneDelta());
         }
         else {
             buildResult = resultEvaluator.evaluateBuildResult(messages, thresholds,
