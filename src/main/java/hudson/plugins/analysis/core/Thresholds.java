@@ -1,5 +1,7 @@
 package hudson.plugins.analysis.core;
 
+import static hudson.plugins.analysis.util.ThresholdValidator.*;
+
 import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
@@ -7,7 +9,6 @@ import org.kohsuke.stapler.export.Exported;
 import org.kohsuke.stapler.export.ExportedBean;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import static hudson.plugins.analysis.util.ThresholdValidator.*;
 
 /**
  * Data object that simply stores the thresholds.
@@ -28,6 +29,8 @@ public class Thresholds implements Serializable {
     @Exported
     public String unstableTotalLow = StringUtils.EMPTY;
     @Exported
+    public String unstableTotalNone = StringUtils.EMPTY;
+    @Exported
     public String unstableNewAll = StringUtils.EMPTY;
     @Exported
     public String unstableNewHigh = StringUtils.EMPTY;
@@ -35,6 +38,8 @@ public class Thresholds implements Serializable {
     public String unstableNewNormal = StringUtils.EMPTY;
     @Exported
     public String unstableNewLow = StringUtils.EMPTY;
+    @Exported
+    public String unstableNewNone = StringUtils.EMPTY;
     @Exported
     public String failedTotalAll = StringUtils.EMPTY;
     @Exported
@@ -44,6 +49,8 @@ public class Thresholds implements Serializable {
     @Exported
     public String failedTotalLow = StringUtils.EMPTY;
     @Exported
+    public String failedTotalNone = StringUtils.EMPTY;
+    @Exported
     public String failedNewAll = StringUtils.EMPTY;
     @Exported
     public String failedNewHigh = StringUtils.EMPTY;
@@ -51,6 +58,8 @@ public class Thresholds implements Serializable {
     public String failedNewNormal = StringUtils.EMPTY;
     @Exported
     public String failedNewLow = StringUtils.EMPTY;
+    @Exported
+    public String failedNewNone = StringUtils.EMPTY;
 
     /**
      * Returns whether at least one of the thresholds is set.
@@ -63,18 +72,22 @@ public class Thresholds implements Serializable {
         || isValid(unstableTotalHigh)
         || isValid(unstableTotalNormal)
         || isValid(unstableTotalLow)
+        || isValid(unstableTotalNone)
         || isValid(unstableNewAll)
         || isValid(unstableNewHigh)
         || isValid(unstableNewNormal)
         || isValid(unstableNewLow)
+         || isValid(unstableNewNone)
         || isValid(failedTotalAll)
         || isValid(failedTotalHigh)
         || isValid(failedTotalNormal)
         || isValid(failedTotalLow)
+        || isValid(failedTotalNone)
         || isValid(failedNewAll)
         || isValid(failedNewHigh)
         || isValid(failedNewNormal)
-        || isValid(failedNewLow);
+        || isValid(failedNewLow)
+        || isValid(failedNewNone);
     }
 
     /**

@@ -69,6 +69,8 @@ public class BuildResultEvaluator {
      *            delta between this build and reference build (priority normal)
      * @param lowDelta
      *            delta between this build and reference build (priority low)
+     * @param noneDelta
+     *            delta between this build and reference build (priority none)
      * @param allAnnotations
      *            all annotations
      * @return the build result
@@ -113,14 +115,14 @@ public class BuildResultEvaluator {
             return Result.FAILURE;
         }
         if (check(logger, newAnnotations, t.failedNewAll,
-                t.failedNewHigh, t.failedNewNormal, t.failedNewLow, false)) {
+                t.failedNewHigh, t.failedNewNormal, t.failedNewLow,t.failedNewNone, false)) {
             return Result.FAILURE;
         }
         if (checkAllWarningsForUnstable(logger, t, allAnnotations)) {
             return Result.UNSTABLE;
         }
         if (check(logger, newAnnotations, t.unstableNewAll,
-                t.unstableNewHigh, t.unstableNewNormal, t.unstableNewLow, false)) {
+                t.unstableNewHigh, t.unstableNewNormal, t.unstableNewLow,t.unstableNewNone, false)) {
             return Result.UNSTABLE;
         }
 
@@ -130,13 +132,13 @@ public class BuildResultEvaluator {
     private boolean checkAllWarningsForUnstable(final StringBuilder logger, final Thresholds t,
             final Collection<? extends FileAnnotation> allAnnotations) {
         return check(logger, allAnnotations, t.unstableTotalAll,
-                t.unstableTotalHigh, t.unstableTotalNormal, t.unstableTotalLow, true);
+                t.unstableTotalHigh, t.unstableTotalNormal, t.unstableTotalLow,t.unstableTotalNone, true);
     }
 
     private boolean checkAllWarningsForFailure(final StringBuilder logger, final Thresholds t,
             final Collection<? extends FileAnnotation> allAnnotations) {
         return check(logger, allAnnotations, t.failedTotalAll,
-                t.failedTotalHigh, t.failedTotalNormal, t.failedTotalLow, true);
+                t.failedTotalHigh, t.failedTotalNormal, t.failedTotalLow,t.failedTotalNone, true);
     }
 
 
@@ -147,8 +149,8 @@ public class BuildResultEvaluator {
     }
 
     private boolean check(final StringBuilder logger, final Collection<? extends FileAnnotation> annotations,
-            final String all, final String high, final String normal, final String low, final boolean isTotals) {
-        if (checkThresholds(logger, annotations, all, isTotals, Priority.HIGH, Priority.NORMAL, Priority.LOW)) {
+            final String all, final String high, final String normal, final String low, final String none, final boolean isTotals) {
+        if (checkThresholds(logger, annotations, all, isTotals, Priority.HIGH, Priority.NORMAL, Priority.LOW, Priority.NONE)) {
             return true;
         }
         if (checkThresholds(logger, annotations, high, isTotals, Priority.HIGH)) {
@@ -160,11 +162,14 @@ public class BuildResultEvaluator {
         if (checkThresholds(logger, annotations, low, isTotals, Priority.LOW)) {
             return true;
         }
+        if (checkThresholds(logger, annotations, none, isTotals, Priority.NONE)) {
+            return true;
+        }
         return false;
     }
 
     private boolean checkFailedNew(final StringBuilder logger, final int delta, final int highDelta, final int normalDelta, final int lowDelta, final int noneDelta, final Thresholds t) {
-        if (checkThresholds(logger, delta, t.failedNewAll, false, Priority.HIGH, Priority.NORMAL, Priority.LOW)) {
+        if (checkThresholds(logger, delta, t.failedNewAll, false, Priority.HIGH, Priority.NORMAL, Priority.LOW, Priority.NONE)) {
             return true;
         }
         if (checkThresholds(logger, highDelta, t.failedNewHigh, false, Priority.HIGH)) {
@@ -176,14 +181,14 @@ public class BuildResultEvaluator {
         if (checkThresholds(logger, lowDelta, t.failedNewLow, false, Priority.LOW)) {
             return true;
         }
-        if (checkThresholds(logger, noneDelta, t.failedNewLow, false, Priority.NONE)) {
+        if (checkThresholds(logger, noneDelta, t.failedNewNone, false, Priority.NONE)) {
             return true;
         }
         return false;
     }
 
     private boolean checkUnstableNew(final StringBuilder logger, final int delta, final int highDelta, final int normalDelta, final int lowDelta, final int noneDelta, final Thresholds t) {
-        if (checkThresholds(logger, delta, t.unstableNewAll, false, Priority.HIGH, Priority.NORMAL, Priority.LOW)) {
+        if (checkThresholds(logger, delta, t.unstableNewAll, false, Priority.HIGH, Priority.NORMAL, Priority.LOW, Priority.NONE)) {
             return true;
         }
         if (checkThresholds(logger, highDelta, t.unstableNewHigh, false, Priority.HIGH)) {
@@ -195,7 +200,7 @@ public class BuildResultEvaluator {
         if (checkThresholds(logger, lowDelta, t.unstableNewLow, false, Priority.LOW)) {
             return true;
         }
-        if (checkThresholds(logger, noneDelta, t.unstableNewLow, false, Priority.NONE)) {
+        if (checkThresholds(logger, noneDelta, t.unstableNewNone, false, Priority.NONE)) {
             return true;
         }
         return false;
@@ -355,10 +360,12 @@ public class BuildResultEvaluator {
      *            delta between this build and reference build (priority normal)
      * @param lowDelta
      *            delta between this build and reference build (priority low)
+     * @param noneDelta
+     *            delta between this build and reference build (priority none)
      * @param allAnnotations
      *            all annotations
      * @return the build result
-     * @deprecated use {@link #evaluateBuildResult(StringBuilder, Thresholds, Collection, int, int, int, int)}
+     * @deprecated use {@link #evaluateBuildResult(StringBuilder, Thresholds, Collection, int, int, int, int, int)}
      */
     @Deprecated
     public Result evaluateBuildResult(final PluginLogger logger, final Thresholds t,

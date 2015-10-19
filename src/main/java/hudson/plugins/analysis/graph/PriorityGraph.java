@@ -1,6 +1,6 @@
 package hudson.plugins.analysis.graph;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +38,7 @@ public class PriorityGraph extends CategoryBuildResultGraph {
     @Override
     protected List<Integer> computeSeries(final BuildResult current) {
         List<Integer> series = new ArrayList<Integer>();
+        series.add(current.getNumberOfAnnotations(Priority.NONE));
         series.add(current.getNumberOfAnnotations(Priority.LOW));
         series.add(current.getNumberOfAnnotations(Priority.NORMAL));
         series.add(current.getNumberOfAnnotations(Priority.HIGH));
@@ -64,9 +65,11 @@ public class PriorityGraph extends CategoryBuildResultGraph {
                     @Override
             protected String getShortDescription(final int row) {
                 if (row == 0) {
+                    return Messages.Trend_PriorityNone();
+                } else if (row == 1) {
                     return Messages.Trend_PriorityLow();
                 }
-                else if (row == 1) {
+                else if (row == 2) {
                     return Messages.Trend_PriorityNormal();
                 }
                 else {
@@ -96,9 +99,11 @@ public class PriorityGraph extends CategoryBuildResultGraph {
         @Override
         protected String getDetailUrl(final int row) {
             if (row == 0) {
+                return Priority.NONE.name();
+            } else if (row == 1) {
                 return Priority.LOW.name();
             }
-            else if (row == 1) {
+            else if (row == 2) {
                 return Priority.NORMAL.name();
             }
             else {

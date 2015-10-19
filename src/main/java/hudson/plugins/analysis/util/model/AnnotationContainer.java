@@ -431,6 +431,25 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
                 getLowAnnotations());
     }
 
+    /**
+     * Returns the annotations with {@link Priority#NONE}.
+     *
+     * @return the annotations with {@link Priority#NONE}
+     */
+    public final Set<FileAnnotation> getNoneAnnotations() {
+        return getAnnotations(Priority.NONE);
+    }
+
+    /**
+     * Returns the annotations with {@link Priority#NONE}.
+     *
+     * @return the annotations with {@link Priority#NONE}
+     */
+    public DefaultAnnotationContainer getNone() {
+        return new DefaultAnnotationContainer(Priority.NONE.getLocalizedString(),
+                getNoneAnnotations());
+    }
+
     @Override
     public final Set<FileAnnotation> getAnnotations(final String priority) {
         return getAnnotations(getPriority(priority));
@@ -450,6 +469,15 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     @Override
     public int getNumberOfAnnotations() {
         return annotations.size();
+    }
+
+    /**
+     * Gets the number of annotations with priority none.
+     *
+     * @return the number of annotations with priority none
+     */
+    public int getNumberOfNoneAnnotations() {
+        return getNoneAnnotations().size();
     }
 
     /**
@@ -883,6 +911,15 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
      */
     public Priority getLowPriority() {
         return Priority.LOW;
+    }
+
+    /**
+     * Returns {@link Priority#NONE}.
+     *
+     * @return {@link Priority#NONE}
+     */
+    public Priority getNonePriority() {
+        return Priority.NONE;
     }
 
     @Override

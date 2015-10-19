@@ -3,11 +3,13 @@ package hudson.plugins.analysis.views;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import hudson.model.Job;
+
 import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.core.AbstractProjectAction;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.util.HtmlPrinter;
 import hudson.plugins.analysis.util.model.Priority;
+
 import hudson.views.ListViewColumn;
 
 /**
@@ -108,6 +110,7 @@ public abstract class WarningsCountColumn<T extends AbstractProjectAction<?>> ex
             print(printer, Priority.HIGH, result.getNumberOfHighPriorityWarnings());
             print(printer, Priority.NORMAL, result.getNumberOfNormalPriorityWarnings());
             print(printer, Priority.LOW, result.getNumberOfLowPriorityWarnings());
+            print(printer, Priority.NONE, result.getNumberOfNonePriorityWarnings());
         }
         else {
             return Messages.Column_NoResults();

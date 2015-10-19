@@ -214,6 +214,11 @@
             background: #729FCF;
             background-image:url(${resURL}/plugin/analysis-core/icons/clearpixel.gif);
         }
+        
+        .priority-none {
+            background: #ADADAD;
+            background-image:url(${resURL}/plugin/analysis-core/icons/clearpixel.gif);
+        }
 
     </style>
 

@@ -60,7 +60,7 @@ public class PriorityDetailFactory {
      * @return the priority detail
      */
     public PrioritiesDetail create(final String priority, @Nonnull final Run<?, ?> owner, final AnnotationContainer container, final String defaultEncoding, final String header) {
-        if (owner instanceof AbstractBuild && Compatibility.isOverridden(PriorityDetailFactory.class, getClass(), "create", 
+        if (owner instanceof AbstractBuild && Compatibility.isOverridden(PriorityDetailFactory.class, getClass(), "create",
                 String.class, AbstractBuild.class, AnnotationContainer.class, String.class, String.class)) {
             return create(priority, (AbstractBuild<?, ?>) owner, container, defaultEncoding, header);
         }
@@ -73,6 +73,9 @@ public class PriorityDetailFactory {
             }
             else if (Priority.LOW.toString().equalsIgnoreCase(priority)) {
                 return createPrioritiesDetail(Priority.LOW, owner, container, defaultEncoding, header);
+            }
+            else if (Priority.NONE.toString().equalsIgnoreCase(priority)) {
+                return createPrioritiesDetail(Priority.NONE, owner, container, defaultEncoding, header);
             }
             throw new IllegalArgumentException("Wrong priority provided: " + priority);
         }
@@ -95,7 +98,7 @@ public class PriorityDetailFactory {
      */
     protected PrioritiesDetail createPrioritiesDetail(final Priority priority, @Nonnull final Run<?, ?> owner, final AnnotationContainer container,
             final String defaultEncoding, final String header) {
-        if (owner instanceof AbstractBuild && Compatibility.isOverridden(PriorityDetailFactory.class, getClass(), "createPrioritiesDetail", 
+        if (owner instanceof AbstractBuild && Compatibility.isOverridden(PriorityDetailFactory.class, getClass(), "createPrioritiesDetail",
                 Priority.class, AbstractBuild.class, AnnotationContainer.class, String.class, String.class)) {
             return createPrioritiesDetail(priority, (AbstractBuild<?, ?>) owner, container, defaultEncoding, header);
         }

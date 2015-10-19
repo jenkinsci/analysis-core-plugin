@@ -465,6 +465,9 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
             errors = new ArrayList<String>();
         }
         try {
+            if (none != null) {
+                noneWarnings = Integer.valueOf(none);
+            }
             if (low != null) {
                 lowWarnings = Integer.valueOf(low);
             }
@@ -948,7 +951,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      * @return the number of warnings with none priority
      */
     @Exported
-    public int getNumberOfNoPriorityWarnings() {
+    public int getNumberOfNonePriorityWarnings() {
         return noneWarnings;
     }
 
@@ -1716,6 +1719,9 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     @Deprecated
     @java.lang.SuppressWarnings("unused")
     private transient Map<String, MavenModule> emptyModules; // NOPMD
+    @Deprecated
+    @java.lang.SuppressWarnings("all")
+    protected transient String none;
     @Deprecated
     @java.lang.SuppressWarnings("all")
     protected transient String low;
