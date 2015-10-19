@@ -8,7 +8,7 @@
   <j:set var="high" value="${container.numberOfHighAnnotations}" />
   <j:set var="normal" value="${container.numberOfNormalAnnotations}" />
   <j:set var="low" value="${container.numberOfLowAnnotations}" />
-   <j:set var="none" value="${container.numberOfNoAnnotations}" />
+   <j:set var="none" value="${container.numberOfNoneAnnotations}" />
 
   <table cellpadding="0" cellspacing="0" width="100%" tooltip="${container.toolTip}">
     <tr style="height:10;padding:0">

@@ -1273,7 +1273,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
         }
         else if (useDeltaValues) {
             buildResult = resultEvaluator.evaluateBuildResult(messages, thresholds, getAnnotations(),
-                    getDelta(), getHighDelta(), getNormalDelta(), getLowDelta(), getNoneDelta());
+                    getDelta(), getHighDelta(), getNormalDelta(), getLowDelta());
         }
         else {
             buildResult = resultEvaluator.evaluateBuildResult(messages, thresholds,
