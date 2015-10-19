@@ -67,4 +67,8 @@ public class AnnotationsLabelProvider implements Serializable {
     public String getLow() {
         return Messages.BuildResult_Tab_Low();
     }
+
+    public String getNone() {
+        return Messages.BuildResult_Tab_None();
+    }
 }
