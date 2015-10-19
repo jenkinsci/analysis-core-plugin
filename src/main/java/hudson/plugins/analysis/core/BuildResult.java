@@ -114,8 +114,6 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
 
     /** Difference between this and the previous build. */
     private int delta;
-    /** Difference between this and the previous build (Priority none). */
-    private int noneDelta;
     /** Difference between this and the previous build (Priority low). */
     private int lowDelta;
     /** Difference between this and the previous build (Priority normal). */
@@ -284,7 +282,6 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
         AnnotationContainer referenceResult = history.getReferenceAnnotations();
 
         delta = result.getNumberOfAnnotations() - referenceResult.getNumberOfAnnotations();
-        noneDelta = computeDelta(result, referenceResult, Priority.NONE);
         lowDelta = computeDelta(result, referenceResult, Priority.LOW);
         normalDelta = computeDelta(result, referenceResult, Priority.NORMAL);
         highDelta = computeDelta(result, referenceResult, Priority.HIGH);
@@ -899,14 +896,6 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
         return delta;
     }
 
-    /**
-     * Returns the none delta.
-     *
-     * @return the delta
-     */
-    public int getNoneDelta() {
-        return noneDelta;
-    }
 
     /**
      * Returns the high delta.
