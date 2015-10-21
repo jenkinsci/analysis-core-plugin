@@ -1,10 +1,11 @@
 package hudson.plugins.analysis.core;
 
-import java.util.Collection;
-
 import static hudson.plugins.analysis.util.ThresholdValidator.*;
 
+import java.util.Collection;
+
 import hudson.model.Result;
+
 import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.analysis.util.model.FileAnnotation;
@@ -270,7 +271,7 @@ public class BuildResultEvaluator {
     }
 
     private String getPriorityUrl(final Priority priority) {
-        return url + "/" + priority.name();
+        return url + "/" + priority.getPriorityName();
     }
 
     /**

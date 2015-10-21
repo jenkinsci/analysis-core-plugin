@@ -1,6 +1,5 @@
 package hudson.plugins.analysis.core; // NOPMD
 
-import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -13,6 +12,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.annotation.Nonnull;
+
+import jenkins.model.Jenkins;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
@@ -28,14 +31,14 @@ import com.infradna.tool.bridge_method_injector.WithBridgeMethods;
 import com.thoughtworks.xstream.XStream;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import jenkins.model.Jenkins;
-
 import hudson.XmlFile;
-import hudson.model.AbstractBuild;
-import hudson.model.Api;
+
 import hudson.model.ModelObject;
 import hudson.model.Result;
+import hudson.model.AbstractBuild;
+import hudson.model.Api;
 import hudson.model.Run;
+
 import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.util.HtmlPrinter;
 import hudson.plugins.analysis.util.PluginLogger;
@@ -47,6 +50,7 @@ import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.JavaProject;
 import hudson.plugins.analysis.util.model.MavenModule;
 import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.analysis.util.model.PriorityInt;
 import hudson.plugins.analysis.views.DetailFactory;
 
 /**
@@ -353,11 +357,11 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     /**
      * Added for backward compatibility. It generates <pre>AbstractBuild getReferenceBuild()</pre> bytecode during the build
      * process, so old implementations can use that signature.
-     * 
+     *
      * @see {@link WithBridgeMethods}
      */
     @Deprecated
-    private final Object getReferenceAbstractBuild(Run owner, Class targetClass) {
+    private final Object getReferenceAbstractBuild(final Run owner, final Class targetClass) {
       return owner instanceof AbstractBuild ? ((AbstractBuild) owner).getProject().getBuildByNumber(referenceBuild) : null;
     }
 
@@ -590,7 +594,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     /**
      * Added for backward compatibility. It generates <pre>AbstractBuild getOwner()</pre> bytecode during the build
      * process, so old implementations can use that signature.
-     * 
+     *
      * @see {@link WithBridgeMethods}
      */
     @Deprecated
@@ -599,7 +603,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     }
 
     @Override
-    public boolean hasAnnotations(final Priority priority) {
+    public boolean hasAnnotations(final PriorityInt priority) {
         return getContainer().hasAnnotations(priority);
     }
 
@@ -619,7 +623,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     }
 
     @Override
-    public boolean hasNoAnnotations(final Priority priority) {
+    public boolean hasNoAnnotations(final PriorityInt priority) {
         return getContainer().hasAnnotations(priority);
     }
 
@@ -681,7 +685,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     }
 
     @Override
-    public Set<FileAnnotation> getAnnotations(final Priority priority) {
+    public Set<FileAnnotation> getAnnotations(final PriorityInt priority) {
         return getContainer().getAnnotations(priority);
     }
 
@@ -834,7 +838,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      *         object
      */
     @Override
-    public int getNumberOfAnnotations(final Priority priority) {
+    public int getNumberOfAnnotations(final PriorityInt priority) {
         if (priority == Priority.HIGH) {
             return highWarnings;
         }
@@ -1131,6 +1135,22 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      */
     public Priority[] getPriorities() {
         return Priority.values();
+    }
+
+    /**
+     * Returns all possible priorities.
+     *
+     * @return all priorities
+     */
+    public String[] getAllPriorities() {
+        String[] priorityStrings = new String[3];
+        Priority[] priorities = Priority.values();
+        for(int i=0; i < priorities.length; i++ ){
+
+            priorityStrings[i] = priorities[i].getPriorityName();
+        }
+
+        return priorityStrings;
     }
 
     @Override

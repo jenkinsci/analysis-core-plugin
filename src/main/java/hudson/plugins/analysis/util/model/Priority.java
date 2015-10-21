@@ -15,13 +15,15 @@ import hudson.plugins.analysis.Messages;
  *
  * @author Ulli Hafner
  */
-public enum Priority {
+public enum Priority implements PriorityInt{
     /** High priority. */
     HIGH,
     /** Normal priority. */
     NORMAL,
     /** Low priority. */
     LOW;
+
+
 
     /**
      * Converts a String priority to an actual enumeration value.
@@ -51,10 +53,21 @@ public enum Priority {
     }
 
     /**
+     * Returns the name of the Priority
+     *
+     * @return name of the Priority
+     */
+    @Override
+    public String getPriorityName(){
+        return name();
+    }
+
+    /**
      * Returns a localized description of this priority.
      *
      * @return localized description of this priority
      */
+    @Override
     public String getLocalizedString() {
         if (this == HIGH) {
             return Messages.Priority_High();
@@ -70,6 +83,7 @@ public enum Priority {
      *
      * @return long localized description of this priority
      */
+    @Override
     public String getLongLocalizedString() {
         if (this == Priority.HIGH) {
             return Messages.HighPriority();

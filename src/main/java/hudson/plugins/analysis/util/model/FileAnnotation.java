@@ -2,7 +2,6 @@ package hudson.plugins.analysis.util.model;
 
 import java.util.Collection;
 
-import hudson.model.AbstractBuild;
 import hudson.model.Run;
 
 /**
@@ -51,7 +50,14 @@ public interface FileAnnotation extends Comparable<FileAnnotation> {
      *
      * @return the priority of this annotation
      */
-    Priority getPriority();
+    PriorityInt getPriority();
+
+    /**
+     * Returns the priority of this annotation.
+     *
+     * @return the priority of this annotation
+     */
+    String getPriorityString();
 
     /**
      * Returns the absolute path of the workspace file that contains this annotation.

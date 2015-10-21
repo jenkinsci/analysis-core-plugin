@@ -86,30 +86,40 @@
             active: false
         }), myTabs);
     </j:if>
-    <j:if test="${it.container.highAnnotations.size() > 0 and it.container.highAnnotations.size() != it.container.numberOfAnnotations}">
-        YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({
-            label: '<div id="high">${l.high}</div>',
-            dataSrc: 'tab.high/',
-            cacheData: true,
-            active: false
-        }), myTabs);
-    </j:if>
-    <j:if test="${it.container.normalAnnotations.size() > 0 and it.container.normalAnnotations.size() != it.container.numberOfAnnotations}">
-        YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({
-            label: '<div id="normal">${l.normal}</div>',
-            dataSrc: 'tab.normal/',
-            cacheData: true,
-            active: false
-        }), myTabs);
-    </j:if>
-    <j:if test="${it.container.lowAnnotations.size() > 0 and it.container.lowAnnotations.size() != it.container.numberOfAnnotations}">
-        YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({
-            label: '<div id="low">${l.low}</div>',
-            dataSrc: 'tab.low/',
-            cacheData: true,
-            active: false
-        }), myTabs);
-    </j:if>
+    <j:forEach var="priority" items="${it.getAllPriorities()}">
+    	<j:if test="${it.container.getNumberOfAnnotations('high') > 0 and it.container.getNumberOfAnnotations('high') != it.container.numberOfAnnotations}">
+	        YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({
+	            label: '<div id="${priority.getPriorityName()}">${l.getPriorityLabel(priority.getPriorityName())}</div>',
+	            dataSrc: 'tab.${priority.getPriorityName()}/',
+	            cacheData: true,
+	            active: false
+	        }), myTabs);
+	    </j:if>
+	   <!-- <j:if test="${it.container.highAnnotations.size() > 0 and it.container.highAnnotations.size() != it.container.numberOfAnnotations}">
+	        YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({
+	            label: '<div id="high">${l.getPriorityLabel("HIGH")}</div>',
+	            dataSrc: 'tab.high/',
+	            cacheData: true,
+	            active: false
+	        }), myTabs);
+	    </j:if>
+	    <j:if test="${it.container.normalAnnotations.size() > 0 and it.container.normalAnnotations.size() != it.container.numberOfAnnotations}">
+	        YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({
+	            label: '<div id="normal">${l.getPriorityLabel("NORMAL")}</div>',
+	            dataSrc: 'tab.normal/',
+	            cacheData: true,
+	            active: false
+	        }), myTabs);
+	    </j:if>
+	    <j:if test="${it.container.lowAnnotations.size() > 0 and it.container.lowAnnotations.size() != it.container.numberOfAnnotations}">
+	        YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({
+	            label: '<div id="low">${l.getPriorityLabel("LOW")}</div>',
+	            dataSrc: 'tab.low/',
+	            cacheData: true,
+	            active: false
+	        }), myTabs);
+	    </j:if> -->
+    </j:forEach>
 
       myTabs.set('activeIndex', 0);
 

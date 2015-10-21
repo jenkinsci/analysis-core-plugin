@@ -24,10 +24,12 @@ import com.google.common.collect.Multimap;
 import com.infradna.tool.bridge_method_injector.WithBridgeMethods;
 
 import hudson.FilePath;
+
 import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.util.FileFinder;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.analysis.util.model.PriorityInt;
 
 /**
  * Stores the collection of parsed annotations and associated error messages.
@@ -48,7 +50,7 @@ public class ParserResult implements Serializable {
     private final List<String> errorMessages = new ArrayList<String>();
     /** Number of annotations by priority. */
     @SuppressWarnings("Se")
-    private final Map<Priority, Integer> annotationCountByPriority = new HashMap<Priority, Integer>();
+    private final Map<String, Integer> annotationCountByPriority = new HashMap<String, Integer>();
     /** The set of modules. */
     @SuppressWarnings("Se")
     private final Set<String> modules = new HashSet<String>();
@@ -107,7 +109,7 @@ public class ParserResult implements Serializable {
      *            resolved using a time expensive operation that scans the whole
      *            workspace for matching files
      */
-    public ParserResult(final FilePath workspace, boolean canResolveRelativePaths) {
+    public ParserResult(final FilePath workspace, final boolean canResolveRelativePaths) {
         this(asWorkspace(workspace), canResolveRelativePaths);
     }
 
@@ -125,8 +127,15 @@ public class ParserResult implements Serializable {
         this.workspace = workspace;
         this.canResolveRelativePaths = canResolveRelativePaths;
 
+        initializeAnnotationCounts();
+    }
+
+    /**
+     * Can be overriden to use custom priority keys
+     */
+    protected void initializeAnnotationCounts(){
         for (Priority priority : Priority.values()) {
-            annotationCountByPriority.put(priority, 0);
+            annotationCountByPriority.put(priority.getPriorityName(), 0);
         }
     }
 
@@ -267,8 +276,8 @@ public class ParserResult implements Serializable {
     public final int addAnnotation(final FileAnnotation annotation) {
         expandRelativePaths(annotation);
         if (annotations.add(annotation)) {
-            Integer count = annotationCountByPriority.get(annotation.getPriority());
-            annotationCountByPriority.put(annotation.getPriority(), count + 1);
+            Integer count = annotationCountByPriority.get(annotation.getPriority().getPriorityName());
+            annotationCountByPriority.put(annotation.getPriority().getPriorityName(), count + 1);
             return 1;
         }
         return 0;
@@ -365,8 +374,8 @@ public class ParserResult implements Serializable {
      * @return total number of annotations of the specified priority for this
      *         object
      */
-    public int getNumberOfAnnotations(final Priority priority) {
-        return annotationCountByPriority.get(priority);
+    public int getNumberOfAnnotations(final PriorityInt priority) {
+        return annotationCountByPriority.get(priority.getPriorityName());
     }
 
     /**
@@ -385,8 +394,8 @@ public class ParserResult implements Serializable {
      *            the priority
      * @return <code>true</code> if this objects has annotations.
      */
-    public boolean hasAnnotations(final Priority priority) {
-        return annotationCountByPriority.get(priority) > 0;
+    public boolean hasAnnotations(final PriorityInt priority) {
+        return annotationCountByPriority.get(priority.getPriorityName()) > 0;
     }
 
     /**
@@ -405,7 +414,7 @@ public class ParserResult implements Serializable {
      *            the priority
      * @return <code>true</code> if this objects has no annotations.
      */
-    public boolean hasNoAnnotations(final Priority priority) {
+    public boolean hasNoAnnotations(final PriorityInt priority) {
         return !hasAnnotations(priority);
     }
 

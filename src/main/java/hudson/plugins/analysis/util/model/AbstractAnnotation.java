@@ -1,11 +1,12 @@
 package hudson.plugins.analysis.util.model;
 
-import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
+
+import javax.annotation.Nonnull;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -16,9 +17,10 @@ import com.google.common.collect.ImmutableList;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-import hudson.model.AbstractBuild;
 import hudson.model.Item;
+import hudson.model.AbstractBuild;
 import hudson.model.Run;
+
 import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.core.AbstractAnnotationParser;
 import hudson.plugins.analysis.util.PackageDetectors;
@@ -46,7 +48,7 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
     /** The message of this annotation. */
     private /*almost final*/ TreeString message;
     /** The priority of this annotation. */
-    private Priority priority;
+    private PriorityInt priority;
     /** Unique key of this annotation. */
     private final long key;
     /**
@@ -128,7 +130,7 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
      * @param type
      *            the type of the annotation
      */
-    public AbstractAnnotation(final Priority priority, final String message, final int start, final int end,
+    public AbstractAnnotation(final PriorityInt priority, final String message, final int start, final int end,
             final String category, final String type) {
         this(message, start, end, category, type);
         this.priority = priority;
@@ -326,7 +328,7 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
      *
      * @param priority the value to set
      */
-    public void setPriority(final Priority priority) {
+    public void setPriority(final PriorityInt priority) {
         this.priority = priority;
     }
 
@@ -338,8 +340,13 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
 
     @Override
     @Exported
-    public Priority getPriority() {
+    public PriorityInt getPriority() {
         return priority;
+    }
+
+    @Override
+    public String getPriorityString() {
+        return priority.getPriorityName();
     }
 
     @Override

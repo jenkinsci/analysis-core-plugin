@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -45,7 +44,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     @SuppressWarnings("Se")
     private final Map<Long, FileAnnotation> annotations = new HashMap<Long, FileAnnotation>();
     /** The annotations mapped by priority. */
-    private transient Map<Priority, Set<FileAnnotation>> annotationsByPriority;
+    private transient Map<String, Set<FileAnnotation>> annotationsByPriority;
     /** The annotations mapped by category. */
     private transient Map<String, Set<FileAnnotation>> annotationsByCategory;
     /** The annotations mapped by type. */
@@ -176,10 +175,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
      * Initializes the transient mappings.
      */
     private void initialize() {
-        annotationsByPriority = new EnumMap<Priority, Set<FileAnnotation>>(Priority.class);
-        for (Priority priority : Priority.values()) {
-            annotationsByPriority.put(priority, new HashSet<FileAnnotation>());
-        }
+        initializeAnnotationsByPriority();
         annotationsByCategory = new HashMap<String, Set<FileAnnotation>>();
         annotationsByType = new HashMap<String, Set<FileAnnotation>>();
         filesByName = new HashMap<String, WorkspaceFile>();
@@ -190,6 +186,18 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
         modulesByHashCode = new HashMap<Integer, MavenModule>();
         categoriesByHashCode = new HashMap<Integer, Set<FileAnnotation>>();
         typesByHashCode = new HashMap<Integer, Set<FileAnnotation>>();
+    }
+
+    /**
+     * Initializes the annotations by Priority.
+     *
+     * This can be overridden to initialize the annotationsByPriority Map with custom enum Keys
+     */
+    protected void initializeAnnotationsByPriority(){
+        annotationsByPriority = new HashMap<String, Set<FileAnnotation>>();
+        for (Priority priority : Priority.values()) {
+            annotationsByPriority.put(priority.getPriorityName(), new HashSet<FileAnnotation>());
+        }
     }
 
     /**
@@ -219,7 +227,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
      * @param annotation the new annotation
      */
     private void updateMappings(final FileAnnotation annotation) {
-        annotationsByPriority.get(annotation.getPriority()).add(annotation);
+        annotationsByPriority.get(annotation.getPriorityString()).add(annotation);
         if (StringUtils.isNotBlank(annotation.getCategory())) {
             addCategory(annotation);
         }
@@ -370,9 +378,17 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     }
 
     @Override
-    public final Set<FileAnnotation> getAnnotations(final Priority priority) {
-        return ImmutableSortedSet.copyOf(annotationsByPriority.get(priority));
+    public final Set<FileAnnotation> getAnnotations(final PriorityInt priority) {
+//        return ImmutableSortedSet.copyOf(annotationsByPriority.get(priority.getPriorityName()));
+        return getAnnotations(priority.getPriorityName());
     }
+
+    @Override
+    public final Set<FileAnnotation> getAnnotations(final String priority) {
+        return ImmutableSortedSet.copyOf(annotationsByPriority.get(priority.toUpperCase()));
+//        return getAnnotations(getPriority(priority));
+    }
+
 
     /**
      * Returns the annotations with {@link Priority#HIGH}.
@@ -431,21 +447,16 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
                 getLowAnnotations());
     }
 
-    @Override
-    public final Set<FileAnnotation> getAnnotations(final String priority) {
-        return getAnnotations(getPriority(priority));
-    }
-
-    /**
-     * Converts a String priority to an actual enumeration value.
-     *
-     * @param priority priority as a String
-     *
-     * @return enumeration value.
-     */
-    private Priority getPriority(final String priority) {
-        return Priority.fromString(priority);
-    }
+//    /**
+//     * Converts a String priority to an actual enumeration value.
+//     *
+//     * @param priority priority as a String
+//     *
+//     * @return enumeration value.
+//     */
+//    private Priority getPriority(final String priority) {
+//        return Priority.fromString(priority);
+//    }
 
     @Override
     public int getNumberOfAnnotations() {
@@ -480,13 +491,15 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     }
 
     @Override
-    public int getNumberOfAnnotations(final Priority priority) {
-        return annotationsByPriority.get(priority).size();
+    public int getNumberOfAnnotations(final PriorityInt priority) {
+//        return annotationsByPriority.get(priority.getPriorityName()).size();
+        return getNumberOfAnnotations(priority.getPriorityName());
     }
 
     @Override
     public final int getNumberOfAnnotations(final String priority) {
-        return getNumberOfAnnotations(getPriority(priority));
+        return annotationsByPriority.get(priority.toUpperCase()).size();
+        // return getNumberOfAnnotations(getPriority(priority));
     }
 
     @Override
@@ -495,7 +508,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     }
 
     @Override
-    public final boolean hasAnnotations(final Priority priority) {
+    public final boolean hasAnnotations(final PriorityInt priority) {
         return !hasNoAnnotations(priority);
     }
 
@@ -510,13 +523,17 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     }
 
     @Override
-    public final boolean hasNoAnnotations(final Priority priority) {
-        return annotationsByPriority.get(priority).isEmpty();
+    public final boolean hasNoAnnotations(final PriorityInt priority) {
+//        return annotationsByPriority.get(priority.getPriorityName()).isEmpty();
+
+        return hasNoAnnotations(priority.getPriorityName());
     }
 
     @Override
     public final boolean hasNoAnnotations(final String priority) {
-        return hasNoAnnotations(getPriority(priority));
+//        return hasNoAnnotations(getPriority(priority));
+
+        return annotationsByPriority.get(priority.toUpperCase()).isEmpty();
     }
 
     @Override

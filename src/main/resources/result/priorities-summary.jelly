@@ -7,16 +7,16 @@
   <table class="pane" id="priority.summary">
     <tr>
       <td class="pane-header">${%Total}</td>
-      <j:forEach var="priority" items="${it.priorities}">
+      <j:forEach var="priority" items="${it.getAllPriorities()}">
         <td class="pane-header">${priority.longLocalizedString}</td>
       </j:forEach>
     </tr>
     <tbody>
       <tr>
         <td class="pane" id="all-priorities">${it.numberOfAnnotations}</td>
-        <j:forEach var="priority" items="${it.priorities}">
+        <j:forEach var="priority" items="${it.getAllPriorities()}">
           <td class="pane">
-            <div id="${priority.name()}">
+            <div id="${priority.getPriorityName()}">
               <j:if test="${it.getNumberOfAnnotations(priority) == 0}">
                 0
               </j:if>

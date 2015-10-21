@@ -2,8 +2,6 @@ package hudson.plugins.analysis.views;
 
 import java.util.Collection;
 
-import org.kohsuke.accmod.Restricted;
-import org.kohsuke.accmod.restrictions.NoExternalUse;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
@@ -91,11 +89,11 @@ public abstract class AbstractAnnotationsDetail extends AnnotationContainer impl
     /**
      * Added for backward compatibility. It generates <pre>AbstractBuild getOwner()</pre> bytecode during the build
      * process, so old implementations can use that signature.
-     * 
+     *
      * @see {@link WithBridgeMethods}
      */
     @Deprecated
-    private final Object getAbstractBuild(Run owner, Class targetClass) {
+    private final Object getAbstractBuild(final Run owner, final Class targetClass) {
       return owner instanceof AbstractBuild ? (AbstractBuild) owner : null;
     }
 
@@ -147,6 +145,22 @@ public abstract class AbstractAnnotationsDetail extends AnnotationContainer impl
      */
     public Priority[] getPriorities() {
         return Priority.values();
+    }
+
+    /**
+     * Returns all possible priorities.
+     *
+     * @return all priorities
+     */
+    public String[] getAllPriorities() {
+        String[] priorityStrings = new String[3];
+        Priority[] priorities = Priority.values();
+        for(int i=0; i < priorities.length; i++ ){
+
+            priorityStrings[i] = priorities[i].getPriorityName();
+        }
+
+        return priorityStrings;
     }
 
     /**

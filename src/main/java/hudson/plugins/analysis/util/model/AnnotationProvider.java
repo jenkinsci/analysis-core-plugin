@@ -24,7 +24,8 @@ public interface AnnotationProvider {
      * @return total number of annotations of the specified priority for this
      *         object
      */
-    int getNumberOfAnnotations(final Priority priority);
+    int getNumberOfAnnotations(final PriorityInt priority);
+
 
     /**
      * Returns the annotations of the specified priority for this object.
@@ -49,7 +50,7 @@ public interface AnnotationProvider {
      *            the priority
      * @return <code>true</code> if this objects has annotations.
      */
-    boolean hasAnnotations(final Priority priority);
+    boolean hasAnnotations(final PriorityInt priority);
 
     /**
      * Returns whether this objects has annotations with the specified priority.
@@ -74,7 +75,7 @@ public interface AnnotationProvider {
      *            the priority
      * @return <code>true</code> if this objects has no annotations.
      */
-    boolean hasNoAnnotations(final Priority priority);
+    boolean hasNoAnnotations(final PriorityInt priority);
 
     /**
      * Returns whether this objects has no annotations with the specified priority.
@@ -99,7 +100,7 @@ public interface AnnotationProvider {
      *            the priority
      * @return annotations of the specified priority for this object
      */
-    Set<FileAnnotation> getAnnotations(final Priority priority);
+    Set<FileAnnotation> getAnnotations(final PriorityInt priority);
 
     /**
      * Returns the annotations of the specified priority for this object.

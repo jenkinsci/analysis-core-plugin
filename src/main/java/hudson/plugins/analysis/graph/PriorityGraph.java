@@ -1,6 +1,6 @@
 package hudson.plugins.analysis.graph;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,13 +96,13 @@ public class PriorityGraph extends CategoryBuildResultGraph {
         @Override
         protected String getDetailUrl(final int row) {
             if (row == 0) {
-                return Priority.LOW.name();
+                return Priority.LOW.getPriorityName();
             }
             else if (row == 1) {
-                return Priority.NORMAL.name();
+                return Priority.NORMAL.getPriorityName();
             }
             else {
-                return Priority.HIGH.name();
+                return Priority.HIGH.getPriorityName();
             }
         }
     }

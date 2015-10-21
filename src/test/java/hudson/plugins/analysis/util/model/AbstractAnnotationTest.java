@@ -1,5 +1,7 @@
 package hudson.plugins.analysis.util.model;
 
+import static org.junit.Assert.*;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -7,8 +9,6 @@ import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 import com.google.common.collect.Lists;
-
-import static org.junit.Assert.*;
 
 /**
  * Tests the class {@link AbstractAnnotation}.
@@ -70,6 +70,7 @@ public class AbstractAnnotationTest {
         public String getToolTip() {
             return StringUtils.EMPTY;
         }
+
     }
 }
 
