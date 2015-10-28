@@ -1142,15 +1142,10 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      *
      * @return all priorities
      */
-    public String[] getAllPriorities() {
-        String[] priorityStrings = new String[3];
+    public PriorityInt[] getAllPriorities() {
         Priority[] priorities = Priority.values();
-        for(int i=0; i < priorities.length; i++ ){
 
-            priorityStrings[i] = priorities[i].getPriorityName();
-        }
-
-        return priorityStrings;
+        return priorities;
     }
 
     @Override

@@ -8,7 +8,7 @@
     <tr>
       <td class="pane-header">${%Total}</td>
       <j:forEach var="priority" items="${it.getAllPriorities()}">
-        <td class="pane-header">${priority.longLocalizedString}</td>
+        <td class="pane-header">${priority.localizedString}</td>
       </j:forEach>
     </tr>
     <tbody>
@@ -16,12 +16,12 @@
         <td class="pane" id="all-priorities">${it.numberOfAnnotations}</td>
         <j:forEach var="priority" items="${it.getAllPriorities()}">
           <td class="pane">
-            <div id="${priority.getPriorityName()}">
-              <j:if test="${it.getNumberOfAnnotations(priority) == 0}">
+            <div id="${priority.priorityName}">
+              <j:if test="${it.getNumberOfAnnotations(priority.priorityName) == 0}">
                 0
               </j:if>
-              <j:if test="${it.getNumberOfAnnotations(priority) != 0}">
-                <a href="${priority}">${it.getNumberOfAnnotations(priority)}</a>
+              <j:if test="${it.getNumberOfAnnotations(priority.priorityName) != 0}">
+                <a href="${priority}">${it.getNumberOfAnnotations(priority.priorityName)}</a>
               </j:if>
             </div>
           </td>

@@ -16,7 +16,7 @@ public class AnnotationsLabelProvider implements Serializable {
 
     private final String packageLabel;
 
-    private final Map<String, String> priorityLabels = new HashMap<String, String>();
+    public final Map<String, String> priorityLabels = new HashMap<String, String>();
 
     public AnnotationsLabelProvider() {
         this(Messages.PackageDetail_title());

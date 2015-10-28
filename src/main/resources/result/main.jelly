@@ -87,10 +87,11 @@
         }), myTabs);
     </j:if>
     <j:forEach var="priority" items="${it.getAllPriorities()}">
-    	<j:if test="${it.container.getNumberOfAnnotations('high') > 0 and it.container.getNumberOfAnnotations('high') != it.container.numberOfAnnotations}">
+    	<j:set var="priorityDataSrc" value="tab.${priority.priorityName.toLowerCase()}/"/>
+    	<j:if test="${it.container.getNumberOfAnnotations(priority.priorityName) > 0 and it.container.getNumberOfAnnotations(priority.priorityName) != it.container.numberOfAnnotations}">
 	        YAHOO.plugin.Dispatcher.delegate (new YAHOO.widget.Tab({
-	            label: '<div id="${priority.getPriorityName()}">${l.getPriorityLabel(priority.getPriorityName())}</div>',
-	            dataSrc: 'tab.${priority.getPriorityName()}/',
+	            label: '<div id="${priority.priorityName}">${l.getPriorityLabel(priority.priorityName)}</div>',
+	            dataSrc: '${priorityDataSrc}',
 	            cacheData: true,
 	            active: false
 	        }), myTabs);
