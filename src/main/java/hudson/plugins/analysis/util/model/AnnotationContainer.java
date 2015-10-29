@@ -876,6 +876,34 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     }
 
     /**
+     * Returns the css style color for this priority
+     *
+     * @return the css color string
+     */
+    public String getPriorityColor(final PriorityInt priority) {
+        if(Priority.HIGH == priority){
+            return "#EF2929";
+        } else if (Priority.NORMAL == priority){
+            return "#FCE94F";
+        } else {
+            return "#729FCF";
+        }
+    }
+
+    /**
+     * Returns all possible priorities.
+     *
+     * @return all priorities
+     */
+    public PriorityInt[] getAllPriorities() {
+        Priority[] priorities = Priority.values();
+
+        return priorities;
+    }
+
+
+
+    /**
      * Returns {@link Priority#HIGH}.
      *
      * @return {@link Priority#HIGH}

@@ -148,22 +148,6 @@ public abstract class AbstractAnnotationsDetail extends AnnotationContainer impl
     }
 
     /**
-     * Returns all possible priorities.
-     *
-     * @return all priorities
-     */
-    public String[] getAllPriorities() {
-        String[] priorityStrings = new String[3];
-        Priority[] priorities = Priority.values();
-        for(int i=0; i < priorities.length; i++ ){
-
-            priorityStrings[i] = priorities[i].getPriorityName();
-        }
-
-        return priorityStrings;
-    }
-
-    /**
      * Creates a new instance of {@link AbstractAnnotationsDetail}.
      *
      * @param owner

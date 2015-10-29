@@ -11,9 +11,11 @@ import com.google.common.collect.Lists;
 
 import hudson.model.Job;
 
-import hudson.plugins.analysis.core.ResultAction;
 import hudson.plugins.analysis.core.AbstractProjectAction;
 import hudson.plugins.analysis.core.BuildResult;
+import hudson.plugins.analysis.core.ResultAction;
+import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.analysis.util.model.PriorityInt;
 
 /**
  * A portlet that shows a table with the number of warnings in the selected jobs.
@@ -152,6 +154,28 @@ public abstract class AbstractWarningsTablePortlet extends AbstractPortlet {
             sum += toInt(getWarnings(job, priority));
         }
         return String.valueOf(sum);
+    }
+
+    /**
+     * Returns the number of compiler warnings for the specified jobs.
+     *
+     * @param jobs
+     *            the jobs to get the warnings for
+     * @param priority
+     *            the priority
+     * @return the number of compiler warnings
+     */
+    public String getWarnings(final Collection<Job<?, ?>> jobs, final PriorityInt priority) {
+        return getWarnings(jobs, priority.getPriorityName());
+    }
+
+    /**
+     * Returns all possible priorities.
+     *
+     * @return all priorities
+     */
+    public PriorityInt[] getAllPriorities() {
+        return Priority.values();
     }
 
     /**

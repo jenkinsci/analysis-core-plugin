@@ -9,9 +9,12 @@
           <tr>
             <td width="30%" initialSortDir="down" class="pane-header">${%Job}</td>
             <td width="10%" class="pane-header">${%Total}</td>
-            <td width="10%" class="pane-header">${%High}</td>
+            <j:forEach var="priority" items="${it.getAllPriorities()}">
+                	<td width="10%" class="pane-header">${priority.localizedString}</td>
+            </j:forEach>
+            <!-- <td width="10%" class="pane-header">${%High}</td>
             <td width="10%" class="pane-header">${%Normal}</td>
-            <td width="10%" class="pane-header">${%Low}</td>
+            <td width="10%" class="pane-header">${%Low}</td> -->
           </tr>
           <tbody>
             <j:forEach var="job" items="${it.filterZeroWarningsJobs(jobs)}">
@@ -22,7 +25,12 @@
                 <td class="pane">
                     <j:out value="${it.getWarnings(job)}" /> 
                 </td>
-                <td class="pane">
+                <j:forEach var="priority" items="${it.getAllPriorities()}">
+                	<td class="pane">
+                    	${it.getWarnings(job, priority)}
+                	</td>
+                </j:forEach>
+                <!-- <td class="pane">
                     ${it.getWarnings(job, 'HIGH')}
                 </td>
                 <td class="pane">
@@ -30,7 +38,7 @@
                 </td>
                 <td class="pane">
                     ${it.getWarnings(job, 'LOW')}
-                </td>
+                </td> -->
               </tr>
             </j:forEach>
             <tr class="sortbottom">
@@ -40,7 +48,12 @@
               <td class="pane-header">
                   ${it.getWarnings(jobs)}
               </td>
-              <td class="pane-header">
+              <j:forEach var="priority" items="${it.getAllPriorities()}">
+                <td class="pane">
+                    ${it.getWarnings(job, priority)}
+                </td>
+              </j:forEach>
+              <!-- <td class="pane-header">
                   ${it.getWarnings(jobs, 'HIGH')}
               </td>
               <td class="pane-header">
@@ -48,7 +61,7 @@
               </td>
               <td class="pane-header">
                   ${it.getWarnings(jobs, 'LOW')}
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>
