@@ -72,6 +72,8 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     private static final String FAILED = "red.png";
     private static final String SUCCESS = "blue.png";
 
+    private static Class<? extends PriorityInt> priorityEnum = Priority.class;
+
     private transient Object projectLock = new Object();
 
     /**
@@ -84,6 +86,8 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     public static long getDays(final long ms) {
         return Math.max(1, ms / DateUtils.MILLIS_PER_DAY);
     }
+
+    private ParserResult result;
 
     /** Current build as owner of this action. */
     private Run<?, ?> owner;
@@ -226,6 +230,34 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     }
 
     /**
+     * Creates a new instance of {@link BuildResult}. Note that the warnings are
+     * not serialized anymore automatically. You need to call
+     * {@link #serializeAnnotations(Collection)} manually in your constructor to
+     * persist them.
+     *
+     * @param build
+     *            the current build as owner of this action
+     * @param history
+     *            build history
+     * @param result
+     *            the parsed result with all annotations
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
+     * @param project
+     *            custom JavaProject
+     */
+    protected BuildResult(final Run<?, ?> build, final BuildHistory history,
+            final ParserResult result, final String defaultEncoding, final JavaProject project) {
+        initialize(history, build, defaultEncoding, result, project);
+    }
+
+
+    public static void setPriorityInt(final Class<? extends PriorityInt> priorityEnum){
+        BuildResult.priorityEnum = priorityEnum;
+    }
+
+
+    /**
      * Creates a new history based on the specified build.
      *
      * @param build
@@ -270,6 +302,26 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     @SuppressWarnings("hiding")
     private void initialize(final BuildHistory history, final Run<?, ?> build, final String defaultEncoding, // NOCHECKSTYLE
             final ParserResult result) {
+        JavaProject container = new JavaProject();
+        initialize(history, build, defaultEncoding, result, container);
+    }
+
+    /**
+     * Initializes this new instance of {@link BuildResult}.
+     *
+     * @param build
+     *            the current build as owner of this action
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
+     * @param result
+     *            the parsed result with all annotations
+     * @param history
+     *            the history of build results of the associated plug-in
+     */
+    @SuppressWarnings("hiding")
+    protected void initialize(final BuildHistory history, final Run<?, ?> build, final String defaultEncoding, // NOCHECKSTYLE
+            final ParserResult result, final JavaProject container) {
+        this.result = result;
         this.history = history;
         owner = build;
         this.defaultEncoding = defaultEncoding;
@@ -280,10 +332,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
         numberOfWarnings = result.getNumberOfAnnotations();
         AnnotationContainer referenceResult = history.getReferenceAnnotations();
 
-        delta = result.getNumberOfAnnotations() - referenceResult.getNumberOfAnnotations();
-        lowDelta = computeDelta(result, referenceResult, Priority.LOW);
-        normalDelta = computeDelta(result, referenceResult, Priority.NORMAL);
-        highDelta = computeDelta(result, referenceResult, Priority.HIGH);
+        initializeDeltas();
 
         Set<FileAnnotation> allWarnings = result.getAnnotations();
 
@@ -296,11 +345,8 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
         numberOfFixedWarnings = fixedWarnings.size();
         fixedWarningsReference = new WeakReference<Collection<FileAnnotation>>(fixedWarnings);
 
-        highWarnings = result.getNumberOfAnnotations(Priority.HIGH);
-        normalWarnings = result.getNumberOfAnnotations(Priority.NORMAL);
-        lowWarnings = result.getNumberOfAnnotations(Priority.LOW);
+        initializePriorityWarnings();
 
-        JavaProject container = new JavaProject();
         container.addAnnotations(result.getAnnotations());
 
         for (FileAnnotation newWarning : newWarnings) {
@@ -315,6 +361,8 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
         defineReferenceBuild(history);
     }
 
+
+
     /**
      * Returns the build history.
      *
@@ -322,6 +370,15 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      */
     public BuildHistory getHistory() {
         return history;
+    }
+
+    /**
+     * Returns the parser result.
+     *
+     * @return the result
+     */
+    public ParserResult getResult() {
+        return result;
     }
 
     @SuppressFBWarnings("NP")
@@ -366,8 +423,37 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     }
 
     private int computeDelta(final ParserResult result, final AnnotationContainer referenceResult, final Priority priority) {
+        return computeDelta(result, referenceResult, priority);
+    }
+
+    protected int computeDelta(final ParserResult result, final AnnotationContainer referenceResult, final PriorityInt priority) {
         return result.getNumberOfAnnotations(priority) - referenceResult.getNumberOfAnnotations(priority);
     }
+
+    /*
+     * This should be overridden if using a custom enum
+     */
+    protected void initializeDeltas(){
+        AnnotationContainer referenceResult = history.getReferenceAnnotations();
+        delta = result.getNumberOfAnnotations() - referenceResult.getNumberOfAnnotations();
+        lowDelta = getDeltaByPriority(Priority.LOW);
+        normalDelta = getDeltaByPriority(Priority.NORMAL);
+        highDelta = getDeltaByPriority(Priority.HIGH);
+    }
+
+    /*
+     * This should be overridden if using a custom enum
+     */
+    protected void initializePriorityWarnings(){
+        highWarnings = result.getNumberOfAnnotations(Priority.HIGH);
+        normalWarnings = result.getNumberOfAnnotations(Priority.NORMAL);
+        lowWarnings = result.getNumberOfAnnotations(Priority.LOW);
+    }
+
+    protected void setDelta(final int delta){
+        this.delta = delta;
+    }
+
 
     /**
      * Computes the zero warnings high score based on the current build and the
@@ -832,6 +918,8 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      * Returns the total number of warnings of the specified priority for
      * this object.
      *
+     *  This should be overridden if using a custom enum
+     *
      * @param priority
      *            the priority
      * @return total number of annotations of the specified priority for this
@@ -904,6 +992,15 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      */
     public int getLowDelta() {
         return lowDelta;
+    }
+
+    /**
+     * Returns the low delta.
+     *
+     * @return the delta
+     */
+    public int getDeltaByPriority(final PriorityInt priority) {
+        return computeDelta(result, history.getReferenceAnnotations(), priority);
     }
 
     /**
@@ -1143,7 +1240,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      * @return all priorities
      */
     public PriorityInt[] getAllPriorities() {
-        Priority[] priorities = Priority.values();
+        PriorityInt[] priorities = priorityEnum.getEnumConstants();
 
         return priorities;
     }
@@ -1153,9 +1250,15 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
         return getContainer().getAnnotations(priority);
     }
 
+
     @Override
-    public int getNumberOfAnnotations(final String priority) {
-        return getNumberOfAnnotations(Priority.fromString(priority));
+    public int getNumberOfAnnotations(final String priorityString) {
+        for(PriorityInt priority : priorityEnum.getEnumConstants()){
+            if(priorityString.toUpperCase().equals(priority.getPriorityName())){
+                return getNumberOfAnnotations(priority);
+            }
+        }
+        return 0;
     }
 
     /**

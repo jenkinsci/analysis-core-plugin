@@ -42,6 +42,8 @@ public class ParserResult implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(ParserResult.class.getName());
     private static final String SLASH = "/";
 
+    private static Class<? extends PriorityInt> priorityEnum = Priority.class;
+
     /** The parsed annotations. */
     @SuppressWarnings("Se")
     private final Set<FileAnnotation> annotations = new HashSet<FileAnnotation>();
@@ -130,13 +132,18 @@ public class ParserResult implements Serializable {
         initializeAnnotationCounts();
     }
 
-    /**
-     * Can be overriden to use custom priority keys
-     */
-    protected void initializeAnnotationCounts(){
-        for (Priority priority : Priority.values()) {
+    public static void setPriorityInt(final Class<? extends PriorityInt> priorityEnum){
+        ParserResult.priorityEnum = priorityEnum;
+    }
+
+    private void initializeAnnotationCounts(){
+        for (PriorityInt priority : priorityEnum.getEnumConstants()) {
             annotationCountByPriority.put(priority.getPriorityName(), 0);
         }
+    }
+
+    protected Map<String, Integer> getAnnotationCountByPriority(){
+        return annotationCountByPriority;
     }
 
     private static FilePathAdapter asWorkspace(final FilePath workspace) {

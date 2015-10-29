@@ -28,6 +28,9 @@ public abstract class AbstractWarningsTablePortlet extends AbstractPortlet {
 
     /** Message to be shown if no result action is found. */
     private static final String NO_RESULTS_FOUND = "-";
+
+    private static Class<? extends PriorityInt> priorityEnum = Priority.class;
+
     private final boolean canHideZeroWarningsProjects;
 
     /**
@@ -53,6 +56,10 @@ public abstract class AbstractWarningsTablePortlet extends AbstractPortlet {
         super(name);
 
         this.canHideZeroWarningsProjects = canHideZeroWarningsProjects;
+    }
+
+    public static void setPriorityInt(final Class<? extends PriorityInt> priorityEnum){
+        AbstractWarningsTablePortlet.priorityEnum = priorityEnum;
     }
 
     /**
@@ -159,6 +166,7 @@ public abstract class AbstractWarningsTablePortlet extends AbstractPortlet {
     /**
      * Returns the number of compiler warnings for the specified jobs.
      *
+     *
      * @param jobs
      *            the jobs to get the warnings for
      * @param priority
@@ -172,10 +180,12 @@ public abstract class AbstractWarningsTablePortlet extends AbstractPortlet {
     /**
      * Returns all possible priorities.
      *
+     *
      * @return all priorities
+     *
      */
     public PriorityInt[] getAllPriorities() {
-        return Priority.values();
+        return priorityEnum.getEnumConstants();
     }
 
     /**

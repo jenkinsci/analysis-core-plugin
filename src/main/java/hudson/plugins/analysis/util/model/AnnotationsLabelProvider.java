@@ -28,7 +28,7 @@ public class AnnotationsLabelProvider implements Serializable {
     }
 
     /**
-     * This can be overridden to provide custom labels for Priority tabs
+     * This should be overridden if using a custom enum
      *
      */
     protected void initializePriorityLabels(){

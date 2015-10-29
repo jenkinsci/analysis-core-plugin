@@ -29,6 +29,8 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 855696821788264261L;
 
+    private static Class<? extends PriorityInt> priorityEnum = Priority.class;
+
     /** The hierarchy of a container. */
     public enum Hierarchy {
         /** Project level. */
@@ -85,6 +87,10 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
      */
     public AnnotationContainer(final Hierarchy hierarchy) {
         this(StringUtils.EMPTY, hierarchy);
+    }
+
+    public static void setPriorityInt(final Class<? extends PriorityInt> priorityEnum){
+        AnnotationContainer.priorityEnum = priorityEnum;
     }
 
     /**
@@ -144,6 +150,8 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
         this.hierarchy = hierarchy;
     }
 
+
+
     /**
      * Sets the hierarchy to the specified value.
      *
@@ -175,6 +183,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
      * Initializes the transient mappings.
      */
     private void initialize() {
+        annotationsByPriority = new HashMap<String, Set<FileAnnotation>>();
         initializeAnnotationsByPriority();
         annotationsByCategory = new HashMap<String, Set<FileAnnotation>>();
         annotationsByType = new HashMap<String, Set<FileAnnotation>>();
@@ -191,13 +200,16 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     /**
      * Initializes the annotations by Priority.
      *
-     * This can be overridden to initialize the annotationsByPriority Map with custom enum Keys
      */
-    protected void initializeAnnotationsByPriority(){
-        annotationsByPriority = new HashMap<String, Set<FileAnnotation>>();
-        for (Priority priority : Priority.values()) {
+    private void initializeAnnotationsByPriority(){
+        for (PriorityInt priority : priorityEnum.getEnumConstants()) {
             annotationsByPriority.put(priority.getPriorityName(), new HashSet<FileAnnotation>());
         }
+    }
+
+
+    protected Map<String, Set<FileAnnotation>> getAnnotationsByPriority(){
+        return annotationsByPriority;
     }
 
     /**
@@ -385,7 +397,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
 
     @Override
     public final Set<FileAnnotation> getAnnotations(final String priority) {
-        return ImmutableSortedSet.copyOf(annotationsByPriority.get(priority.toUpperCase()));
+        return ImmutableSortedSet.copyOf(annotationsByPriority.get(priority));
 //        return getAnnotations(getPriority(priority));
     }
 
@@ -498,7 +510,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
 
     @Override
     public final int getNumberOfAnnotations(final String priority) {
-        return annotationsByPriority.get(priority.toUpperCase()).size();
+        return annotationsByPriority.get(priority).size();
         // return getNumberOfAnnotations(getPriority(priority));
     }
 
@@ -533,7 +545,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     public final boolean hasNoAnnotations(final String priority) {
 //        return hasNoAnnotations(getPriority(priority));
 
-        return annotationsByPriority.get(priority.toUpperCase()).isEmpty();
+        return annotationsByPriority.get(priority).isEmpty();
     }
 
     @Override
@@ -558,7 +570,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     public String getToolTip() {
         StringBuilder message = new StringBuilder();
         String separator = " - ";
-        for (Priority priority : Priority.values()) {
+        for (PriorityInt priority : priorityEnum.getEnumConstants()) {
             if (hasAnnotations(priority)) {
                 message.append(priority.getLocalizedString());
                 message.append(':');
@@ -878,6 +890,8 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     /**
      * Returns the css style color for this priority
      *
+     * This should be overridden if using a custom enum
+     *
      * @return the css color string
      */
     public String getPriorityColor(final PriorityInt priority) {
@@ -896,7 +910,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
      * @return all priorities
      */
     public PriorityInt[] getAllPriorities() {
-        Priority[] priorities = Priority.values();
+        PriorityInt[] priorities = priorityEnum.getEnumConstants();
 
         return priorities;
     }

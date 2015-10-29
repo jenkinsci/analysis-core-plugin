@@ -1,6 +1,8 @@
 package hudson.plugins.analysis.util.model;
 
-
+/**
+ * Custom enums should also implement the same static classes and methods as in the Priority enum.
+ */
 public interface PriorityInt {
 
 
