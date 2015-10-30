@@ -50,6 +50,7 @@ import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.JavaProject;
 import hudson.plugins.analysis.util.model.MavenModule;
 import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.analysis.util.model.PriorityConstant;
 import hudson.plugins.analysis.util.model.PriorityInt;
 import hudson.plugins.analysis.views.DetailFactory;
 
@@ -72,7 +73,6 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     private static final String FAILED = "red.png";
     private static final String SUCCESS = "blue.png";
 
-    private static Class<? extends PriorityInt> priorityEnum = Priority.class;
 
     private transient Object projectLock = new Object();
 
@@ -229,33 +229,6 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
         initialize(history, build, defaultEncoding, result);
     }
 
-    /**
-     * Creates a new instance of {@link BuildResult}. Note that the warnings are
-     * not serialized anymore automatically. You need to call
-     * {@link #serializeAnnotations(Collection)} manually in your constructor to
-     * persist them.
-     *
-     * @param build
-     *            the current build as owner of this action
-     * @param history
-     *            build history
-     * @param result
-     *            the parsed result with all annotations
-     * @param defaultEncoding
-     *            the default encoding to be used when reading and parsing files
-     * @param project
-     *            custom JavaProject
-     */
-    protected BuildResult(final Run<?, ?> build, final BuildHistory history,
-            final ParserResult result, final String defaultEncoding, final JavaProject project) {
-        initialize(history, build, defaultEncoding, result, project);
-    }
-
-
-    public static void setPriorityInt(final Class<? extends PriorityInt> priorityEnum){
-        BuildResult.priorityEnum = priorityEnum;
-    }
-
 
     /**
      * Creates a new history based on the specified build.
@@ -300,27 +273,8 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      *            the history of build results of the associated plug-in
      */
     @SuppressWarnings("hiding")
-    private void initialize(final BuildHistory history, final Run<?, ?> build, final String defaultEncoding, // NOCHECKSTYLE
-            final ParserResult result) {
-        JavaProject container = new JavaProject();
-        initialize(history, build, defaultEncoding, result, container);
-    }
-
-    /**
-     * Initializes this new instance of {@link BuildResult}.
-     *
-     * @param build
-     *            the current build as owner of this action
-     * @param defaultEncoding
-     *            the default encoding to be used when reading and parsing files
-     * @param result
-     *            the parsed result with all annotations
-     * @param history
-     *            the history of build results of the associated plug-in
-     */
-    @SuppressWarnings("hiding")
     protected void initialize(final BuildHistory history, final Run<?, ?> build, final String defaultEncoding, // NOCHECKSTYLE
-            final ParserResult result, final JavaProject container) {
+            final ParserResult result) {
         this.result = result;
         this.history = history;
         owner = build;
@@ -347,6 +301,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
 
         initializePriorityWarnings();
 
+        JavaProject container = new JavaProject();
         container.addAnnotations(result.getAnnotations());
 
         for (FileAnnotation newWarning : newWarnings) {
@@ -1240,7 +1195,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      * @return all priorities
      */
     public PriorityInt[] getAllPriorities() {
-        PriorityInt[] priorities = priorityEnum.getEnumConstants();
+        PriorityInt[] priorities = PriorityConstant.priorityEnum.getEnumConstants();
 
         return priorities;
     }
@@ -1253,7 +1208,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
 
     @Override
     public int getNumberOfAnnotations(final String priorityString) {
-        for(PriorityInt priority : priorityEnum.getEnumConstants()){
+        for(PriorityInt priority : PriorityConstant.priorityEnum.getEnumConstants()){
             if(priorityString.toUpperCase().equals(priority.getPriorityName())){
                 return getNumberOfAnnotations(priority);
             }

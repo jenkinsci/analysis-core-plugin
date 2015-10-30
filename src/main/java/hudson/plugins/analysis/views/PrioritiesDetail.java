@@ -7,6 +7,7 @@ import hudson.model.Run;
 
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.analysis.util.model.PriorityInt;
 
 /**
  * Result object to visualize the priorities statistics of an annotation container.
@@ -17,7 +18,7 @@ public class PrioritiesDetail extends AbstractAnnotationsDetail {
     /** Unique identifier of this class. */
     private static final long serialVersionUID = -5315146140343619856L;
     /** Priority of the annotations. */
-    private final Priority priority;
+    private final PriorityInt priority;
 
     /**
      * Creates a new instance of <code>ModuleDetail</code>.
@@ -35,7 +36,7 @@ public class PrioritiesDetail extends AbstractAnnotationsDetail {
      * @param header
      *            header to be shown on detail page
      */
-    public PrioritiesDetail(final Run<?, ?> owner, final DetailFactory detailFactory, final Collection<FileAnnotation> annotations, final Priority priority, final String defaultEncoding, final String header) {
+    public PrioritiesDetail(final Run<?, ?> owner, final DetailFactory detailFactory, final Collection<FileAnnotation> annotations, final PriorityInt priority, final String defaultEncoding, final String header) {
         super(owner, detailFactory, annotations, defaultEncoding, header, Hierarchy.PROJECT);
         this.priority = priority;
     }

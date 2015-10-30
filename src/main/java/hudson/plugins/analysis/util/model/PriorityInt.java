@@ -28,5 +28,12 @@ public interface PriorityInt {
     public String getPriorityName();
 
 
+    /**
+     * Returns the css style color for this priority
+     *
+     * @return the css color string
+     */
+    public String getCssColor();
+
 }
 

@@ -14,7 +14,7 @@
      <j:forEach var="priority" items="${container.getAllPriorities()}">
      	<j:set var="prioritySize" value="${container.getNumberOfAnnotations(priority)}" />
      	<j:if test="${prioritySize > 0}">
-        	<td  class="priority-bar" style="background:${container.getPriorityColor(priority)};width:${prioritySize / max * 100}%">
+        	<td  class="priority-bar" style="background:${priority.cssColor};width:${prioritySize / max * 100}%">
         	</td>
       	</j:if>
 

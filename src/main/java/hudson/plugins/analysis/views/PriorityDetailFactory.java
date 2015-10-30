@@ -8,6 +8,8 @@ import hudson.model.Run;
 import hudson.plugins.analysis.util.Compatibility;
 import hudson.plugins.analysis.util.model.AnnotationContainer;
 import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.analysis.util.model.PriorityConstant;
+import hudson.plugins.analysis.util.model.PriorityInt;
 
 /**
  * Creates priority detail objects.
@@ -36,7 +38,7 @@ public class PriorityDetailFactory {
      * @return <code>true</code> if the provided value is a valid priority, <code>false</code> otherwise
      */
     public boolean isPriority(final String value) {
-        for (Priority priority : Priority.values()) {
+        for (PriorityInt priority : PriorityConstant.priorityEnum.getEnumConstants()) {
             if (priority.toString().equalsIgnoreCase(value)) {
                 return true;
             }
@@ -60,21 +62,34 @@ public class PriorityDetailFactory {
      * @return the priority detail
      */
     public PrioritiesDetail create(final String priority, @Nonnull final Run<?, ?> owner, final AnnotationContainer container, final String defaultEncoding, final String header) {
-        if (owner instanceof AbstractBuild && Compatibility.isOverridden(PriorityDetailFactory.class, getClass(), "create", 
+        if (owner instanceof AbstractBuild && Compatibility.isOverridden(PriorityDetailFactory.class, getClass(), "create",
                 String.class, AbstractBuild.class, AnnotationContainer.class, String.class, String.class)) {
             return create(priority, (AbstractBuild<?, ?>) owner, container, defaultEncoding, header);
         }
         else {
-            if (Priority.HIGH.toString().equalsIgnoreCase(priority)) {
-                return createPrioritiesDetail(Priority.HIGH, owner, container, defaultEncoding, header);
+            PriorityInt actualPriority = null;
+
+            for (PriorityInt currentPriority : PriorityConstant.priorityEnum.getEnumConstants()) {
+                if(currentPriority.getPriorityName().equals(priority.toUpperCase())){
+                    actualPriority = currentPriority;
+                }
             }
-            else if (Priority.NORMAL.toString().equalsIgnoreCase(priority)) {
-                return createPrioritiesDetail(Priority.NORMAL, owner, container, defaultEncoding, header);
+            if(actualPriority == null){
+                throw new IllegalArgumentException("Wrong priority provided: " + priority);
             }
-            else if (Priority.LOW.toString().equalsIgnoreCase(priority)) {
-                return createPrioritiesDetail(Priority.LOW, owner, container, defaultEncoding, header);
-            }
-            throw new IllegalArgumentException("Wrong priority provided: " + priority);
+
+            return createPrioritiesDetail(actualPriority, owner, container, defaultEncoding, header);
+
+//            if (Priority.HIGH.toString().equalsIgnoreCase(priority)) {
+//                return createPrioritiesDetail(Priority.HIGH, owner, container, defaultEncoding, header);
+//            }
+//            else if (Priority.NORMAL.toString().equalsIgnoreCase(priority)) {
+//                return createPrioritiesDetail(Priority.NORMAL, owner, container, defaultEncoding, header);
+//            }
+//            else if (Priority.LOW.toString().equalsIgnoreCase(priority)) {
+//                return createPrioritiesDetail(Priority.LOW, owner, container, defaultEncoding, header);
+//            }
+//            throw new IllegalArgumentException("Wrong priority provided: " + priority);
         }
     }
 
@@ -93,11 +108,11 @@ public class PriorityDetailFactory {
      *            header to show
      * @return the priority detail
      */
-    protected PrioritiesDetail createPrioritiesDetail(final Priority priority, @Nonnull final Run<?, ?> owner, final AnnotationContainer container,
+    protected PrioritiesDetail createPrioritiesDetail(final PriorityInt priority, @Nonnull final Run<?, ?> owner, final AnnotationContainer container,
             final String defaultEncoding, final String header) {
-        if (owner instanceof AbstractBuild && Compatibility.isOverridden(PriorityDetailFactory.class, getClass(), "createPrioritiesDetail", 
+        if (owner instanceof AbstractBuild && Compatibility.isOverridden(PriorityDetailFactory.class, getClass(), "createPrioritiesDetail",
                 Priority.class, AbstractBuild.class, AnnotationContainer.class, String.class, String.class)) {
-            return createPrioritiesDetail(priority, (AbstractBuild<?, ?>) owner, container, defaultEncoding, header);
+            return createPrioritiesDetail(priority, owner, container, defaultEncoding, header);
         }
         else {
             return new PrioritiesDetail(owner, detailFactory, container.getAnnotations(priority), priority, defaultEncoding, header);

@@ -29,7 +29,6 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     /** Unique identifier of this class. */
     private static final long serialVersionUID = 855696821788264261L;
 
-    private static Class<? extends PriorityInt> priorityEnum = Priority.class;
 
     /** The hierarchy of a container. */
     public enum Hierarchy {
@@ -89,9 +88,6 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
         this(StringUtils.EMPTY, hierarchy);
     }
 
-    public static void setPriorityInt(final Class<? extends PriorityInt> priorityEnum){
-        AnnotationContainer.priorityEnum = priorityEnum;
-    }
 
     /**
      * Returns this container.
@@ -202,7 +198,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
      *
      */
     private void initializeAnnotationsByPriority(){
-        for (PriorityInt priority : priorityEnum.getEnumConstants()) {
+        for (PriorityInt priority : PriorityConstant.priorityEnum.getEnumConstants()) {
             annotationsByPriority.put(priority.getPriorityName(), new HashSet<FileAnnotation>());
         }
     }
@@ -570,7 +566,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     public String getToolTip() {
         StringBuilder message = new StringBuilder();
         String separator = " - ";
-        for (PriorityInt priority : priorityEnum.getEnumConstants()) {
+        for (PriorityInt priority : PriorityConstant.priorityEnum.getEnumConstants()) {
             if (hasAnnotations(priority)) {
                 message.append(priority.getLocalizedString());
                 message.append(':');
@@ -887,22 +883,6 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
         throw new NoSuchElementException("Type by hashcode not found: " + hashCode);
     }
 
-    /**
-     * Returns the css style color for this priority
-     *
-     * This should be overridden if using a custom enum
-     *
-     * @return the css color string
-     */
-    public String getPriorityColor(final PriorityInt priority) {
-        if(Priority.HIGH == priority){
-            return "#EF2929";
-        } else if (Priority.NORMAL == priority){
-            return "#FCE94F";
-        } else {
-            return "#729FCF";
-        }
-    }
 
     /**
      * Returns all possible priorities.
@@ -910,7 +890,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
      * @return all priorities
      */
     public PriorityInt[] getAllPriorities() {
-        PriorityInt[] priorities = priorityEnum.getEnumConstants();
+        PriorityInt[] priorities = PriorityConstant.priorityEnum.getEnumConstants();
 
         return priorities;
     }

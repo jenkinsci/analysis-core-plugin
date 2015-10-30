@@ -28,7 +28,7 @@ import hudson.FilePath;
 import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.util.FileFinder;
 import hudson.plugins.analysis.util.model.FileAnnotation;
-import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.analysis.util.model.PriorityConstant;
 import hudson.plugins.analysis.util.model.PriorityInt;
 
 /**
@@ -42,7 +42,6 @@ public class ParserResult implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(ParserResult.class.getName());
     private static final String SLASH = "/";
 
-    private static Class<? extends PriorityInt> priorityEnum = Priority.class;
 
     /** The parsed annotations. */
     @SuppressWarnings("Se")
@@ -132,12 +131,9 @@ public class ParserResult implements Serializable {
         initializeAnnotationCounts();
     }
 
-    public static void setPriorityInt(final Class<? extends PriorityInt> priorityEnum){
-        ParserResult.priorityEnum = priorityEnum;
-    }
 
     private void initializeAnnotationCounts(){
-        for (PriorityInt priority : priorityEnum.getEnumConstants()) {
+        for (PriorityInt priority : PriorityConstant.priorityEnum.getEnumConstants()) {
             annotationCountByPriority.put(priority.getPriorityName(), 0);
         }
     }

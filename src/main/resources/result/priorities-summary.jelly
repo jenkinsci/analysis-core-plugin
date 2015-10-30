@@ -21,7 +21,7 @@
                 0
               </j:if>
               <j:if test="${it.getNumberOfAnnotations(priority.priorityName) != 0}">
-                <a href="${priority}">${it.getNumberOfAnnotations(priority.priorityName)}</a>
+                <a href="${priority.priorityName.toLowerCase()}">${it.getNumberOfAnnotations(priority.priorityName)}</a>
               </j:if>
             </div>
           </td>

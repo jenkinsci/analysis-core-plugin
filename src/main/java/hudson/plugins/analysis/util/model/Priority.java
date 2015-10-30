@@ -17,13 +17,23 @@ import hudson.plugins.analysis.Messages;
  */
 public enum Priority implements PriorityInt{
     /** High priority. */
-    HIGH,
+    HIGH("#EF2929"),
     /** Normal priority. */
-    NORMAL,
+    NORMAL("#FCE94F"),
     /** Low priority. */
-    LOW;
+    LOW("#729FCF");
 
+    private final String cssColor;
 
+    Priority(final String cssColor){
+        this.cssColor = cssColor;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getCssColor() {
+        return cssColor;
+    }
 
     /**
      * Converts a String priority to an actual enumeration value.
@@ -114,4 +124,5 @@ public enum Priority implements PriorityInt{
         }
         return priorities;
     }
+
 }

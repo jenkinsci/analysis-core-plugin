@@ -14,7 +14,7 @@ import hudson.model.Job;
 import hudson.plugins.analysis.core.AbstractProjectAction;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.ResultAction;
-import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.analysis.util.model.PriorityConstant;
 import hudson.plugins.analysis.util.model.PriorityInt;
 
 /**
@@ -28,8 +28,6 @@ public abstract class AbstractWarningsTablePortlet extends AbstractPortlet {
 
     /** Message to be shown if no result action is found. */
     private static final String NO_RESULTS_FOUND = "-";
-
-    private static Class<? extends PriorityInt> priorityEnum = Priority.class;
 
     private final boolean canHideZeroWarningsProjects;
 
@@ -58,9 +56,6 @@ public abstract class AbstractWarningsTablePortlet extends AbstractPortlet {
         this.canHideZeroWarningsProjects = canHideZeroWarningsProjects;
     }
 
-    public static void setPriorityInt(final Class<? extends PriorityInt> priorityEnum){
-        AbstractWarningsTablePortlet.priorityEnum = priorityEnum;
-    }
 
     /**
      * Returns whether zero warnings projects should be hidden in the table.
@@ -185,7 +180,7 @@ public abstract class AbstractWarningsTablePortlet extends AbstractPortlet {
      *
      */
     public PriorityInt[] getAllPriorities() {
-        return priorityEnum.getEnumConstants();
+        return PriorityConstant.priorityEnum.getEnumConstants();
     }
 
     /**
