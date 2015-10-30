@@ -137,6 +137,28 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
     }
 
     /**
+     * Creates a new instance of <code>AbstractAnnotation</code>.
+     *
+     * @param priority
+     *            the priority
+     * @param message
+     *            the message of the warning
+     * @param start
+     *            the first line of the line range
+     * @param end
+     *            the last line of the line range
+     * @param category
+     *            the category of the annotation
+     * @param type
+     *            the type of the annotation
+     */
+    public AbstractAnnotation(final Priority priority, final String message, final int start, final int end,
+            final String category, final String type) {
+        this(message, start, end, category, type);
+        this.priority = priority;
+    }
+
+    /**
      * Copy constructor: Creates a new instance of {@link AbstractAnnotation}.
      *
      * @param copy

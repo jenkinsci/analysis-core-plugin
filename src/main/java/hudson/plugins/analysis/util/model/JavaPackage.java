@@ -22,6 +22,17 @@ public class JavaPackage extends AnnotationContainer {
     }
 
     /**
+     * Creates a new instance of <code>JavaPackage</code>.
+     *
+     * @param packageName
+     *            the name of this package
+     * @param priorityClass custom priority class
+     */
+    public JavaPackage(final String packageName, final Class<? extends PriorityInt> priorityClass) {
+        super(packageName, Hierarchy.PACKAGE, priorityClass);
+    }
+
+    /**
      * Rebuilds the priorities mapping.
      *
      * @return the created object

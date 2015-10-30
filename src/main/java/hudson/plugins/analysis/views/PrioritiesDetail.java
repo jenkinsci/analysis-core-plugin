@@ -42,6 +42,29 @@ public class PrioritiesDetail extends AbstractAnnotationsDetail {
     }
 
     /**
+     * Creates a new instance of <code>ModuleDetail</code>.
+     *
+     * @param owner
+     *            current build as owner of this action.
+     * @param detailFactory
+     *            factory to create detail objects with
+     * @param annotations
+     *            the package to show the details for
+     * @param priority
+     *            the priority of all annotations
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
+     * @param header
+     *            header to be shown on detail page
+     * @param priorityClass custom priority class
+     */
+    public PrioritiesDetail(final Run<?, ?> owner, final DetailFactory detailFactory, final Collection<FileAnnotation> annotations,
+            final PriorityInt priority, final String defaultEncoding, final String header, final Class<? extends PriorityInt> priorityClass) {
+        super(owner, detailFactory, annotations, defaultEncoding, header, Hierarchy.PROJECT, priorityClass);
+        this.priority = priority;
+    }
+
+    /**
      * Returns the header for the detail screen.
      *
      * @return the header

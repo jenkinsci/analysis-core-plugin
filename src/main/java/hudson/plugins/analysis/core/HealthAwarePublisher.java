@@ -86,7 +86,7 @@ public abstract class HealthAwarePublisher extends HealthAwareRecorder {
             updateBuildResult(result, logger);
         }
 
-        copyFilesWithAnnotationsToBuildFolder(run.getRootDir(), launcher.getChannel(), result.getAnnotations());
+        copyFilesWithAnnotationsToBuildFolder(run.getRootDir(), launcher.getChannel(), result.getAnnotations(), result.priorityClass);
 
         return true;
     }
@@ -127,13 +127,13 @@ public abstract class HealthAwarePublisher extends HealthAwareRecorder {
      *             better understanding on why it failed.
      */
     @Deprecated
-    protected BuildResult perform(AbstractBuild<?, ?> build, PluginLogger logger)
+    protected BuildResult perform(final AbstractBuild<?, ?> build, final PluginLogger logger)
             throws InterruptedException, IOException {
-        return perform((Run) build, null, logger);
+        return perform(build, null, logger);
     }
 
     @SuppressWarnings("deprecation")
-    protected /*abstract*/ BuildResult perform(Run<?, ?> run, FilePath workspace, PluginLogger logger) throws InterruptedException, IOException{
+    protected /*abstract*/ BuildResult perform(final Run<?, ?> run, final FilePath workspace, final PluginLogger logger) throws InterruptedException, IOException{
         if (run instanceof AbstractBuild && Compatibility.isOverridden(HealthAwarePublisher.class, getClass(),
                 "perform", AbstractBuild.class, PluginLogger.class)) {
             return perform((AbstractBuild) run, logger);

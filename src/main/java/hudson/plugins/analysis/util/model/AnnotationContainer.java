@@ -67,6 +67,8 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     /** The modules that contain annotations mapped by hash code of type name. */
     private transient Map<Integer, Set<FileAnnotation>> typesByHashCode;
 
+    private final Class<? extends PriorityInt> priorityClass;
+
     /** Determines whether to build up a set of {@link WorkspaceFile}s. */
     @java.lang.SuppressWarnings("unused")
     private boolean handleFiles; // backward compatibility NOPMD
@@ -86,6 +88,16 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
      */
     public AnnotationContainer(final Hierarchy hierarchy) {
         this(StringUtils.EMPTY, hierarchy);
+    }
+
+    /**
+     * Creates a new instance of <code>AnnotationContainer</code>.
+     *
+     * @param hierarchy the hierarchy of this container
+     * @param priorityClass custom priority class
+     */
+    public AnnotationContainer(final Hierarchy hierarchy, final Class<? extends PriorityInt> priorityClass) {
+        this(StringUtils.EMPTY, hierarchy, priorityClass);
     }
 
 
@@ -141,9 +153,21 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
      * @param hierarchy the hierarchy of this container
      */
     protected AnnotationContainer(final String name, final Hierarchy hierarchy) {
-        initialize();
+        this(name, hierarchy, Priority.class);
+    }
+
+    /**
+     * Creates a new instance of <code>AnnotationContainer</code>.
+     *
+     * @param name the name of this container
+     * @param hierarchy the hierarchy of this container
+     * @param priorityClass custom priority class
+     */
+    protected AnnotationContainer(final String name, final Hierarchy hierarchy, final Class<? extends PriorityInt> priorityClass) {
+        initialize(priorityClass);
         this.name = name;
         this.hierarchy = hierarchy;
+        this.priorityClass = priorityClass;
     }
 
 
@@ -178,9 +202,9 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     /**
      * Initializes the transient mappings.
      */
-    private void initialize() {
+    private void initialize(final Class<? extends PriorityInt> priorityClass) {
         annotationsByPriority = new HashMap<String, Set<FileAnnotation>>();
-        initializeAnnotationsByPriority();
+        initializeAnnotationsByPriority(priorityClass);
         annotationsByCategory = new HashMap<String, Set<FileAnnotation>>();
         annotationsByType = new HashMap<String, Set<FileAnnotation>>();
         filesByName = new HashMap<String, WorkspaceFile>();
@@ -197,8 +221,8 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
      * Initializes the annotations by Priority.
      *
      */
-    private void initializeAnnotationsByPriority(){
-        for (PriorityInt priority : PriorityConstant.priorityEnum.getEnumConstants()) {
+    private void initializeAnnotationsByPriority(final Class<? extends PriorityInt> priorityClass){
+        for (PriorityInt priority : priorityClass.getEnumConstants()) {
             annotationsByPriority.put(priority.getPriorityName(), new HashSet<FileAnnotation>());
         }
     }
@@ -223,7 +247,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
      * Rebuilds the priorities and files after deserialization.
      */
     protected void rebuildMappings() {
-        initialize();
+        initialize(priorityClass);
         for (FileAnnotation annotation : getAnnotations()) {
             updateMappings(annotation);
         }
@@ -297,7 +321,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     private void addModule(final FileAnnotation annotation) {
         String moduleName = annotation.getModuleName();
         if (!modulesByName.containsKey(moduleName)) {
-            MavenModule module = new MavenModule(moduleName);
+            MavenModule module = new MavenModule(moduleName, priorityClass);
             modulesByName.put(moduleName, module);
             modulesByHashCode.put(moduleName.hashCode(), module);
         }
@@ -317,7 +341,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
             packageName = "-";
         }
         if (!packagesByName.containsKey(packageName)) {
-            JavaPackage javaPackage = new JavaPackage(packageName);
+            JavaPackage javaPackage = new JavaPackage(packageName, priorityClass);
             packagesByName.put(packageName, javaPackage);
             packagesByHashCode.put(packageName.hashCode(), javaPackage);
         }
@@ -334,7 +358,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     private void addFile(final FileAnnotation annotation) {
         String fileName = annotation.getFileName();
         if (!filesByName.containsKey(fileName)) {
-            WorkspaceFile file = new WorkspaceFile(fileName);
+            WorkspaceFile file = new WorkspaceFile(fileName, priorityClass);
             filesByName.put(fileName, file);
             filesByHashCode.put(file.getName().hashCode(), file);
         }
@@ -566,7 +590,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
     public String getToolTip() {
         StringBuilder message = new StringBuilder();
         String separator = " - ";
-        for (PriorityInt priority : PriorityConstant.priorityEnum.getEnumConstants()) {
+        for (PriorityInt priority : priorityClass.getEnumConstants()) {
             if (hasAnnotations(priority)) {
                 message.append(priority.getLocalizedString());
                 message.append(':');
@@ -890,7 +914,7 @@ public abstract class AnnotationContainer implements AnnotationProvider, Seriali
      * @return all priorities
      */
     public PriorityInt[] getAllPriorities() {
-        PriorityInt[] priorities = PriorityConstant.priorityEnum.getEnumConstants();
+        PriorityInt[] priorities = priorityClass.getEnumConstants();
 
         return priorities;
     }

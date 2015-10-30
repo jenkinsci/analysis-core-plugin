@@ -9,11 +9,15 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import hudson.FilePath;
+
 import hudson.plugins.analysis.util.model.AbstractAnnotation;
 import hudson.plugins.analysis.util.model.AnnotationContainer;
 import hudson.plugins.analysis.util.model.DefaultAnnotationContainer;
 import hudson.plugins.analysis.util.model.FileAnnotation;
+import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.analysis.util.model.PriorityInt;
 import hudson.plugins.analysis.util.model.WorkspaceFile;
+
 import hudson.remoting.VirtualChannel;
 
 /**
@@ -61,6 +65,28 @@ public class Files {
     public void copyFilesWithAnnotationsToBuildFolder(final VirtualChannel channel, final FilePath rootDir,
             final Collection<FileAnnotation> annotations, final String defaultEncoding)
             throws IOException, InterruptedException {
+        copyFilesWithAnnotationsToBuildFolder(channel, rootDir, annotations, defaultEncoding, Priority.class);
+    }
+
+    /**
+     * Copies all files with annotations from the workspace to the build folder.
+     *
+     * @param channel
+     *            channel to get the files from
+     * @param rootDir
+     *            directory to store the copied files in
+     * @param annotations
+     *            annotations determining the actual files to copy
+     * @param defaultEncoding
+     * @param priorityClass custom priority class
+     * @throws IOException
+     *             if the files could not be written
+     * @throws InterruptedException
+     *             if the user cancels the processing
+     */
+    public void copyFilesWithAnnotationsToBuildFolder(final VirtualChannel channel, final FilePath rootDir,
+            final Collection<FileAnnotation> annotations, final String defaultEncoding, final Class<? extends PriorityInt> priorityClass)
+            throws IOException, InterruptedException {
         FilePath directory = rootDir.child(AbstractAnnotation.WORKSPACE_FILES);
         if (!directory.exists()) {
             try {
@@ -72,7 +98,7 @@ public class Files {
             }
         }
 
-        AnnotationContainer container = new DefaultAnnotationContainer(annotations);
+        AnnotationContainer container = new DefaultAnnotationContainer(annotations, priorityClass);
         for (WorkspaceFile file : container.getFiles()) {
             FilePath masterFile = directory.child(file.getTempName());
             if (!masterFile.exists()) {

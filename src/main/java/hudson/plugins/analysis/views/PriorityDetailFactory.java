@@ -8,7 +8,6 @@ import hudson.model.Run;
 import hudson.plugins.analysis.util.Compatibility;
 import hudson.plugins.analysis.util.model.AnnotationContainer;
 import hudson.plugins.analysis.util.model.Priority;
-import hudson.plugins.analysis.util.model.PriorityConstant;
 import hudson.plugins.analysis.util.model.PriorityInt;
 
 /**
@@ -38,7 +37,25 @@ public class PriorityDetailFactory {
      * @return <code>true</code> if the provided value is a valid priority, <code>false</code> otherwise
      */
     public boolean isPriority(final String value) {
-        for (PriorityInt priority : PriorityConstant.priorityEnum.getEnumConstants()) {
+        for (Priority priority : Priority.values()) {
+            if (priority.toString().equalsIgnoreCase(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns whether the provided value is a valid priority.
+     *
+     * @param value the value to check
+     * @return <code>true</code> if the provided value is a valid priority, <code>false</code> otherwise
+     */
+    public boolean isCustomPriority(final String value) {
+        if(DetailFactory.customPriorityClass == null){
+            return false;
+        }
+        for (PriorityInt priority : DetailFactory.customPriorityClass.getEnumConstants()) {
             if (priority.toString().equalsIgnoreCase(value)) {
                 return true;
             }
@@ -69,9 +86,10 @@ public class PriorityDetailFactory {
         else {
             PriorityInt actualPriority = null;
 
-            for (PriorityInt currentPriority : PriorityConstant.priorityEnum.getEnumConstants()) {
+            for (Priority currentPriority : Priority.values()) {
                 if(currentPriority.getPriorityName().equals(priority.toUpperCase())){
                     actualPriority = currentPriority;
+                    break;
                 }
             }
             if(actualPriority == null){
@@ -94,6 +112,43 @@ public class PriorityDetailFactory {
     }
 
     /**
+     * Creates a new priorities detail object.
+     *
+     * @param priority
+     *            the priority to show
+     * @param owner
+     *            owner of the build
+     * @param container
+     *            annotation container
+     * @param header
+     *            header to show
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
+     * @return the priority detail
+     */
+    public PrioritiesDetail createCustomDetails(final String priority, @Nonnull final Run<?, ?> owner, final AnnotationContainer container, final String defaultEncoding, final String header) {
+        if (owner instanceof AbstractBuild && Compatibility.isOverridden(PriorityDetailFactory.class, getClass(), "create",
+                String.class, AbstractBuild.class, AnnotationContainer.class, String.class, String.class)) {
+            return create(priority, (AbstractBuild<?, ?>) owner, container, defaultEncoding, header);
+        }
+        else {
+            PriorityInt actualPriority = null;
+
+            for (PriorityInt currentPriority : DetailFactory.customPriorityClass.getEnumConstants()) {
+                if(currentPriority.getPriorityName().equals(priority.toUpperCase())){
+                    actualPriority = currentPriority;
+                    break;
+                }
+            }
+            if(actualPriority == null){
+                throw new IllegalArgumentException("Wrong priority provided: " + priority);
+            }
+
+            return createPrioritiesDetail(actualPriority, owner, container, defaultEncoding, header, DetailFactory.customPriorityClass);
+        }
+    }
+
+    /**
      * Creates a new priorities detail.
      *
      * @param priority
@@ -110,12 +165,33 @@ public class PriorityDetailFactory {
      */
     protected PrioritiesDetail createPrioritiesDetail(final PriorityInt priority, @Nonnull final Run<?, ?> owner, final AnnotationContainer container,
             final String defaultEncoding, final String header) {
+       return createPrioritiesDetail(priority, owner, container, defaultEncoding, header, Priority.class);
+    }
+
+    /**
+     * Creates a new priorities detail.
+     *
+     * @param priority
+     *            the priority to show
+     * @param owner
+     *            owner of the build
+     * @param container
+     *            annotation container
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
+     * @param header
+     *            header to show
+     * @param priorityClass custom priority class
+     * @return the priority detail
+     */
+    protected PrioritiesDetail createPrioritiesDetail(final PriorityInt priority, @Nonnull final Run<?, ?> owner, final AnnotationContainer container,
+            final String defaultEncoding, final String header, final Class<? extends PriorityInt> priorityClass) {
         if (owner instanceof AbstractBuild && Compatibility.isOverridden(PriorityDetailFactory.class, getClass(), "createPrioritiesDetail",
                 Priority.class, AbstractBuild.class, AnnotationContainer.class, String.class, String.class)) {
             return createPrioritiesDetail(priority, owner, container, defaultEncoding, header);
         }
         else {
-            return new PrioritiesDetail(owner, detailFactory, container.getAnnotations(priority), priority, defaultEncoding, header);
+            return new PrioritiesDetail(owner, detailFactory, container.getAnnotations(priority), priority, defaultEncoding, header, priorityClass);
         }
     }
 

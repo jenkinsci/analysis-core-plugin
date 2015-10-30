@@ -1,35 +1,40 @@
 package hudson.plugins.analysis.core; // NOPMD
 
-import javax.annotation.CheckForNull;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
 
-import org.apache.commons.lang.StringUtils;
-import org.kohsuke.stapler.DataBoundSetter;
+import javax.annotation.CheckForNull;
 
 import jenkins.tasks.SimpleBuildStep;
+
+import org.apache.commons.lang.StringUtils;
+import org.kohsuke.stapler.DataBoundSetter;
 
 import hudson.FilePath;
 import hudson.Launcher;
 import hudson.matrix.MatrixAggregatable;
+
+import hudson.model.Result;
+import hudson.model.TaskListener;
 import hudson.model.AbstractBuild;
 import hudson.model.Project;
-import hudson.model.Result;
 import hudson.model.Run;
-import hudson.model.TaskListener;
+
 import hudson.plugins.analysis.util.EncodingValidator;
 import hudson.plugins.analysis.util.Files;
 import hudson.plugins.analysis.util.LoggerFactory;
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.analysis.util.model.PriorityInt;
+
 import hudson.remoting.VirtualChannel;
 import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Builder;
-import hudson.tasks.Maven;
 import hudson.tasks.Recorder;
+import hudson.tasks.Maven;
 
 /**
  * A base class for publishers with the following two characteristics:
@@ -126,7 +131,7 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
      *
      * @param pluginName the plugin name
      */
-    protected HealthAwareRecorder(String pluginName) {
+    protected HealthAwareRecorder(final String pluginName) {
         this.pluginName = "[" + pluginName + "] ";
     }
 
@@ -309,8 +314,32 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
     protected void copyFilesWithAnnotationsToBuildFolder(final File rootDir,
             final VirtualChannel channel, final Collection<FileAnnotation> annotations)
             throws IOException, FileNotFoundException, InterruptedException {
+        copyFilesWithAnnotationsToBuildFolder(rootDir, channel, annotations, Priority.class);
+    }
+
+    /**
+     * Copies all files with annotations from the workspace to the build folder.
+     *
+     * @param rootDir
+     *            directory to store the copied files in
+     * @param channel
+     *            channel to get the files from
+     * @param annotations
+     *            annotations determining the actual files to copy
+     * @param priorityClass custom priority class
+     * @throws IOException
+     *             if the files could not be written
+     * @throws FileNotFoundException
+     *             if the files could not be written
+     * @throws InterruptedException
+     *             if the user cancels the processing
+     */
+    protected void copyFilesWithAnnotationsToBuildFolder(final File rootDir,
+            final VirtualChannel channel, final Collection<FileAnnotation> annotations,
+            final Class<? extends PriorityInt> priorityClass)
+            throws IOException, FileNotFoundException, InterruptedException {
         new Files().copyFilesWithAnnotationsToBuildFolder(channel, new FilePath(rootDir), annotations,
-                EncodingValidator.getEncoding(getDefaultEncoding()));
+                EncodingValidator.getEncoding(getDefaultEncoding()), priorityClass);
     }
 
     /**
@@ -569,7 +598,7 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
     /**
      *  Added to avoid the fat constructor. It replicates the constructor behaviour and
      *  offers the same field name outside.
-     *  
+     *
      *  Useful when defining the groovy script in workflow jobs.
      */
     @DataBoundSetter
@@ -580,7 +609,7 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
     /**
      *  Added to avoid the fat constructor. It replicates the constructor behavior and
      *  offers the same field name outside.
-     *  
+     *
      *  Useful when defining the groovy script in workflow jobs.
      */
     @DataBoundSetter
@@ -837,7 +866,7 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
         this.defaultEncoding = defaultEncoding;
         this.useDeltaValues = useDeltaValues;
         this.canRunOnFailed = canRunOnFailed;
-        this.usePreviousBuildAsReference = false;
+        usePreviousBuildAsReference = false;
         useStableBuildAsReference = false;
         dontComputeNew = false;
         shouldDetectModules = false;

@@ -50,7 +50,6 @@ import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.JavaProject;
 import hudson.plugins.analysis.util.model.MavenModule;
 import hudson.plugins.analysis.util.model.Priority;
-import hudson.plugins.analysis.util.model.PriorityConstant;
 import hudson.plugins.analysis.util.model.PriorityInt;
 import hudson.plugins.analysis.views.DetailFactory;
 
@@ -73,6 +72,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     private static final String FAILED = "red.png";
     private static final String SUCCESS = "blue.png";
 
+    public final Class<? extends PriorityInt> priorityClass;
 
     private transient Object projectLock = new Object();
 
@@ -226,6 +226,31 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      */
     protected BuildResult(final Run<?, ?> build, final BuildHistory history,
             final ParserResult result, final String defaultEncoding) {
+        priorityClass = Priority.class;
+        initialize(history, build, defaultEncoding, result);
+    }
+
+    /**
+     * Creates a new instance of {@link BuildResult}. Note that the warnings are
+     * not serialized anymore automatically. You need to call
+     * {@link #serializeAnnotations(Collection)} manually in your constructor to
+     * persist them.
+     *
+     * @param build
+     *            the current build as owner of this action
+     * @param history
+     *            build history
+     * @param result
+     *            the parsed result with all annotations
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
+     * @param priorityClass
+     *            custom enum priority
+     * @since 1.73
+     */
+    protected BuildResult(final Run<?, ?> build, final BuildHistory history,
+            final ParserResult result, final String defaultEncoding, final Class<? extends PriorityInt> priorityClass) {
+        this.priorityClass = priorityClass;
         initialize(history, build, defaultEncoding, result);
     }
 
@@ -301,7 +326,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
 
         initializePriorityWarnings();
 
-        JavaProject container = new JavaProject();
+        JavaProject container = new JavaProject(priorityClass);
         container.addAnnotations(result.getAnnotations());
 
         for (FileAnnotation newWarning : newWarnings) {
@@ -1025,7 +1050,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     private JavaProject loadResult() {
         JavaProject result;
         try {
-            JavaProject newProject = new JavaProject();
+            JavaProject newProject = new JavaProject(priorityClass);
             FileAnnotation[] annotations = (FileAnnotation[])getDataFile().read();
             newProject.addAnnotations(annotations);
             attachLabelProvider(newProject);
@@ -1035,7 +1060,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
         }
         catch (IOException exception) {
             LOGGER.log(Level.WARNING, "Failed to load " + getDataFile(), exception);
-            result = new JavaProject();
+            result = new JavaProject(priorityClass);
         }
         project = new WeakReference<JavaProject>(result);
 
@@ -1195,7 +1220,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      * @return all priorities
      */
     public PriorityInt[] getAllPriorities() {
-        PriorityInt[] priorities = PriorityConstant.priorityEnum.getEnumConstants();
+        PriorityInt[] priorities = priorityClass.getEnumConstants();
 
         return priorities;
     }
@@ -1208,7 +1233,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
 
     @Override
     public int getNumberOfAnnotations(final String priorityString) {
-        for(PriorityInt priority : PriorityConstant.priorityEnum.getEnumConstants()){
+        for(PriorityInt priority : priorityClass.getEnumConstants()){
             if(priorityString.toUpperCase().equals(priority.getPriorityName())){
                 return getNumberOfAnnotations(priority);
             }
@@ -1685,7 +1710,8 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
     @Deprecated
     public BuildResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result, final BuildHistory history) {
-        initialize(history, build, defaultEncoding, result);
+        this(build, history, result, defaultEncoding, Priority.class);
+        // initialize(history, build, defaultEncoding, result);
         serializeAnnotations(result.getAnnotations());
     }
 
@@ -1706,6 +1732,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     @SuppressWarnings({"PMD.ConstructorCallsOverridableMethod", "deprecation"})
     public BuildResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result) {
         initialize(createHistory(build), build, defaultEncoding, result);
+        priorityClass = Priority.class;
         serializeAnnotations(result.getAnnotations());
     }
 
@@ -1728,7 +1755,8 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     @Deprecated
     protected BuildResult(final AbstractBuild<?, ?> build, final BuildHistory history,
             final ParserResult result, final String defaultEncoding) {
-        initialize(history, build, defaultEncoding, result);
+//        initialize(history, build, defaultEncoding, result);
+        this(build, history, result, defaultEncoding, Priority.class);
     }
 
     /**

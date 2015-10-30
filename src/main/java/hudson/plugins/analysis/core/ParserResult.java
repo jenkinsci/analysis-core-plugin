@@ -28,7 +28,7 @@ import hudson.FilePath;
 import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.util.FileFinder;
 import hudson.plugins.analysis.util.model.FileAnnotation;
-import hudson.plugins.analysis.util.model.PriorityConstant;
+import hudson.plugins.analysis.util.model.Priority;
 import hudson.plugins.analysis.util.model.PriorityInt;
 
 /**
@@ -42,6 +42,7 @@ public class ParserResult implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(ParserResult.class.getName());
     private static final String SLASH = "/";
 
+    private final Class<? extends PriorityInt> priorityClass;
 
     /** The parsed annotations. */
     @SuppressWarnings("Se")
@@ -95,6 +96,18 @@ public class ParserResult implements Serializable {
      *
      * @param workspace
      *            the workspace to find the files in
+     * @param priorityClass
+     *            custom enum priority
+     */
+    public ParserResult(final FilePath workspace, final Class<? extends PriorityInt> priorityClass) {
+        this(workspace, false, priorityClass);
+    }
+
+    /**
+     * Creates a new instance of {@link ParserResult}.
+     *
+     * @param workspace
+     *            the workspace to find the files in
      */
     public ParserResult(final Workspace workspace) {
         this(workspace, false);
@@ -123,17 +136,48 @@ public class ParserResult implements Serializable {
      *            determines whether relative paths in warnings should be
      *            resolved using a time expensive operation that scans the whole
      *            workspace for matching files
+     * @param priorityClass
+     *            custom enum priority
+     */
+    public ParserResult(final FilePath workspace, final boolean canResolveRelativePaths, final Class<? extends PriorityInt> priorityClass) {
+        this(asWorkspace(workspace), canResolveRelativePaths, priorityClass);
+    }
+
+    /**
+     * Creates a new instance of {@link ParserResult}.
+     *
+     * @param workspace
+     *            the workspace to find the files in
+     * @param canResolveRelativePaths
+     *            determines whether relative paths in warnings should be
+     *            resolved using a time expensive operation that scans the whole
+     *            workspace for matching files
      */
     public ParserResult(final Workspace workspace, final boolean canResolveRelativePaths) {
+        this(workspace, canResolveRelativePaths, Priority.class);
+    }
+
+    /**
+     * Creates a new instance of {@link ParserResult}.
+     *
+     * @param workspace
+     *            the workspace to find the files in
+     * @param canResolveRelativePaths
+     *            determines whether relative paths in warnings should be
+     *            resolved using a time expensive operation that scans the whole
+     *            workspace for matching files
+     * @param priorityClass
+     *            custom enum priority
+     */
+    public ParserResult(final Workspace workspace, final boolean canResolveRelativePaths, final Class<? extends PriorityInt> priorityClass) {
         this.workspace = workspace;
         this.canResolveRelativePaths = canResolveRelativePaths;
-
+        this.priorityClass = priorityClass;
         initializeAnnotationCounts();
     }
 
-
     private void initializeAnnotationCounts(){
-        for (PriorityInt priority : PriorityConstant.priorityEnum.getEnumConstants()) {
+        for (PriorityInt priority : priorityClass.getEnumConstants()) {
             annotationCountByPriority.put(priority.getPriorityName(), 0);
         }
     }

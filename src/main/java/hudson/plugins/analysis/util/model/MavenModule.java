@@ -41,6 +41,17 @@ public class MavenModule extends AnnotationContainer {
     }
 
     /**
+     * Creates a new instance of <code>MavenModule</code>.
+     *
+     * @param moduleName
+     *            name of the module
+     * @param priorityClass custom priority class
+     */
+    public MavenModule(final String moduleName, final Class<? extends PriorityInt> priorityClass) {
+        super(moduleName, Hierarchy.MODULE, priorityClass);
+    }
+
+    /**
      * Rebuilds the priorities mapping.
      *
      * @return the created object

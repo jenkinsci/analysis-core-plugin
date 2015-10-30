@@ -6,6 +6,7 @@ import hudson.model.AbstractBuild;
 import hudson.model.Run;
 
 import hudson.plugins.analysis.util.model.FileAnnotation;
+import hudson.plugins.analysis.util.model.PriorityInt;
 
 /**
  * Result object representing a dynamic tab.
@@ -32,8 +33,30 @@ public class TabDetail extends AbstractAnnotationsDetail {
      * @param defaultEncoding
      *            the default encoding to be used when reading and parsing files
      */
-    public TabDetail(final Run<?, ?> owner, final DetailFactory detailFactory, final Collection<FileAnnotation> annotations, final String url, final String defaultEncoding) {
+    public TabDetail(final Run<?, ?> owner, final DetailFactory detailFactory, final Collection<FileAnnotation> annotations,
+            final String url, final String defaultEncoding) {
         super(owner, detailFactory, annotations, defaultEncoding, "No Header", Hierarchy.PROJECT);
+        this.url = url;
+    }
+
+    /**
+     * Creates a new instance of {@link TabDetail}.
+     *
+     * @param owner
+     *            current build as owner of this action.
+     * @param detailFactory
+     *            factory to create detail objects with
+     * @param annotations
+     *            the module to show the details for
+     * @param url
+     *            URL to render the content of this tab
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
+     * @param priorityClass custom priority class
+     */
+    public TabDetail(final Run<?, ?> owner, final DetailFactory detailFactory, final Collection<FileAnnotation> annotations,
+            final String url, final String defaultEncoding, final Class<? extends PriorityInt> priorityClass) {
+        super(owner, detailFactory, annotations, defaultEncoding, "No Header", Hierarchy.PROJECT, priorityClass);
         this.url = url;
     }
 

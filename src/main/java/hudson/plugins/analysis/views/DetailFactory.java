@@ -1,16 +1,18 @@
 package hudson.plugins.analysis.views;
 
-import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Map;
+
+import javax.annotation.Nonnull;
 
 import org.apache.commons.lang.StringUtils;
 
 import com.google.common.collect.Maps;
 
-import hudson.model.AbstractBuild;
 import hudson.model.Item;
+import hudson.model.AbstractBuild;
 import hudson.model.Run;
+
 import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.ResultAction;
@@ -20,6 +22,7 @@ import hudson.plugins.analysis.util.model.AnnotationsLabelProvider;
 import hudson.plugins.analysis.util.model.DefaultAnnotationContainer;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.LineRange;
+import hudson.plugins.analysis.util.model.PriorityInt;
 
 /**
  * Creates detail objects for the selected element of a annotation container.
@@ -32,6 +35,8 @@ public class DetailFactory {
     private static final DetailFactory DEFAULT_DETAIL_BUILDER = new DetailFactory();
     /** Maps plug-ins to detail builders. */
     private static Map<Class<? extends ResultAction<? extends BuildResult>>, DetailFactory> factories = Maps.newHashMap();
+
+    public static Class<? extends PriorityInt> customPriorityClass;
 
     /**
      * Creates a new detail builder.
@@ -160,6 +165,8 @@ public class DetailFactory {
             AnnotationContainer detail = null;
             if (factory.isPriority(link)) {
                 detail = factory.create(link, owner, container, defaultEncoding, displayName);
+            } else if (factory.isCustomPriority(link)) {
+                detail = factory.createCustomDetails(link, owner, container, defaultEncoding, displayName);
             }
             else if (link.startsWith("module.")) {
                 detail = new ModuleDetail(owner, this, container.getModule(createHashCode(link, "module.")), defaultEncoding, displayName);

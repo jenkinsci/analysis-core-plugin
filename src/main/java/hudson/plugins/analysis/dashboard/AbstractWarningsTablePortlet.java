@@ -14,7 +14,7 @@ import hudson.model.Job;
 import hudson.plugins.analysis.core.AbstractProjectAction;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.ResultAction;
-import hudson.plugins.analysis.util.model.PriorityConstant;
+import hudson.plugins.analysis.util.model.Priority;
 import hudson.plugins.analysis.util.model.PriorityInt;
 
 /**
@@ -28,6 +28,8 @@ public abstract class AbstractWarningsTablePortlet extends AbstractPortlet {
 
     /** Message to be shown if no result action is found. */
     private static final String NO_RESULTS_FOUND = "-";
+
+    private final Class<? extends PriorityInt> priorityClass;
 
     private final boolean canHideZeroWarningsProjects;
 
@@ -51,8 +53,25 @@ public abstract class AbstractWarningsTablePortlet extends AbstractPortlet {
      *            table
      */
     public AbstractWarningsTablePortlet(final String name, final boolean canHideZeroWarningsProjects) {
-        super(name);
+        this(name, canHideZeroWarningsProjects, Priority.class);
+//        super(name);
+//        this.canHideZeroWarningsProjects = canHideZeroWarningsProjects;
+    }
 
+    /**
+     * Creates a new instance of {@link AbstractWarningsTablePortlet}.
+     *
+     * @param name
+     *            the name of the portlet
+     * @param canHideZeroWarningsProjects
+     *            determines if zero warnings projects should be hidden in the
+     *            table
+     * @param priorityClass
+     *            custom enum priority
+     */
+    public AbstractWarningsTablePortlet(final String name, final boolean canHideZeroWarningsProjects, final Class<? extends PriorityInt> priorityClass) {
+        super(name);
+        this.priorityClass = priorityClass;
         this.canHideZeroWarningsProjects = canHideZeroWarningsProjects;
     }
 
@@ -180,7 +199,7 @@ public abstract class AbstractWarningsTablePortlet extends AbstractPortlet {
      *
      */
     public PriorityInt[] getAllPriorities() {
-        return PriorityConstant.priorityEnum.getEnumConstants();
+        return priorityClass.getEnumConstants();
     }
 
     /**

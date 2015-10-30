@@ -19,8 +19,6 @@ import com.google.common.collect.Maps;
 
 import hudson.model.AbstractProject;
 
-import hudson.plugins.analysis.util.model.PriorityConstant;
-
 import hudson.util.FormValidation;
 
 /**
@@ -78,9 +76,7 @@ public class GraphConfiguration  {
      * @return a default configuration
      */
     public static GraphConfiguration createDefault() {
-        if(PriorityConstant.DEFAULT_GRAPH != null){
-            return new GraphConfiguration(PriorityConstant.DEFAULT_GRAPH);
-        }
+
         return new GraphConfiguration(DEFAULT_GRAPH);
     }
 
@@ -504,11 +500,9 @@ public class GraphConfiguration  {
         width  = DEFAULT_WIDTH;
         buildCount = DEFAULT_BUILD_COUNT;
         dayCount = DEFAULT_DAY_COUNT;
-        if(PriorityConstant.DEFAULT_GRAPH != null){
-            graphType = PriorityConstant.DEFAULT_GRAPH;
-        } else{
+
             graphType = DEFAULT_GRAPH;
-        }
+
         useBuildDate = DEFAULT_USE_BUILD_DATE;
         parameterName = DEFAULT_NAME;
         parameterValue = DEFAULT_VALUE;
@@ -716,7 +710,7 @@ public class GraphConfiguration  {
     public boolean isDefault() {
         return width == DEFAULT_WIDTH
                 && height == DEFAULT_HEIGHT
-                && ((PriorityConstant.DEFAULT_GRAPH != null && graphType == PriorityConstant.DEFAULT_GRAPH) || graphType == DEFAULT_GRAPH ) // NOPMD
+                &&  graphType == DEFAULT_GRAPH // NOPMD
                 && buildCount == DEFAULT_BUILD_COUNT
                 && dayCount == DEFAULT_DAY_COUNT
                 && useBuildDate == DEFAULT_USE_BUILD_DATE
@@ -763,11 +757,7 @@ public class GraphConfiguration  {
             return graphId2Graph.get(graphId);
         }
         else {
-            if(PriorityConstant.DEFAULT_GRAPH != null){
-                return PriorityConstant.DEFAULT_GRAPH;
-            } else{
-                return DEFAULT_GRAPH;
-            }
+            return DEFAULT_GRAPH;
         }
     }
 

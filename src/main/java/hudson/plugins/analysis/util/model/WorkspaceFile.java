@@ -26,6 +26,17 @@ public class WorkspaceFile extends AnnotationContainer {
     }
 
     /**
+     * Creates a new instance of <code>WorkspaceFile</code>.
+     *
+     * @param fileName
+     *            absolute path of this file
+     * @param priorityClass custom priority class
+     */
+    public WorkspaceFile(final String fileName, final Class<? extends PriorityInt> priorityClass) {
+        super(fileName.replace('\\', '/'), Hierarchy.FILE, priorityClass);
+    }
+
+    /**
      * Returns a readable name of this workspace file without path prefix.
      *
      * @return a readable name of this workspace file.

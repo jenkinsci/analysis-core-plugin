@@ -37,7 +37,8 @@ import hudson.plugins.analysis.graph.PriorityGraph;
 import hudson.plugins.analysis.graph.TotalsGraph;
 import hudson.plugins.analysis.graph.TrendDetails;
 import hudson.plugins.analysis.graph.UserGraphConfigurationView;
-import hudson.plugins.analysis.util.model.PriorityConstant;
+import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.analysis.util.model.PriorityInt;
 
 import hudson.util.Graph;
 
@@ -59,6 +60,11 @@ public abstract class AbstractProjectAction<T extends ResultAction<?>> implement
     private final AbstractProject<?, ?> project;
     /** The type of the result action.  */
     private final Class<? extends T> resultActionType;
+
+    private final Class<? extends PriorityInt> priorityClass;
+
+    private final BuildResultGraph priorityGraph;
+
     /** The icon URL of this action: it will be shown as soon as a result is available. */
     private final String iconUrl;
     /** Plug-in URL. */
@@ -90,6 +96,33 @@ public abstract class AbstractProjectAction<T extends ResultAction<?>> implement
      */
     public AbstractProjectAction(final AbstractProject<?, ?> project, final Class<? extends T> resultActionType,
             final Localizable name, final Localizable trendName, final String pluginUrl, final String iconUrl, final String resultUrl) {
+        this(project, resultActionType, name, trendName, pluginUrl, iconUrl, resultUrl, Priority.class, new PriorityGraph());
+    }
+
+    /**
+     * Creates a new instance of {@link AbstractProjectAction}.
+     *
+     * @param project
+     *            the project that owns this action
+     * @param resultActionType
+     *            the type of the result action
+     * @param name
+     *            the human readable name of this action
+     * @param trendName
+     *            the human readable name of the trend graph
+     * @param pluginUrl
+     *            the URL of the associated plug-in
+     * @param iconUrl
+     *            the icon to show
+     * @param resultUrl
+     *            the URL of the associated build results
+     * @param priorityClass
+     *            custom enum priority
+     * @param priorityGraph
+     *            custom priority graph
+     */
+    public AbstractProjectAction(final AbstractProject<?, ?> project, final Class<? extends T> resultActionType,
+            final Localizable name, final Localizable trendName, final String pluginUrl, final String iconUrl, final String resultUrl, final Class<? extends PriorityInt> priorityClass, final BuildResultGraph priorityGraph) {
         this.project = project;
         this.resultActionType = resultActionType;
         this.name = name;
@@ -97,6 +130,8 @@ public abstract class AbstractProjectAction<T extends ResultAction<?>> implement
         this.pluginUrl = pluginUrl;
         this.iconUrl = iconUrl;
         this.resultUrl = resultUrl;
+        this.priorityClass = priorityClass;
+        this.priorityGraph = priorityGraph;
     }
 
     /**
@@ -324,11 +359,7 @@ public abstract class AbstractProjectAction<T extends ResultAction<?>> implement
         List<BuildResultGraph> availableGraphs = Lists.newArrayList();
 
         availableGraphs.add(new NewVersusFixedGraph());
-        if(PriorityConstant.DEFAULT_GRAPH != null){
-            availableGraphs.add(PriorityConstant.DEFAULT_GRAPH);
-        } else{
-             availableGraphs.add(new PriorityGraph());
-        }
+        availableGraphs.add(priorityGraph);
         availableGraphs.add(new TotalsGraph());
         if (hasValidResults()) {
             availableGraphs.add(new HealthGraph(getLastAction().getHealthDescriptor()));

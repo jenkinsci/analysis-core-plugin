@@ -14,6 +14,7 @@ import hudson.model.Run;
 import hudson.plugins.analysis.util.model.AnnotationContainer;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
+import hudson.plugins.analysis.util.model.PriorityInt;
 
 /**
  * Base class for annotation detail objects. Instances of this class could be used for
@@ -48,6 +49,7 @@ public abstract class AbstractAnnotationsDetail extends AnnotationContainer impl
      *            the name of this object
      * @param hierarchy
      *            the hierarchy level of this detail object
+     *
      */
     public AbstractAnnotationsDetail(final Run<?, ?> owner, final DetailFactory detailFactory, final Collection<FileAnnotation> annotations, final String defaultEncoding, final String name, final Hierarchy hierarchy) {
         super(name, hierarchy);
@@ -57,6 +59,33 @@ public abstract class AbstractAnnotationsDetail extends AnnotationContainer impl
 
         addAnnotations(annotations);
     }
+
+    /**
+     * Creates a new instance of {@link AbstractAnnotationsDetail}.
+     *
+     * @param owner
+     *            current build as owner of this object
+     * @param detailFactory
+     *            factory to create detail objects with
+     * @param annotations
+     *            the set of warnings represented by this object
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
+     * @param name
+     *            the name of this object
+     * @param hierarchy
+     *            the hierarchy level of this detail object
+     * @param priorityClass custom priority class
+     */
+    public AbstractAnnotationsDetail(final Run<?, ?> owner, final DetailFactory detailFactory, final Collection<FileAnnotation> annotations, final String defaultEncoding, final String name, final Hierarchy hierarchy, final Class<? extends PriorityInt> priorityClass) {
+        super(name, hierarchy, priorityClass);
+        this.owner = owner;
+        this.detailFactory = detailFactory;
+        this.defaultEncoding = defaultEncoding;
+
+        addAnnotations(annotations);
+    }
+
 
     /**
      * Returns the defined default encoding.

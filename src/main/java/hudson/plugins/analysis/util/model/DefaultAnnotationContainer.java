@@ -47,11 +47,39 @@ public class DefaultAnnotationContainer extends AnnotationContainer {
     /**
      * Creates a new instance of {@link DefaultAnnotationContainer}.
      *
+     * @param name
+     *            the name of this container
+     * @param annotations
+     *            the annotations to be stored
+     * @param priorityClass custom priority class
+     */
+    public DefaultAnnotationContainer(final String name, final Collection<FileAnnotation> annotations, final Class<? extends PriorityInt> priorityClass) {
+        super(name, Hierarchy.PROJECT, priorityClass);
+
+        addAnnotations(annotations);
+    }
+
+    /**
+     * Creates a new instance of {@link DefaultAnnotationContainer}.
+     *
      * @param annotations
      *            the annotations to be stored
      */
     public DefaultAnnotationContainer(final Collection<FileAnnotation> annotations) {
         super(TEMPORARY, Hierarchy.PROJECT);
+
+        addAnnotations(annotations);
+    }
+
+    /**
+     * Creates a new instance of {@link DefaultAnnotationContainer}.
+     *
+     * @param annotations
+     *            the annotations to be stored
+     * @param priorityClass custom priority class
+     */
+    public DefaultAnnotationContainer(final Collection<FileAnnotation> annotations, final Class<? extends PriorityInt> priorityClass) {
+        super(TEMPORARY, Hierarchy.PROJECT, priorityClass);
 
         addAnnotations(annotations);
     }

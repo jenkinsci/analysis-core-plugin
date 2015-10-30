@@ -27,6 +27,15 @@ public class JavaProject extends AnnotationContainer {
     public JavaProject() {
         super(Hierarchy.PROJECT);
     }
+
+    /**
+     * Creates a new instance of {@link JavaProject}.
+     * @param priorityClass custom priority class
+     */
+    public JavaProject(final Class<? extends PriorityInt> priorityClass) {
+        super(Hierarchy.PROJECT, priorityClass);
+    }
+
     /**
      * Rebuilds the priorities mapping.
      *
