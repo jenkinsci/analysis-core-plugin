@@ -7,6 +7,13 @@ public interface PriorityInt {
 
 
     /**
+     * Returns the message for the trend graph.
+     *
+     * @return message for the trend graph.
+     */
+    public String getTrendMessage();
+
+    /**
      * Returns a localized description of this annotation type.
      *
      * @return localized description of this annotation type

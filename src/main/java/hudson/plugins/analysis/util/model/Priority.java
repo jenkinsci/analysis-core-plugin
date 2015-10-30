@@ -35,6 +35,20 @@ public enum Priority implements PriorityInt{
         return cssColor;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public String getTrendMessage() {
+        if (equals(Priority.LOW)) {
+            return Messages.Trend_PriorityLow();
+        }
+        if (equals(Priority.NORMAL)) {
+            return Messages.Trend_PriorityNormal();
+        }
+        else {
+            return Messages.Trend_PriorityHigh();
+        }
+    }
+
     /**
      * Converts a String priority to an actual enumeration value.
      *
@@ -124,5 +138,6 @@ public enum Priority implements PriorityInt{
         }
         return priorities;
     }
+
 
 }

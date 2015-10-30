@@ -1,10 +1,13 @@
 package hudson.plugins.analysis.core;
 
-import javax.annotation.CheckForNull;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.annotation.CheckForNull;
+
+import jenkins.model.Jenkins;
 
 import org.jvnet.localizer.Localizable;
 import org.kohsuke.stapler.Stapler;
@@ -15,13 +18,12 @@ import org.kohsuke.stapler.export.ExportedBean;
 
 import com.google.common.collect.Lists;
 
-import jenkins.model.Jenkins;
-
+import hudson.model.Action;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
-import hudson.model.Action;
 import hudson.model.Api;
 import hudson.model.Run;
+
 import hudson.plugins.analysis.graph.BuildResultGraph;
 import hudson.plugins.analysis.graph.DefaultGraphConfigurationView;
 import hudson.plugins.analysis.graph.DifferenceGraph;
@@ -35,6 +37,8 @@ import hudson.plugins.analysis.graph.PriorityGraph;
 import hudson.plugins.analysis.graph.TotalsGraph;
 import hudson.plugins.analysis.graph.TrendDetails;
 import hudson.plugins.analysis.graph.UserGraphConfigurationView;
+import hudson.plugins.analysis.util.model.PriorityConstant;
+
 import hudson.util.Graph;
 
 /**
@@ -320,7 +324,11 @@ public abstract class AbstractProjectAction<T extends ResultAction<?>> implement
         List<BuildResultGraph> availableGraphs = Lists.newArrayList();
 
         availableGraphs.add(new NewVersusFixedGraph());
-        availableGraphs.add(new PriorityGraph());
+        if(PriorityConstant.DEFAULT_GRAPH != null){
+            availableGraphs.add(PriorityConstant.DEFAULT_GRAPH);
+        } else{
+             availableGraphs.add(new PriorityGraph());
+        }
         availableGraphs.add(new TotalsGraph());
         if (hasValidResults()) {
             availableGraphs.add(new HealthGraph(getLastAction().getHealthDescriptor()));
