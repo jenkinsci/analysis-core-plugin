@@ -17,31 +17,34 @@ import hudson.plugins.analysis.Messages;
  */
 public enum Priority implements PriorityInt{
     /** High priority. */
-    HIGH("#EF2929"),
+    HIGH(),
     /** Normal priority. */
-    NORMAL("#FCE94F"),
+    NORMAL(),
     /** Low priority. */
-    LOW("#729FCF");
+    LOW();
 
-    private final String cssColor;
-
-    Priority(final String cssColor){
-        this.cssColor = cssColor;
-    }
 
     /** {@inheritDoc} */
     @Override
     public String getCssColor() {
-        return cssColor;
+        if (this == LOW) {
+            return "#729FCF";
+        }
+        if (this == NORMAL) {
+            return "#FCE94F";
+        }
+        else {
+            return "#EF2929";
+        }
     }
 
     /** {@inheritDoc} */
     @Override
     public String getTrendMessage() {
-        if (equals(Priority.LOW)) {
+        if (this == LOW) {
             return Messages.Trend_PriorityLow();
         }
-        if (equals(Priority.NORMAL)) {
+        if (this == NORMAL) {
             return Messages.Trend_PriorityNormal();
         }
         else {
@@ -126,7 +129,7 @@ public enum Priority implements PriorityInt{
      *            the minimum priority
      * @return the priorities starting from the specified priority
      */
-    public static Collection<Priority> collectPrioritiesFrom(final Priority minimumPriority) {
+    public static Collection<Priority> collectPrioritiesFrom(final PriorityInt minimumPriority) {
         ArrayList<Priority> priorities = new ArrayList<Priority>();
         priorities.add(Priority.HIGH);
         if (minimumPriority == Priority.NORMAL) {
