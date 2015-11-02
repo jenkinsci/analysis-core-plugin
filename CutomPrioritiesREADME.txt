@@ -15,7 +15,9 @@ Creating your own Priority Enum :
 	6. The getPriorityName() method should return the corresponding name of this enum
 	
 Using your custom Priority Enum :
-
+	
+	* When creating the ParserResult make sure to set your Enum class in the constructor
+	* 
 	* You can create your own AnnotationsLabelProvider to provide custom tab labels. 
 			To provide custom tab labels for your custom enum values you can override the 
 			initializePriorityLabels() method and add custom labels to the priorityLabels map 
@@ -25,6 +27,8 @@ Using your custom Priority Enum :
 			method addDetailBuilder() and you should set the static custom priority class on the DetailFactory
 	* You can create your own TabDetail class to override the jelly files for the tabs in the report. 
 	 		This also allows you to create the content of the tabs for your custom enum values
+	 		Make sure you set your Enum class in the constructor
+	* When creating DefaultAnnotationContainer, make sure you set the Enum class in the constructor
 	* In your custom DetailFactory you should override the createTabDetail() method to use your custom TabDetail class
 	
 	* Using your own class of BuildResult you can also attach the label provider
@@ -33,8 +37,11 @@ Using your custom Priority Enum :
 			You should override the method initializePriorityWarnings(), this method should be empty if using custom enum values
 	
 	* You can create your own AbstractProjectAction to display your results in a trend graph at the Project level, 
-			if you override the createConfiguration() method you can return your own GraphConfiguration
-	* If you create your own GraphConfiguration you can set a custom BuildResultGraph as the default graph to use
+			if you override the createConfiguration() method you can return your own GraphConfiguration.
+			Make sure you set your Enum class in the constructor, you can also set the custom BuildResultGraph to use 
+			instead of the default priority graph (this will allow your new graph type to show up in the trend graph configuration)
+	* If you create your own GraphConfiguration you can set a custom BuildResultGraph as the default graph to use,
+			this will change the default Priorty graph to your custom BuildResultGraph
 	
 
 NOTE: Custom priority enums do not work with the HealthAware classes yet.

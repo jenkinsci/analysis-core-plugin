@@ -118,6 +118,31 @@ public abstract class AbstractProjectAction<T extends ResultAction<?>> implement
      *            the URL of the associated build results
      * @param priorityClass
      *            custom enum priority
+     */
+    public AbstractProjectAction(final AbstractProject<?, ?> project, final Class<? extends T> resultActionType,
+            final Localizable name, final Localizable trendName, final String pluginUrl, final String iconUrl, final String resultUrl, final Class<? extends PriorityInt> priorityClass) {
+        this(project, resultActionType, name, trendName, pluginUrl, iconUrl, resultUrl, priorityClass, new PriorityGraph());
+    }
+
+    /**
+     * Creates a new instance of {@link AbstractProjectAction}.
+     *
+     * @param project
+     *            the project that owns this action
+     * @param resultActionType
+     *            the type of the result action
+     * @param name
+     *            the human readable name of this action
+     * @param trendName
+     *            the human readable name of the trend graph
+     * @param pluginUrl
+     *            the URL of the associated plug-in
+     * @param iconUrl
+     *            the icon to show
+     * @param resultUrl
+     *            the URL of the associated build results
+     * @param priorityClass
+     *            custom enum priority
      * @param priorityGraph
      *            custom priority graph
      */
