@@ -81,6 +81,15 @@ public class GraphConfiguration  {
     }
 
     /**
+     * Returns the default graph type
+     * @return the default BuildResultGraph
+     */
+    public BuildResultGraph getDefaultGraphType(){
+        return GraphConfiguration.DEFAULT_GRAPH;
+    }
+
+
+    /**
      * Creates a new instance of {@link GraphConfiguration}.
      *
      * @param availableGraphs
@@ -495,14 +504,12 @@ public class GraphConfiguration  {
     /**
      * Resets the graph configuration to the default values.
      */
-    private void reset() {
+    protected void reset() {
         height = DEFAULT_HEIGHT;
         width  = DEFAULT_WIDTH;
         buildCount = DEFAULT_BUILD_COUNT;
         dayCount = DEFAULT_DAY_COUNT;
-
-            graphType = DEFAULT_GRAPH;
-
+        graphType = getDefaultGraphType();
         useBuildDate = DEFAULT_USE_BUILD_DATE;
         parameterName = DEFAULT_NAME;
         parameterValue = DEFAULT_VALUE;
@@ -710,7 +717,7 @@ public class GraphConfiguration  {
     public boolean isDefault() {
         return width == DEFAULT_WIDTH
                 && height == DEFAULT_HEIGHT
-                &&  graphType == DEFAULT_GRAPH // NOPMD
+                &&  graphType == getDefaultGraphType() // NOPMD
                 && buildCount == DEFAULT_BUILD_COUNT
                 && dayCount == DEFAULT_DAY_COUNT
                 && useBuildDate == DEFAULT_USE_BUILD_DATE
@@ -757,7 +764,7 @@ public class GraphConfiguration  {
             return graphId2Graph.get(graphId);
         }
         else {
-            return DEFAULT_GRAPH;
+            return getDefaultGraphType();
         }
     }
 
