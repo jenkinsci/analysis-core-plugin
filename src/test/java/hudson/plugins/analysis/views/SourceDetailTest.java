@@ -1,23 +1,6 @@
 package hudson.plugins.analysis.views;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.LineIterator;
-import org.junit.Assert;
-import org.junit.Test;
-
-import static org.easymock.EasyMock.*;
-
-import hudson.model.AbstractBuild;
-import hudson.model.Run;
-import hudson.plugins.analysis.util.model.FileAnnotation;
-import hudson.plugins.analysis.util.model.LineRange;
 
 /**
  *  Tests the class {@link SourceDetail}.
@@ -33,7 +16,7 @@ public class SourceDetailTest {
      * code at a fixed line offset.
      *
      * @throws IOException in case of an IO error
-     */
+     *
     @Test
     public void checkCorrectOffset() throws IOException {
         FileAnnotation annotation = createMock(FileAnnotation.class);
@@ -78,7 +61,7 @@ public class SourceDetailTest {
      * Checks whether we correctly highlight the source for a single line.
      *
      * @throws IOException in case of an IO error
-     */
+     *
     @Test
     public void splitSingleLine() throws IOException {
         ArrayList<LineRange> lineRanges = new ArrayList<LineRange>();
@@ -90,7 +73,7 @@ public class SourceDetailTest {
      * Checks whether we correctly highlight the source for range of 7 lines.
      *
      * @throws IOException in case of an IO error
-     */
+     *
     @Test
     public void splitLineRange() throws IOException {
         ArrayList<LineRange> lineRanges = new ArrayList<LineRange>();
@@ -102,7 +85,7 @@ public class SourceDetailTest {
      * Checks whether we correctly highlight the source for 2 ranges.
      *
      * @throws IOException in case of an IO error
-     */
+     *
     @Test
     public void splitTwoRanges() throws IOException {
         ArrayList<LineRange> lineRanges = new ArrayList<LineRange>();
@@ -121,7 +104,7 @@ public class SourceDetailTest {
      *            the ranges to test
      * @throws IOException
      *             in case of an IO error
-     */
+     *
     @SuppressWarnings("unchecked")
     private void split(final String fileName, final List<LineRange> lineRanges) throws IOException {
         InputStream stream = SourceDetailTest.class.getResourceAsStream("AbortException.txt");
@@ -160,6 +143,6 @@ public class SourceDetailTest {
         }
 
         verify(annotation);
-    }
+    }*/
 }
 

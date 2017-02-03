@@ -6,10 +6,13 @@
   <l:layout norefresh="true">
     <st:include it="${it.owner}" page="sidepanel.jelly" />
     <l:main-panel>
-      <h1>${%sourcedetail.header(it.fileName)}</h1>
-
-      <j:out value="${it.sourceCode}" />
-
+    <h1>${%sourcedetail.header(it.fileName)}</h1>
+        <link href="${resURL}/plugin/analysis-core/prettify/prettify.css" type="text/css" rel="stylesheet"></link>
+        <link rel="stylesheet" type="text/css" href="${resURL}/plugin/analysis-core/message/message_default.css"></link>
+        <script type="text/javascript" src="${resURL}/plugin/analysis-core/message/message.js"></script>
+        <script type="text/javascript" src="${resURL}/plugin/analysis-core/prettify/prettify.js"></script>
+                <j:out value="${it.sourceCode}" />
+        <script>window.onload = (function(){ prettyPrint(); });</script>
     </l:main-panel>
   </l:layout>
 </j:jelly>

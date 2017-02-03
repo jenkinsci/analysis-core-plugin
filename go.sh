@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 rm -rf $JENKINS_HOME/plugins/analysis-core*
 
 mvn install || { echo "Build failed"; exit 1; }

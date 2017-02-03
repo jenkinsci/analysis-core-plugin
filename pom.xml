@@ -65,6 +65,11 @@
       <artifactId>joda-time</artifactId>
       <version>1.6</version>
     </dependency>
+      <dependency>
+          <groupId>org.jvnet.hudson.plugins</groupId>
+          <artifactId>analysis-core</artifactId>
+          <version>1.80-SNAPSHOT</version>
+      </dependency>
   </dependencies>
 
   <scm>
