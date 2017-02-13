@@ -18,7 +18,7 @@ public class TokenSequence {
      * @param sequence String that has to be transformed into a token sequence.
      */
     public TokenSequence(String sequence) {
-        this.sequence=new ArrayList<Token>();
+        this.sequence=new ArrayList<Token>(100);
         for(int i=0;i<sequence.length();i++){
             this.sequence.add(new Token(sequence.charAt(i)));
         }
@@ -82,7 +82,7 @@ public class TokenSequence {
      * @return token sequence as a string
      */
     public String toString(){
-        StringBuilder sb=new StringBuilder();
+        StringBuilder sb=new StringBuilder(5000);
         Iterator iterator=sequence.iterator();
 
         while(iterator.hasNext()){

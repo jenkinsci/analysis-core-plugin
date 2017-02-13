@@ -17,13 +17,17 @@ import java.util.regex.Pattern;
 public class Matrix {
 
     private TreeSet<RangeLimiter> matrix;
+    private List<RangeLimiter> doubleWarnings;
+    private Pattern pattern;
 
     public Matrix() {
         this.matrix = new TreeSet<RangeLimiter>();
+        this.doubleWarnings=new ArrayList<RangeLimiter>();
+        this.pattern = Pattern.compile("(truefalse)+");
     }
 
     public TreeSet<RangeLimiter> getMatrix() {
-        return matrix;
+        return this.matrix;
     }
 
     /**
@@ -32,7 +36,7 @@ public class Matrix {
      * @return true if there was no such element in the data structure
      */
     public boolean addElement(RangeLimiter rangeLimiter){
-        return matrix.add(rangeLimiter);
+        return this.matrix.add(rangeLimiter);
     }
 
     /**
@@ -41,7 +45,7 @@ public class Matrix {
      * @return true if the element got removed
      */
     public boolean removeElement(RangeLimiter rangeLimiter){
-        return matrix.remove(rangeLimiter);
+        return this.matrix.remove(rangeLimiter);
     }
 
     /**
@@ -49,9 +53,9 @@ public class Matrix {
      *
      * @return all elements in order
      */
-    public ArrayList<RangeLimiter> getAllElementsInOrder(){
-        ArrayList<RangeLimiter> list=new ArrayList<RangeLimiter>();
-        Iterator iterator=matrix.iterator();
+    private ArrayList<RangeLimiter> getAllElementsInOrder(){
+        ArrayList<RangeLimiter> list=new ArrayList<RangeLimiter>(50);
+        Iterator iterator=this.matrix.iterator();
         while(iterator.hasNext()){
             list.add((RangeLimiter)iterator.next());
         }
@@ -111,22 +115,18 @@ public class Matrix {
      * @return true if ranges intersect
      */
     public boolean rangesIntersect() {
-        // Alle Elemente holen
         ArrayList<RangeLimiter> list = getAllElementsInOrder();
         Iterator iterator = list.iterator();
         StringBuilder sb = new StringBuilder(256);
 
-        // Für jeden Eintrag abfragen, ob es sich um einen Start handelt.
-        // Die Ergebnisse zu einem String zusammenfassen.
+        // For each entry, query whether it is a start and summarize the results to a string.
         while (iterator.hasNext()) {
             RangeLimiter tmp = (RangeLimiter) iterator.next();
             sb.append(tmp.isStart());
         }
 
-        //Überprüfen, ob der String dem Muster "(truefalse)+" entspricht.
-        Pattern pattern = Pattern.compile("(truefalse)+");
-        Matcher matcher = pattern.matcher(sb.toString());
-
+        //Check if the string matches the (truefalse)+ pattern.
+        Matcher matcher = this.pattern.matcher(sb.toString());
         return !matcher.matches();
     }
 
@@ -136,7 +136,7 @@ public class Matrix {
      * @return
      */
     public List<RangeLimiter> getLine(int lineNumber){
-        List<RangeLimiter> line=new ArrayList<RangeLimiter>();
+        List<RangeLimiter> line=new ArrayList<RangeLimiter>(20);
         List<RangeLimiter> allElements=getAllElementsInOrder();
         Iterator iterator=allElements.iterator();
         while(iterator.hasNext()){
@@ -146,5 +146,56 @@ public class Matrix {
             }
         }
         return line;
+    }
+    /**
+     * Writes a RangeLimiter object to the list of RangeLimiters to create the buttons with warning messages.
+     * The method is invoked when several areas begin or end at the same location.
+     * @param rangeLimiter  RangeLimiter object which is required for the generation of buttons
+     */
+    public void addButton(RangeLimiter rangeLimiter){
+        this.doubleWarnings.add(rangeLimiter);
+    }
+
+    /**
+     * Checks if there are warnings to be displayed separately.
+     * @return true if there are warnings to be displayed separately..
+     */
+    public boolean hasDoubleWarnings(){
+        return !this.doubleWarnings.isEmpty();
+    }
+
+    /**
+     * Returns all RangeLimiter objects that are required for the generation of warning buttons in this row.
+     * @param line row number
+     * @return all RangeLimiter objects that are required for the generation of buttons in this row
+     */
+    public List<RangeLimiter> getDoubleWarnings(int line){
+        Iterator iterator=this.doubleWarnings.iterator();
+        List<RangeLimiter> resultList=new ArrayList<RangeLimiter>();
+        while(iterator.hasNext()){
+            RangeLimiter temp=(RangeLimiter) iterator.next();
+            if(temp.getLine()==line){
+                resultList.add(temp);
+            }
+        }
+        return resultList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Matrix)) return false;
+
+        Matrix matrix1 = (Matrix) o;
+
+        if (!this.matrix.equals(matrix1.getMatrix())) return false;
+        return this.doubleWarnings.equals(matrix1.doubleWarnings);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = this.matrix.hashCode();
+        result = 31 * result + this.doubleWarnings.hashCode();
+        return result;
     }
 }

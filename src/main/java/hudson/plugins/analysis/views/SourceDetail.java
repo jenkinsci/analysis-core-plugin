@@ -87,6 +87,7 @@ public class SourceDetail implements ModelObject {
         this.owner = owner;
         this.annotations = annotations;
         this.defaultEncoding = defaultEncoding;
+        this.isFirstColor=true;
         fileName = StringUtils.substringAfterLast(getFirstAnnotation(annotations).getFileName(), SourceDetail.FILE_SEPARATOR);
         initializeContent();
     }
@@ -125,18 +126,17 @@ public class SourceDetail implements ModelObject {
      * @return source file
      */
     private String readFile(BufferedReader file) throws IOException {
-
         int capacity = 50000;
         StringBuilder stringBuilder = new StringBuilder(capacity);
         String line = StringUtils.EMPTY;
         stringBuilder.append(HTML_PRE_TAG_START);
-
 
         while ((line = file.readLine()) != null) {
 
             if (containsPattern(line, codeTagPattern)) {
                 line = replacePattern(line, codeTagPattern, "");
             }
+
             if (containsPattern(line, angleBracketPattern)) {
                 outputEscaped(stringBuilder, line);
                 stringBuilder.append(SourceDetail.LINE_SEPARATOR);
@@ -147,7 +147,6 @@ public class SourceDetail implements ModelObject {
         }
         stringBuilder.append(HTML_PRE_TAG_END);
         file.close();
-
         return stringBuilder.toString();
     }
 
@@ -157,7 +156,6 @@ public class SourceDetail implements ModelObject {
      * @param sourceFile source file
      */
     public void splitSourceFile(String sourceFile) {
-
         LineIterator lineIterator = IOUtils.lineIterator(new StringReader(sourceFile));
         int lineNumber = 1;
         int capacity = 50000;
@@ -165,19 +163,22 @@ public class SourceDetail implements ModelObject {
         Matrix warningMatrix = getWarningMatrix(getAnnotations());
 
         while (lineIterator.hasNext()) {
+            List<RangeLimiter> lineEntries = warningMatrix.getLine(lineNumber);
+            if(warningMatrix.hasDoubleWarnings()){
+                output.append(warningButtons(warningMatrix.getDoubleWarnings(lineNumber)));
+            }
 
-            List<RangeLimiter> line = warningMatrix.getLine(lineNumber);
-            if (line.size() > 0) {
-                String lineWithTHMLTags = lineWithHTMLTags(lineNumber, lineIterator.next(), line);
-                output.append(lineWithTHMLTags);
+            if (lineEntries.size() > 0) {
+                String lineWithHTMLTags = lineWithHTMLTags(lineNumber, lineIterator.next(), lineEntries);
+                output.append(lineWithHTMLTags);
                 output.append(LINE_SEPARATOR);
                 lineNumber++;
             } else {
                 copyLine(output, lineIterator);
                 lineNumber++;
             }
-            sourceCode = output.toString();
         }
+        sourceCode = output.toString();
     }
 
     /**
@@ -192,31 +193,28 @@ public class SourceDetail implements ModelObject {
     private String lineWithHTMLTags(int lineNumber, String line, List columns) {
         Iterator iterator = columns.iterator();
         int lineLength = line.length();
-        //Token Sequence zum Eintragen der HTML-Tags erzeugen.
         TokenSequence tokenSequence = new TokenSequence(line);
 
         while (iterator.hasNext()) {
             RangeLimiter limiter =(RangeLimiter) iterator.next();
             int columnNr=limiter.getColumn();
-            // Zeichen fuer Zeilenende aufloesen.
 
+            // Zeichen fuer Zeilenende aufloesen.
             if (columnNr == Integer.MAX_VALUE) {
                 columnNr = lineLength - 1;
             }
-            // Indizes anpassen. Momentan ist Index der Warnungen gleich Index-1 der Textzeilen.
+            // Adjust the index. Currently, indexes of warnings are equal to index-1 in the text line.
             else if (columnNr > 0) {
                 columnNr = columnNr - 1;
             }
-
             /**
-             * Für den Fall, dass eine exception geworfen wird.
+             * In the case that an FileNotFound Exception is thrown while loading the source file.
              */
             if (columnNr >= lineLength) {
                 for (int i = -1; i < columnNr - lineLength; i++) {
                     tokenSequence.appendSequence(" ");
                 }
             }
-
             if (limiter.isStart()) {
                 tokenSequence.prependStringToToken(buildOpeningTag(limiter.getMessage(), limiter.getToolTip()), columnNr);
             } else {
@@ -308,10 +306,11 @@ public class SourceDetail implements ModelObject {
      * @return rangeColor
      */
     private String getRangeColor(boolean isFirstColor) {
-        setFirstColor(!isFirstColor);
         if (isFirstColor) {
+            setFirstColor(!isFirstColor);
             return SourceDetail.FIRST_COLOR;
         } else {
+            setFirstColor(!isFirstColor);
             return SourceDetail.OTHER_COLOR;
         }
     }
@@ -334,7 +333,7 @@ public class SourceDetail implements ModelObject {
      */
     private Matrix getWarningMatrix(Set<FileAnnotation> annotations) {
         Matrix matrix = new Matrix();
-        ArrayList<Range> ranges = new ArrayList<Range>();
+        ArrayList<Range> ranges = new ArrayList<Range>(50);
         int number = 1;
 
         for (FileAnnotation annotation : annotations) {
@@ -343,6 +342,11 @@ public class SourceDetail implements ModelObject {
             //Informationen wie message, tooltip start- und end-column auslesen um sie im Range Limter abzulegen.
             String message = annotation.getMessage();
             String toolTip = annotation.getToolTip();
+
+            if(message.isEmpty()){
+                message=toolTip;
+            }
+
             int startColumn = annotation.getColumnStart();
             int endColumn = annotation.getColumnEnd();
             boolean firstRange = true;
@@ -353,20 +357,20 @@ public class SourceDetail implements ModelObject {
                 RangeLimiter start;
                 RangeLimiter end;
 
+                if(startLine<=0){
+                    matrix.addButton(new RangeLimiter(true,message,toolTip,1,0,number));
+                }
                 if (firstRange) {
-                    // Hier die Faelle mit gleichem Start- und End-column.
                     if ((startColumn == endColumn) && startColumn == 0) {
                         start = new RangeLimiter(true, message, toolTip, startLine, startColumn, number);
                         end = new RangeLimiter(false, message, toolTip, endLine, Integer.MAX_VALUE, number);
                     }
-                    // Alle anderen Faelle.
                     else {
                         start = new RangeLimiter(true, message, toolTip, startLine, startColumn, number);
                         end = new RangeLimiter(false, message, toolTip, endLine, endColumn, number);
                     }
                     firstRange = false;
                 }
-                // Andere Line Ranges behandeln. Hier gibt es aber kein start- und end column. Deswegen werden die ganzen Zeilen eingefaerbt.
                 else {
                     start = new RangeLimiter(true, message, toolTip, startLine, 0, number);
                     end = new RangeLimiter(false, message, toolTip, endLine, Integer.MAX_VALUE, number);
@@ -375,10 +379,9 @@ public class SourceDetail implements ModelObject {
                 ranges.add(new Range(start, end));
             }
         }
-        // Ranges nach Groesse sortieren.
         Collections.sort(ranges);
 
-        //Beginnend mit dem Groessten, sortierte Ranges eintragen.
+        //Starting with the largest, add the ranges to the matrix.
         int rangesSize = ranges.size();
         for (int i = rangesSize - 1; i >= 0; i--) {
 
@@ -390,15 +393,52 @@ public class SourceDetail implements ModelObject {
             if (matrix.addElement(start)) {
                 insertSuceeded = matrix.addElement(end);
             }
-            if (!insertSuceeded) {
-                matrix.removeElement(start);
+            else{
+                matrix.addButton(start);
             }
 
+            if (!insertSuceeded) {
+                matrix.removeElement(start);
+                matrix.addButton(start);
+            }
+
+            // Resolve intersecions between Ranges.
             if(matrix.rangesIntersect()) {
                 matrix.resolveIntersections();
             }
         }
         return matrix;
+    }
+
+    /**
+     *
+     * @param rangeLimiters
+     * @return String HTML-Button to show warning message in case that two ranges have same start or end.
+     */
+    private String warningButtons(List<RangeLimiter> rangeLimiters){
+        Iterator iterator=rangeLimiters.iterator();
+        StringBuilder sb=new StringBuilder(5000);
+
+        while (iterator.hasNext()){
+            RangeLimiter tmp=(RangeLimiter)iterator.next();
+
+            sb.append("<button onclick='dhtmlx.modalbox({title:\"");
+
+            String message=tmp.getMessage();
+            message = replacePattern(message, lineBreakPattern, "");
+            message = replacePattern(message, apostrophesPattern, "");
+            sb.append(message);
+
+            sb.append("\", text:\"");
+
+            String toolTip=tmp.getToolTip();
+            toolTip = replacePattern(toolTip, lineBreakPattern, "</br>");
+            toolTip = replacePattern(toolTip, apostrophesPattern, "");
+            sb.append(toolTip);
+
+            sb.append("\",buttons:[\"CLOSE\"]})' style=\"font-size:13px;padding:0px 6px; font-family: 'Times New Roman';  color: black;font-weight: bolder; border-width:1px;  border-radius:12px;  background-color: darkorange\">!</button> ");
+        }
+        return sb.toString();
     }
 
     /**
@@ -431,33 +471,29 @@ public class SourceDetail implements ModelObject {
     public String replacePattern(CharSequence string, Pattern pattern, String replacement) {
         Matcher matcher = pattern.matcher(string);
         int capacity = 1000;
-
         StringBuffer buffer = new StringBuffer(capacity);
 
         while (matcher.find()) {
             matcher.appendReplacement(buffer, replacement);
         }
         matcher.appendTail(buffer);
-
         return buffer.toString();
     }
 
     /**
      * Builds a string containing HTML span-tag surrounding annotation message and tooltip.
      * Annotation message and tooltip are shown in a popup message when user clicks on colored field
-     * which marks a warning.
+     * that marks a warning.
      *
      * @return prependString
      */
     private String buildOpeningTag(String message, String toolTip) {
 
-        message = replacePattern(message, lineBreakPattern, "");
+        message = replacePattern(message, lineBreakPattern, "</br>");
         message = replacePattern(message, apostrophesPattern, "");
-        message = replacePattern(message, paragraphBlockPattern, "");
 
-        toolTip = replacePattern(toolTip, lineBreakPattern, "");
+        toolTip = replacePattern(toolTip, lineBreakPattern, "</br>");
         toolTip = replacePattern(toolTip, apostrophesPattern, "");
-        toolTip = replacePattern(toolTip, paragraphBlockPattern, "");
 
         return "<span title=\"For more information click on orange or yellow colored area.\"   style=\"background-color:"
                 + getRangeColor(isFirstColor())
@@ -485,12 +521,6 @@ public class SourceDetail implements ModelObject {
     }
 
 
-    private static final String INFO_BUTTON = "<button onclick='dhtmlx.modalbox({title:\"Info\", text:\"For more information please click on colored areas\",buttons:[\"CLOSE\"]})' style=\"font-size:13px;padding:0px 6px; font-family: 'Times New Roman';  color: black;font-weight: bolder; border-width:1px;  border-radius:12px;  background-color: darkorange\">i</button> ";
-
-    private static final String TABULATOR_PATTERN = "\t";
-    private static final String HTML_PARAGRAPH_PATTERN = "<p>|</p>";
-
-    private static final Pattern paragraphBlockPattern = Pattern.compile(HTML_PARAGRAPH_PATTERN);
     /**
      * Pattern needed to detect line breaks.
      */
