@@ -35,6 +35,11 @@
     <orderEntry type="library" name="Maven: com.infradna.tool:bridge-method-annotation:1.14" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci:annotation-indexer:1.4" level="project" />
     <orderEntry type="library" name="Maven: joda-time:joda-time:1.6" level="project" />
+    <orderEntry type="library" name="Maven: com.puppycrawl.tools:checkstyle:5.8" level="project" />
+    <orderEntry type="library" name="Maven: antlr:antlr:2.7.7" level="project" />
+    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils-core:1.8.3" level="project" />
+    <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.2" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava-jdk5:14.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.main:maven-plugin:2.9" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:javadoc:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:mailer:1.7" level="project" />
@@ -65,7 +70,6 @@
     <orderEntry type="library" name="Maven: org.apache.maven:maven-embedder:3.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.sonatype.plexus:plexus-cipher:1.7" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.4" level="project" />
-    <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.2" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.aether:aether-api:0.9.0.M3" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.aether:aether-impl:0.9.0.M3" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.aether:aether-spi:0.9.0.M3" level="project" />
@@ -154,7 +158,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.kohsuke:asm5:5.0.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jenkins-ci:task-reactor:1.4" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jvnet.localizer:localizer:1.23" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: antlr:antlr:2.7.6" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jvnet.hudson:xstream:1.4.7-jenkins-1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: jfree:jfreechart:1.0.9" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: jfree:jcommon:1.0.12" level="project" />

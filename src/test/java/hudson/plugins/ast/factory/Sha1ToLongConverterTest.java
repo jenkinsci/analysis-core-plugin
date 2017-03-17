@@ -2,13 +2,12 @@ package hudson.plugins.ast.factory;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
-import hudson.plugins.analysis.ast.Ast;
 import hudson.plugins.analysis.ast.Sha1ToLongConverter;
 
 /**
- * Tests the class {@link Ast}.
+ * Tests the class {@link Sha1ToLongConverter}.
  *
  * @author Ullrich Hafner
  */
