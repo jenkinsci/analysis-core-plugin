@@ -9,9 +9,10 @@ import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
-import hudson.FilePath;
-import hudson.FilePath.FileCallable;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jenkins.MasterToSlaveFileCallable;
 
+import hudson.FilePath;
 import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.util.FileFinder;
 import hudson.plugins.analysis.util.ModuleDetector;
@@ -19,7 +20,6 @@ import hudson.plugins.analysis.util.NullModuleDetector;
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.analysis.util.StringPluginLogger;
 import hudson.plugins.analysis.util.model.FileAnnotation;
-
 import hudson.remoting.VirtualChannel;
 
 /**
@@ -28,11 +28,11 @@ import hudson.remoting.VirtualChannel;
  *
  * @author Ulli Hafner
  */
-public class FilesParser implements FileCallable<ParserResult> {
+public class FilesParser extends MasterToSlaveFileCallable<ParserResult> {
     private static final long serialVersionUID = -6415863872891783891L;
 
     /** Logs into a string. @since 1.20 */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("Se")
+    @SuppressFBWarnings("Se")
     private transient StringPluginLogger stringLogger;
 
     /** Ant file-set pattern to scan for. */
@@ -177,16 +177,18 @@ public class FilesParser implements FileCallable<ParserResult> {
      *            the message in singular or plural form depending on the count,
      *            or an empty string if the count is 0 and no format is specified
      */
-    protected String plural(final int count, String message) {
+    protected String plural(final int count, final String message) {
         if (count == 0 && !message.contains("%")) {
             return "";
         }
 
+        String messageFormat = message;
+
         if (count != 1) {
-            message += "s";
+            messageFormat += "s";
         }
 
-        return String.format(message, count);
+        return String.format(messageFormat, count);
     }
 
     @Override
@@ -216,14 +218,12 @@ public class FilesParser implements FileCallable<ParserResult> {
     }
 
     private void parserCollectionOfFiles(final File workspace, final ParserResult result) throws InterruptedException {
-        log("Finding all files that match the pattern " + filePattern);
+        log("Searching for all files in " + workspace.getAbsolutePath() + " that match the pattern " + filePattern);
         String[] fileNames = new FileFinder(filePattern).find(workspace);
 
         if (fileNames.length == 0) {
-            if (isMavenBuild) {
-                log("No files found in " + workspace.getAbsolutePath() + " for pattern: " + filePattern);
-            }
-            else {
+            log("No files found. Configuration error?");
+            if (!isMavenBuild) {
                 result.addErrorMessage(Messages.FilesParser_Error_NoFiles());
             }
         }

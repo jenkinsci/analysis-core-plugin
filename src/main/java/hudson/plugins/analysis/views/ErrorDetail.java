@@ -2,7 +2,10 @@ package hudson.plugins.analysis.views;
 
 import java.util.Collection;
 
+import com.infradna.tool.bridge_method_injector.WithBridgeMethods;
+
 import hudson.model.AbstractBuild;
+import hudson.model.Run;
 import hudson.model.ModelObject;
 
 import hudson.plugins.analysis.Messages;
@@ -14,7 +17,7 @@ import hudson.plugins.analysis.Messages;
  */
 public class ErrorDetail implements ModelObject  {
     /** Current build as owner of this action. */
-    private final AbstractBuild<?, ?> owner;
+    private final Run<?, ?> owner;
     /** All errors of the project. */
     private final Collection<String> errors;
 
@@ -26,7 +29,7 @@ public class ErrorDetail implements ModelObject  {
      * @param errors
      *            all modules of the project
      */
-    public ErrorDetail(final AbstractBuild<?, ?> owner, final Collection<String> errors) {
+    public ErrorDetail(final Run<?, ?> owner, final Collection<String> errors) {
         this.owner = owner;
         this.errors = errors;
     }
@@ -36,8 +39,20 @@ public class ErrorDetail implements ModelObject  {
      *
      * @return the owner
      */
-    public final AbstractBuild<?, ?> getOwner() {
+    @WithBridgeMethods(value=AbstractBuild.class, adapterMethod="getAbstractBuild")
+    public final Run<?, ?> getOwner() {
         return owner;
+    }
+
+    /**
+     * Added for backward compatibility. It generates <pre>AbstractBuild getOwner()</pre> bytecode during the build
+     * process, so old implementations can use that signature.
+     * 
+     * @see {@link WithBridgeMethods}
+     */
+    @Deprecated
+    private final Object getAbstractBuild(Run owner, Class targetClass) {
+      return owner instanceof AbstractBuild ? (AbstractBuild) owner : null;
     }
 
     @Override
@@ -52,6 +67,21 @@ public class ErrorDetail implements ModelObject  {
      */
     public Collection<String> getErrors() {
         return errors;
+    }
+
+    /**
+     * Creates a new instance of <code>ErrorDetail</code>.
+     *
+     * @param owner
+     *            current build as owner of this action.
+     * @param errors
+     *            all modules of the project
+     * @deprecated use {@link #ErrorDetail(Run, Collection)} instead
+     */
+    @Deprecated
+    public ErrorDetail(final AbstractBuild<?, ?> owner, final Collection<String> errors) {
+        this.owner = owner;
+        this.errors = errors;
     }
 }
 

@@ -3,6 +3,7 @@ package hudson.plugins.analysis.views;
 import java.util.Collection;
 
 import hudson.model.AbstractBuild;
+import hudson.model.Run;
 
 import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.util.model.FileAnnotation;
@@ -30,13 +31,33 @@ public class FixedWarningsDetail extends AbstractAnnotationsDetail {
      * @param header
      *            header to be shown on detail page
      */
-    public FixedWarningsDetail(final AbstractBuild<?, ?> owner, final DetailFactory detailFactory, final Collection<FileAnnotation> fixedWarnings, final String defaultEncoding, final String header) {
+    public FixedWarningsDetail(final Run<?, ?> owner, final DetailFactory detailFactory, final Collection<FileAnnotation> fixedWarnings, final String defaultEncoding, final String header) {
         super(owner, detailFactory, fixedWarnings, defaultEncoding, header, Hierarchy.PROJECT);
     }
 
     @Override
     public String getDisplayName() {
         return Messages.FixedWarningsDetail_Name();
+    }
+
+    /**
+     * Creates a new instance of <code>FixedWarningsDetail</code>.
+     *
+     * @param owner
+     *            the current results object as owner of this action
+     * @param detailFactory
+     *            factory to create detail objects with
+     * @param fixedWarnings
+     *            all fixed warnings in this build
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
+     * @param header
+     *            header to be shown on detail page
+     * @deprecated use {@link #FixedWarningsDetail(Run, DetailFactory, Collection, String, String)} instead
+     */
+    @Deprecated
+    public FixedWarningsDetail(final AbstractBuild<?, ?> owner, final DetailFactory detailFactory, final Collection<FileAnnotation> fixedWarnings, final String defaultEncoding, final String header) {
+        this((Run<?, ?>) owner, detailFactory, fixedWarnings, defaultEncoding, header);
     }
 }
 

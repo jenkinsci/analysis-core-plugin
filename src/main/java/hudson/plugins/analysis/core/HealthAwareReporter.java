@@ -8,6 +8,8 @@ import java.util.Collection;
 import org.apache.commons.lang.StringUtils;
 import org.apache.maven.project.MavenProject;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import hudson.FilePath;
 import hudson.Launcher;
 import hudson.maven.MavenAggregatedReport;
@@ -17,9 +19,9 @@ import hudson.maven.MavenBuildProxy.BuildCallable;
 import hudson.maven.MavenModuleSetBuild;
 import hudson.maven.MavenReporter;
 import hudson.maven.MojoInfo;
-import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
 import hudson.model.Result;
+import hudson.model.Run;
 import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.util.EncodingValidator;
 import hudson.plugins.analysis.util.Files;
@@ -243,7 +245,7 @@ public abstract class HealthAwareReporter<T extends BuildResult> extends MavenRe
      *
      * @return <code>true</code> if the previous build should always be used.
      */
-    public boolean getUsePreviousBuildAsStable() {
+    public boolean getUsePreviousBuildAsReference() {
         return usePreviousBuildAsReference;
     }
 
@@ -252,8 +254,8 @@ public abstract class HealthAwareReporter<T extends BuildResult> extends MavenRe
      *
      * @return <code>true</code> if the previous build should always be used.
      */
-    public boolean usePreviousBuildAsStable() {
-        return getUsePreviousBuildAsStable();
+    public boolean usePreviousBuildAsReference() {
+        return getUsePreviousBuildAsReference();
     }
 
     /**
@@ -285,7 +287,8 @@ public abstract class HealthAwareReporter<T extends BuildResult> extends MavenRe
      *
      * @return the object
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("Se")
+    @SuppressWarnings("deprecation")
+    @SuppressFBWarnings("Se")
     private Object readResolve() {
         if (thresholdLimit == null) {
             thresholdLimit = DEFAULT_PRIORITY_THRESHOLD_LIMIT;
@@ -394,7 +397,7 @@ public abstract class HealthAwareReporter<T extends BuildResult> extends MavenRe
         }
         mavenBuild.addAction(createMavenAggregatedReport(mavenBuild, buildResult));
         mavenBuild.registerAsProjectAction(HealthAwareReporter.this);
-        AbstractBuild<?, ?> referenceBuild = buildResult.getHistory().getReferenceBuild();
+        Run<?, ?> referenceBuild = buildResult.getHistory().getReferenceBuild();
         if (referenceBuild != null) {
             pluginLogger.log("Computing warning deltas based on reference build " + referenceBuild.getDisplayName());
         }
@@ -709,7 +712,7 @@ public abstract class HealthAwareReporter<T extends BuildResult> extends MavenRe
             useStableBuildAsReference, canComputeNew, pluginName);
     }
     /** Backward compatibility. @deprecated */
-    @SuppressWarnings({"PMD.ExcessiveParameterList","javadoc"})
+    @SuppressWarnings({"PMD.ExcessiveParameterList", "javadoc", "deprecation"})
     @Deprecated
     public HealthAwareReporter(final String healthy, final String unHealthy, final String thresholdLimit, final boolean useDeltaValues,
             final String unstableTotalAll, final String unstableTotalHigh, final String unstableTotalNormal, final String unstableTotalLow,
@@ -727,7 +730,7 @@ public abstract class HealthAwareReporter<T extends BuildResult> extends MavenRe
                 pluginName);
     }
     /** Backward compatibility. @deprecated */
-    @SuppressWarnings({"PMD.ExcessiveParameterList","javadoc"})
+    @SuppressWarnings({"PMD.ExcessiveParameterList", "javadoc", "deprecation"})
     @Deprecated
     public HealthAwareReporter(final String healthy, final String unHealthy, final String thresholdLimit, final boolean useDeltaValues,
             final String unstableTotalAll, final String unstableTotalHigh, final String unstableTotalNormal, final String unstableTotalLow,
@@ -742,6 +745,21 @@ public abstract class HealthAwareReporter<T extends BuildResult> extends MavenRe
                 failedNewAll, failedNewHigh, failedNewNormal, failedNewLow,
                 canRunOnFailed, true, pluginName);
     }
+    /**
+     * @deprecated mistyped method name from v1.72 - see {@link #getUsePreviousBuildAsReference()}
+     */
+    @Deprecated
+    public boolean getUsePreviousBuildAsStable() {
+        return getUsePreviousBuildAsReference();
+    }
+    /**
+     * @deprecated mistyped method name from v1.72 - see {@link #usePreviousBuildAsReference()}
+     */
+    @Deprecated
+    public boolean usePreviousBuildAsStable() {
+        return usePreviousBuildAsReference();
+    }
+
     // CHECKSTYLE:ON
 
     /**

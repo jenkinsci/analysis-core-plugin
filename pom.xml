@@ -4,13 +4,14 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>analysis-pom</artifactId>
-    <version>1.59</version>
+    <version>1.65</version>
+    <relativePath>../analysis-pom</relativePath>
   </parent>
 
   <artifactId>analysis-core</artifactId>
   <packaging>hpi</packaging>
   <name>Static Analysis Utilities</name>
-  <version>1.72-SNAPSHOT</version>
+  <version>1.83-SNAPSHOT</version>
   <description>This plug-in provides utilities for the static code analysis plug-ins.</description>
 
   <url>http://wiki.jenkins-ci.org/x/CwDgAQ</url>
@@ -21,6 +22,11 @@
       <artifactId>ant</artifactId>
       <version>1.1</version>
       <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>matrix-project</artifactId>
+      <version>1.4</version>
     </dependency>
     <dependency>
       <groupId>de.java2html</groupId>
@@ -42,10 +48,22 @@
       <artifactId>xercesImpl</artifactId>
       <version>2.11.0</version>
     </dependency>
+    <dependency><!-- 2.4 is required. Avoid transitive import derived issues -->
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.4</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
-      <groupId>com.puppycrawl.tools</groupId>
-      <artifactId>checkstyle</artifactId>
-      <version>5.8</version>
+      <groupId>com.infradna.tool</groupId>
+      <artifactId>bridge-method-annotation</artifactId>
+      <version>1.14</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>1.6</version>
     </dependency>
   </dependencies>
 
@@ -85,7 +103,7 @@
       <plugin>
         <groupId>com.infradna.tool</groupId>
         <artifactId>bridge-method-injector</artifactId>
-        <version>1.2</version>
+        <version>1.14</version>
         <executions>
           <execution>
             <goals>

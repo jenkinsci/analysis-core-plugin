@@ -2,22 +2,19 @@ package hudson.plugins.analysis.core;
 
 import java.io.IOException;
 
-import net.sf.json.JSONObject;
-
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.QueryParameter;
-import org.kohsuke.stapler.StaplerRequest;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jenkins.model.Jenkins;
+import net.sf.json.JSONObject;
 
 import hudson.FilePath;
-
 import hudson.model.AbstractProject;
-import hudson.model.Hudson;
-
 import hudson.plugins.analysis.graph.GraphConfiguration;
 import hudson.plugins.analysis.util.EncodingValidator;
 import hudson.plugins.analysis.util.ThresholdValidator;
-
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
 import hudson.util.FormValidation;
@@ -31,7 +28,6 @@ public abstract class PluginDescriptor extends BuildStepDescriptor<Publisher> {
     /** Suffix of the URL of the plug-in result. */
     protected static final String RESULT_URL_SUFFIX = "Result";
     private static final String COMPUTE_NEW_SECTION_KEY = "canComputeNew";
-    private static final String CONFIGURATION_SECTION_KEY = "configuration"; // starting with 1.55
 
     /**
      * Returns the result URL for the specified plug-in.
@@ -52,7 +48,7 @@ public abstract class PluginDescriptor extends BuildStepDescriptor<Publisher> {
      * @return <code>true</code> if the specified plug-in is installed, <code>false</code> if not.
      */
     public static boolean isPluginInstalled(final String shortName) {
-        Hudson instance = Hudson.getInstance();
+        Jenkins instance = Jenkins.getInstance();
         if (instance != null) {
             return instance.getPlugin(shortName) != null;
         }
@@ -76,7 +72,11 @@ public abstract class PluginDescriptor extends BuildStepDescriptor<Publisher> {
      * @param hierarchical
      *            the JSON object containing a sub-section
      * @return the flat structure
+     *
+     * @deprecated This transformation is no longer required. The JSON is coming as expected from the browser.
      */
+    @SuppressWarnings("deprecation")
+    @Deprecated
     protected static JSONObject convertHierarchicalFormData(final JSONObject hierarchical) {
         return convertHierarchicalFormData(hierarchical, COMPUTE_NEW_SECTION_KEY);
     }
@@ -91,8 +91,11 @@ public abstract class PluginDescriptor extends BuildStepDescriptor<Publisher> {
      *            the section to flatten
      * @return the flat structure
      * @since 1.55
+     *
+     * @deprecated This transformation is no longer required. The JSON is coming as expected from the browser.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("WMI")
+    @Deprecated
+    @SuppressFBWarnings("WMI")
     protected static JSONObject convertHierarchicalFormData(final JSONObject hierarchical, final String section) {
         if (hierarchical.containsKey(section)) {
             JSONObject newSection = hierarchical.getJSONObject(section);
@@ -119,21 +122,6 @@ public abstract class PluginDescriptor extends BuildStepDescriptor<Publisher> {
      */
     public PluginDescriptor(final Class<? extends Publisher> clazz) {
         super(clazz);
-    }
-
-    @Override
-    public Publisher newInstance(final StaplerRequest req, final JSONObject formData)
-            throws hudson.model.Descriptor.FormException {
-        JSONObject converted;
-        if (formData.containsKey(CONFIGURATION_SECTION_KEY)) {
-            JSONObject old = formData.getJSONObject(CONFIGURATION_SECTION_KEY);
-            formData.put(CONFIGURATION_SECTION_KEY, convertHierarchicalFormData(old));
-            converted = formData;
-        }
-        else {
-            converted = convertHierarchicalFormData(formData);
-        }
-        return super.newInstance(req, converted);
     }
 
     @Override
@@ -200,7 +188,7 @@ public abstract class PluginDescriptor extends BuildStepDescriptor<Publisher> {
     }
 
     /**
-     * Performs on-the-fly validation on the file name pattern.
+     * Performs on-the-fly validation on the ant pattern for input files.
      *
      * @param project
      *            the project
@@ -212,7 +200,23 @@ public abstract class PluginDescriptor extends BuildStepDescriptor<Publisher> {
      */
     public FormValidation doCheckPattern(@AncestorInPath final AbstractProject<?, ?> project,
             @QueryParameter final String pattern) throws IOException {
-        return FilePath.validateFileMask(project.getSomeWorkspace(), pattern);
+        if (project != null) { // there is no workspace in pipelines
+            try {
+                FilePath workspace = project.getSomeWorkspace();
+                if (workspace != null) {
+                    String result = workspace.validateAntFileMask(pattern,
+                            FilePath.VALIDATE_ANT_FILE_MASK_BOUND);
+                    if (result != null) {
+                        return FormValidation.error(result);
+                    }
+                }
+            }
+            catch (InterruptedException e) {
+                // ignore and return ok
+            }
+        }
+
+        return FormValidation.ok();
     }
 
     /**

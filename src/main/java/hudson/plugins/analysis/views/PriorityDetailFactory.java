@@ -1,7 +1,11 @@
 package hudson.plugins.analysis.views;
 
-import hudson.model.AbstractBuild;
+import javax.annotation.Nonnull;
 
+import hudson.model.AbstractBuild;
+import hudson.model.Run;
+
+import hudson.plugins.analysis.util.Compatibility;
 import hudson.plugins.analysis.util.model.AnnotationContainer;
 import hudson.plugins.analysis.util.model.Priority;
 
@@ -10,6 +14,7 @@ import hudson.plugins.analysis.util.model.Priority;
  *
  * @author Ulli Hafner
  */
+@SuppressWarnings("deprecation")
 public class PriorityDetailFactory {
     /** The detail factory to use. */
     private final DetailFactory detailFactory;
@@ -54,17 +59,23 @@ public class PriorityDetailFactory {
      *            the default encoding to be used when reading and parsing files
      * @return the priority detail
      */
-    public PrioritiesDetail create(final String priority, final AbstractBuild<?, ?> owner, final AnnotationContainer container, final String defaultEncoding, final String header) {
-        if (Priority.HIGH.toString().equalsIgnoreCase(priority)) {
-            return createPrioritiesDetail(Priority.HIGH, owner, container, defaultEncoding, header);
+    public PrioritiesDetail create(final String priority, @Nonnull final Run<?, ?> owner, final AnnotationContainer container, final String defaultEncoding, final String header) {
+        if (owner instanceof AbstractBuild && Compatibility.isOverridden(PriorityDetailFactory.class, getClass(), "create", 
+                String.class, AbstractBuild.class, AnnotationContainer.class, String.class, String.class)) {
+            return create(priority, (AbstractBuild<?, ?>) owner, container, defaultEncoding, header);
         }
-        else if (Priority.NORMAL.toString().equalsIgnoreCase(priority)) {
-            return createPrioritiesDetail(Priority.NORMAL, owner, container, defaultEncoding, header);
+        else {
+            if (Priority.HIGH.toString().equalsIgnoreCase(priority)) {
+                return createPrioritiesDetail(Priority.HIGH, owner, container, defaultEncoding, header);
+            }
+            else if (Priority.NORMAL.toString().equalsIgnoreCase(priority)) {
+                return createPrioritiesDetail(Priority.NORMAL, owner, container, defaultEncoding, header);
+            }
+            else if (Priority.LOW.toString().equalsIgnoreCase(priority)) {
+                return createPrioritiesDetail(Priority.LOW, owner, container, defaultEncoding, header);
+            }
+            throw new IllegalArgumentException("Wrong priority provided: " + priority);
         }
-        else if (Priority.LOW.toString().equalsIgnoreCase(priority)) {
-            return createPrioritiesDetail(Priority.LOW, owner, container, defaultEncoding, header);
-        }
-        throw new IllegalArgumentException("Wrong priority provided: " + priority);
     }
 
     /**
@@ -82,9 +93,32 @@ public class PriorityDetailFactory {
      *            header to show
      * @return the priority detail
      */
+    protected PrioritiesDetail createPrioritiesDetail(final Priority priority, @Nonnull final Run<?, ?> owner, final AnnotationContainer container,
+            final String defaultEncoding, final String header) {
+        if (owner instanceof AbstractBuild && Compatibility.isOverridden(PriorityDetailFactory.class, getClass(), "createPrioritiesDetail", 
+                Priority.class, AbstractBuild.class, AnnotationContainer.class, String.class, String.class)) {
+            return createPrioritiesDetail(priority, (AbstractBuild<?, ?>) owner, container, defaultEncoding, header);
+        }
+        else {
+            return new PrioritiesDetail(owner, detailFactory, container.getAnnotations(priority), priority, defaultEncoding, header);
+        }
+    }
+
+    /**
+     * @deprecated use {@link #create(String, Run, AnnotationContainer, String, String)} instead
+     */
+    @Deprecated
+    public PrioritiesDetail create(final String priority, final AbstractBuild<?, ?> owner, final AnnotationContainer container, final String defaultEncoding, final String header) {
+        return create(priority, (Run<?, ?>) owner, container, defaultEncoding, header);
+    }
+
+    /**
+     * @deprecated use {@link #createPrioritiesDetail(Priority, Run, AnnotationContainer, String, String)} instead
+     */
+    @Deprecated
     protected PrioritiesDetail createPrioritiesDetail(final Priority priority, final AbstractBuild<?, ?> owner, final AnnotationContainer container,
             final String defaultEncoding, final String header) {
-        return new PrioritiesDetail(owner, detailFactory, container.getAnnotations(priority), priority, defaultEncoding, header);
+        return createPrioritiesDetail(priority, (Run<?, ?>) owner, container, defaultEncoding, header);
     }
 }
 

@@ -3,11 +3,12 @@ package hudson.plugins.analysis.util;
 import java.io.File;
 import java.io.IOException;
 
+import jenkins.MasterToSlaveFileCallable;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.FileSet;
 
-import hudson.FilePath.FileCallable;
 import hudson.remoting.VirtualChannel;
 
 /**
@@ -15,7 +16,7 @@ import hudson.remoting.VirtualChannel;
  *
  * @author Ulli Hafner
  */
-public class FileFinder implements FileCallable<String[]> {
+public class FileFinder extends MasterToSlaveFileCallable<String[]> {
     /** Generated ID. */
     private static final long serialVersionUID = 2970029366847565970L;
     /** File name pattern for java files. */

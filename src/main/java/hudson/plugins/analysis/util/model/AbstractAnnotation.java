@@ -1,9 +1,11 @@
 package hudson.plugins.analysis.util.model;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Random;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -12,8 +14,11 @@ import org.kohsuke.stapler.export.ExportedBean;
 
 import com.google.common.collect.ImmutableList;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import hudson.model.AbstractBuild;
 import hudson.model.Item;
+import hudson.model.Run;
 import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.core.AbstractAnnotationParser;
 import hudson.plugins.analysis.util.PackageDetectors;
@@ -21,7 +26,7 @@ import hudson.plugins.analysis.util.TreeString;
 import hudson.plugins.analysis.util.TreeStringBuilder;
 
 /**
- *  A base class for annotations.
+ * A base class for annotations.
  *
  * @author Ulli Hafner
  */
@@ -35,8 +40,10 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
     public static final String WORKSPACE_FILES = "workspace-files";
     /** Unique identifier of this class. */
     private static final long serialVersionUID = -1092014926477547148L;
+    public static final String DEFAULT_CATEGORY = "-";
+
     /** Current key of this annotation. */
-    private static long currentKey;
+    private static long currentKey = new Random().nextLong();
 
     /** The message of this annotation. */
     private /*almost final*/ TreeString message;
@@ -75,6 +82,8 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
     private int primaryColumnStart;
     /** Column end of primary line range of warning. @since 1.38 */
     private int primaryColumnEnd;
+    /** The build number in which this annotation has been introduced. @since 1.72 */
+    private int build;
 
     /**
      * Creates a new instance of <code>AbstractAnnotation</code>.
@@ -90,11 +99,11 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
      * @param type
      *            the type of the annotation
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("ST")
+    @SuppressFBWarnings("ST")
     public AbstractAnnotation(final String message, final int start, final int end, final String category, final String type) {
         this.message = TreeString.of(StringUtils.strip(message));
-        this.category = StringUtils.defaultString(category);
-        this.type = StringUtils.defaultString(type);
+        this.category = defaultString(category);
+        this.type = defaultString(type);
 
         key = currentKey++;
 
@@ -103,6 +112,10 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
         primaryLineNumber = start;
 
         contextHashCode = currentKey;
+    }
+
+    private static String defaultString(final String value) {
+        return StringUtils.defaultIfBlank(value, DEFAULT_CATEGORY);
     }
 
     /**
@@ -133,7 +146,7 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
      * @param copy
      *            the annotation to copy the values from
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("ST")
+    @SuppressFBWarnings("ST")
     public AbstractAnnotation(final FileAnnotation copy) {
         key = currentKey++;
 
@@ -161,7 +174,7 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
      *
      * @return this
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("SE")
+    @SuppressFBWarnings("SE")
     private Object readResolve() {
         if (origin != null) {
             origin = origin.intern();
@@ -348,7 +361,7 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
     }
 
     @Override
-    public String getTempName(final AbstractBuild<?, ?> owner) {
+    public String getTempName(@Nonnull final Run<?, ?> owner) {
         if (fileName != null) {
             return owner.getRootDir().getAbsolutePath()
                     + SLASH + WORKSPACE_FILES
@@ -575,7 +588,7 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
      * @return <code>true</code>, if successful
      */
     @Override
-    public final boolean canDisplayFile(final AbstractBuild<?, ?> owner) {
+    public final boolean canDisplayFile(final Run<?, ?> owner) {
         if (owner.hasPermission(Item.WORKSPACE)) {
             return isInConsoleLog() || new File(getFileName()).exists() || new File(getTempName(owner)).exists();
         }
@@ -610,5 +623,23 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
     @Override
     public boolean isInConsoleLog() {
         return fileName == null || StringUtils.isBlank(fileName.toString());
+    }
+
+    @Override
+    public void setBuild(final int build) {
+        this.build = build;
+    }
+
+    @Override
+    public int getBuild() {
+        return build;
+    }
+
+    /**
+     * @deprecated use {@link #getTempName(Run)} instead
+     */
+    @Deprecated
+    public String getTempName(final AbstractBuild<?, ?> owner) {
+        return getTempName((Run<?, ?>) owner);
     }
 }

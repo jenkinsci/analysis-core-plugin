@@ -1,21 +1,30 @@
 package hudson.plugins.analysis.core;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.StaplerProxy;
 import org.kohsuke.stapler.export.Exported;
 import org.kohsuke.stapler.export.ExportedBean;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import com.infradna.tool.bridge_method_injector.WithBridgeMethods;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jenkins.model.Jenkins;
+import jenkins.tasks.SimpleBuildStep.LastBuildAction;
 
 import hudson.maven.MavenBuild;
 import hudson.maven.MavenModule;
 import hudson.model.AbstractBuild;
+import hudson.model.Action;
 import hudson.model.HealthReport;
 import hudson.model.HealthReportingAction;
+import hudson.model.Job;
+import hudson.model.Run;
 import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.util.ToolTipProvider;
 
@@ -33,9 +42,9 @@ import hudson.plugins.analysis.util.ToolTipProvider;
  */
 //CHECKSTYLE:COUPLING-OFF
 @ExportedBean
-public abstract class AbstractResultAction<T extends BuildResult> implements StaplerProxy, HealthReportingAction, ToolTipProvider, ResultAction<T> {
-    /** The associated build of this action. */
-    private final AbstractBuild<?, ?> owner;
+public abstract class AbstractResultAction<T extends BuildResult> implements StaplerProxy, HealthReportingAction, ToolTipProvider, ResultAction<T>, LastBuildAction {
+    /** The associated run of this action. */
+    private final Run<?, ?> owner;
     /** Parameters for the health report. */
     private final AbstractHealthDescriptor healthDescriptor;
     /** The actual result of this action. */
@@ -51,10 +60,20 @@ public abstract class AbstractResultAction<T extends BuildResult> implements Sta
      * @param result
      *            the result of the action
      */
-    public AbstractResultAction(final AbstractBuild<?, ?> owner, final AbstractHealthDescriptor healthDescriptor, final T result) {
+    public AbstractResultAction(final Run<?, ?> owner, final AbstractHealthDescriptor healthDescriptor, final T result) {
         this.owner = owner;
         this.result = result;
         this.healthDescriptor = healthDescriptor;
+    }
+
+    /**
+     * Wraps the specified action into a set.
+     *
+     * @param action the action to add to the set
+     * @return a set containing the action
+     */
+    protected Set<Action> asSet(final Action action) {
+        return Collections.singleton(action);
     }
 
     /**
@@ -84,6 +103,10 @@ public abstract class AbstractResultAction<T extends BuildResult> implements Sta
         return getDescriptor().getPluginName();
     }
 
+    protected Job<?, ?> getJob() {
+        return getBuild().getParent();
+    }
+
     @Override
     public String getUrlName() {
         return getDescriptor().getPluginResultUrlName();
@@ -104,13 +127,37 @@ public abstract class AbstractResultAction<T extends BuildResult> implements Sta
      *
      * @return the associated build of this action
      */
-    public final AbstractBuild<?, ?> getOwner() {
+    @WithBridgeMethods(value=AbstractBuild.class, adapterMethod="getAbstractBuild")
+    public final Run<?, ?> getOwner() {
         return owner;
     }
 
     @Override
-    public final AbstractBuild<?, ?> getBuild() {
+    @WithBridgeMethods(value=AbstractBuild.class, adapterMethod="getAbstractBuild")
+    public final Run<?, ?> getBuild() {
         return owner;
+    }
+
+    /**
+     * Returns the project actions for this result action.
+     *
+     * @return default implementation returns empty collection, plug-in must override if they want to contribute to the UI.
+     * FIXME: Make it abstract in 2.0
+     */
+    @Override
+    public Collection<? extends Action> getProjectActions() {
+        return Collections.emptyList();
+    }
+
+    /**
+     * Added for backward compatibility. It generates <pre>AbstractBuild getOwner()</pre> bytecode during the build
+     * process, so old implementations can use that signature.
+     * 
+     * @see {@link WithBridgeMethods}
+     */
+    @Deprecated
+    private Object getAbstractBuild(final Run owner, final Class targetClass) {
+      return owner instanceof AbstractBuild ? (AbstractBuild) owner : null;
     }
 
     @Override
@@ -286,9 +333,27 @@ public abstract class AbstractResultAction<T extends BuildResult> implements Sta
         this.healthDescriptor = healthDescriptor;
     }
 
+    /**
+     * Creates a new instance of <code>AbstractResultAction</code>.
+     *
+     * @param owner
+     *            the associated build of this action
+     * @param healthDescriptor
+     *            health descriptor
+     * @param result
+     *            the result of the action
+     * @deprecated use {@link #AbstractResultAction(Run, AbstractHealthDescriptor, BuildResult)} instead
+     */
+    @Deprecated
+    public AbstractResultAction(final AbstractBuild<?, ?> owner, final AbstractHealthDescriptor healthDescriptor, final T result) {
+        this.owner = owner;
+        this.result = result;
+        this.healthDescriptor = healthDescriptor;
+    }
+
     /** Backward compatibility. @deprecated */
     @Deprecated
     @java.lang.SuppressWarnings("PMD")
-    @SuppressWarnings("UuF")
+    @SuppressFBWarnings("UuF")
     private transient HealthReportBuilder healthReportBuilder; // NOPMD
 }

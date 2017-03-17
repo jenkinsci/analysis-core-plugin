@@ -3,6 +3,7 @@ package hudson.plugins.analysis.util.model;
 import java.util.Collection;
 
 import hudson.model.AbstractBuild;
+import hudson.model.Run;
 
 /**
  * Annotates a collection of line ranges in a file. An annotation consists of a description and a tooltip.
@@ -71,36 +72,32 @@ public interface FileAnnotation extends Comparable<FileAnnotation> {
      * in a master - slave scenario where the original file remains on the slave while this temporary file is
      * transferred to the master.
      *
-     * @param owner
-     *            the owner that provides the root directory where the files are stored
+     * @param owner the owner that provides the root directory where the files are stored
      * @return the temporary name
      */
-    String getTempName(AbstractBuild<?, ?> owner);
+    String getTempName(Run<?, ?> owner);
 
     /**
      * Sets the file name to the specified value.
      *
-     * @param fileName
-     *            the value to set
+     * @param fileName the value to set
      */
     void setFileName(final String fileName);
 
     /**
      * Sets the pathname for this warning.
      *
-     * @param workspacePath
-     *            the workspace path
+     * @param workspacePath the workspace path
      */
     void setPathName(final String workspacePath);
 
     /**
      * Checks if the file exists.
      *
-     * @param owner
-     *            the owner that provides the root directory where the files are stored
+     * @param owner the owner that provides the root directory where the files are stored
      * @return <code>true</code>, if successful
      */
-    boolean canDisplayFile(AbstractBuild<?, ?> owner);
+    boolean canDisplayFile(Run<?, ?> owner);
 
     /**
      * Gets the associated file name of this bug (without path).
@@ -119,8 +116,7 @@ public interface FileAnnotation extends Comparable<FileAnnotation> {
     /**
      * Sets the name of the maven or ant module that contains this annotation.
      *
-     * @param moduleName
-     *            the name of the module that contains this annotation
+     * @param moduleName the name of the module that contains this annotation
      */
     void setModuleName(String moduleName);
 
@@ -176,8 +172,7 @@ public interface FileAnnotation extends Comparable<FileAnnotation> {
     /**
      * Sets the context hash code to the specified value.
      *
-     * @param contextHashCode
-     *            the value to set
+     * @param contextHashCode the value to set
      */
     void setContextHashCode(long contextHashCode);
 
@@ -201,8 +196,24 @@ public interface FileAnnotation extends Comparable<FileAnnotation> {
      * Returns whether this annotation is in the console log or in a file in the filesystem.
      *
      * @return <code>true</code> if this annotation is in the console log, or <code>false</code> if this annotation is
-     *         in a file in the filesystem.
+     * in a file in the filesystem.
      * @since 1.53
      */
     boolean isInConsoleLog();
+
+    /**
+     * Sets the build number in which this annotation has been introduced.
+     *
+     * @param build the build number introducing this annotation
+     * @since 1.72
+     */
+    void setBuild(int build);
+
+    /**
+     * Returns the build number in which this annotation has been introduced.
+     *
+     * @return the build number introducing this annotation
+     * @since 1.72
+     */
+    int getBuild();
 }

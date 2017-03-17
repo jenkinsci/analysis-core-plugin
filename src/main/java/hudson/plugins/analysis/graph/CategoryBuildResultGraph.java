@@ -1,8 +1,6 @@
 package hudson.plugins.analysis.graph;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -10,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
@@ -22,22 +21,24 @@ import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.joda.time.LocalDate;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import hudson.model.AbstractBuild;
-
-import hudson.plugins.analysis.core.ResultAction;
+import hudson.model.Run;
 import hudson.plugins.analysis.core.BuildResult;
+import hudson.plugins.analysis.core.ResultAction;
 import hudson.plugins.analysis.util.ToolTipProvider;
-
 import hudson.util.ChartUtil.NumberOnlyBuildLabel;
 import hudson.util.DataSetBuilder;
 import hudson.util.ShiftedCategoryAxis;
-
+import hudson.plugins.analysis.Messages;
 /**
  * A build result graph using a {@link CategoryPlot}. Uses a template method to
  * create a graph based on a series of build results.
@@ -46,6 +47,7 @@ import hudson.util.ShiftedCategoryAxis;
  */
 public abstract class CategoryBuildResultGraph extends BuildResultGraph {
     private static final Font LEGEND_FONT = new Font("SansSerif", Font.PLAIN, 10); // NOCHECKSTYLE
+    private static final String Y_AXIS_LABEL = Messages.Trend_yAxisLabel();
 
     /**
      * Creates a PNG image trend graph with clickable map.
@@ -80,7 +82,7 @@ public abstract class CategoryBuildResultGraph extends BuildResultGraph {
      * @return the graph
      */
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("WMI")
+    @SuppressFBWarnings("WMI")
     public JFreeChart createAggregation(final GraphConfiguration configuration,
             final Collection<ResultAction<? extends BuildResult>> resultActions, final String pluginName) {
         Set<LocalDate> availableDates = Sets.newHashSet();
@@ -202,23 +204,26 @@ public abstract class CategoryBuildResultGraph extends BuildResultGraph {
      * @return a series of values per build
      */
     @SuppressWarnings("rawtypes")
-    private Map<AbstractBuild, List<Integer>> createSeriesPerBuild(
+    private Map<Run, List<Integer>> createSeriesPerBuild(
             final GraphConfiguration configuration, final BuildResult lastBuildResult) {
         BuildResult current = lastBuildResult;
 
         int buildCount = 0;
-        Map<AbstractBuild, List<Integer>> valuesPerBuild = Maps.newHashMap();
+        Map<Run, List<Integer>> valuesPerBuild = Maps.newHashMap();
+        String parameterName = configuration.getParameterName();
+        String parameterValue = configuration.getParameterValue();
         while (true) {
             if (isBuildTooOld(configuration, current)) {
                 break;
             }
-
-            valuesPerBuild.put(current.getOwner(), computeSeries(current));
+            if (passesFilteringByParameter(current.getOwner(), parameterName, parameterValue)) {
+                valuesPerBuild.put(current.getOwner(), computeSeries(current));
+            }
 
             if (current.hasPreviousResult()) {
                 current = current.getPreviousResult();
                 if (current == null) {
-                    break; // see: HUDSON-6613
+                    break; // see: JENKINS-6613
                 }
             }
             else {
@@ -235,6 +240,29 @@ public abstract class CategoryBuildResultGraph extends BuildResultGraph {
         return valuesPerBuild;
     }
 
+    private boolean passesFilteringByParameter(final Run<?, ?> build, final String parameterName, final String parameterValue) {
+        if (StringUtils.isBlank(parameterName)) {
+            return true;
+        }
+
+        Map<String, String> variables;
+        if (build instanceof AbstractBuild) {
+            variables = ((AbstractBuild<?, ?>) build).getBuildVariables();
+        }
+        else {
+            // There is no comparable method for Run. This means that this feature (using parameters for
+            // result graph) will not be available for other than AbstractBuild extending classes (basically
+            // all except Workflow builds).
+            // So workflow jobs will be never filtered, just show them all.
+            return true;
+        }
+        if (variables == null) {
+            return false;
+        }
+
+        return Objects.equal(variables.get(parameterName), parameterValue);
+    }
+
     /**
      * Creates a data set that contains a series per build number.
      *
@@ -243,11 +271,11 @@ public abstract class CategoryBuildResultGraph extends BuildResultGraph {
      * @return a data set
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
-    private CategoryDataset createDatasetPerBuildNumber(final Map<AbstractBuild, List<Integer>> valuesPerBuild) {
+    private CategoryDataset createDatasetPerBuildNumber(final Map<Run, List<Integer>> valuesPerBuild) {
         DataSetBuilder<String, NumberOnlyBuildLabel> builder = new DataSetBuilder<String, NumberOnlyBuildLabel>();
-        List<AbstractBuild> builds = Lists.newArrayList(valuesPerBuild.keySet());
+        List<Run> builds = Lists.newArrayList(valuesPerBuild.keySet());
         Collections.sort(builds);
-        for (AbstractBuild<?, ?> build : builds) {
+        for (Run<?, ?> build : builds) {
             List<Integer> series = valuesPerBuild.get(build);
             int level = 0;
             for (Integer integer : series) {
@@ -290,7 +318,7 @@ public abstract class CategoryBuildResultGraph extends BuildResultGraph {
      */
     @SuppressWarnings("rawtypes")
     private Map<LocalDate, List<Integer>> averageByDate(
-            final Map<AbstractBuild, List<Integer>> valuesPerBuild) {
+            final Map<Run, List<Integer>> valuesPerBuild) {
         return createSeriesPerDay(createMultiSeriesPerDay(valuesPerBuild));
     }
 
@@ -338,11 +366,11 @@ public abstract class CategoryBuildResultGraph extends BuildResultGraph {
      * @return the multi map with the values per day
      */
     @SuppressWarnings("rawtypes")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("WMI")
+    @SuppressFBWarnings("WMI")
     private Multimap<LocalDate, List<Integer>> createMultiSeriesPerDay(
-            final Map<AbstractBuild, List<Integer>> valuesPerBuild) {
+            final Map<Run, List<Integer>> valuesPerBuild) {
         Multimap<LocalDate, List<Integer>> valuesPerDate = HashMultimap.create();
-        for (AbstractBuild<?, ?> build : valuesPerBuild.keySet()) {
+        for (Run<?, ?> build : valuesPerBuild.keySet()) {
             valuesPerDate.put(new LocalDate(build.getTimestamp()), valuesPerBuild.get(build));
         }
         return valuesPerDate;
@@ -446,10 +474,23 @@ public abstract class CategoryBuildResultGraph extends BuildResultGraph {
      * @return the created graph
      */
     public JFreeChart createAreaChart(final CategoryDataset dataset) {
+        return createAreaChart(dataset, "count");
+    }
+
+    /**
+     * Creates a stacked area graph from the specified data set.
+     *
+     * @param dataset
+     *            the values to display
+     * @param yAxisLabel
+     *            label of the range axis, i.e. y axis
+     * @return the created graph
+     */
+    public JFreeChart createAreaChart(final CategoryDataset dataset, final String yAxisLabel) {
         JFreeChart chart = ChartFactory.createStackedAreaChart(
             null,                      // chart title
             null,                      // unused
-            "count",                   // range axis label
+            yAxisLabel,                // range axis label
             dataset,                   // data
             PlotOrientation.VERTICAL,  // orientation
             false,                     // include legend
@@ -471,10 +512,23 @@ public abstract class CategoryBuildResultGraph extends BuildResultGraph {
      * @return the created graph
      */
     public JFreeChart createBlockChart(final CategoryDataset dataset) {
+        return createBlockChart(dataset, "count");
+    }
+
+    /**
+     * Creates a stacked block graph from the specified data set.
+     *
+     * @param dataset
+     *            the values to display
+     * @param yAxisLabel
+     *            label of the range axis, i.e. y axis
+     * @return the created graph
+     */
+    public JFreeChart createBlockChart(final CategoryDataset dataset, final String yAxisLabel) {
         JFreeChart chart = ChartFactory.createStackedBarChart(
                 null,                      // chart title
                 null,                      // unused
-                "count",                   // range axis label
+                yAxisLabel,                   // range axis label
                 dataset,                   // data
                 PlotOrientation.VERTICAL,  // orientation
                 false,                     // include legend
@@ -509,7 +563,22 @@ public abstract class CategoryBuildResultGraph extends BuildResultGraph {
      * @return the graph
      */
     protected JFreeChart createLineGraph(final CategoryDataset dataSet, final boolean hasLegend) {
-        NumberAxis numberAxis = new NumberAxis("count");
+        return createLineGraph(dataSet, hasLegend, Y_AXIS_LABEL);
+    }
+
+    /**
+     * Creates a line graph for the specified data set.
+     *
+     * @param dataSet
+     *            the data to plot
+     * @param hasLegend
+     *            determines whether to show a legend
+     * @param yAxisLabel
+     *            label of the range axis, i.e. y axis
+     * @return the graph
+     */
+    protected JFreeChart createLineGraph(final CategoryDataset dataSet, final boolean hasLegend, final String yAxisLabel) {
+        NumberAxis numberAxis = new NumberAxis(yAxisLabel);
         numberAxis.setAutoRange(true);
         numberAxis.setAutoRangeIncludesZero(false);
 

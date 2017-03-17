@@ -1,5 +1,7 @@
 package hudson.plugins.analysis.core;
 
+import javax.annotation.CheckForNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -8,13 +10,12 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.annotation.CheckForNull;
-
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.StaplerProxy;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.infradna.tool.bridge_method_injector.WithBridgeMethods;
 
 import hudson.FilePath;
 import hudson.maven.AggregatableAction;
@@ -22,9 +23,10 @@ import hudson.maven.MavenAggregatedReport;
 import hudson.maven.MavenBuild;
 import hudson.maven.MavenModule;
 
+import hudson.model.AbstractBuild;
+import hudson.model.Run;
 import hudson.model.HealthReport;
 import hudson.model.Result;
-import hudson.model.AbstractBuild;
 
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.analysis.util.StringPluginLogger;
@@ -257,12 +259,45 @@ public abstract class MavenResultAction<T extends BuildResult> implements Staple
     }
 
     /**
+     * Determines whether only stable builds should be used as reference builds
+     * or not.
+     *
+     * @since 1.73
+     * @return <code>true</code> if only stable builds should be used
+     */
+    public boolean useOnlyStableBuildsAsReference() {
+        return delegate.getResult().useOnlyStableBuildsAsReference();
+    }
+
+    /**
+     * Determines whether to always use the previous build as the reference.
+     *
+     * @since 1.73
+     * @return <code>true</code> if the previous build should always be used.
+     */
+    public boolean usePreviousBuildAsStable() {
+        return delegate.getResult().usePreviousBuildAsStable();
+    }
+
+    /**
      * Returns the associated build of this action.
      *
      * @return the associated build of this action
      */
-    public AbstractBuild<?, ?> getOwner() {
+    @WithBridgeMethods(value=AbstractBuild.class, adapterMethod="getAbstractBuild")
+    public Run<?, ?> getOwner() {
         return delegate.getOwner();
+    }
+
+    /**
+     * Added for backward compatibility. It generates <pre>AbstractBuild getOwner()</pre> bytecode during the build
+     * process, so old implementations can use that signature.
+     * 
+     * @see {@link WithBridgeMethods}
+     */
+    @Deprecated
+    private Object getAbstractBuild(final Run owner, final Class targetClass) {
+        return delegate.getOwner() instanceof AbstractBuild ? (AbstractBuild<?, ?>) delegate.getOwner() : null;
     }
 
     /**
@@ -280,8 +315,9 @@ public abstract class MavenResultAction<T extends BuildResult> implements Staple
     }
 
     @Override
-    public final AbstractBuild<?, ?> getBuild() {
-        return delegate.getBuild();
+    @WithBridgeMethods(value=AbstractBuild.class, adapterMethod="getAbstractBuild")
+    public final Run<?, ?> getBuild() {
+        return delegate.getOwner();
     }
 
     @Override

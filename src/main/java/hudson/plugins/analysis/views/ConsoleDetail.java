@@ -8,11 +8,16 @@ import java.io.InputStreamReader;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
+import org.kohsuke.accmod.Restricted;
+import org.kohsuke.accmod.restrictions.NoExternalUse;
+
+import com.infradna.tool.bridge_method_injector.WithBridgeMethods;
 
 import hudson.console.ConsoleNote;
 
 import hudson.model.ModelObject;
 import hudson.model.AbstractBuild;
+import hudson.model.Run;
 
 import hudson.plugins.analysis.Messages;
 
@@ -26,7 +31,7 @@ public class ConsoleDetail implements ModelObject {
     /** Filename dummy if the console log is the source of the warning. */
     public static final String CONSOLE_LOG_FILENAME = "Console Log";
     /** The current build as owner of this object. */
-    private final AbstractBuild<?, ?> owner;
+    private final Run<?, ?> owner;
     /** The rendered source file. */
     private String sourceCode = StringUtils.EMPTY;
     private final int from;
@@ -44,7 +49,7 @@ public class ConsoleDetail implements ModelObject {
      * @param to
      *            last line in the console log
      */
-    public ConsoleDetail(final AbstractBuild<?, ?> owner, final int from, final int to) {
+    public ConsoleDetail(final Run<?, ?> owner, final int from, final int to) {
         this.owner = owner;
         this.from = from;
         this.to = to;
@@ -106,8 +111,20 @@ public class ConsoleDetail implements ModelObject {
      *
      * @return the build
      */
-    public AbstractBuild<?, ?> getOwner() {
+    @WithBridgeMethods(value=AbstractBuild.class, adapterMethod="getAbstractBuild")
+    public Run<?, ?> getOwner() {
         return owner;
+    }
+
+    /**
+     * Added for backward compatibility. It generates <pre>AbstractBuild getOwner()</pre> bytecode during the build
+     * process, so old implementations can use that signature.
+     * 
+     * @see {@link WithBridgeMethods}
+     */
+    @Deprecated
+    private final Object getAbstractBuild(Run owner, Class targetClass) {
+      return owner instanceof AbstractBuild ? (AbstractBuild) owner : null;
     }
 
     /**
@@ -117,5 +134,21 @@ public class ConsoleDetail implements ModelObject {
      */
     public String getSourceCode() {
         return sourceCode;
+    }
+
+    /**
+     * Creates a new instance of this console log viewer object.
+     *
+     * @param owner
+     *            the current build as owner of this object
+     * @param from
+     *            first line in the console log
+     * @param to
+     *            last line in the console log
+     * @deprecated use {@link #ConsoleDetail(Run, int, int)} instead
+     */
+    @Deprecated
+    public ConsoleDetail(final AbstractBuild<?, ?> owner, final int from, final int to) {
+        this((Run<?, ?>) owner, from ,to);
     }
 }

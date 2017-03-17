@@ -1,5 +1,6 @@
 package hudson.plugins.analysis.core; // NOPMD
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,16 +24,19 @@ import org.kohsuke.stapler.StaplerResponse;
 import org.kohsuke.stapler.export.Exported;
 import org.kohsuke.stapler.export.ExportedBean;
 
+import com.google.common.collect.Sets;
+import com.infradna.tool.bridge_method_injector.WithBridgeMethods;
 import com.thoughtworks.xstream.XStream;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jenkins.model.Jenkins;
 
 import hudson.XmlFile;
 import hudson.model.AbstractBuild;
 import hudson.model.Api;
-import hudson.model.Hudson;
 import hudson.model.ModelObject;
 import hudson.model.Result;
+import hudson.model.Run;
 import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.util.HtmlPrinter;
 import hudson.plugins.analysis.util.PluginLogger;
@@ -78,7 +83,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     }
 
     /** Current build as owner of this action. */
-    private AbstractBuild<?, ?> owner;
+    private Run<?, ?> owner;
     /** All parsed modules. */
     private Set<String> modules;
     /** The total number of parsed modules (regardless if there are annotations). */
@@ -87,13 +92,13 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     private String defaultEncoding;
 
     /** The project containing the annotations. */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("Se")
+    @SuppressFBWarnings("Se")
     private transient WeakReference<JavaProject> project;
     /** All new warnings in the current build. */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("Se")
+    @SuppressFBWarnings("Se")
     private transient WeakReference<Collection<FileAnnotation>> newWarningsReference;
     /** All fixed warnings in the current build. */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("Se")
+    @SuppressFBWarnings("Se")
     private transient WeakReference<Collection<FileAnnotation>> fixedWarningsReference;
     /** The build history for the results of this plug-in. */
     private transient BuildHistory history;
@@ -132,7 +137,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     /** Determines the number of msec still to go before a new high score is reached. */
     private long highScoreGap;
     /** Error messages. */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("Se")
+    @SuppressFBWarnings("Se")
     private List<String> errors;
 
     /**
@@ -210,9 +215,9 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      *            the parsed result with all annotations
      * @param defaultEncoding
      *            the default encoding to be used when reading and parsing files
-     * @since 1.39
+     * @since 1.73
      */
-    protected BuildResult(final AbstractBuild<?, ?> build, final BuildHistory history,
+    protected BuildResult(final Run<?, ?> build, final BuildHistory history,
             final ParserResult result, final String defaultEncoding) {
         initialize(history, build, defaultEncoding, result);
     }
@@ -224,8 +229,8 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      *            the build to start with
      * @return the history
      */
-    protected BuildHistory createHistory(final AbstractBuild<?, ?> build) {
-        return new BuildHistory(build, getResultActionType(), false);
+    protected BuildHistory createHistory(@Nonnull final Run<?, ?> build) {
+        return new BuildHistory(build, getResultActionType(), false, false);
     }
 
     /**
@@ -260,7 +265,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      *            the history of build results of the associated plug-in
      */
     @SuppressWarnings("hiding")
-    private void initialize(final BuildHistory history, final AbstractBuild<?, ?> build, final String defaultEncoding, // NOCHECKSTYLE
+    private void initialize(final BuildHistory history, final Run<?, ?> build, final String defaultEncoding, // NOCHECKSTYLE
             final ParserResult result) {
         this.history = history;
         owner = build;
@@ -279,6 +284,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
 
         Set<FileAnnotation> allWarnings = result.getAnnotations();
 
+        // FIXME: why is there a flag to enable computation of new warnings?
         Set<FileAnnotation> newWarnings = AnnotationDifferencer.getNewAnnotations(allWarnings, referenceResult.getAnnotations());
         numberOfNewWarnings = newWarnings.size();
         newWarningsReference = new WeakReference<Collection<FileAnnotation>>(newWarnings);
@@ -293,6 +299,11 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
 
         JavaProject container = new JavaProject();
         container.addAnnotations(result.getAnnotations());
+
+        for (FileAnnotation newWarning : newWarnings) {
+            newWarning.setBuild(build.getNumber());
+        }
+        // FIXME: for the old warnings we need to find the introducing build by using the context hash code
 
         project = new WeakReference<JavaProject>(container);
 
@@ -310,7 +321,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
         return history;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("NP")
+    @SuppressFBWarnings("NP")
     private void defineReferenceBuild(final BuildHistory buildHistory) {
         if (buildHistory.hasReferenceBuild()) {
             referenceBuild = buildHistory.getReferenceBuild().getNumber();
@@ -335,8 +346,20 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      * @return the reference build.
      */
     @Exported
-    public AbstractBuild<?, ?> getReferenceBuild() {
-        return owner.getProject().getBuildByNumber(referenceBuild);
+    @WithBridgeMethods(value=AbstractBuild.class, adapterMethod="getReferenceAbstractBuild")
+    public Run<?, ?> getReferenceBuild() {
+        return owner.getParent().getBuildByNumber(referenceBuild);
+    }
+
+    /**
+     * Added for backward compatibility. It generates <pre>AbstractBuild getReferenceBuild()</pre> bytecode during the build
+     * process, so old implementations can use that signature.
+     * 
+     * @see {@link WithBridgeMethods}
+     */
+    @Deprecated
+    private final Object getReferenceAbstractBuild(Run owner, Class targetClass) {
+      return owner instanceof AbstractBuild ? ((AbstractBuild) owner).getProject().getBuildByNumber(referenceBuild) : null;
     }
 
     private int computeDelta(final ParserResult result, final AnnotationContainer referenceResult, final Priority priority) {
@@ -352,7 +375,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      * @param currentResult
      *            the current result
      */
-    private void computeZeroWarningsHighScore(final AbstractBuild<?, ?> build, final ParserResult currentResult) {
+    private void computeZeroWarningsHighScore(final Run<?, ?> build, final ParserResult currentResult) {
         if (history.hasPreviousResult()) {
             BuildResult previous = history.getPreviousResult();
             if (currentResult.hasNoAnnotations()) {
@@ -414,7 +437,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      *
      * @return the created object
      */
-    @SuppressWarnings("PMD")
+    @SuppressWarnings({"PMD", "deprecation"})
     protected Object readResolve() {
         projectLock = new Object();
         if (pluginResult == null) {
@@ -500,12 +523,22 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     }
 
     /**
-     * Returns the serialization file.
+     * Returns the serialization file for all warnings.
      *
      * @return the serialization file.
      */
     public final XmlFile getDataFile() {
         return new XmlFile(getXStream(), new File(getOwner().getRootDir(), getSerializationFileName()));
+    }
+
+    /**
+     * Returns the serialization file for the fixed warnings.
+     *
+     * @return the serialization file.
+     */
+    private XmlFile getFixedDataFile() {
+        return new XmlFile(getXStream(), new File(getOwner().getRootDir(),
+                getSerializationFileName().replace(".xml", "-fixed.xml")));
     }
 
     /**
@@ -542,7 +575,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      * @return <code>true</code> if this result belongs to the last build
      */
     public boolean isCurrent() {
-        return getOwner().getProject().getLastBuild().number == getOwner().number;
+        return getOwner().getParent().getLastBuild().number == getOwner().number;
     }
 
     /**
@@ -550,8 +583,20 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      *
      * @return the owner
      */
-    public AbstractBuild<?, ?> getOwner() {
+    @WithBridgeMethods(value=AbstractBuild.class, adapterMethod="getAbstractBuild")
+    public Run<?, ?> getOwner() {
         return owner;
+    }
+
+    /**
+     * Added for backward compatibility. It generates <pre>AbstractBuild getOwner()</pre> bytecode during the build
+     * process, so old implementations can use that signature.
+     * 
+     * @see {@link WithBridgeMethods}
+     */
+    @Deprecated
+    private Object getAbstractBuild(final Run owner, final Class targetClass) {
+      return owner instanceof AbstractBuild ? (AbstractBuild) owner : null;
     }
 
     @Override
@@ -650,8 +695,12 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      */
     protected void serializeAnnotations(final Collection<FileAnnotation> annotations) {
         try {
-            Collection<FileAnnotation> files = annotations;
-            getDataFile().write(files.toArray(new FileAnnotation[files.size()]));
+            getDataFile().write(annotations.toArray(new FileAnnotation[annotations.size()]));
+
+            Set<FileAnnotation> allAnnotations = new HashSet<FileAnnotation>();
+            allAnnotations.addAll(annotations);
+            Collection<FileAnnotation> fixedWarnings = history.getFixedWarnings(allAnnotations);
+            getFixedDataFile().write(fixedWarnings.toArray(new FileAnnotation[fixedWarnings.size()]));
         }
         catch (IOException exception) {
             LOGGER.log(Level.SEVERE, "Failed to serialize the annotations of the build.", exception);
@@ -966,17 +1015,21 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     }
 
     /**
-     * Loads the results of the current and reference build, computes the new
-     * warnings and wraps them in a weak reference that might get removed by the
-     * garbage collector.
+     * Filters all warnings by the current build number and wraps them in a weak reference that might get
+     * removed by the garbage collector.
      *
      * @return the new warnings
      */
     private Collection<FileAnnotation> loadNewWarnings() {
-        Collection<FileAnnotation> difference = history.getNewWarnings(getProject().getAnnotations());
-        newWarningsReference = new WeakReference<Collection<FileAnnotation>>(difference);
+        Set<FileAnnotation> newWarnings = new HashSet<FileAnnotation>();
+        for (FileAnnotation warning : getProject().getAnnotations()) {
+            if (warning.getBuild() == getOwner().getNumber()) {
+                newWarnings.add(warning);
+            }
+        }
+        newWarningsReference = new WeakReference<Collection<FileAnnotation>>(newWarnings);
 
-        return difference;
+        return newWarnings;
     }
 
     /**
@@ -985,12 +1038,52 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      * @return the fixed warnings of this build.
      */
     public Collection<FileAnnotation> getFixedWarnings() {
+        if (getFixedDataFile().exists()) {
+            return getFixedWarningsAfterRelease72();
+        }
+        else {
+            return getFixedWarningsBeforeRelease72();
+        }
+    }
+
+    private Collection<FileAnnotation> getFixedWarningsAfterRelease72() {
+        synchronized (projectLock) {
+            if (fixedWarningsReference == null) {
+                return loadFixedWarningsAfterRelease72();
+            }
+            Collection<FileAnnotation> result = fixedWarningsReference.get();
+            if (result == null) {
+                return loadFixedWarningsAfterRelease72();
+            }
+            return result;
+        }
+    }
+
+    private Collection<FileAnnotation> loadFixedWarningsAfterRelease72() {
+        Set<FileAnnotation> fixedWarnings;
+        try {
+            FileAnnotation[] annotations = (FileAnnotation[])getFixedDataFile().read();
+            fixedWarnings = Sets.newHashSet(annotations);
+
+            LOGGER.log(Level.FINE, "Loaded data file " + getFixedDataFile() + " for build " + getOwner().getNumber());
+        }
+        catch (IOException exception) {
+            LOGGER.log(Level.WARNING, "Failed to load " + getFixedDataFile(), exception);
+            fixedWarnings = new HashSet<FileAnnotation>();
+        }
+        fixedWarningsReference = new WeakReference<Collection<FileAnnotation>>(fixedWarnings);
+
+        return fixedWarnings;
+
+    }
+
+    private Collection<FileAnnotation> getFixedWarningsBeforeRelease72() {
         if (fixedWarningsReference == null) {
-            return loadFixedWarnings();
+            return loadFixedWarningsBeforeRelease72();
         }
         Collection<FileAnnotation> result = fixedWarningsReference.get();
         if (result == null) {
-            return loadFixedWarnings();
+            return loadFixedWarningsBeforeRelease72();
         }
         return result;
     }
@@ -1002,7 +1095,7 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      *
      * @return the fixed warnings
      */
-    private Collection<FileAnnotation> loadFixedWarnings() {
+    private Collection<FileAnnotation> loadFixedWarningsBeforeRelease72() {
         Collection<FileAnnotation> difference = history.getFixedWarnings(getProject().getAnnotations());
         fixedWarningsReference = new WeakReference<Collection<FileAnnotation>>(difference);
 
@@ -1028,8 +1121,19 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      * @return the dynamic result of the analysis (detail page).
      */
     public Object getDynamic(final String link, final StaplerRequest request, final StaplerResponse response) {
-        return DetailFactory.create(getResultActionType()).createTrendDetails(link, getOwner(), getContainer(), getFixedWarnings(),
-                getNewWarnings(), getErrors(), getDefaultEncoding(), getDisplayName());
+        try {
+            return DetailFactory.create(getResultActionType()).createTrendDetails(link, getOwner(), getContainer(), getFixedWarnings(),
+                    getNewWarnings(), getErrors(), getDefaultEncoding(), getDisplayName());
+        }
+        catch (NoSuchElementException exception) {
+            try {
+                response.sendRedirect2("../");
+            }
+            catch (IOException e) {
+                // ignore
+            }
+            return this; // fallback on broken URLs
+        }
     }
 
     /**
@@ -1402,13 +1506,13 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     private String getReferenceBuildUrl() {
         HtmlPrinter printer = new HtmlPrinter();
         if (hasReferenceBuild()) {
-            AbstractBuild<?, ?> build = getReferenceBuild();
+            Run<?, ?> build = getReferenceBuild();
 
             printer.append("&nbsp;");
             printer.append("(");
             printer.append(Messages.ReferenceBuild());
             printer.append(": ");
-            printer.append(printer.link(Hudson.getInstance().getRootUrl() + "/" + build.getUrl(),
+            printer.append(printer.link(Jenkins.getInstance().getRootUrl() + "/" + build.getUrl(),
                     build.getDisplayName()));
             printer.append(")");
         }
@@ -1538,10 +1642,45 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
      *             you need to save them manually
      */
     @Deprecated
-    @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
+    @SuppressWarnings({"PMD.ConstructorCallsOverridableMethod", "deprecation"})
     public BuildResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result) {
         initialize(createHistory(build), build, defaultEncoding, result);
         serializeAnnotations(result.getAnnotations());
+    }
+
+    /**
+     * Creates a new instance of {@link BuildResult}. Note that the warnings are
+     * not serialized anymore automatically. You need to call
+     * {@link #serializeAnnotations(Collection)} manually in your constructor to
+     * persist them.
+     *
+     * @param build
+     *            the current build as owner of this action
+     * @param history
+     *            build history
+     * @param result
+     *            the parsed result with all annotations
+     * @param defaultEncoding
+     *            the default encoding to be used when reading and parsing files
+     * @since 1.39
+     */
+    @Deprecated
+    protected BuildResult(final AbstractBuild<?, ?> build, final BuildHistory history,
+            final ParserResult result, final String defaultEncoding) {
+        initialize(history, build, defaultEncoding, result);
+    }
+
+    /**
+     * Creates a new history based on the specified build.
+     *
+     * @param build
+     *            the build to start with
+     * @return the history
+     * @deprecated use {@link #createHistory(Run)} instead
+     */
+    @Deprecated
+    protected BuildHistory createHistory(final AbstractBuild<?, ?> build) {
+        return createHistory((Run<?, ?>) build);
     }
 
     // Backward compatibility. Do not remove.

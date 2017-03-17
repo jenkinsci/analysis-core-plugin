@@ -8,14 +8,17 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
+
+import com.infradna.tool.bridge_method_injector.WithBridgeMethods;
 
 import com.google.common.collect.Lists;
 
 import net.sf.json.JSONObject;
 
+import hudson.model.Job;
 import hudson.model.AbstractProject;
 import hudson.model.ModelObject;
 import hudson.plugins.analysis.core.AbstractHealthDescriptor;
@@ -28,13 +31,34 @@ import hudson.util.Graph;
 public abstract class GraphConfigurationView implements ModelObject {
     private static final Logger LOGGER = Logger.getLogger(GraphConfigurationView.class.getName());
 
-    /** The owning project to configure the graphs for. */
-    private final AbstractProject<?, ?> project;
+    /** The owning job to configure the graphs for. */
+    private final Job<?, ?> owner;
 
     private final String key;
     private final BuildHistory buildHistory;
     private final AbstractHealthDescriptor healthDescriptor; // NOPMD
     private final GraphConfiguration configuration;
+    private String urlPrefix;
+
+    /**
+     * Creates a new instance of {@link GraphConfigurationView}.
+     *
+     * @param configuration
+     *            the graph configuration
+     * @param job
+     *            the owning job to configure the graphs for
+     * @param key
+     *            unique key of this graph
+     * @param buildHistory
+     *            the build history for this job
+     */
+    public GraphConfigurationView(final GraphConfiguration configuration, final Job<?, ?> job, final String key, final BuildHistory buildHistory) {
+        this.configuration = configuration;
+        this.owner = job;
+        this.key = key;
+        this.buildHistory = buildHistory;
+        healthDescriptor = buildHistory.getHealthDescriptor();
+    }
 
     /**
      * Creates a new instance of {@link GraphConfigurationView}.
@@ -47,15 +71,27 @@ public abstract class GraphConfigurationView implements ModelObject {
      *            unique key of this graph
      * @param buildHistory
      *            the build history for this project
+     * @deprecated use
+     *             {@link #GraphConfigurationView(GraphConfiguration, Job, String, BuildHistory)}
      */
+    @Deprecated
     public GraphConfigurationView(final GraphConfiguration configuration, final AbstractProject<?, ?> project, final String key, final BuildHistory buildHistory) {
-        this.configuration = configuration;
-        this.project = project;
-        this.key = key;
-        this.buildHistory = buildHistory;
-        healthDescriptor = buildHistory.getHealthDescriptor();
+        this(configuration, (Job<?, ?>) project, key, buildHistory);
     }
-
+    
+    /**
+     * Creates a file with for the default values.
+     *
+     * @param job
+     *            the job used as directory for the file
+     * @param pluginName
+     *            the name of the plug-in
+     * @return the created file
+     */
+    protected static File createDefaultsFile(final Job<?, ?> job, final String pluginName) {
+        return new File(job.getRootDir(), pluginName + ".txt");
+    }
+    
     /**
      * Creates a file with for the default values.
      *
@@ -64,9 +100,13 @@ public abstract class GraphConfigurationView implements ModelObject {
      * @param pluginName
      *            the name of the plug-in
      * @return the created file
+     *
+     * @deprecated use
+     *             {@link #createDefaultsFile(Job, String)}
      */
+    @Deprecated
     protected static File createDefaultsFile(final AbstractProject<?, ?> project, final String pluginName) {
-        return new File(project.getRootDir(), pluginName + ".txt");
+        return createDefaultsFile((Job<?, ?>) project, pluginName);
     }
 
     /**
@@ -85,12 +125,24 @@ public abstract class GraphConfigurationView implements ModelObject {
     }
 
     /**
-     * Returns the project.
+     * Returns the owner.
      *
-     * @return the project
+     * @return the owner
      */
-    public AbstractProject<?, ?> getOwner() {
-        return project;
+    @WithBridgeMethods(value=AbstractProject.class, adapterMethod="getAbstractProject")
+    public Job<?, ?> getOwner() {
+        return owner;
+    }
+
+   /**
+     * Added for backward compatibility. It generates <pre>AbstractProject getOwner()</pre> bytecode during the build
+     * process, so old implementations can use that signature.
+     * 
+     * @see {@link WithBridgeMethods}
+     */
+    @Deprecated
+    private Object getAbstractProject(final Job owner, final Class targetClass) {
+        return owner instanceof AbstractProject ? (AbstractProject) owner : null;
     }
 
     /**
@@ -133,7 +185,7 @@ public abstract class GraphConfigurationView implements ModelObject {
         }
         finally {
             try {
-                response.sendRedirect(project.getAbsoluteUrl());
+                response.sendRedirect(owner.getAbsoluteUrl());
             }
             catch (IOException exception) {
                 LOGGER.log(Level.SEVERE, "Can't redirect", exception);
@@ -185,10 +237,8 @@ public abstract class GraphConfigurationView implements ModelObject {
     public Object getDynamic(final String graphId, final StaplerRequest request, final StaplerResponse response) {
         try {
             BuildResultGraph graph = configuration.getGraph(graphId);
-            if (hasMeaningfulGraph()) {
-                if (graph.isVisible()) {
-                    return graph.getGraph(-1, configuration, null, buildHistory.getBaseline());
-                }
+            if (hasMeaningfulGraph() && graph.isVisible()) {
+                return graph.getGraph(-1, configuration, null, buildHistory.getBaseline());
             }
             response.sendRedirect2(request.getContextPath() + graph.getExampleImage());
         }
@@ -326,12 +376,32 @@ public abstract class GraphConfigurationView implements ModelObject {
     }
 
     /**
+     * Returns the parameter name to consider.
+     *
+     * @return the parameter name to consider.
+     */
+    public String getParameterName() {
+        return configuration.getParameterName();
+    }
+
+    /**
+     * Returns the parameter value to consider.
+     *
+     * @return the parameter value to consider.
+     */
+    public String getParameterValue() {
+        return configuration.getParameterValue();
+    }
+
+    /**
      * Returns the type of the graph.
      *
      * @return the type
      */
     public BuildResultGraph getGraphType() {
-        return configuration.getGraphType();
+        BuildResultGraph graphType = configuration.getGraphType();
+        graphType.setRootUrl(StringUtils.defaultString(urlPrefix));
+        return graphType;
     }
 
     /**
@@ -364,5 +434,16 @@ public abstract class GraphConfigurationView implements ModelObject {
      */
     public AbstractHealthDescriptor getHealthDescriptor() {
         return healthDescriptor;
+    }
+
+    /**
+     * Sets the prefix of the URLs in the trend graph. Depending on the sub page this trend is shown a different
+     * prefix can be set for the relative URL.
+     *
+     * @param urlPrefix prefix, might be empty
+     * @since 1.73
+     */
+    public void setUrlPrefix(final String urlPrefix) {
+        this.urlPrefix = urlPrefix;
     }
 }
