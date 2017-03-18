@@ -20,6 +20,15 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:git:3.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:git-client:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jgit:org.eclipse.jgit:4.4.1.201607150455-r" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jgit:org.eclipse.jgit.http.server:4.4.1.201607150455-r" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:structs:1.3" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci:symbol-annotation:1.3" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:credentials:2.1.4" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:scm-api:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:mailer:1.17" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:ant:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:matrix-project:1.4" level="project" />
     <orderEntry type="library" name="Maven: de.java2html:java2html:5.0" level="project" />
@@ -35,9 +44,25 @@
     <orderEntry type="library" name="Maven: com.infradna.tool:bridge-method-annotation:1.14" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci:annotation-indexer:1.4" level="project" />
     <orderEntry type="library" name="Maven: joda-time:joda-time:1.6" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:git:3.0.3" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:git-client:2.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jgit:org.eclipse.jgit:4.5.0.201609210915-r" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode.javaewah:JavaEWAH:0.7.9" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jgit:org.eclipse.jgit.http.server:4.5.0.201609210915-r" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jgit:org.eclipse.jgit.http.apache:4.5.0.201609210915-r" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:structs:1.5" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci:symbol-annotation:1.5" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:credentials:2.1.8" level="project" />
+    <orderEntry type="library" name="Maven: org.antlr:antlr4-runtime:4.5" level="project" />
+    <orderEntry type="library" name="Maven: org.abego.treelayout:org.abego.treelayout.core:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:ssh-credentials:1.12" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:scm-api:2.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins.workflow:workflow-scm-step:1.14.2" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins.workflow:workflow-step-api:1.14.2" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:mailer:1.18" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:display-url-api:0.2" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.main:maven-plugin:2.9" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:javadoc:1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:mailer:1.7" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.main.maven:maven-agent:1.6" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.main.maven:maven-interceptor:1.6" level="project" />
     <orderEntry type="library" name="Maven: org.jvnet.hudson:maven2.1-interceptor:1.2" level="project" />
@@ -189,7 +214,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.sun.xml.txw2:txw2:20110809" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.xml.stream:stax-api:1.0-2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: relaxngDatatype:relaxngDatatype:20020414" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jvnet.winp:winp:1.22" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jenkins-ci:memory-monitor:1.9" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.woodstox:wstx-asl:3.2.9" level="project" />
@@ -231,7 +256,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.jenkins-ci.plugins:matrix-auth:1.0.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jenkins-ci.plugins:antisamy-markup-formatter:1.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.kohsuke:owasp-html-sanitizer:r88" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.jenkins-ci.plugins:junit:1.2-beta-4" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:junit:1.2-beta-4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.mortbay.jetty:jetty:6.1.26" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.mortbay.jetty:jetty-util:6.1.26" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.mortbay.jetty:servlet-api:2.5-20081211" level="project" />
@@ -249,7 +274,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.jvnet.hudson:netx:0.5-hudson-2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.easymock:easymock:2.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.netbeans.modules:org-netbeans-insane:RELEASE72" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: com.github.stephenc.findbugs:findbugs-annotations:1.3.9-1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.stephenc.findbugs:findbugs-annotations:1.3.9-1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.geb:geb-implicit-assertions:0.7.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.4" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.mojo:animal-sniffer-annotations:1.9" level="project" />

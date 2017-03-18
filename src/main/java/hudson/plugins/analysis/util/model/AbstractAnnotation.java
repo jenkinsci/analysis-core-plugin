@@ -85,6 +85,13 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
     /** The build number in which this annotation has been introduced. @since 1.72 */
     private int build;
 
+    /** Who caused this annotation. */
+    private String authorName;
+    /** Who caused this annotation. */
+    private String authorEmail;
+    /** Which commit caused this annotation. */
+    private String authorCommitId;
+
     /**
      * Creates a new instance of <code>AbstractAnnotation</code>.
      *
@@ -162,6 +169,9 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
         type = copy.getType();
         moduleName = TreeString.of(copy.getModuleName());
         packageName = TreeString.of(copy.getPackageName());
+        authorName = copy.getAuthorName();
+        authorEmail = copy.getAuthorEmail();
+        authorCommitId = copy.getAuthorCommitId();
     }
 
     /**
@@ -184,6 +194,15 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
         }
         if (type != null) {
             type = type.intern();
+        }
+        if (authorName != null) {
+            authorName = authorName.intern();
+        }
+        if (authorEmail != null) {
+            authorEmail = authorEmail.intern();
+        }
+        if (authorCommitId != null) {
+            authorCommitId = authorCommitId.intern();
         }
         return this;
     }
@@ -432,6 +451,37 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
         return Collections.unmodifiableCollection(lineRanges);
     }
 
+    /** {@inheritDoc} */
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    /** {@inheritDoc} */
+    public void setAuthorName(final String authorName) {
+        this.authorName = authorName;
+    }
+
+    /** {@inheritDoc} */
+    public String getAuthorEmail() {
+        return authorEmail;
+    }
+
+    /** {@inheritDoc} */
+    public void setAuthorEmail(final String authorEmail) {
+        this.authorEmail = authorEmail;
+    }
+
+    /** {@inheritDoc} */
+    public String getAuthorCommitId() {
+        return authorCommitId;
+    }
+
+    /** {@inheritDoc} */
+    public void setAuthorCommitId(final String commitId) {
+        this.authorCommitId = commitId;
+    }
+
+
     @Override
     @Exported
     public final int getPrimaryLineNumber() {
@@ -469,6 +519,7 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
         this.contextHashCode = contextHashCode;
     }
 
+
     // CHECKSTYLE:OFF
 
     @Override
@@ -487,6 +538,7 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
         result = prime * result + primaryColumnEnd;
         result = prime * result + ((priority == null) ? 0 : priority.hashCode());
         result = prime * result + ((type == null) ? 0 : type.hashCode());
+        result = prime * result + ((authorCommitId == null) ? 0 : authorCommitId.hashCode());
         return result;
     }
 
@@ -566,6 +618,28 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
         else if (!type.equals(other.type)) {
             return false;
         }
+        if (authorName == null) {
+            if (other.authorName != null) {
+                return false;
+            }
+        } else if(!authorName.equals(other.authorName)) {
+            return false;
+        }
+        if (authorEmail == null) {
+            if (other.authorEmail != null) {
+                return false;
+            }
+        } else if(!authorEmail.equals(other.authorEmail)) {
+            return false;
+        }
+        if (authorCommitId == null) {
+            if (other.authorCommitId != null) {
+                return false;
+            }
+        } else if(!authorCommitId.equals(other.authorCommitId)) {
+            return false;
+        }
+
         return true;
     }
 
