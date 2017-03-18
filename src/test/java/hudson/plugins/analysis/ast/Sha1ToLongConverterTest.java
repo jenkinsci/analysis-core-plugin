@@ -1,10 +1,8 @@
-package hudson.plugins.ast.factory;
+package hudson.plugins.analysis.ast;
 
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-
-import hudson.plugins.analysis.ast.Sha1ToLongConverter;
 
 /**
  * Tests the class {@link Sha1ToLongConverter}.
