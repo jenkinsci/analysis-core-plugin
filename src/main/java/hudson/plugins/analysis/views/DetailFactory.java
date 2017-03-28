@@ -20,6 +20,7 @@ import hudson.plugins.analysis.util.model.AnnotationsLabelProvider;
 import hudson.plugins.analysis.util.model.DefaultAnnotationContainer;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.LineRange;
+import hudson.plugins.analysis.util.model.WorkspaceFile;
 
 /**
  * Creates detail objects for the selected element of a annotation container.
@@ -168,7 +169,9 @@ public class DetailFactory {
                 detail = new PackageDetail(owner, this, container.getPackage(createHashCode(link, "package.")), defaultEncoding, displayName);
             }
             else if (link.startsWith("file.")) {
-                detail = new FileDetail(owner, this, container.getFile(createHashCode(link, "file.")), defaultEncoding, displayName);
+                // detail = new FileDetail(owner, this, container.getFile(createHashCode(link, "file.")), defaultEncoding, displayName);
+                WorkspaceFile file = container.getFile(createHashCode(link, "file."));
+                return new SourceDetail(owner, file.getAnnotations(), defaultEncoding);
             }
             else if (link.startsWith("tab.")) {
                 detail = createTabDetail(owner, container.getAnnotations(), createGenericTabUrl(link), defaultEncoding);
