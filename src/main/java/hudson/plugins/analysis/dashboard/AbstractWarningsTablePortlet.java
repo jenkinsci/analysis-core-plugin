@@ -192,7 +192,7 @@ public abstract class AbstractWarningsTablePortlet extends AbstractPortlet {
                 int numberOfAnnotations = result.getNumberOfAnnotations();
                 String value;
                 if (numberOfAnnotations > 0) {
-                    value = String.format("<a href=\"%s%s\">%d</a>", job.getShortUrl(), action.getUrlName(), numberOfAnnotations);
+                    value = String.format("<a href=\"%s%s\">%d</a>", job.getAbsoluteUrl(), action.getUrlName(), numberOfAnnotations);
                 }
                 else {
                     value = String.valueOf(numberOfAnnotations);
