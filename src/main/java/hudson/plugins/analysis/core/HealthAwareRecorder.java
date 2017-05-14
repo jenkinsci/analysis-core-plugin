@@ -291,12 +291,7 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
     public final void perform(final Run<?, ?> run, final FilePath workspace, final Launcher launcher, final TaskListener listener)
             throws InterruptedException, IOException {
         PluginLogger logger = new LoggerFactory().createLogger(listener.getLogger(), pluginName);
-        if (canContinue(run.getResult())) {
-            perform(run, workspace, launcher, logger);
-        }
-        else {
-            logger.log("Skipping publisher since build result is " + run.getResult());
-        }
+        perform(run, workspace, launcher, logger);
     }
 
     /**
