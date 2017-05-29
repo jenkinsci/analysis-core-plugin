@@ -40,7 +40,7 @@ public final class AnnotationDifferencer {
     private static Set<FileAnnotation> difference(
             final Set<FileAnnotation> target, final Set<FileAnnotation> other) {
         Set<FileAnnotation> difference = Sets.newHashSet(target);
-        difference.removeAll(other);
+        difference.removeAll(Sets.newHashSet(other));
         return difference;
     }
 
