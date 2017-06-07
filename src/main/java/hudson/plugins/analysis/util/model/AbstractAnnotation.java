@@ -66,6 +66,8 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
     private TreeString moduleName;
     /** The name of the package (or name space) that contains this annotation. */
     private TreeString packageName;
+    /** The category name of "package" to adopt it to special needs. */
+    private TreeString overridePackageCategoryName;
     /** Bug category. */
     private /*almost final*/ String category;
     /** Bug type. */
@@ -163,6 +165,7 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
         type = copy.getType();
         moduleName = TreeString.of(copy.getModuleName());
         packageName = TreeString.of(copy.getPackageName());
+        overridePackageCategoryName = TreeString.of(copy.getOverridePackageCategoryName());
     }
 
     /**
@@ -284,6 +287,17 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
         return StringUtils.isNotBlank(actualPackageName) && !StringUtils.equals(actualPackageName, PackageDetectors.UNDEFINED_PACKAGE);
     }
 
+    @Override
+    public boolean hasOverridePackageCategoryName() {
+        String actualPackageCategoryName = StringUtils.trim(TreeString.toString(overridePackageCategoryName));
+        return StringUtils.isNotBlank(actualPackageCategoryName);
+    }
+
+    @Override
+    public boolean hasOverridePackageCategoryTitle() {
+        return hasOverridePackageCategoryName();
+    }
+    
     /**
      * Sets the pathname for this warning.
      *
@@ -421,6 +435,18 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
         }
     }
 
+    @Override
+    @Exported
+    public final String getOverridePackageCategoryName() {
+        return TreeString.toString(overridePackageCategoryName);
+    }
+
+    @Override
+    @Exported
+    public final String getOverridePackageCategoryTitle() {
+        return TreeString.toString(overridePackageCategoryName) + "s";
+    }
+
     /**
      * Sets the package name to the specified value.
      *
@@ -428,6 +454,15 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
      */
     public final void setPackageName(final String packageName) {
         this.packageName = TreeString.of(packageName);
+    }
+
+    /**
+     * Override the package category name  to the specified value.
+     *
+     * @param packageCategoryName the value to set
+     */
+    public final void setOverridePackageCategoryName(final String packageCategoryName) {
+        this.overridePackageCategoryName = TreeString.of(packageCategoryName);
     }
 
     @Override
