@@ -29,7 +29,12 @@ public class GlobalSettings extends RunListener<Run<?, ?>> implements Describabl
     }
 
     private static DescriptorImpl findDescriptor() {
-        return (DescriptorImpl)Jenkins.getInstance().getDescriptorOrDie(GlobalSettings.class);
+        Jenkins jenkinsInstance = Jenkins.getInstance();
+        if (jenkinsInstance == null) {
+            /* Throw AssertionError exception to match behavior of Jenkins.getDescriptorOrDie */
+            throw new AssertionError("No Jenkins instance");
+        }
+        return (DescriptorImpl) jenkinsInstance.getDescriptorOrDie(GlobalSettings.class);
     }
 
     /**
@@ -50,6 +55,7 @@ public class GlobalSettings extends RunListener<Run<?, ?>> implements Describabl
     public static class DescriptorImpl extends Descriptor<GlobalSettings> implements Settings {
         private Boolean isQuiet;
         private Boolean failOnCorrupt;
+        private Boolean emptyGraphByDefault;
 
         private final CopyOnWriteList<AnalysisConfiguration> configurations = new CopyOnWriteList<AnalysisConfiguration>();
 
@@ -155,6 +161,21 @@ public class GlobalSettings extends RunListener<Run<?, ?>> implements Describabl
          */
         public void setFailOnCorrupt(final Boolean value) {
             failOnCorrupt = value;
+        }
+
+        @Override
+        public Boolean getEmptyGraphByDefault() {
+            return getValidBoolean(emptyGraphByDefault);
+        }
+
+        /**
+         * Sets the value of the emptyGraphByDefault boolean property.
+         *
+         * @param value
+         *            the value to set
+         */
+        public void setEmptyGraphByDefault(final Boolean value) {
+            emptyGraphByDefault = value;
         }
 
         private Boolean getValidBoolean(final Boolean value) {

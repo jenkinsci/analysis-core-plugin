@@ -11,6 +11,7 @@ public class SerializableSettings implements Settings, Serializable {
     private static final long serialVersionUID = 2078877884081589761L;
 
     private final boolean failOnCorrupt;
+    private final boolean emptyGraphByDefault;
     private final boolean quietMode;
     private final AnalysisConfiguration[] configurations;
 
@@ -23,6 +24,7 @@ public class SerializableSettings implements Settings, Serializable {
     public SerializableSettings(final Settings original) {
         failOnCorrupt = original.getFailOnCorrupt();
         quietMode = original.getQuietMode();
+        emptyGraphByDefault = original.getEmptyGraphByDefault();
         configurations = copy(original.getConfigurations());
     }
 
@@ -40,6 +42,11 @@ public class SerializableSettings implements Settings, Serializable {
     @Override
     public Boolean getFailOnCorrupt() {
         return failOnCorrupt;
+    }
+
+    @Override
+    public Boolean getEmptyGraphByDefault() {
+        return emptyGraphByDefault;
     }
 
     @Override

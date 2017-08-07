@@ -21,6 +21,8 @@ import hudson.model.AbstractProject;
 
 import hudson.util.FormValidation;
 
+import hudson.plugins.analysis.core.GlobalSettings;
+
 /**
  * Configuration properties of a trend graph.
  */
@@ -33,6 +35,7 @@ public class GraphConfiguration  {
     private static final int DEFAULT_DAY_COUNT = 30;
     private static final int DEFAULT_WIDTH = 500;
     private static final int DEFAULT_HEIGHT = 200;
+    private static final BuildResultGraph EMPTY_GRAPH = new EmptyGraph();
     private static final BuildResultGraph DEFAULT_GRAPH = new PriorityGraph();
 
     /** Separator of cookie values. */
@@ -431,8 +434,21 @@ public class GraphConfiguration  {
         width  = DEFAULT_WIDTH;
         buildCount = DEFAULT_BUILD_COUNT;
         dayCount = DEFAULT_DAY_COUNT;
-        graphType = DEFAULT_GRAPH;
+
+        graphType = graphTypeBySettings();
+
         useBuildDate = DEFAULT_USE_BUILD_DATE;
+    }
+
+    private BuildResultGraph graphTypeBySettings() {
+        try {
+	        if(GlobalSettings.instance().getEmptyGraphByDefault()) {
+	            return EMPTY_GRAPH;
+	        }
+	    } catch (AssertionError exception) {
+	        // ignore
+        }
+        return DEFAULT_GRAPH;
     }
 
     /**

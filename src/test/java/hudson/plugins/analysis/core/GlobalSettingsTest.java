@@ -59,7 +59,7 @@ public class GlobalSettingsTest {
      */
     @Test
     public void verifyJsonConversionTwoConfigurationElements() {
-        String input = "{\"quietMode\":true,\"failOnCorrupt\":false,\"configurations\":["
+        String input = "{\"quietMode\":true,\"failOnCorrupt\":false,\"emptyGraphByDefault\":true,\"configurations\":["
                 + "{\"name\":\"Eins\",\"canRunOnFailed\":false,\"defaultEncoding\":\"\",\"shouldDetectModules\":false,\"healthy\":\"\",\"unHealthy\":\"\",\"thresholdLimit\":\"low\",\"unstableTotalAll\":\"\",\"unstableTotalHigh\":\"\",\"unstableTotalNormal\":\"\",\"unstableTotalLow\":\"\",\"failedTotalAll\":\"\",\"failedTotalHigh\":\"\",\"failedTotalNormal\":\"\",\"failedTotalLow\":\"\"},"
                 + "{\"name\":\"Zwei\",\"canRunOnFailed\":false,\"defaultEncoding\":\"\",\"shouldDetectModules\":false,\"healthy\":\"\",\"unHealthy\":\"\",\"thresholdLimit\":\"low\",\"unstableTotalAll\":\"\",\"unstableTotalHigh\":\"\",\"unstableTotalNormal\":\"\",\"unstableTotalLow\":\"\",\"failedTotalAll\":\"\",\"failedTotalHigh\":\"\",\"failedTotalNormal\":\"\",\"failedTotalLow\":\"\",\"canComputeNew\":{\"unstableNewAll\":\"\",\"unstableNewHigh\":\"\",\"unstableNewNormal\":\"\",\"unstableNewLow\":\"\",\"failedNewAll\":\"\",\"failedNewHigh\":\"\",\"failedNewNormal\":\"\",\"failedNewLow\":\"\",\"useDeltaValues\":false,\"useStableBuildAsReference\":false}}]}}";
         DescriptorImpl settings = convert(input);
@@ -71,6 +71,7 @@ public class GlobalSettingsTest {
         assertEquals("Wrong name of configuration", "Zwei", configurations[1].getName());
 
         verifyBooleans(settings, true, false);
+        assertEquals("Wrong empty graph mode", true, settings.getEmptyGraphByDefault());
     }
 
     private void verifyBooleans(final DescriptorImpl settings, final boolean expectedQuiet, final boolean expectedCorrupt) {

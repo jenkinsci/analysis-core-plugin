@@ -22,6 +22,13 @@ public interface Settings {
     Boolean getFailOnCorrupt();
 
     /**
+     * Returns whether the trend graph should be empty by default.
+     *
+     * @return on <code>true</code> the trend graph will be empty by default, on <code>false</code> the default trend graph will be shown.
+     */
+    Boolean getEmptyGraphByDefault();
+
+    /**
      * Returns the defined analysis configurations.
      *
      * @return the configurations
