@@ -6,12 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collection;
 
+import hudson.plugins.analysis.util.*;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.LineIterator;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import hudson.plugins.analysis.util.ContextHashCode;
 import hudson.plugins.analysis.util.model.AbstractAnnotation;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 
@@ -127,5 +129,27 @@ public abstract class AbstractAnnotationParser implements AnnotationParser {
         }
         builder.append(warningType);
         return builder.toHashCode();
+    }
+
+    protected WarningFingerprint createFingerprint(final String fileName, final int line, final String warningType) {
+        String builder = "";
+        String errorLine = "";
+        try {
+            builder = (new WarningText().create(fileName, line, defaultEncoding));
+            //builder = (new ContextCode().create(fileName, line, defaultEncoding));
+            LineIterator lineIterator = EncodingValidator.readFile(fileName, defaultEncoding);
+
+            for (int i = 0; lineIterator.hasNext(); i++) {
+                errorLine = lineIterator.nextLine();
+                if (i == line - 1) {
+                    break;
+                }
+            }
+
+        } catch (IOException ignored) {
+
+        }
+        RobustWinnowing r = new RobustWinnowing();
+        return new WarningFingerprint(r.winnow(builder), warningType, line, fileName, errorLine);
     }
 }

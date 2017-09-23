@@ -1,9 +1,12 @@
 package hudson.plugins.analysis.util.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import hudson.model.AbstractBuild;
 import hudson.model.Run;
+import hudson.plugins.analysis.util.WarningFingerprint;
+import jnr.ffi.annotations.In;
 
 /**
  * Annotates a collection of line ranges in a file. An annotation consists of a description and a tooltip.
@@ -216,4 +219,8 @@ public interface FileAnnotation extends Comparable<FileAnnotation> {
      * @since 1.72
      */
     int getBuild();
+
+    void setFingerprint(WarningFingerprint fingerprint);
+
+    WarningFingerprint getFingerprint();
 }
