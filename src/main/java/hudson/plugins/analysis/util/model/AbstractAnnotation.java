@@ -3,10 +3,13 @@ package hudson.plugins.analysis.util.model;
 import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
+import hudson.plugins.analysis.util.WarningFingerprint;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.kohsuke.stapler.export.Exported;
@@ -74,6 +77,13 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
      * two annotations are equal even if the equals method returns <code>false</code>.
      */
     private long contextHashCode;
+
+    /**
+     * Object with information about the warning. It is used to decide if
+     * two annotations are the same even if the contextHashCode isn´ the same.
+     */
+    private WarningFingerprint fingerprint;
+
     /** The origin of this warning. */
     private String origin;
     /** Relative path of this duplication. @since 1.10 */
@@ -641,5 +651,13 @@ public abstract class AbstractAnnotation implements FileAnnotation, Serializable
     @Deprecated
     public String getTempName(final AbstractBuild<?, ?> owner) {
         return getTempName((Run<?, ?>) owner);
+    }
+
+    public WarningFingerprint getFingerprint() {
+        return fingerprint;
+    }
+
+    public void setFingerprint(WarningFingerprint fingerprint) {
+        this.fingerprint = fingerprint;
     }
 }

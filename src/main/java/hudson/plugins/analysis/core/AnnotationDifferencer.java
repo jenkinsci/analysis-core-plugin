@@ -1,10 +1,14 @@
 package hudson.plugins.analysis.core;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
 
+import hudson.plugins.analysis.util.FingerprintMatcher;
+import hudson.plugins.analysis.util.WarningFingerprint;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 
 /**
@@ -63,8 +67,30 @@ public final class AnnotationDifferencer {
             }
         }
 
-        targetSet.removeAll(duplicates);
+        //targetSet.removeAll(duplicates);
+        //comment in to use the old method too
+
+
+        List<WarningFingerprint> otherFingerprints = extractFingerprints(previous);
+        Set<FileAnnotation> possibleDuplicates = Sets.newHashSet();
+        for (FileAnnotation annotation : targetSet) {
+            FingerprintMatcher f = new FingerprintMatcher(otherFingerprints, annotation.getFingerprint());
+            boolean match = f.match();
+            if (match) {
+                possibleDuplicates.add(annotation);
+            }
+        }
+        targetSet.removeAll(possibleDuplicates);
         return targetSet;
+    }
+
+    private static ArrayList<WarningFingerprint> extractFingerprints(final Set<FileAnnotation> previous) {
+        ArrayList<WarningFingerprint> fingerprints = new ArrayList<WarningFingerprint>();
+        for (FileAnnotation annotation : previous) {
+            fingerprints.add(annotation.getFingerprint());
+        }
+        return fingerprints;
+
     }
 
     /**
