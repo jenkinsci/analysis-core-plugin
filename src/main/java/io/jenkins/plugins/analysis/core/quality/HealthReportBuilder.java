@@ -4,11 +4,10 @@ import java.io.Serializable;
 
 import org.jvnet.localizer.Localizable;
 
-import edu.hm.hafner.analysis.Priority;
-import io.jenkins.plugins.analysis.core.steps.AnalysisResult;
-
 import hudson.model.HealthReport;
 import hudson.plugins.analysis.Messages;
+import hudson.plugins.analysis.util.model.AnnotationProvider;
+import hudson.plugins.analysis.util.model.Priority;
 
 /**
  * Creates a health report for integer values based on healthy and unhealthy thresholds.
@@ -25,8 +24,7 @@ public class HealthReportBuilder implements Serializable {
     /**
      * Creates a new instance of {@link HealthReportBuilder}.
      *
-     * @param healthDescriptor
-     *         health descriptor
+     * @param healthDescriptor health descriptor
      */
     public HealthReportBuilder(final HealthDescriptor healthDescriptor) {
         this.healthDescriptor = healthDescriptor;
@@ -34,34 +32,45 @@ public class HealthReportBuilder implements Serializable {
 
     /**
      * Computes the healthiness of a build based on the specified results. Reports a health of 100% when the specified
-     * counter is less than {@link HealthDescriptor#getHealthy()}. Reports a health of 0% when the specified counter is
-     * greater than {@link HealthDescriptor#getUnHealthy()}. The computation takes only annotations of the specified
-     * severity into account.
+     * counter is less than {@link #healthy}. Reports a health of 0% when the specified counter is greater than {@link
+     * #unHealthy}. The computation takes only annotations of the specified severity into account.
      *
-     * @param result
-     *         annotations of the current build
-     *
+     * @param result annotations of the current build
      * @return the healthiness of a build
      */
-    public HealthReport computeHealth(final AnalysisResult result) {
+    public HealthReport computeHealth(final AnnotationProvider result) {
         int numberOfAnnotations = 0;
         for (Priority priority : Priority.collectPrioritiesFrom(healthDescriptor.getMinimumPriority())) {
-            numberOfAnnotations += result.getTotalSize(priority);
+            numberOfAnnotations += result.getNumberOfAnnotations(priority);
         }
 
+        return computeHealth(numberOfAnnotations, result);
+    }
+
+
+    /**
+     * Computes the healthiness of a build based on the specified counter. Reports a health of 100% when the specified
+     * counter is less than {@link #healthy}. Reports a health of 0% when the specified counter is greater than {@link
+     * #unHealthy}.
+     *
+     * @param counter the number of items in a build that should be considered for health computation
+     * @param result  annotations of the current build
+     * @return the healthiness of a build
+     */
+    protected HealthReport computeHealth(final int counter, final AnnotationProvider result) {
         if (healthDescriptor.isEnabled()) {
             int percentage;
             int healthy = healthDescriptor.getHealthy();
-            if (numberOfAnnotations < healthy) {
+            if (counter < healthy) {
                 percentage = 100;
             }
             else {
                 int unHealthy = healthDescriptor.getUnHealthy();
-                if (numberOfAnnotations > unHealthy) {
+                if (counter > unHealthy) {
                     percentage = 0;
                 }
                 else {
-                    percentage = 100 - ((numberOfAnnotations - healthy) * 100 / (unHealthy - healthy));
+                    percentage = 100 - ((counter - healthy) * 100 / (unHealthy - healthy));
                 }
             }
 
@@ -70,17 +79,16 @@ public class HealthReportBuilder implements Serializable {
         return null;
     }
 
-
-    private Localizable getDescription(final AnalysisResult result) {
+    private Localizable getDescription(final AnnotationProvider result) {
         String name = "Static Analysis"; // FIXME: extract from IssueParser.find(id)
-        if (result.getTotalSize() == 0) {
+        if (result.getNumberOfAnnotations() == 0) {
             return Messages._ResultAction_HealthReportNoItem(name);
         }
-        else if (result.getTotalSize() == 1) {
+        else if (result.getNumberOfAnnotations() == 1) {
             return Messages._ResultAction_HealthReportSingleItem(name);
         }
         else {
-            return Messages._ResultAction_HealthReportMultipleItem(name, result.getTotalSize());
+            return Messages._ResultAction_HealthReportMultipleItem(name, result.getNumberOfAnnotations());
         }
     }
 }
