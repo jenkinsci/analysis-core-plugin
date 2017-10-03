@@ -1,32 +1,36 @@
 package io.jenkins.plugins.analysis.core.history;
 
-import edu.hm.hafner.analysis.Issues;
+import javax.annotation.CheckForNull;
 
 import hudson.model.Run;
-import hudson.plugins.analysis.core.IssueDifference;
+import hudson.plugins.analysis.util.model.AnnotationContainer;
 
 /**
- * Provides the reference result for a new static analysis run. When old, new, and fixed issues are computed (see {@link
- * IssueDifference}) for a new static analysis run then an instance of this reference is used as a baseline.
+ * FIXME: write comment.
  *
  * @author Ullrich Hafner
  */
 public interface ReferenceProvider {
-    /** Indicates that no reference has been found. */
-    int NO_REFERENCE_FOUND = -1;
+    /**
+     * Returns the reference build or {@code null} if there is no such build.
+     *
+     * @return the reference build
+     * @see #hasReference()
+     */
+    @CheckForNull
+    Run<?, ?> getReference();
+
+    /**
+     * Returns whether a reference build is available to get results from.
+     *
+     * @return {@code true} if a reference build exists, {@code false} otherwise
+     */
+    boolean hasReference();
 
     /**
      * Returns the issues of the reference build.
      *
      * @return the issues of the reference build
      */
-    Issues getIssues();
-
-    /**
-     * Returns the number of the reference run.
-     *
-     * @return the number of the {@link Run} that is used as reference, or {@link #NO_REFERENCE_FOUND}
-     * if no such run exists.
-     */
-    int getNumber();
+    AnnotationContainer getIssues();
 }
