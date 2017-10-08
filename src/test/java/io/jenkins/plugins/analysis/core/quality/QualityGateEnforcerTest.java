@@ -28,7 +28,7 @@ class QualityGateEnforcerTest {
     void shouldBeSuccessfulWhenNoIssuesPresentAndFailureQualityGateIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
-        QualityGate qualityGate = new QualityGate(1);
+        QualityGate qualityGate = new QualityGate();
 
         Result success = enforcer.evaluate(run, qualityGate);
 
