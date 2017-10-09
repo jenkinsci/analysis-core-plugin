@@ -30,7 +30,7 @@ import io.jenkins.plugins.analysis.core.graphs.TrendDetails;
 import io.jenkins.plugins.analysis.core.graphs.UserGraphConfigurationView;
 import io.jenkins.plugins.analysis.core.history.BuildHistory;
 import io.jenkins.plugins.analysis.core.history.NullBuildHistory;
-import io.jenkins.plugins.analysis.core.history.ResultHistory;
+import io.jenkins.plugins.analysis.core.history.RunResultHistory;
 import io.jenkins.plugins.analysis.core.quality.HealthDescriptor;
 import jenkins.model.Jenkins;
 
@@ -53,21 +53,20 @@ import hudson.util.Graph;
 public class JobAction implements Action {
     private static final Logger LOGGER = Logger.getLogger(JobAction.class.getName());
 
-    private final Job<?, ?> job;
+    private final Job<?, ?> job; // FIXME: make transient
     private final String id;
-    private final String name;
 
     /**
      * Creates a new instance of {@link JobAction}.
-     *  @param job
+     *
+     * @param job
      *            the job that owns this action
      * @param id
-     * @param name
+     *            the ID of the parser
      */
-    public JobAction(final Job<?, ?> job, final String id, final String name) {
+    public JobAction(final Job<?, ?> job, final String id) {
         this.job = job;
         this.id = id;
-        this.name = name;
     }
 
     /**
@@ -81,11 +80,11 @@ public class JobAction implements Action {
 
     @Override @Exported
     public String getDisplayName() {
-        return getTool().getLinkName();
+        return getIssueParser().getLinkName();
     }
 
-    private StaticAnalysisLabelProvider getTool() {
-        return StaticAnalysisTool.find(id, name);
+    private StaticAnalysisTool getIssueParser() {
+        return StaticAnalysisTool.find(id);
     }
 
     /**
@@ -94,7 +93,7 @@ public class JobAction implements Action {
      * @return the title of the trend graph.
      */
     public String getTrendName() {
-        return getTool().getTrendName();
+        return getIssueParser().getTrendName();
     }
 
     /**
@@ -254,7 +253,7 @@ public class JobAction implements Action {
      */
     protected GraphConfigurationView createUserConfiguration(final StaplerRequest request) {
         return new UserGraphConfigurationView(createConfiguration(), getJob(),
-                getUrlName(), request.getCookies(), createBuildHistory(), getTool());
+                getUrlName(), request.getCookies(), createBuildHistory());
     }
 
     /**
@@ -264,10 +263,10 @@ public class JobAction implements Action {
      */
     protected GraphConfigurationView createDefaultConfiguration() {
         return new DefaultGraphConfigurationView(createConfiguration(), getJob(),
-                getUrlName(), createBuildHistory(), getTool());
+                getUrlName(), createBuildHistory());
     }
 
-    private ResultHistory createBuildHistory() {
+    private RunResultHistory createBuildHistory() {
         Run<?, ?> lastFinishedRun = getLastFinishedRun();
         if (lastFinishedRun == null) {
             return new NullBuildHistory();
@@ -334,8 +333,8 @@ public class JobAction implements Action {
     @Override
     public String getIconFileName() {
         ResultAction lastAction = getLastAction();
-        if (lastAction != null && lastAction.getResult().getTotalSize() > 0) {
-            return Jenkins.RESOURCE_PATH + getTool().getSmallIconUrl();
+        if (lastAction != null && lastAction.getResult().hasAnnotations()) {
+            return Jenkins.RESOURCE_PATH + getIssueParser().getSmallIconUrl();
         }
         return null;
     }
@@ -391,7 +390,7 @@ public class JobAction implements Action {
      */
     @CheckForNull @Exported
     public Run<?, ?> getLastFinishedRun() {
-        if (job == null) { // FIXME: can't be null
+        if (job == null) {
             return null;
         }
         Run<?, ?> lastRun = job.getLastBuild();
@@ -414,12 +413,7 @@ public class JobAction implements Action {
     public void doIndex(final StaplerRequest request, final StaplerResponse response) throws IOException {
         Run<?, ?> lastRun = getLastFinishedRun();
         if (lastRun != null) {
-            response.sendRedirect2(String.format("../%d/%s", lastRun.getNumber(), getTool().getResultUrl()));
+            response.sendRedirect2(String.format("../%d/%s", lastRun.getNumber(), id));
         }
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s(%s)", getClass().getName(), id);
     }
 }

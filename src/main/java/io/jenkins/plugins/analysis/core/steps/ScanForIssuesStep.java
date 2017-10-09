@@ -3,7 +3,6 @@ package io.jenkins.plugins.analysis.core.steps;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Set;
 
@@ -18,11 +17,8 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 import com.google.common.collect.Sets;
 
-import edu.hm.hafner.analysis.Issues;
 import io.jenkins.plugins.analysis.core.steps.StaticAnalysisTool.StaticAnalysisToolDescriptor;
 import io.jenkins.plugins.analysis.core.util.FilesParser;
-import io.jenkins.plugins.analysis.core.util.Logger;
-import io.jenkins.plugins.analysis.core.util.LoggerFactory;
 import jenkins.model.Jenkins;
 
 import hudson.EnvVars;
@@ -31,6 +27,7 @@ import hudson.FilePath;
 import hudson.Util;
 import hudson.model.Run;
 import hudson.model.TaskListener;
+import hudson.plugins.analysis.core.ParserResult;
 
 /**
  * Scan files or the console log for issues.
@@ -53,8 +50,7 @@ public class ScanForIssuesStep extends Step {
     }
 
     /**
-     * Sets the Ant file-set pattern of files to work with. If the pattern is undefined then the console log is
-     * scanned.
+     * Sets the Ant file-set pattern of files to work with.
      *
      * @param pattern
      *         the pattern to use
@@ -70,10 +66,10 @@ public class ScanForIssuesStep extends Step {
     }
 
     /**
-     * Sets the static analysis tool that produced the issues.
+     * Sets the parsers to use.
      *
      * @param tool
-     *         the static analysis tool
+     *         the parser to use
      */
     @DataBoundSetter
     public void setTool(final StaticAnalysisTool tool) {
@@ -117,10 +113,10 @@ public class ScanForIssuesStep extends Step {
         return new Execution(stepContext, this);
     }
 
-    public static class Execution extends SynchronousNonBlockingStepExecution<Issues> {
+    public static class Execution extends SynchronousNonBlockingStepExecution<ParserResult> {
         private final String defaultEncoding;
         private final boolean shouldDetectModules;
-        private final StaticAnalysisTool tool;
+        private final StaticAnalysisTool parser;
         private final String pattern;
 
         protected Execution(@Nonnull final StepContext context, final ScanForIssuesStep step) {
@@ -128,70 +124,35 @@ public class ScanForIssuesStep extends Step {
 
             defaultEncoding = step.getDefaultEncoding();
             shouldDetectModules = step.getShouldDetectModules();
-            tool = step.getTool();
+            parser = step.getTool();
             pattern = step.getPattern();
         }
 
-        private Logger createLogger() throws IOException, InterruptedException {
-            TaskListener listener = getContext().get(TaskListener.class);
-
-            return new LoggerFactory().createLogger(listener.getLogger(), tool.getName());
-        }
-
-        private Run<?, ?> getRun() throws IOException, InterruptedException {
-            return getContext().get(Run.class);
-        }
-
         @Override
-        protected Issues run() throws IOException, InterruptedException, IllegalStateException, InvocationTargetException {
+        protected ParserResult run() throws Exception {
             FilePath workspace = getContext().get(FilePath.class);
+            TaskListener logger = getContext().get(TaskListener.class);
 
-            if (workspace == null) {
-                throw new IllegalStateException("No workspace set for step " + this);
+            logger.getLogger().append("Starting parser " + parser + " (encoding = " + defaultEncoding
+                    + ", detectModules = " + shouldDetectModules + ") in workspace " + workspace + "\n");
+
+            if (workspace != null) {
+                ParserResult result = workspace.act(
+                        new FilesParser(parser.getId(), getPattern(), parser, shouldDetectModules));
+                logger.getLogger().append(result.getLogMessages());
+                return result;
             }
             else {
-                if (StringUtils.isNotBlank(pattern)) {
-                    return scanFiles(workspace);
-                }
-                else {
-                    return scanConsoleLog(workspace);
-                }
+                return new ParserResult();
             }
-        }
-
-        private Issues scanConsoleLog(final FilePath workspace) throws IOException, InterruptedException, InvocationTargetException {
-            Logger logger = createLogger();
-            logger.log("Parsing console log (in workspace '%s')", workspace);
-
-            Issues issues = new Issues(workspace.getName()); // TODO: Mix of FilePath and File
-            // issues.setId(tool.getId()); TODO value of issue?
-            issues.addAll(tool.parse(getRun().getLogFile(), StringUtils.EMPTY));
-
-            int modulesSize = issues.getProperties(issue -> issue.getModuleName()).size();
-            if (modulesSize > 0) {
-                logger.log("Successfully parsed console log: found %d issues in %d modules",
-                        issues.getSize(), modulesSize);
-            }
-            else {
-                logger.log("Successfully parsed console log: found %d issues", issues.getSize());
-            }
-
-            return issues;
-        }
-
-        private Issues scanFiles(final FilePath workspace) throws IOException, InterruptedException {
-            FilesParser parser = new FilesParser(expandEnvironmentVariables(pattern), tool, shouldDetectModules);
-            Issues issues = workspace.act(parser);
-
-            // FIXME: here we have no prefix for the logger since lines are just dumped
-            Logger logger = createLogger();
-            logger.log(issues.getLogMessages());
-
-            return issues;
         }
 
         /** Maximum number of times that the environment expansion is executed. */
         private static final int RESOLVE_VARIABLES_DEPTH = 10;
+
+        protected String getPattern() {
+            return expandEnvironmentVariables(StringUtils.defaultIfBlank(pattern, parser.getDefaultPattern()));
+        }
 
         /**
          * Resolve build parameters in the file pattern up to {@link #RESOLVE_VARIABLES_DEPTH} times.
@@ -208,12 +169,15 @@ public class ScanForIssuesStep extends Step {
                         String old = expanded;
                         expanded = Util.replaceMacro(expanded, environment);
                         if (old.equals(expanded)) {
-                            return expanded;
+                            break;
                         }
                     }
                 }
             }
-            catch (IOException | InterruptedException ignored) {
+            catch (IOException e) {
+                // ignore
+            }
+            catch (InterruptedException e) {
                 // ignore
             }
             return expanded;
