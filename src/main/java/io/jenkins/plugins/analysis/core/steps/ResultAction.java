@@ -10,7 +10,6 @@ import org.kohsuke.stapler.export.ExportedBean;
 
 import io.jenkins.plugins.analysis.core.quality.HealthDescriptor;
 import io.jenkins.plugins.analysis.core.quality.HealthReportBuilder;
-import io.jenkins.plugins.analysis.core.views.IssuesDetail;
 import jenkins.model.RunAction2;
 import jenkins.tasks.SimpleBuildStep.LastBuildAction;
 
@@ -18,52 +17,45 @@ import hudson.model.Action;
 import hudson.model.HealthReport;
 import hudson.model.HealthReportingAction;
 import hudson.model.Run;
+import hudson.plugins.analysis.Messages;
+import hudson.plugins.analysis.util.ToolTipProvider;
 
 /**
  * Controls the live cycle of the results in a job. This action persists the results of a build and displays them on the
- * build page. The actual visualization of the results is defined in the matching {@code summary.jelly} file.
- *
- * <p>
- * Moreover, this class renders the results trend.
- * </p>
+ * build page. The actual visualization of the results is defined in the matching {@code summary.jelly} file. <p>
+ * Moreover, this class renders the results trend. </p>
  *
  * @author Ulli Hafner
  */
 //CHECKSTYLE:COUPLING-OFF
 @ExportedBean
-public class ResultAction implements HealthReportingAction, LastBuildAction, RunAction2, StaplerProxy {
+public class ResultAction implements StaplerProxy, HealthReportingAction, ToolTipProvider, LastBuildAction, RunAction2 {
     private transient Run<?, ?> run;
 
     private final AnalysisResult result;
     private final String id;
     private final HealthDescriptor healthDescriptor;
-    private final String name;
 
     /**
-     * Creates a new instance of {@link ResultAction}.
+     * Creates a new instance of <code>AbstractResultAction</code>.
      *
      * @param run
      *         the associated build of this action
+     * @param id
+     *         the ID of the parser
      * @param result
      *         the result of the static analysis run
      * @param healthDescriptor
      *         defines the health for the current result
-     * @param id
-     *         the ID of the static analysis tool
-     * @param name
-     *         The name of the tool. If empty the name is resolved using the ID.
      */
-    public ResultAction(final Run<?, ?> run, final AnalysisResult result, final HealthDescriptor healthDescriptor,
-            final String id, final String name) {
+    public ResultAction(final Run<?, ?> run, final String id, final AnalysisResult result,
+            final HealthDescriptor healthDescriptor) {
         this.run = run;
         this.result = result;
         this.id = id;
         this.healthDescriptor = healthDescriptor;
-        this.name = name;
     }
 
-    // FIXME: use owner as name
-    @Exported
     public Run<?, ?> getRun() {
         return run;
     }
@@ -86,13 +78,12 @@ public class ResultAction implements HealthReportingAction, LastBuildAction, Run
     @Override
     @Exported
     public String getDisplayName() {
-        return getLabelProvider().getLinkName();
+        return getIssueParser().getLinkName();
     }
 
     @Override
-    @Exported
     public String getUrlName() {
-        return getLabelProvider().getResultUrl();
+        return getIssueParser().getResultUrl();
     }
 
     @Override
@@ -103,7 +94,12 @@ public class ResultAction implements HealthReportingAction, LastBuildAction, Run
 
     @Override
     public Collection<? extends Action> getProjectActions() {
-        return Collections.singleton(new JobAction(run.getParent(), id, name));
+        return Collections.singleton(new JobAction(run.getParent(), id));
+    }
+
+    @Override
+    public final Object getTarget() {
+        return getResult();
     }
 
     @Exported
@@ -113,7 +109,7 @@ public class ResultAction implements HealthReportingAction, LastBuildAction, Run
 
     @Override
     public String getIconFileName() {
-        if (getResult().getTotalSize() > 0) {
+        if (getResult().getNumberOfAnnotations() > 0) {
             return getSmallImage();
         }
         return null;
@@ -137,7 +133,7 @@ public class ResultAction implements HealthReportingAction, LastBuildAction, Run
      * @since 1.41
      */
     public String getLargeImageName() {
-        return getLabelProvider().getLargeIconUrl();
+        return getIssueParser().getLargeIconUrl();
     }
 
     /**
@@ -156,7 +152,39 @@ public class ResultAction implements HealthReportingAction, LastBuildAction, Run
      * @return the URL of the image
      */
     protected String getSmallImage() {
-        return getLabelProvider().getSmallIconUrl();
+        return getIssueParser().getSmallIconUrl();
+    }
+
+    // FIXME: should be handled by IssuesParser
+    @Override
+    public String getTooltip(final int numberOfItems) {
+        if (numberOfItems == 1) {
+            return getSingleItemTooltip();
+        }
+        else {
+            return getMultipleItemsTooltip(numberOfItems);
+        }
+    }
+
+    /**
+     * Returns the tooltip for several items.
+     *
+     * @param numberOfItems
+     *         the number of items to display the tooltip for
+     *
+     * @return the tooltip for several items
+     */
+    protected String getMultipleItemsTooltip(final int numberOfItems) {
+        return Messages.ResultAction_MultipleWarnings(numberOfItems);
+    }
+
+    /**
+     * Returns the tooltip for exactly one item.
+     *
+     * @return the tooltip for exactly one item
+     */
+    protected String getSingleItemTooltip() {
+        return Messages.ResultAction_OneWarning();
     }
 
     @Exported
@@ -164,25 +192,7 @@ public class ResultAction implements HealthReportingAction, LastBuildAction, Run
         return getResult().isSuccessful();
     }
 
-    @Override
-    public String toString() {
-        return String.format("%s for %s", getClass().getName(), getLabelProvider().getName());
-    }
-
-    private StaticAnalysisLabelProvider getLabelProvider() {
-        return StaticAnalysisTool.find(id, name);
-    }
-
-    /**
-     * Returns the detail view for issues for all Stapler requests.
-     *
-     * @return the detail view for issues
-     */
-    @Override
-    public Object getTarget() {
-        AnalysisResult result = getResult();
-
-        return new IssuesDetail(run, result.getProject(), result.getFixedWarnings(), result.getNewWarnings(),
-                result.getDefaultEncoding(), getLabelProvider().getLinkName());
+    private StaticAnalysisTool getIssueParser() {
+        return StaticAnalysisTool.find(id);
     }
 }
