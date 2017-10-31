@@ -10,6 +10,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 import edu.hm.hafner.analysis.Issue;
 import edu.hm.hafner.analysis.Issues;
+import io.jenkins.plugins.analysis.core.steps.Messages;
 
 import hudson.model.ModelObject;
 import hudson.model.Run;
@@ -20,7 +21,7 @@ import hudson.model.Run;
  * @author Ulli Hafner
  */
 public class PropertyCountTab extends IssuesDetail {
-    private final Map<String, Integer> propertyCount;
+    private final Map<String, Long> propertyCount;
     private final Function<String, String> propertyFormatter;
     private final String property;
 
@@ -35,14 +36,14 @@ public class PropertyCountTab extends IssuesDetail {
      */
     public PropertyCountTab(final Run<?, ?> owner, final Issues issues, final String defaultEncoding,
             final ModelObject parent, final String property, final Function<String, String> propertyFormatter) {
-        super(owner, issues, new Issues(), new Issues(), defaultEncoding, parent);
+        super(owner, issues, new Issues(), new Issues(), defaultEncoding, parent, Messages._Default_Name());
 
         this.property = property;
         propertyCount = getIssues().getPropertyCount(getIssueStringFunction(property));
         this.propertyFormatter = propertyFormatter;
     }
 
-    static Function<Issue, String> getIssueStringFunction(final String property) {
+    private Function<Issue, String> getIssueStringFunction(final String property) {
         return issue -> {
             try {
                 return PropertyUtils.getProperty(issue, property).toString();
@@ -51,21 +52,6 @@ public class PropertyCountTab extends IssuesDetail {
                 return property;
             }
         };
-    }
-
-    public String getColumnHeader() {
-        Issues issues = getIssues();
-        String property = this.property;
-        return getColumnHeaderFor(issues, property);
-    }
-
-    static String getColumnHeaderFor(final Issues issues, final String property) {
-        try {
-            return PropertyUtils.getProperty(new TabLabelProvider(issues), property).toString();
-        }
-        catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            return "Element";
-        }
     }
 
     public String getProperty() {
