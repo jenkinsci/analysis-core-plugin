@@ -750,6 +750,16 @@ public class AnalysisResult implements Serializable, StaticAnalysisRun2 {
     }
 
     @Override
+    public Map<String, Integer> getSizePerOrigin() {
+        return getProject().getPropertyCount(issue -> issue.getOrigin());
+    }
+
+    @Override
+    public AnalysisBuild getBuild() {
+        return new RunAdapter(run);
+    }
+
+    @Override
     public int getTotalSize() {
         return numberOfWarnings;
     }
