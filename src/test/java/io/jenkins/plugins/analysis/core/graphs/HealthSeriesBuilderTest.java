@@ -56,19 +56,6 @@ class HealthSeriesBuilderTest {
      * healthy < total < unhealty
      * result: (healthy, total - healthy, 0)
      */
-    @Test
-    void totalSmallerThanUnhealthyButBiggerThanHealthy() {
-        assertThat(testComputeSeries(1 ,6, 3)).containsExactly(1, 2, 0);
-    }
-
-    /**
-     * total < healty < unhealthy
-     * result: (total, 0 ,0)
-     */
-    @Test
-    void totalSmallerThanHealthy() {
-        assertThat(testComputeSeries(3 ,6, 1)).containsExactly(1, 0, 0);
-    }
 
     /**
      * Runs a parameterized test of computeSeries
