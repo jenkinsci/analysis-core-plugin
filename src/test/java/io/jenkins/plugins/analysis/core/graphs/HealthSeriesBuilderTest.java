@@ -1,10 +1,12 @@
 package io.jenkins.plugins.analysis.core.graphs;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.assertj.core.api.ListAssert;
+import org.jfree.data.category.CategoryDataset;
 import org.junit.jupiter.api.Test;
 
 import edu.hm.hafner.analysis.Priority;
@@ -30,7 +32,7 @@ class HealthSeriesBuilderTest {
      * result: (healty, 0, 0)
      */
     @Test
-    void totalEqualToHealthy() {
+    void computeSeriesTotalEqualToHealthy() {
         assertThat(testComputeSeries(1, 3, 1)).containsExactly(1, 0, 0);
     }
 
@@ -39,7 +41,7 @@ class HealthSeriesBuilderTest {
      * result: (healty, unhealthy - healthy ,0)
      */
     @Test
-    void totalEqualToUnhealty() {
+    void computeSeriesTotalEqualToUnhealty() {
         assertThat(testComputeSeries(1, 3, 3)).containsExactly(1, 2, 0);
     }
 
@@ -48,17 +50,34 @@ class HealthSeriesBuilderTest {
      * result: (healty, unhealthy - healthy, total - unhealthy)
      */
     @Test
-    void totalBiggerThanUnhealthy() {
+    void computeSeriesTotalBiggerThanUnhealthy() {
         assertThat(testComputeSeries(1, 3, 6)).containsExactly(1, 2, 3);
     }
 
-    /**
-     * healthy < total < unhealty
-     * result: (healthy, total - healthy, 0)
-     */
+    @Test
+    void t1() {
+        int healthy = 0;
+        int unHeahlthy = 1;
+        int total = 0;
+
+        HealthDescriptor healthDescriptor = new HealthDescriptor(Integer.toString(healthy), Integer.toString(unHeahlthy), Priority.NORMAL);
+        StaticAnalysisRun staticAnalysisRun = mock(StaticAnalysisRun.class);
+        when(staticAnalysisRun.getTotalSize()).thenReturn(total);
+        HealthSeriesBuilder sut = new HealthSeriesBuilder(healthDescriptor);
+
+        List<StaticAnalysisRun> staticAnalysisRuns = new ArrayList<>();
+        staticAnalysisRuns.add(0, mock(StaticAnalysisRun.class));
+        //when(staticAnalysisRuns.get(0))
+
+        GraphConfiguration graphConfiguration = mock(GraphConfiguration.class);
+        when(graphConfiguration.useBuildDateAsDomain()).thenReturn(false);
+        when(graphConfiguration.isDayCountDefined()).thenReturn(false); // Needed in areResultsTooOld()
+        CategoryDataset result = sut.createDataSet(graphConfiguration, staticAnalysisRuns);
+
+    }
 
     /**
-     * Runs a parameterized test of computeSeries
+     * Runs a parameterized test of computeSeriesGraphConfiguration
      * @param healthy healthy parameter
      * @param unHeahlthy unhealthy parameter
      * @param total total parameter
