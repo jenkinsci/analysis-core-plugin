@@ -240,7 +240,7 @@ class HealthSeriesBuilderTest {
     }
 
     @Test
-    void buildDateAsDomainOneDayTwoBuildsWithAEqualStaticAnalysisRuns() {
+    void buildDateAsDomainOneDayTwoBuildsWithEqualStaticAnalysisRuns() {
         HealthDescriptor healthDescriptor = new HealthDescriptor(Integer.toString(2), Integer.toString(4), Priority.NORMAL);
         List<StaticAnalysisRun> runs = new ArrayList<>();
         runs.add(stubStaticAnalysisRun(6, BUILD_THIS_MIDDAY));
@@ -256,7 +256,7 @@ class HealthSeriesBuilderTest {
         assertThat(result.getColumnCount()).isEqualTo(1);
         assertThat(result.getValue(0,0)).isEqualTo(2);
         assertThat(result.getValue(1,0)).isEqualTo(2);;
-        assertThat(result.getValue(2,0)).isEqualTo(10);;
+        assertThat(result.getValue(2,0)).isEqualTo(8);;
     }
 
     @Test
