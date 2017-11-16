@@ -9,13 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.collections.impl.multimap.list.FastListMultimap;
 import org.jfree.data.category.CategoryDataset;
 import org.joda.time.LocalDate;
 
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -34,6 +33,19 @@ import hudson.util.DataSetBuilder;
 public abstract class SeriesBuilder {
     private static final int A_DAY_IN_MSEC = 24 * 3600 * 1000;
 
+    /**
+     * Creates a new data set for a category graph from the specified static analysis results. The results (provided by
+     * an iterator) must be sorted by build number in descending order. I.e., the iterator starts with the newest build
+     * and stops at the oldest build. The actual series for each result needs to be implemented by sub classes by
+     * overriding method {@link #computeSeries}.
+     *
+     * @param configuration
+     *         configures the data set (how many results should be process, etc.)
+     * @param results
+     *         the ordered static analysis results
+     *
+     * @return the created data set
+     */
     public CategoryDataset createDataSet(final GraphConfiguration configuration,
             final Iterable<? extends StaticAnalysisRun> results) {
         CategoryDataset dataSet;
@@ -130,7 +142,7 @@ public abstract class SeriesBuilder {
      * @return the values as one series per day (average)
      */
     private Map<LocalDate, List<Integer>> createSeriesPerDay(
-            final Multimap<LocalDate, List<Integer>> multiSeriesPerDate) {
+            final FastListMultimap<LocalDate, List<Integer>> multiSeriesPerDate) {
         Map<LocalDate, List<Integer>> seriesPerDate = Maps.newHashMap();
 
         for (LocalDate date : multiSeriesPerDate.keySet()) {
@@ -178,9 +190,9 @@ public abstract class SeriesBuilder {
      */
     @SuppressWarnings("rawtypes")
     @SuppressFBWarnings("WMI")
-    private Multimap<LocalDate, List<Integer>> createMultiSeriesPerDay(
+    private FastListMultimap<LocalDate, List<Integer>> createMultiSeriesPerDay(
             final Map<AnalysisBuild, List<Integer>> valuesPerBuild) {
-        Multimap<LocalDate, List<Integer>> valuesPerDate = HashMultimap.create();
+        FastListMultimap<LocalDate, List<Integer>> valuesPerDate = FastListMultimap.newMultimap();
         for (AnalysisBuild build : valuesPerBuild.keySet()) {
             valuesPerDate.put(new LocalDate(build.getTimeInMillis()), valuesPerBuild.get(build));
         }
