@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 class HealthSeriesBuilderTest {
 
 
-    /** Verifies that the health descriptor is not enabled */
+    /** Verifies that the health descriptor is disabled */
     @Test
     void healthDescriptorIsNotEnabled() {
         HealthDescriptor healthDescriptor = mock(HealthDescriptor.class);
