@@ -204,28 +204,6 @@ class HealthSeriesBuilderTest {
     }
 
     @Test
-    void t7() {
-        //TODO Name, Configuration, Asserts, Refactoring
-        List<StaticAnalysisRun> runs = new ArrayList<>();
-        runs.add(stubStaticAnalysisRun(5, BUILD_THIS_MIDNIGHT));
-        runs.add(stubStaticAnalysisRun(3, BUILD_YESTERDAYS_MIDNIGHT));
-        runs.add(stubStaticAnalysisRun(5, BUILD_BEFORE_YESTERDAYS_MIDNIGHT));
-
-        GraphConfiguration configuration = mock(GraphConfiguration.class);
-        when(configuration.useBuildDateAsDomain()).thenReturn(false);
-        when(configuration.isDayCountDefined()).thenReturn(true);
-        when(configuration.getDayCount()).thenReturn(1);
-        when(configuration.isBuildCountDefined()).thenReturn(true);
-        when(configuration.getBuildCount()).thenReturn(2);
-
-        HealthSeriesBuilder sut = new HealthSeriesBuilder(HEALTH_DESCRIPTOR);
-
-        CategoryDataset result = sut.createDataSet(configuration, runs);
-
-        assertThat(result.getColumnCount()).isEqualTo(1);
-    }
-
-    @Test
     void buildDateAsDomainOneDayThreeDifferentStaticAnalysisRuns() {
         List<StaticAnalysisRun> runs = new ArrayList<>();
         runs.add(stubStaticAnalysisRun(6, BUILD_THIS_MIDDAY));
@@ -355,10 +333,6 @@ class HealthSeriesBuilderTest {
         when(build.getNumber()).thenReturn(buildNumber);
         when(build.getTimeInMillis()).thenReturn(calculatePastTimestamps(daysAgo, timestampHour));
         return build;
-    }
-
-    private static StaticAnalysisRun stubStaticAnalysisRun(int totalSize, int buildNumber, int daysAgo, int timestampHour) {
-        return stubStaticAnalysisRun(totalSize, stubAnalysisBuild(buildNumber, daysAgo, timestampHour));
     }
 
     private static StaticAnalysisRun stubStaticAnalysisRun(int totalSize, AnalysisBuild build) {
