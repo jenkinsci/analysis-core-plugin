@@ -3,10 +3,10 @@ package io.jenkins.plugins.analysis.core.graphs;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.jfree.data.category.CategoryDataset;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 
 import edu.hm.hafner.analysis.Priority;
@@ -17,21 +17,17 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class HealthSeriesBuilderTest {
-
-    private final static long MILLISECONDS_OF_HOUR = 60 * 60 * 1000;
-    private final static long MILLISECONDS_OF_DAY = 24 * MILLISECONDS_OF_HOUR;
-
+    private final static LocalDate TEST_START_DATE = new LocalDate();
+    private final static ResultTime RESULT_TIME = new ResultTime(java.time.LocalDate.of(TEST_START_DATE.getYear(), TEST_START_DATE.getMonthOfYear(), TEST_START_DATE.getDayOfMonth()));
     private final static HealthDescriptor HEALTH_DESCRIPTOR = new HealthDescriptor(Integer.toString(1), Integer.toString(3), Priority.NORMAL);
 
-    private final static AnalysisBuild BUILD_BEFORE_YESTERDAYS_MIDNIGHT = stubAnalysisBuild(1, 2, 0);
-    private final static AnalysisBuild BUILD_BEFORE_YESTERDAYS_MORNING = stubAnalysisBuild(2, 2, 8);
-    private final static AnalysisBuild BUILD_BEFORE_YESTERDAYS_MIDDAY = stubAnalysisBuild(3, 2, 12);
-    private final static AnalysisBuild BUILD_YESTERDAYS_MIDNIGHT = stubAnalysisBuild(5, 1, 0);
-    private final static AnalysisBuild BUILD_YESTERDAYS_MORNING = stubAnalysisBuild(6, 1, 8);
-    private final static AnalysisBuild BUILD_YESTERDAYS_MIDDAY = stubAnalysisBuild(7, 1, 12);
-    private final static AnalysisBuild BUILD_THIS_MIDNIGHT = stubAnalysisBuild(9, 0, 0);
-    private final static AnalysisBuild BUILD_THIS_MORNING = stubAnalysisBuild(10, 0, 8);
-    private final static AnalysisBuild BUILD_THIS_MIDDAY = stubAnalysisBuild(11, 0, 12);
+    private final static AnalysisBuild BEFORE_YESTERDAYS_MIDNIGHT = stubAnalysisBuild(1, 2, 0, 0, 0);
+    private final static AnalysisBuild BEFORE_YESTERDAYS_BEFORE_MIDNIGHT = stubAnalysisBuild(3, 2, 23, 59, 59);
+    private final static AnalysisBuild YESTERDAYS_MIDNIGHT = stubAnalysisBuild(5, 1, 0, 0, 0);
+    private final static AnalysisBuild YESTERDAY_BEFORE_MIDNIGHT = stubAnalysisBuild(7, 1, 23, 59, 59);
+    private final static AnalysisBuild TODAY_MIDNIGHT = stubAnalysisBuild(9, 0, 0, 0, 0);
+    private final static AnalysisBuild TODAY_MIDDAY = stubAnalysisBuild(10, 0, 12, 0, 0);
+    private final static AnalysisBuild TODAY_BEFORE_MIDNIGHT = stubAnalysisBuild(11, 0, 23, 59, 59);
 
     /**
      * testComputeSeries should return a list with a zero, if the unhealthy is not bigger than healthy
@@ -92,7 +88,7 @@ class HealthSeriesBuilderTest {
     @Test
     void dataSetPerBuildOneBuild() {
         List<StaticAnalysisRun> runs = new ArrayList<>();
-        runs.add(stubStaticAnalysisRun(6, BUILD_THIS_MORNING));
+        runs.add(stubStaticAnalysisRun(6, TODAY_MIDDAY));
 
         GraphConfiguration configuration = mock(GraphConfiguration.class);
         when(configuration.useBuildDateAsDomain()).thenReturn(false);
@@ -107,14 +103,14 @@ class HealthSeriesBuilderTest {
         assertThat(result.getValue(0,0)).isEqualTo(1);
         assertThat(result.getValue(1,0)).isEqualTo(2);
         assertThat(result.getValue(2,0)).isEqualTo(3);
-        assertThat(result.getColumnKey(0)).isEqualTo(new NumberOnlyBuildLabel(BUILD_THIS_MORNING));
+        assertThat(result.getColumnKey(0)).isEqualTo(new NumberOnlyBuildLabel(TODAY_MIDDAY));
     }
 
     @Test
     void dataSetPerBuildTwoBuilds() {
         List<StaticAnalysisRun> runs = new ArrayList<>();
-        runs.add(stubStaticAnalysisRun(6, BUILD_THIS_MIDDAY));
-        runs.add(stubStaticAnalysisRun(7, BUILD_THIS_MORNING));
+        runs.add(stubStaticAnalysisRun(6, TODAY_BEFORE_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(7, TODAY_MIDDAY));
 
         GraphConfiguration configuration = mock(GraphConfiguration.class);
         when(configuration.useBuildDateAsDomain()).thenReturn(false);
@@ -128,16 +124,16 @@ class HealthSeriesBuilderTest {
         assertThat(result.getColumnCount()).isEqualTo(2);
         assertThat(result.getValue(2, 0)).isEqualTo(4);
         assertThat(result.getValue(2, 1)).isEqualTo(3);
-        assertThat(result.getColumnKey(0)).isEqualTo(new NumberOnlyBuildLabel(BUILD_THIS_MORNING));
-        assertThat(result.getColumnKey(1)).isEqualTo(new NumberOnlyBuildLabel(BUILD_THIS_MIDDAY));
+        assertThat(result.getColumnKey(0)).isEqualTo(new NumberOnlyBuildLabel(TODAY_MIDDAY));
+        assertThat(result.getColumnKey(1)).isEqualTo(new NumberOnlyBuildLabel(TODAY_BEFORE_MIDNIGHT));
     }
 
     @Test
     void dataSetPerBuildThreeBuildsDefinedBuildCountTwo() {
         List<StaticAnalysisRun> runs = new ArrayList<>();
-        runs.add(stubStaticAnalysisRun(6, BUILD_THIS_MIDDAY));
-        runs.add(stubStaticAnalysisRun(7, BUILD_THIS_MORNING));
-        runs.add(stubStaticAnalysisRun(8, BUILD_THIS_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(6, TODAY_BEFORE_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(7, TODAY_MIDDAY));
+        runs.add(stubStaticAnalysisRun(8, TODAY_MIDNIGHT));
 
 
         GraphConfiguration configuration = mock(GraphConfiguration.class);
@@ -153,16 +149,16 @@ class HealthSeriesBuilderTest {
         assertThat(result.getColumnCount()).isEqualTo(2);
         assertThat(result.getValue(2, 0)).isEqualTo(4);
         assertThat(result.getValue(2, 1)).isEqualTo(3);
-        assertThat(result.getColumnKey(0)).isEqualTo(new NumberOnlyBuildLabel(BUILD_THIS_MORNING));
-        assertThat(result.getColumnKey(1)).isEqualTo(new NumberOnlyBuildLabel(BUILD_THIS_MIDDAY));
+        assertThat(result.getColumnKey(0)).isEqualTo(new NumberOnlyBuildLabel(TODAY_MIDDAY));
+        assertThat(result.getColumnKey(1)).isEqualTo(new NumberOnlyBuildLabel(TODAY_BEFORE_MIDNIGHT));
     }
 
     @Test
     void dataSetPerBuildThreeBuildsOfThreeDaysDefinedDayCountOne() {
         List<StaticAnalysisRun> runs = new ArrayList<>();
-        runs.add(stubStaticAnalysisRun(6, BUILD_THIS_MIDNIGHT));
-        runs.add(stubStaticAnalysisRun(7, BUILD_YESTERDAYS_MIDNIGHT));
-        runs.add(stubStaticAnalysisRun(8, BUILD_BEFORE_YESTERDAYS_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(6, TODAY_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(7, YESTERDAY_BEFORE_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(8, BEFORE_YESTERDAYS_BEFORE_MIDNIGHT));
 
         GraphConfiguration configuration = mock(GraphConfiguration.class);
         when(configuration.useBuildDateAsDomain()).thenReturn(false);
@@ -176,15 +172,15 @@ class HealthSeriesBuilderTest {
 
         assertThat(result.getColumnCount()).isEqualTo(1);
         assertThat(result.getValue(2, 0)).isEqualTo(3);
-        assertThat(result.getColumnKey(0)).isEqualTo(new NumberOnlyBuildLabel(BUILD_THIS_MIDNIGHT));
+        assertThat(result.getColumnKey(0)).isEqualTo(new NumberOnlyBuildLabel(TODAY_MIDNIGHT));
     }
 
     @Test
     void dataSetPerBuildThreeBuildsOfThreeDaysDefinedDayCountTwo() {
         List<StaticAnalysisRun> runs = new ArrayList<>();
-        runs.add(stubStaticAnalysisRun(6, BUILD_THIS_MIDNIGHT));
-        runs.add(stubStaticAnalysisRun(7, BUILD_YESTERDAYS_MIDNIGHT));
-        runs.add(stubStaticAnalysisRun(8, BUILD_BEFORE_YESTERDAYS_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(6, TODAY_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(7, YESTERDAYS_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(8, BEFORE_YESTERDAYS_BEFORE_MIDNIGHT));
 
         GraphConfiguration configuration = mock(GraphConfiguration.class);
         when(configuration.useBuildDateAsDomain()).thenReturn(false);
@@ -199,21 +195,21 @@ class HealthSeriesBuilderTest {
         assertThat(result.getColumnCount()).isEqualTo(2);
         assertThat(result.getValue(2, 0)).isEqualTo(4);
         assertThat(result.getValue(2, 1)).isEqualTo(3);
-        assertThat(result.getColumnKey(0)).isEqualTo(new NumberOnlyBuildLabel(BUILD_YESTERDAYS_MIDNIGHT));
-        assertThat(result.getColumnKey(1)).isEqualTo(new NumberOnlyBuildLabel(BUILD_THIS_MIDNIGHT));
+        assertThat(result.getColumnKey(0)).isEqualTo(new NumberOnlyBuildLabel(YESTERDAYS_MIDNIGHT));
+        assertThat(result.getColumnKey(1)).isEqualTo(new NumberOnlyBuildLabel(TODAY_MIDNIGHT));
     }
 
     @Test
     void buildDateAsDomainOneDayThreeDifferentStaticAnalysisRuns() {
         List<StaticAnalysisRun> runs = new ArrayList<>();
-        runs.add(stubStaticAnalysisRun(6, BUILD_THIS_MIDDAY));
-        runs.add(stubStaticAnalysisRun(9, BUILD_THIS_MORNING));
-        runs.add(stubStaticAnalysisRun(12, BUILD_THIS_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(6, TODAY_BEFORE_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(9, TODAY_MIDDAY));
+        runs.add(stubStaticAnalysisRun(12, TODAY_MIDNIGHT));
 
         GraphConfiguration configuration = mock(GraphConfiguration.class);
         when(configuration.useBuildDateAsDomain()).thenReturn(true);
 
-        HealthSeriesBuilder sut = new HealthSeriesBuilder(HEALTH_DESCRIPTOR);
+        HealthSeriesBuilder sut = new HealthSeriesBuilder(HEALTH_DESCRIPTOR, RESULT_TIME);
 
         CategoryDataset result = sut.createDataSet(configuration, runs);
 
@@ -223,17 +219,20 @@ class HealthSeriesBuilderTest {
         assertThat(result.getValue(2, 0)).isEqualTo(6);
     }
 
+    /**
+     * Verify if the average calculation is correct if two of three runs have the same result.
+     */
     @Test
     void buildDateAsDomainOneDayTwoBuildsWithEqualStaticAnalysisRuns() {
         List<StaticAnalysisRun> runs = new ArrayList<>();
-        runs.add(stubStaticAnalysisRun(6, BUILD_THIS_MIDDAY));
-        runs.add(stubStaticAnalysisRun(6, BUILD_THIS_MORNING));
-        runs.add(stubStaticAnalysisRun(9, BUILD_THIS_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(6, TODAY_BEFORE_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(6, TODAY_MIDDAY));
+        runs.add(stubStaticAnalysisRun(9, TODAY_MIDNIGHT));
 
         GraphConfiguration configuration = mock(GraphConfiguration.class);
         when(configuration.useBuildDateAsDomain()).thenReturn(true);
 
-        HealthSeriesBuilder sut = new HealthSeriesBuilder(HEALTH_DESCRIPTOR);
+        HealthSeriesBuilder sut = new HealthSeriesBuilder(HEALTH_DESCRIPTOR, RESULT_TIME);
         CategoryDataset result = sut.createDataSet(configuration, runs);
 
         assertThat(result.getColumnCount()).isEqualTo(1);
@@ -245,67 +244,65 @@ class HealthSeriesBuilderTest {
     @Test
     void buildDateAsDomainTwoDayEachWithOneBuild() {
         List<StaticAnalysisRun> runs = new ArrayList<>();
-        runs.add(stubStaticAnalysisRun(7, BUILD_THIS_MIDNIGHT));
-        runs.add(stubStaticAnalysisRun(6, BUILD_YESTERDAYS_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(7, TODAY_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(6, YESTERDAYS_MIDNIGHT));
 
         GraphConfiguration configuration = mock(GraphConfiguration.class);
         when(configuration.useBuildDateAsDomain()).thenReturn(true);
 
-        HealthSeriesBuilder sut = new HealthSeriesBuilder(HEALTH_DESCRIPTOR);
+        HealthSeriesBuilder sut = new HealthSeriesBuilder(HEALTH_DESCRIPTOR, RESULT_TIME);
 
         CategoryDataset result = sut.createDataSet(configuration, runs);
 
         assertThat(result.getColumnCount()).isEqualTo(2);
         assertThat(result.getValue(2, 0)).isEqualTo(3);
         assertThat(result.getValue(2, 1)).isEqualTo(4);
-        assertThat(result.getColumnKey(0)).isEqualTo(new LocalDateLabel(new LocalDate(BUILD_YESTERDAYS_MIDNIGHT.getTimeInMillis())));
-        assertThat(result.getColumnKey(1)).isEqualTo(new LocalDateLabel(new LocalDate(BUILD_THIS_MIDNIGHT.getTimeInMillis())));
+        assertThat(result.getColumnKey(0)).isEqualTo(new LocalDateLabel(new LocalDate(YESTERDAYS_MIDNIGHT.getTimeInMillis())));
+        assertThat(result.getColumnKey(1)).isEqualTo(new LocalDateLabel(new LocalDate(TODAY_MIDNIGHT.getTimeInMillis())));
     }
 
     @Test
     void buildDateAsDomainTwoDayEachWithTwoBuilds() {
         List<StaticAnalysisRun> runs = new ArrayList<>();
-        runs.add(stubStaticAnalysisRun(6, BUILD_THIS_MORNING));
-        runs.add(stubStaticAnalysisRun(6, BUILD_THIS_MIDNIGHT));
-        runs.add(stubStaticAnalysisRun(6, BUILD_YESTERDAYS_MORNING));
-        runs.add(stubStaticAnalysisRun(12, BUILD_YESTERDAYS_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(6, TODAY_BEFORE_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(6, TODAY_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(6, YESTERDAY_BEFORE_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(12, YESTERDAYS_MIDNIGHT));
 
         GraphConfiguration configuration = mock(GraphConfiguration.class);
         when(configuration.useBuildDateAsDomain()).thenReturn(true);
 
-        HealthSeriesBuilder sut = new HealthSeriesBuilder(HEALTH_DESCRIPTOR);
+        HealthSeriesBuilder sut = new HealthSeriesBuilder(HEALTH_DESCRIPTOR, RESULT_TIME);
 
         CategoryDataset result = sut.createDataSet(configuration, runs);
 
         assertThat(result.getColumnCount()).isEqualTo(2);
         assertThat(result.getValue(2, 0)).isEqualTo(6);
         assertThat(result.getValue(2, 1)).isEqualTo(3);
-        assertThat(result.getColumnKey(0)).isEqualTo(new LocalDateLabel(new LocalDate(BUILD_YESTERDAYS_MORNING.getTimeInMillis())));
-        assertThat(result.getColumnKey(1)).isEqualTo(new LocalDateLabel(new LocalDate(BUILD_THIS_MORNING.getTimeInMillis())));
+        assertThat(result.getColumnKey(0)).isEqualTo(new LocalDateLabel(new LocalDate(YESTERDAYS_MIDNIGHT.getTimeInMillis())));
+        assertThat(result.getColumnKey(1)).isEqualTo(new LocalDateLabel(new LocalDate(TODAY_MIDNIGHT.getTimeInMillis())));
     }
 
+    /**
+     * Verify that the labels are correct if there is a gap of a day between two runs.
+     */
     @Test
     void buildDateAsDomainTwoDaysTheDayBetweenIsMissing() {
         List<StaticAnalysisRun> runs = new ArrayList<>();
-        runs.add(stubStaticAnalysisRun(5, BUILD_THIS_MIDNIGHT));
-        runs.add(stubStaticAnalysisRun(5, BUILD_BEFORE_YESTERDAYS_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(5, TODAY_MIDNIGHT));
+        runs.add(stubStaticAnalysisRun(5, BEFORE_YESTERDAYS_MIDNIGHT));
 
         GraphConfiguration configuration = mock(GraphConfiguration.class);
         when(configuration.useBuildDateAsDomain()).thenReturn(true);
 
-        HealthSeriesBuilder sut = new HealthSeriesBuilder(HEALTH_DESCRIPTOR);
+        HealthSeriesBuilder sut = new HealthSeriesBuilder(HEALTH_DESCRIPTOR, RESULT_TIME);
 
         CategoryDataset result = sut.createDataSet(configuration, runs);
 
         assertThat(result.getColumnCount()).isEqualTo(2);
-        assertThat(result.getColumnKey(0)).isEqualTo(new LocalDateLabel(new LocalDate(BUILD_BEFORE_YESTERDAYS_MIDNIGHT.getTimeInMillis())));
-        assertThat(result.getColumnKey(1)).isEqualTo(new LocalDateLabel(new LocalDate(BUILD_THIS_MIDNIGHT.getTimeInMillis())));
+        assertThat(result.getColumnKey(0)).isEqualTo(new LocalDateLabel(new LocalDate(BEFORE_YESTERDAYS_MIDNIGHT.getTimeInMillis())));
+        assertThat(result.getColumnKey(1)).isEqualTo(new LocalDateLabel(new LocalDate(TODAY_MIDNIGHT.getTimeInMillis())));
     }
-
-
-
-
-
 
     /**
      * Runs a parameterized test of computeSeriesGraphConfiguration
@@ -322,16 +319,19 @@ class HealthSeriesBuilderTest {
         return sut.computeSeries(staticAnalysisRun);
     }
 
-    private static long calculatePastTimestamps(int daysAgo, int timestampHour) {
-        long now = System.currentTimeMillis();
-        long currentDay = now - now % MILLISECONDS_OF_DAY - TimeZone.getDefault().getOffset(now);
-        return currentDay - daysAgo * MILLISECONDS_OF_DAY + timestampHour * MILLISECONDS_OF_HOUR;
+    private static long calculatePastTimestamps(int daysAgo, int timestampHour, int timestampMinutes, int timestampSeconds) {
+        LocalDateTime targetTime = new LocalDateTime(TEST_START_DATE.toDate().getTime());
+        targetTime = targetTime.minusDays(daysAgo)
+                .plusHours(timestampHour)
+                .plusMinutes(timestampMinutes)
+                .plusSeconds(timestampSeconds);
+        return targetTime.toDateTime().getMillis();
     }
 
-    private static AnalysisBuild stubAnalysisBuild(int buildNumber, int daysAgo, int timestampHour) {
+    private static AnalysisBuild stubAnalysisBuild(int buildNumber, int daysAgo, int timestampHour, int timestampMinutes, int timestampSeconds) {
         AnalysisBuild build = mock(AnalysisBuild.class);
         when(build.getNumber()).thenReturn(buildNumber);
-        when(build.getTimeInMillis()).thenReturn(calculatePastTimestamps(daysAgo, timestampHour));
+        when(build.getTimeInMillis()).thenReturn(calculatePastTimestamps(daysAgo, timestampHour, timestampMinutes, timestampSeconds));
         return build;
     }
 
