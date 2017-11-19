@@ -28,18 +28,19 @@ public class HealthSeriesBuilder extends SeriesBuilder {
 
             int range = healthDescriptor.getUnHealthy() - healthDescriptor.getHealthy();
             remainder -= healthDescriptor.getHealthy();
-            if (remainder > 0) {
+            if (remainder > 0 && range >=0 ) {
                 series.add(Math.min(remainder, range));
+
+                remainder -= range;
+                if (remainder > 0 ) {
+                    series.add(remainder);
+                }
+                else {
+                    series.add(0);
+                }
             }
             else {
                 series.add(0);
-            }
-
-            remainder -= range;
-            if (remainder > 0) {
-                series.add(remainder);
-            }
-            else {
                 series.add(0);
             }
         }
