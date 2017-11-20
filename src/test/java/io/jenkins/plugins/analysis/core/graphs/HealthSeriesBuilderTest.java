@@ -1,11 +1,16 @@
 package io.jenkins.plugins.analysis.core.graphs;
 
 import java.util.List;
+import java.util.stream.Stream;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import io.jenkins.plugins.analysis.core.quality.HealthDescriptor;
 import io.jenkins.plugins.analysis.core.quality.StaticAnalysisRun;
+import static java.util.Arrays.*;
+import static java.util.Collections.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -18,88 +23,55 @@ class HealthSeriesBuilderTest {
     private static final int HEALTHY_THRESHOLD = 2;
     private static final int UNHEALTHY_THRESHOLD = 8;
 
-    @Test
-    void healthReportingDisabled() {
-        HealthSeriesBuilder builder = createBuilder(healthReportDisabled());
-        StaticAnalysisRun run = createRunWithWarnings(5);
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("computeSeriesArguments")
+    void computeSeries(final String testDescription, final boolean reportingEnabled, final int warningCount, final List<Integer> expectedSeries) {
+        HealthDescriptor healthDescriptor = createHealthDescriptor(reportingEnabled);
+        HealthSeriesBuilder builder = createBuilder(healthDescriptor);
+        StaticAnalysisRun run = createRunWithWarnings(warningCount);
 
         List<Integer> series = builder.computeSeries(run);
 
-        assertThat(series).containsExactly(5);
+        assertThat(series).isEqualTo(expectedSeries);
     }
 
-    @Test
-    void noIssues() {
-        HealthSeriesBuilder builder = createBuilder(healthReportEnabled());
-        StaticAnalysisRun run = createRunWithWarnings(0);
-
-        List<Integer> series = builder.computeSeries(run);
-
-        assertThat(series).containsExactly(0, 0, 0);
+    private static Stream<Object> computeSeriesArguments() {
+        return Stream.of(
+                Arguments.of(
+                        "reporting disabled",
+                        false, 5, singletonList(5)),
+                Arguments.of(
+                        "issueCount == 0",
+                        true, 0, asList(0, 0, 0)),
+                Arguments.of(
+                        "issueCount < HEALTHY_THRESHOLD",
+                        true, HEALTHY_THRESHOLD - 1, asList(HEALTHY_THRESHOLD - 1, 0, 0)),
+                Arguments.of(
+                        "issueCount == HEALTHY_THRESHOLD",
+                        true, HEALTHY_THRESHOLD, asList(HEALTHY_THRESHOLD, 0, 0)),
+                Arguments.of(
+                        "issueCount > HEALTHY_THRESHOLD",
+                        true, HEALTHY_THRESHOLD + 1, asList(HEALTHY_THRESHOLD, 1, 0)),
+                Arguments.of(
+                        "issueCount < UNHEALTHY_THRESHOLD",
+                        true, UNHEALTHY_THRESHOLD - 1, asList(HEALTHY_THRESHOLD, UNHEALTHY_THRESHOLD - HEALTHY_THRESHOLD - 1, 0)),
+                Arguments.of(
+                        "issueCount == UNHEALTHY_THRESHOLD",
+                        true, UNHEALTHY_THRESHOLD, asList(HEALTHY_THRESHOLD, UNHEALTHY_THRESHOLD - HEALTHY_THRESHOLD, 0)),
+                Arguments.of(
+                        "issueCount > UNHEALTHY_COUNT",
+                        true, UNHEALTHY_THRESHOLD + 1, asList(HEALTHY_THRESHOLD, UNHEALTHY_THRESHOLD - HEALTHY_THRESHOLD, 1))
+        );
     }
 
-    @Test
-    void issuesHealthy() {
-        HealthSeriesBuilder builder = createBuilder(healthReportEnabled());
-        StaticAnalysisRun run = createRunWithWarnings(HEALTHY_THRESHOLD - 1);
-
-        List<Integer> series = builder.computeSeries(run);
-
-        assertThat(series).containsExactly(1, 0, 0);
-    }
-
-    @Test
-    void issuesStillHealthy() {
-        HealthSeriesBuilder builder = createBuilder(healthReportEnabled());
-        StaticAnalysisRun run = createRunWithWarnings(HEALTHY_THRESHOLD);
-
-        List<Integer> series = builder.computeSeries(run);
-
-        assertThat(series).containsExactly(2, 0, 0);
-    }
-
-    @Test
-    void issuesYellow() {
-        HealthSeriesBuilder builder = createBuilder(healthReportEnabled());
-        StaticAnalysisRun run = createRunWithWarnings(HEALTHY_THRESHOLD + 1);
-
-        List<Integer> series = builder.computeSeries(run);
-
-        assertThat(series).containsExactly(2, 1, 0);
-    }
-
-    @Test
-    void issuesStillYellow() {
-        HealthSeriesBuilder builder = createBuilder(healthReportEnabled());
-        StaticAnalysisRun run = createRunWithWarnings(UNHEALTHY_THRESHOLD);
-
-        List<Integer> series = builder.computeSeries(run);
-
-        assertThat(series).containsExactly(2, 6, 0);
-    }
-
-    @Test
-    void issuesUnhealthy() {
-        HealthSeriesBuilder builder = createBuilder(healthReportEnabled());
-        StaticAnalysisRun run = createRunWithWarnings(UNHEALTHY_THRESHOLD + 1);
-
-        List<Integer> series = builder.computeSeries(run);
-
-        assertThat(series).containsExactly(2, 6, 1);
-    }
-    
-    private HealthDescriptor healthReportDisabled() {
-        return mock(HealthDescriptor.class);
-    }
-
-    private HealthDescriptor healthReportEnabled() {
+    private HealthDescriptor createHealthDescriptor(final boolean reportingEnabled) {
         HealthDescriptor healthDescriptor = mock(HealthDescriptor.class);
-        when(healthDescriptor.isEnabled()).thenReturn(true);
+        when(healthDescriptor.isEnabled()).thenReturn(reportingEnabled);
         when(healthDescriptor.getHealthy()).thenReturn(HEALTHY_THRESHOLD);
         when(healthDescriptor.getUnHealthy()).thenReturn(UNHEALTHY_THRESHOLD);
         return healthDescriptor;
     }
-    
+
     private HealthSeriesBuilder createBuilder(HealthDescriptor healthDescriptor) {
         return new HealthSeriesBuilder(healthDescriptor);
     }
