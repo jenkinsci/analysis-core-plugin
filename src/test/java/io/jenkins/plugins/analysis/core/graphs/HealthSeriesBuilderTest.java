@@ -25,10 +25,10 @@ class HealthSeriesBuilderTest {
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("computeSeriesArguments")
-    void computeSeries(final String testDescription, final boolean reportingEnabled, final int warningCount, final List<Integer> expectedSeries) {
+    void computeSeries(final String testDescription, final boolean reportingEnabled, final int issueCount, final List<Integer> expectedSeries) {
         HealthDescriptor healthDescriptor = createHealthDescriptor(reportingEnabled);
         HealthSeriesBuilder builder = createBuilder(healthDescriptor);
-        StaticAnalysisRun run = createRunWithWarnings(warningCount);
+        StaticAnalysisRun run = createResult(issueCount);
 
         List<Integer> series = builder.computeSeries(run);
 
@@ -76,7 +76,7 @@ class HealthSeriesBuilderTest {
         return new HealthSeriesBuilder(healthDescriptor);
     }
 
-    private StaticAnalysisRun createRunWithWarnings(final int totalSize) {
+    private StaticAnalysisRun createResult(final int totalSize) {
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalSize()).thenReturn(totalSize);
         return run;
