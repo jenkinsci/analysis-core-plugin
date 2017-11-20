@@ -61,9 +61,9 @@ class ResultTimeTest {
 
         assertThatRunIsWithinDayCount(today, time);
         assertThatRunIsWithinDayCount(today.plusDays(1), time);
-        assertThatRunIsWithinDayCount(today.plusDays(2), time);
+        assertThatRunIsWithinDayCount(today.minusDays(2), time);
 
-        assertThatRunIsOutsideOfDayCount(today.plusDays(3), time);
+        assertThatRunIsOutsideOfDayCount(today.minusDays(3), time);
         assertThatRunIsOutsideOfDayCount(today.plusDays(4), time);
     }
 

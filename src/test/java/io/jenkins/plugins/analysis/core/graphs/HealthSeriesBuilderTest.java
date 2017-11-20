@@ -165,11 +165,11 @@ class HealthSeriesBuilderTest {
         HealthSeriesBuilder builder = new HealthSeriesBuilder(descriptor);
         StaticAnalysisRun buildOfRecentTimes = createBuildResult(42, 8, System.currentTimeMillis());
         StaticAnalysisRun buildOfAncientTimes = createBuildResult(41, 8, 1L);
-        List<StaticAnalysisRun> results = Lists.newArrayList(buildOfRecentTimes, buildOfAncientTimes);
+        List<StaticAnalysisRun> results = Lists.newArrayList(buildOfRecentTimes,buildOfAncientTimes);
 
         GraphConfiguration configuration = createGraphConfiguration();
         when(configuration.isDayCountDefined()).thenReturn(true);
-        when(configuration.getDayCount()).thenReturn(7);
+        when(configuration.getDayCount()).thenReturn(1);
 
         CategoryDataset dataSet = builder.createDataSet(configuration, results);
         assertThat(dataSet.getRowCount()).isEqualTo(3);
