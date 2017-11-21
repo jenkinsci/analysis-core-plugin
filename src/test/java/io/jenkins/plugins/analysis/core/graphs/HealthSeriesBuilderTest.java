@@ -124,45 +124,4 @@ class HealthSeriesBuilderTest {
 
 
 
-    /*
-     * Should never be reached because unhealthy < healthy
-     */
-    @Test
-    void healthReportWithWithJustHealthy() {
-        HealthDescriptor healthDiscStub = GenerateHealthStub.generateHealthDescriptor(true, 10, 0);
-        StaticAnalysisRun paramStub = generateParamStub();
-        HealthSeriesBuilder b = new HealthSeriesBuilder(healthDiscStub);
-
-        List<Integer> firstList = b.computeSeries(paramStub);
-        List<Integer> secondList = b.computeSeries(paramStub);
-        List<Integer> thirdList = b.computeSeries(paramStub);
-        List<Integer> fourthList = b.computeSeries(paramStub);
-
-        assertThat(firstList).containsExactly(0, 0, 0);
-        assertThat(secondList).containsExactly(1, 0, 0);
-        assertThat(thirdList).containsExactly(10, 0, 0);
-        assertThat(fourthList).containsExactly(10, 0, 0);
-
-    }
-    /*
-         * Should also never be reached because unhealthy and healthy < 0
-         */
-    @Test
-    void healthReportWithNegativeNumbers() {
-        HealthDescriptor healthDiscStub = GenerateHealthStub.generateHealthDescriptor(true, -4, -3);
-        StaticAnalysisRun paramStub = mock(StaticAnalysisRun.class);
-        when(paramStub.getTotalSize()).thenReturn(-0).thenReturn(-1).thenReturn(-5).thenReturn(-10);
-        HealthSeriesBuilder b = new HealthSeriesBuilder(healthDiscStub);
-
-        List<Integer> firstList = b.computeSeries(paramStub);
-        List<Integer> secondList = b.computeSeries(paramStub);
-        List<Integer> thirdList = b.computeSeries(paramStub);
-        List<Integer> fourthList = b.computeSeries(paramStub);
-
-        assertThat(firstList).containsExactly(-4, 1, 3);
-        assertThat(secondList).containsExactly(-4, 1, 2);
-        assertThat(thirdList).containsExactly(-5, 0, 0);
-        assertThat(fourthList).containsExactly(-10, 0, 0);
-
-    }
 }

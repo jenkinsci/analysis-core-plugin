@@ -145,7 +145,7 @@ class SerialBuilderTest {
 
     @Test
     void dataSetAsDomainAndTimeLimitation() {
-        GraphConfiguration stub = generateGraphConfiguration(true, 4, 0);
+        GraphConfiguration stub = generateGraphConfiguration(true, 3, 0);
         HealthSeriesBuilder b = new HealthSeriesBuilder(GenerateHealthStub.generateHealthDescriptor(true, 5, 8));
         long[] values = {1, 10, 1, 16, 4, 20, 4, 22, 4, 24, 7, 50};
         long[] newValues = {13};
