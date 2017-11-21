@@ -20,17 +20,19 @@ import static org.mockito.Mockito.*;
 
 class HealthSeriesBuilderTest {
 
+    private static final int A_DAY_IN_MSEC = 24 * 3600 * 1000;
+
     @Test
-    void disabledHealthDiscrptorTest() {
-        HealthDescriptor health = mock(HealthDescriptor.class);
+    void disabledHealthDescriptor() {
+        final HealthDescriptor health = mock(HealthDescriptor.class);
         when(health.isEnabled()).thenReturn(false);
 
-        StaticAnalysisRun buildResult = mock(StaticAnalysisRun.class);
+        final StaticAnalysisRun buildResult = mock(StaticAnalysisRun.class);
         when(buildResult.getTotalSize()).thenReturn(5);
 
-        HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
+        final HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
 
-        List<Integer> series = builder.computeSeries(buildResult);
+        final List<Integer> series = builder.computeSeries(buildResult);
 
         assertThat(series.size()).isEqualTo(1);
         assertThat(series.get(0)).isEqualTo(5);
@@ -38,39 +40,39 @@ class HealthSeriesBuilderTest {
     }
 
     @Test
-    void onlyHealhyGraphTest() {
-        HealthDescriptor health = mock(HealthDescriptor.class);
+    void onlyHealthyGraph() {
+        final HealthDescriptor health = mock(HealthDescriptor.class);
         when(health.isEnabled()).thenReturn(true);
         when(health.getHealthy()).thenReturn(10);
         when(health.getUnHealthy()).thenReturn(20);
 
-        StaticAnalysisRun buildResult = mock(StaticAnalysisRun.class);
-        when(buildResult.getTotalSize()).thenReturn(9);
+        final StaticAnalysisRun buildResult = mock(StaticAnalysisRun.class);
+        when(buildResult.getTotalSize()).thenReturn(10);
 
-        HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
+        final HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
 
-        List<Integer> series = builder.computeSeries(buildResult);
+        final List<Integer> series = builder.computeSeries(buildResult);
 
         assertThat(series.size()).isEqualTo(3);
-        assertThat(series.get(0)).isEqualTo(9);
+        assertThat(series.get(0)).isEqualTo(10);
         assertThat(series.get(1)).isEqualTo(0);
         assertThat(series.get(2)).isEqualTo(0);
 
     }
 
     @Test
-    void notonlyHealthyTest() {
-        HealthDescriptor health = mock(HealthDescriptor.class);
+    void notOnlyHealthyGraph() {
+        final HealthDescriptor health = mock(HealthDescriptor.class);
         when(health.isEnabled()).thenReturn(true);
         when(health.getHealthy()).thenReturn(10);
         when(health.getUnHealthy()).thenReturn(20);
 
-        StaticAnalysisRun buildResult = mock(StaticAnalysisRun.class);
+        final StaticAnalysisRun buildResult = mock(StaticAnalysisRun.class);
         when(buildResult.getTotalSize()).thenReturn(11);
 
-        HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
+        final HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
 
-        List<Integer> series = builder.computeSeries(buildResult);
+        final List<Integer> series = builder.computeSeries(buildResult);
 
         assertThat(series.size()).isEqualTo(3);
         assertThat(series.get(0)).isEqualTo(10);
@@ -80,18 +82,18 @@ class HealthSeriesBuilderTest {
     }
 
     @Test
-    void unhealthyTest() {
-        HealthDescriptor health = mock(HealthDescriptor.class);
+    void healthyAndUnhealthyGraph() {
+        final HealthDescriptor health = mock(HealthDescriptor.class);
         when(health.isEnabled()).thenReturn(true);
         when(health.getHealthy()).thenReturn(10);
         when(health.getUnHealthy()).thenReturn(20);
 
-        StaticAnalysisRun buildResult = mock(StaticAnalysisRun.class);
+        final StaticAnalysisRun buildResult = mock(StaticAnalysisRun.class);
         when(buildResult.getTotalSize()).thenReturn(21);
 
-        HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
+        final HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
 
-        List<Integer> series = builder.computeSeries(buildResult);
+        final List<Integer> series = builder.computeSeries(buildResult);
 
         assertThat(series.size()).isEqualTo(3);
         assertThat(series.get(0)).isEqualTo(10);
@@ -101,37 +103,405 @@ class HealthSeriesBuilderTest {
     }
 
     @Test
-    void daySeriesTest() {
-        HealthDescriptor health = mock(HealthDescriptor.class);
+    void noBuilds() {
+        final HealthDescriptor health = mock(HealthDescriptor.class);
         when(health.isEnabled()).thenReturn(true);
         when(health.getHealthy()).thenReturn(10);
         when(health.getUnHealthy()).thenReturn(20);
 
+        final HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
 
-        HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
-
-        GraphConfiguration graphConfig = mock(GraphConfiguration.class);
+        final GraphConfiguration graphConfig = mock(GraphConfiguration.class);
         when(graphConfig.useBuildDateAsDomain()).thenReturn(false);
 
-        List<StaticAnalysisRun> runs = new ArrayList<>();
+        final List<StaticAnalysisRun> runs = new ArrayList<>();
+        final CategoryDataset dataset = builder.createDataSet(graphConfig, runs);
+        assertThat(dataset.getRowCount()).isEqualTo(0);
+        assertThat(dataset.getColumnCount()).isEqualTo(0);
+    }
 
-        for (int i = 1; i <= 4; i++) {
-            StaticAnalysisRun buildResult = mock(StaticAnalysisRun.class);
+    @Test
+    void oneBuild() {
+        final HealthDescriptor health = mock(HealthDescriptor.class);
+        when(health.isEnabled()).thenReturn(true);
+        when(health.getHealthy()).thenReturn(10);
+        when(health.getUnHealthy()).thenReturn(20);
+
+        final HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
+
+        final GraphConfiguration graphConfig = mock(GraphConfiguration.class);
+        when(graphConfig.useBuildDateAsDomain()).thenReturn(false);
+
+
+        final StaticAnalysisRun run = mock(StaticAnalysisRun.class);
+        when(run.getTotalSize()).thenReturn(10);
+        final AnalysisBuild build = mock(AnalysisBuild.class);
+        when(run.getBuild()).thenReturn(build);
+
+        final List<StaticAnalysisRun> runs = new ArrayList<>();
+        runs.add(run);
+        final CategoryDataset dataset = builder.createDataSet(graphConfig, runs);
+        assertThat(dataset.getRowCount()).isEqualTo(3);
+        assertThat(dataset.getColumnCount()).isEqualTo(1);
+
+    }
+
+    @Test
+    void oneBuildPerDayOneDayLong() {
+        final HealthDescriptor health = mock(HealthDescriptor.class);
+        when(health.isEnabled()).thenReturn(true);
+        when(health.getHealthy()).thenReturn(10);
+        when(health.getUnHealthy()).thenReturn(20);
+
+        final HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
+
+        final GraphConfiguration graphConfig = mock(GraphConfiguration.class);
+        when(graphConfig.useBuildDateAsDomain()).thenReturn(true);
+
+        final StaticAnalysisRun run = mock(StaticAnalysisRun.class);
+        when(run.getTotalSize()).thenReturn(10);
+        final AnalysisBuild build = mock(AnalysisBuild.class);
+        when(run.getBuild()).thenReturn(build);
+
+        final List<StaticAnalysisRun> runs = new ArrayList<>();
+        runs.add(run);
+        final CategoryDataset dataset = builder.createDataSet(graphConfig, runs);
+
+        assertThat(dataset.getRowCount()).isEqualTo(3);
+        assertThat(dataset.getColumnCount()).isEqualTo(1);
+        assertThat(dataset.getValue(0, 0)).isEqualTo(10);
+        assertThat(dataset.getValue(1, 0)).isEqualTo(0);
+        assertThat(dataset.getValue(2, 0)).isEqualTo(0);
+
+
+    }
+
+    @Test
+    void noBuildPerDayOneDayLong() {
+        final HealthDescriptor health = mock(HealthDescriptor.class);
+        when(health.isEnabled()).thenReturn(true);
+        when(health.getHealthy()).thenReturn(10);
+        when(health.getUnHealthy()).thenReturn(20);
+
+        final HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
+
+        final GraphConfiguration graphConfig = mock(GraphConfiguration.class);
+        when(graphConfig.useBuildDateAsDomain()).thenReturn(true);
+
+        final List<StaticAnalysisRun> runs = new ArrayList<>();
+        final CategoryDataset dataset = builder.createDataSet(graphConfig, runs);
+        assertThat(dataset.getRowCount()).isEqualTo(0);
+        assertThat(dataset.getColumnCount()).isEqualTo(0);
+
+
+    }
+
+    @Test
+    void twoBuildsPerDayOneDayLong() {
+        final HealthDescriptor health = mock(HealthDescriptor.class);
+        when(health.isEnabled()).thenReturn(true);
+        when(health.getHealthy()).thenReturn(10);
+        when(health.getUnHealthy()).thenReturn(20);
+
+        final HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
+
+        final GraphConfiguration graphConfig = mock(GraphConfiguration.class);
+        when(graphConfig.useBuildDateAsDomain()).thenReturn(true);
+
+        final List<StaticAnalysisRun> runs = new ArrayList<>();
+
+        for (int i = 1; i <= 2; i++) {
+            final StaticAnalysisRun buildResult = mock(StaticAnalysisRun.class);
             when(buildResult.getTotalSize()).thenReturn(i * 10);
-            AnalysisBuild build = mock(AnalysisBuild.class);
+            final AnalysisBuild build = mock(AnalysisBuild.class);
+            when(build.getTimeInMillis()).thenReturn(System.currentTimeMillis());
             when(build.getNumber()).thenReturn(i);
             when(buildResult.getBuild()).thenReturn(build);
             runs.add(buildResult);
+        }
+        final CategoryDataset dataset = builder.createDataSet(graphConfig, runs);
 
+        assertThat(dataset.getRowCount()).isEqualTo(3);
+        assertThat(dataset.getColumnCount()).isEqualTo(1);
+        assertThat(dataset.getValue(0, 0)).isEqualTo(10);
+        assertThat(dataset.getValue(1, 0)).isEqualTo(5);
+        assertThat(dataset.getValue(2, 0)).isEqualTo(0);
+
+
+    }
+
+    @Test
+    void oneBuildsPerDayTwoDayLong() {
+        final HealthDescriptor health = mock(HealthDescriptor.class);
+        when(health.isEnabled()).thenReturn(true);
+        when(health.getHealthy()).thenReturn(10);
+        when(health.getUnHealthy()).thenReturn(20);
+
+        final HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
+
+        final GraphConfiguration graphConfig = mock(GraphConfiguration.class);
+        when(graphConfig.useBuildDateAsDomain()).thenReturn(true);
+
+        final List<StaticAnalysisRun> runs = new ArrayList<>();
+
+        for (int i = 1; i <= 2; i++) {
+            final StaticAnalysisRun buildResult = mock(StaticAnalysisRun.class);
+            when(buildResult.getTotalSize()).thenReturn(i * 10);
+            final AnalysisBuild build = mock(AnalysisBuild.class);
+            when(build.getTimeInMillis()).thenReturn(System.currentTimeMillis() * (i - 1));
+            when(build.getNumber()).thenReturn(i);
+            when(buildResult.getBuild()).thenReturn(build);
+            runs.add(buildResult);
+        }
+        final CategoryDataset dataset = builder.createDataSet(graphConfig, runs);
+
+        assertThat(dataset.getRowCount()).isEqualTo(3);
+        assertThat(dataset.getColumnCount()).isEqualTo(2);
+        assertThat(dataset.getValue(0, 0)).isEqualTo(10);
+        assertThat(dataset.getValue(1, 0)).isEqualTo(0);
+        assertThat(dataset.getValue(2, 0)).isEqualTo(0);
+
+        assertThat(dataset.getValue(0, 1)).isEqualTo(10);
+        assertThat(dataset.getValue(1, 1)).isEqualTo(10);
+        assertThat(dataset.getValue(2, 1)).isEqualTo(0);
+    }
+
+    @Test
+    void twoBuildsPerDayTwoDayLong() {
+        final HealthDescriptor health = mock(HealthDescriptor.class);
+        when(health.isEnabled()).thenReturn(true);
+        when(health.getHealthy()).thenReturn(10);
+        when(health.getUnHealthy()).thenReturn(20);
+
+        final HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
+
+        final GraphConfiguration graphConfig = mock(GraphConfiguration.class);
+        when(graphConfig.useBuildDateAsDomain()).thenReturn(true);
+
+        final List<StaticAnalysisRun> runs = new ArrayList<>();
+
+        for (int i = 1; i <= 4; i++) {
+            final StaticAnalysisRun buildResult = mock(StaticAnalysisRun.class);
+            when(buildResult.getTotalSize()).thenReturn(i * 10);
+            final AnalysisBuild build = mock(AnalysisBuild.class);
+            when(build.getTimeInMillis()).thenReturn(System.currentTimeMillis() * (i % 2));
+            when(build.getNumber()).thenReturn(i);
+            when(buildResult.getBuild()).thenReturn(build);
+            runs.add(buildResult);
+        }
+        final CategoryDataset dataset = builder.createDataSet(graphConfig, runs);
+
+        assertThat(dataset.getRowCount()).isEqualTo(3);
+        assertThat(dataset.getColumnCount()).isEqualTo(2);
+        assertThat(dataset.getValue(0, 0)).isEqualTo(10);
+        assertThat(dataset.getValue(1, 0)).isEqualTo(10);
+        assertThat(dataset.getValue(2, 0)).isEqualTo(10);
+
+        assertThat(dataset.getValue(0, 1)).isEqualTo(10);
+        assertThat(dataset.getValue(1, 1)).isEqualTo(5);
+        assertThat(dataset.getValue(2, 1)).isEqualTo(5);
+    }
+
+    @Test
+    void toOldBuild() {
+        final HealthDescriptor health = mock(HealthDescriptor.class);
+        when(health.isEnabled()).thenReturn(true);
+        when(health.getHealthy()).thenReturn(10);
+        when(health.getUnHealthy()).thenReturn(20);
+
+        final HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
+
+        final GraphConfiguration graphConfig = mock(GraphConfiguration.class);
+        when(graphConfig.useBuildDateAsDomain()).thenReturn(false);
+        when(graphConfig.isDayCountDefined()).thenReturn(true);
+        when(graphConfig.getDayCount()).thenReturn(1);
+
+        final StaticAnalysisRun run = mock(StaticAnalysisRun.class);
+        when(run.getTotalSize()).thenReturn(10);
+        final AnalysisBuild build = mock(AnalysisBuild.class);
+        when(build.getTimeInMillis()).thenReturn(System.currentTimeMillis() - 2 * A_DAY_IN_MSEC);
+        when(run.getBuild()).thenReturn(build);
+
+        final List<StaticAnalysisRun> runs = new ArrayList<>();
+        runs.add(run);
+        final CategoryDataset dataset = builder.createDataSet(graphConfig, runs);
+        assertThat(dataset.getRowCount()).isEqualTo(0);
+        assertThat(dataset.getColumnCount()).isEqualTo(0);
+
+    }
+
+    @Test
+    void allowOnlyOneBuild() {
+        final HealthDescriptor health = mock(HealthDescriptor.class);
+        when(health.isEnabled()).thenReturn(true);
+        when(health.getHealthy()).thenReturn(10);
+        when(health.getUnHealthy()).thenReturn(20);
+
+        final HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
+
+        final GraphConfiguration graphConfig = mock(GraphConfiguration.class);
+        when(graphConfig.useBuildDateAsDomain()).thenReturn(false);
+        when(graphConfig.isBuildCountDefined()).thenReturn(true);
+        when(graphConfig.getBuildCount()).thenReturn(1);
+
+        final StaticAnalysisRun run = mock(StaticAnalysisRun.class);
+        when(run.getTotalSize()).thenReturn(10);
+        final AnalysisBuild build = mock(AnalysisBuild.class);
+        when(run.getBuild()).thenReturn(build);
+
+        final List<StaticAnalysisRun> runs = new ArrayList<>();
+        runs.add(run);
+        final CategoryDataset dataset = builder.createDataSet(graphConfig, runs);
+
+        assertThat(dataset.getRowCount()).isEqualTo(3);
+        assertThat(dataset.getColumnCount()).isEqualTo(1);
+
+        assertThat(dataset.getValue(0, 0)).isEqualTo(10);
+        assertThat(dataset.getValue(1, 0)).isEqualTo(0);
+        assertThat(dataset.getValue(2, 0)).isEqualTo(0);
+
+    }
+
+    @Test
+    void allowTwoBuildsAndDoOne() {
+        final HealthDescriptor health = mock(HealthDescriptor.class);
+        when(health.isEnabled()).thenReturn(true);
+        when(health.getHealthy()).thenReturn(10);
+        when(health.getUnHealthy()).thenReturn(20);
+
+        final HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
+
+        final GraphConfiguration graphConfig = mock(GraphConfiguration.class);
+        when(graphConfig.useBuildDateAsDomain()).thenReturn(false);
+        when(graphConfig.isBuildCountDefined()).thenReturn(true);
+        when(graphConfig.getBuildCount()).thenReturn(2);
+
+        final StaticAnalysisRun run = mock(StaticAnalysisRun.class);
+        when(run.getTotalSize()).thenReturn(10);
+        final AnalysisBuild build = mock(AnalysisBuild.class);
+        when(run.getBuild()).thenReturn(build);
+
+        final List<StaticAnalysisRun> runs = new ArrayList<>();
+        runs.add(run);
+        final CategoryDataset dataset = builder.createDataSet(graphConfig, runs);
+
+        assertThat(dataset.getRowCount()).isEqualTo(3);
+        assertThat(dataset.getColumnCount()).isEqualTo(1);
+
+        assertThat(dataset.getValue(0, 0)).isEqualTo(10);
+        assertThat(dataset.getValue(1, 0)).isEqualTo(0);
+        assertThat(dataset.getValue(2, 0)).isEqualTo(0);
+
+    }
+
+    @Test
+    void twoBuildsInARow() {
+        final HealthDescriptor health = mock(HealthDescriptor.class);
+        when(health.isEnabled()).thenReturn(true);
+        when(health.getHealthy()).thenReturn(10);
+        when(health.getUnHealthy()).thenReturn(20);
+
+        final HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
+
+        final GraphConfiguration graphConfig = mock(GraphConfiguration.class);
+        when(graphConfig.useBuildDateAsDomain()).thenReturn(false);
+
+        final List<StaticAnalysisRun> runs = createAnalyseRunWithBuildNumber(2);
+
+        final CategoryDataset dataset = builder.createDataSet(graphConfig, runs);
+
+        assertThat(dataset.getRowCount()).isEqualTo(3);
+        assertThat(dataset.getColumnCount()).isEqualTo(2);
+
+        assertThat(dataset.getValue(0, 0)).isEqualTo(10);
+        assertThat(dataset.getValue(1, 0)).isEqualTo(0);
+        assertThat(dataset.getValue(2, 0)).isEqualTo(0);
+
+        assertThat(dataset.getValue(0, 1)).isEqualTo(10);
+        assertThat(dataset.getValue(1, 1)).isEqualTo(10);
+        assertThat(dataset.getValue(2, 1)).isEqualTo(0);
+    }
+
+    @Test
+    void twoBuildsInARowButOneIsToOld() {
+        final HealthDescriptor health = mock(HealthDescriptor.class);
+        when(health.isEnabled()).thenReturn(true);
+        when(health.getHealthy()).thenReturn(10);
+        when(health.getUnHealthy()).thenReturn(20);
+
+        final HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
+
+        final GraphConfiguration graphConfig = mock(GraphConfiguration.class);
+        when(graphConfig.useBuildDateAsDomain()).thenReturn(false);
+        when(graphConfig.isDayCountDefined()).thenReturn(true);
+        when(graphConfig.getDayCount()).thenReturn(1);
+
+        final List<StaticAnalysisRun> runs = new ArrayList<>();
+        for (int i = 1; i <= 2; i++) {
+            final StaticAnalysisRun run = mock(StaticAnalysisRun.class);
+            when(run.getTotalSize()).thenReturn(10);
+            final AnalysisBuild build = mock(AnalysisBuild.class);
+            when(build.getTimeInMillis()).thenReturn(System.currentTimeMillis() - (i - 1) * A_DAY_IN_MSEC);
+            when(run.getBuild()).thenReturn(build);
+            runs.add(run);
         }
 
+        final CategoryDataset dataset = builder.createDataSet(graphConfig, runs);
 
-        CategoryDataset dataset = builder.createDataSet(graphConfig, runs);
+        assertThat(dataset.getRowCount()).isEqualTo(3);
+        assertThat(dataset.getColumnCount()).isEqualTo(1);
 
-       System.out.print("for debug");
+        assertThat(dataset.getValue(0, 0)).isEqualTo(10);
+        assertThat(dataset.getValue(1, 0)).isEqualTo(0);
+        assertThat(dataset.getValue(2, 0)).isEqualTo(0);
+
+    }
+
+    @Test
+    void threeBuildsInARowButOneBuildNumberIsToHigh() {
+        final HealthDescriptor health = mock(HealthDescriptor.class);
+        when(health.isEnabled()).thenReturn(true);
+        when(health.getHealthy()).thenReturn(10);
+        when(health.getUnHealthy()).thenReturn(20);
+
+        final HealthSeriesBuilder builder = new HealthSeriesBuilder(health);
+
+        final GraphConfiguration graphConfig = mock(GraphConfiguration.class);
+        when(graphConfig.useBuildDateAsDomain()).thenReturn(false);
+        when(graphConfig.isBuildCountDefined()).thenReturn(true);
+        when(graphConfig.getBuildCount()).thenReturn(2);
 
 
+        final List<StaticAnalysisRun> runs = createAnalyseRunWithBuildNumber(3);
+        final CategoryDataset dataset = builder.createDataSet(graphConfig, runs);
 
+        assertThat(dataset.getRowCount()).isEqualTo(3);
+        assertThat(dataset.getColumnCount()).isEqualTo(2);
+
+        assertThat(dataset.getValue(0, 0)).isEqualTo(10);
+        assertThat(dataset.getValue(1, 0)).isEqualTo(0);
+        assertThat(dataset.getValue(2, 0)).isEqualTo(0);
+
+        assertThat(dataset.getValue(0, 1)).isEqualTo(10);
+        assertThat(dataset.getValue(1, 1)).isEqualTo(10);
+        assertThat(dataset.getValue(2, 1)).isEqualTo(0);
+
+
+    }
+
+
+    private List<StaticAnalysisRun> createAnalyseRunWithBuildNumber(final int count) {
+        final List<StaticAnalysisRun> runs = new ArrayList<>();
+
+        for (int i = 1; i <= count; i++) {
+            final StaticAnalysisRun buildResult = mock(StaticAnalysisRun.class);
+            when(buildResult.getTotalSize()).thenReturn(i * 10);
+            final AnalysisBuild build = mock(AnalysisBuild.class);
+            when(build.getNumber()).thenReturn(i);
+            when(buildResult.getBuild()).thenReturn(build);
+            runs.add(buildResult);
+        }
+        return runs;
     }
 
 
