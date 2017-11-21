@@ -169,7 +169,7 @@ class HealthSeriesBuilderTest {
 
         GraphConfiguration configuration = createGraphConfiguration();
         when(configuration.isDayCountDefined()).thenReturn(true);
-        when(configuration.getDayCount()).thenReturn(1);
+        when(configuration.getDayCount()).thenReturn(7);
 
         CategoryDataset dataSet = builder.createDataSet(configuration, results);
         assertThat(dataSet.getRowCount()).isEqualTo(3);
