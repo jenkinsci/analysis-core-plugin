@@ -9,10 +9,16 @@ import io.jenkins.plugins.analysis.core.quality.StaticAnalysisRun;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Tests the overwriten compute series method from HealthSeriesBuilder. The base class is tested separately.
+ */
 class HealthSeriesBuilderTest {
 
+    /**
+     * Verifies, that in case of less values than the healty threshold, all values are counted as healthy.
+     */
     @Test
-    void testHealthyCategoryGetsAll() {
+    void shouldCountAllAsHealthy() {
         HealthDescriptor healthDescriptorStub = mock(HealthDescriptor.class);
         StaticAnalysisRun staticAnalysisRunStub = mock(StaticAnalysisRun.class);
         setupStubs(healthDescriptorStub, staticAnalysisRunStub, true, 5, 6, 5);
@@ -23,8 +29,12 @@ class HealthSeriesBuilderTest {
         assertResultListSizeAndValues(list, 3, 5, 0, 0);
     }
 
+    /**
+     * Verifies, that in case of a healthy threshold of zero and a high unhealty threshold, all values are counted as
+     * "warnings"(second value in the resulting list).
+     */
     @Test
-    void testWarningsCategoryGetsAll() {
+    void shouldCountAllAsWarning() {
         HealthDescriptor healthDescriptorStub = mock(HealthDescriptor.class);
         StaticAnalysisRun staticAnalysisRunStub = mock(StaticAnalysisRun.class);
         setupStubs(healthDescriptorStub, staticAnalysisRunStub, true, 0, 5, 3);
@@ -35,8 +45,12 @@ class HealthSeriesBuilderTest {
         assertResultListSizeAndValues(list, 3, 0, 3, 0);
     }
 
+    /**
+     * Verifies, that in case of an unhealthy threshold of zero, all values are counted as unhealthy (third value in
+     * resulting list).
+     */
     @Test
-    void testUnhealthyCategoryGetsAll() {
+    void shouldCountAllAsUnhealthy() {
         HealthDescriptor healthDescriptorStub = mock(HealthDescriptor.class);
         StaticAnalysisRun staticAnalysisRunStub = mock(StaticAnalysisRun.class);
         setupStubs(healthDescriptorStub, staticAnalysisRunStub, true, 0, 0, 3);
@@ -47,8 +61,12 @@ class HealthSeriesBuilderTest {
         assertResultListSizeAndValues(list, 3, 0, 0, 3);
     }
 
+    /**
+     * Verifies, that in case of more values than healty threshold and unhealthy thresold, the values are counted to the
+     * appropriate category.
+     */
     @Test
-    void testEachCategoryGetsOne() {
+    void shouldCountCorrectlyToAllCategories() {
         HealthDescriptor healthDescriptorStub = mock(HealthDescriptor.class);
         StaticAnalysisRun staticAnalysisRunStub = mock(StaticAnalysisRun.class);
         setupStubs(healthDescriptorStub, staticAnalysisRunStub, true, 1, 2, 3);
@@ -59,8 +77,11 @@ class HealthSeriesBuilderTest {
         assertResultListSizeAndValues(list, 3, 1, 1, 1);
     }
 
+    /**
+     * Verifies, that in case of a disabled healthDescriptor, all values are counted to the same default category.
+     */
     @Test
-    void testHealthDescriptorDisabled() {
+    void shouldCountAllToTheSameCategory() {
         HealthDescriptor healthDescriptorStub = mock(HealthDescriptor.class);
         StaticAnalysisRun staticAnalysisRunStub = mock(StaticAnalysisRun.class);
         setupStubs(healthDescriptorStub, staticAnalysisRunStub, false, 0, 0, 3);
