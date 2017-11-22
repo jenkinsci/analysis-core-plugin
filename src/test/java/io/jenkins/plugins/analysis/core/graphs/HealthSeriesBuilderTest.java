@@ -19,9 +19,6 @@ import static org.mockito.Mockito.*;
  */
 class HealthSeriesBuilderTest {
 
-    /**
-     * Value of one day in milliseconds.
-     */
     private static final int A_DAY_IN_M_SEC = 24 * 3600 * 1000;
 
     @Test
