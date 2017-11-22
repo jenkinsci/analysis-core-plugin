@@ -309,11 +309,11 @@ class HealthSeriesBuilderTest {
         assertThat(categoryDataset.getColumnCount()).isEqualTo(2);
         assertThat(categoryDataset.getRowCount()).isEqualTo(3);
 
-        assertThat(categoryDataset.getValue(0, 0)).isEqualTo(10);
+        assertThat(categoryDataset.getValue(0, 0)).isEqualTo(5);
         assertThat(categoryDataset.getValue(1, 0)).isEqualTo(0);
         assertThat(categoryDataset.getValue(2, 0)).isEqualTo(0);
 
-        assertThat(categoryDataset.getValue(0, 1)).isEqualTo(5);
+        assertThat(categoryDataset.getValue(0, 1)).isEqualTo(10);
         assertThat(categoryDataset.getValue(1, 1)).isEqualTo(0);
         assertThat(categoryDataset.getValue(2, 1)).isEqualTo(0);
     }
@@ -335,7 +335,7 @@ class HealthSeriesBuilderTest {
 
         final CategoryDataset categoryDataset = builder.createDataSet(configuration, analysisRuns);
 
-        assertThat(categoryDataset.getColumnCount()).isEqualTo(1);
+        assertThat(categoryDataset.getColumnCount()).isEqualTo(2);
         assertThat(categoryDataset.getRowCount()).isEqualTo(3);
 
         assertThat(categoryDataset.getValue(0, 0)).isEqualTo(5);
