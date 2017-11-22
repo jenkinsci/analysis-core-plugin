@@ -29,7 +29,8 @@ public class ResultTime {
     /**
      * Creates a new instance of {@link ResultTime}.
      *
-     * @param now the date representing today
+     * @param now
+     *         the date representing today
      */
     @VisibleForTesting
     ResultTime(final LocalDate now) {
@@ -39,8 +40,11 @@ public class ResultTime {
     /**
      * Returns whether the specified build result is too old in order to be considered for the trend graph.
      *
-     * @param configuration the graph configuration
-     * @param analysisRun   the results of a analysis run
+     * @param configuration
+     *         the graph configuration
+     * @param analysisRun
+     *         the results of a analysis run
+     *
      * @return {@code true} if the build is too old
      */
     public boolean areResultsTooOld(final GraphConfiguration configuration, final StaticAnalysisRun analysisRun) {
@@ -48,7 +52,7 @@ public class ResultTime {
     }
 
     private int computeDayDelta(final StaticAnalysisRun analysisRun) {
-        return Math.abs(Period.between(today, toLocalDate(analysisRun.getBuild().getTimeInMillis())).getDays());
+        return Math.abs(Period.between(toLocalDate(analysisRun.getBuild().getTimeInMillis()), today).getDays());
     }
 
     private LocalDate toLocalDate(final long timeInMillis) {
