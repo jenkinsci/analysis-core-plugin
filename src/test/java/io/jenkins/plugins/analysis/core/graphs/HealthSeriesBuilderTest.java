@@ -78,7 +78,7 @@ class HealthSeriesBuilderTest {
     }
 
     /**
-     * The number of builds to create the dataset from shouldn't be exceeded.
+     * The number of builds to create the data-set from shouldn't be exceeded.
      */
     @Test
     void buildCountShouldNotBeExceeded() {
@@ -337,7 +337,7 @@ class HealthSeriesBuilderTest {
     }
 
     /*
-     * Provides a set of sample input data:
+     * Provides a set of sample input data (build number, build date, issues):
      *  build 1-2, day 1, avg. 9 issues
      *  build 3, day 2, 12 issues
      *  build 4-5, day 3, avg. 15 issues
