@@ -14,11 +14,10 @@ import io.jenkins.plugins.analysis.core.quality.StaticAnalysisRun;
 import static org.mockito.Mockito.*;
 
 /**
- * Tests the class {@link HealthSeriesBuilder}
+ * Tests the class {@link HealthSeriesBuilder}.
  *
  * @author Joscha Behrmann
  */
-// TODO: custom assertions? CHECKSTYLE
 @SuppressWarnings("Duplicates")
 class HealthSeriesBuilderTest {
 
@@ -49,7 +48,6 @@ class HealthSeriesBuilderTest {
         SeriesBuilder builder = new HealthSeriesBuilder(createDisabledHealthDescriptor());
 
         SoftAssertions.assertSoftly(softly -> {
-            // createDataSetPerDay
             CategoryDataset dataSet2 = builder.createDataSet(cfg, Lists.newArrayList());
             softly.assertThat(dataSet2.getColumnCount()).isEqualTo(0);
             softly.assertThat(dataSet2.getRowCount()).isEqualTo(0);
@@ -65,11 +63,11 @@ class HealthSeriesBuilderTest {
         ResultTime resTime = mock(ResultTime.class);
         SeriesBuilder builder = new HealthSeriesBuilder(createDisabledHealthDescriptor(), resTime);
 
-        // Only first 3 runs are "fresh" enough to be added
+        // Only first 3 runs are new enough to be considered
         when(resTime.areResultsTooOld(any(), any())).thenReturn(false, false, false, true);
 
         SoftAssertions.assertSoftly(softly -> {
-            CategoryDataset dataSet = builder.createDataSet(cfg, Lists.newArrayList(getInputAnalysisRuns()));
+            CategoryDataset dataSet = builder.createDataSet(cfg, Lists.newArrayList(createAnalysisRuns()));
             softly.assertThat(dataSet.getRowCount()).isOne();
             softly.assertThat(dataSet.getColumnCount())
                     .as("Old runs shouldn't be added to the dataset")
@@ -94,21 +92,21 @@ class HealthSeriesBuilderTest {
         SoftAssertions.assertSoftly(softly -> {
             // Number of builds to add is capped at 1, only add first run
             when(cfg.getBuildCount()).thenReturn(1);
-            CategoryDataset dataSet = builder.createDataSet(cfg, getInputAnalysisRuns());
+            CategoryDataset dataSet = builder.createDataSet(cfg, createAnalysisRuns());
             softly.assertThat(dataSet.getRowCount()).isOne();
             softly.assertThat(dataSet.getColumnCount()).isOne();
             softly.assertThat(dataSet.getValue(0, 0)).isEqualTo(6);
 
             // Number of builds to add is capped at 7, add all runs
             when(cfg.getBuildCount()).thenReturn(7);
-            CategoryDataset dataSet1 = builder.createDataSet(cfg, getInputAnalysisRuns());
+            CategoryDataset dataSet1 = builder.createDataSet(cfg, createAnalysisRuns());
             softly.assertThat(dataSet1.getRowCount()).isOne();
             softly.assertThat(dataSet1.getColumnCount()).isEqualTo(5);
             softly.assertThat(dataSet1.getValue(0, 0)).isEqualTo(9);
 
             // Number of builds to add is capped at 10, add all runs
             when(cfg.getBuildCount()).thenReturn(10);
-            CategoryDataset dataSet2 = builder.createDataSet(cfg, getInputAnalysisRuns());
+            CategoryDataset dataSet2 = builder.createDataSet(cfg, createAnalysisRuns());
             softly.assertThat(dataSet2.getRowCount()).isOne();
             softly.assertThat(dataSet2.getColumnCount()).isEqualTo(5);
             softly.assertThat(dataSet2.getValue(0, 0)).isEqualTo(9);
@@ -126,7 +124,7 @@ class HealthSeriesBuilderTest {
         SeriesBuilder builder = new HealthSeriesBuilder(createDisabledHealthDescriptor(), resTime);
 
         SoftAssertions.assertSoftly(softly -> {
-            CategoryDataset dataSet = builder.createDataSet(cfg, getInputAnalysisRuns());
+            CategoryDataset dataSet = builder.createDataSet(cfg, createAnalysisRuns());
             softly.assertThat(dataSet.getRowCount()).isOne();
             softly.assertThat(dataSet.getColumnCount()).isEqualTo(5);
 
@@ -156,7 +154,7 @@ class HealthSeriesBuilderTest {
         SeriesBuilder builder = new HealthSeriesBuilder(createDisabledHealthDescriptor(), resTime);
 
         SoftAssertions.assertSoftly(softly-> {
-            CategoryDataset dataSet = builder.createDataSet(cfg, getInputAnalysisRuns());
+            CategoryDataset dataSet = builder.createDataSet(cfg, createAnalysisRuns());
             softly.assertThat(dataSet.getRowCount()).isOne();
             softly.assertThat(dataSet.getColumnCount()).isEqualTo(5);
             softly.assertThat(dataSet.getValue(0, 0)).isEqualTo(9);
@@ -168,17 +166,17 @@ class HealthSeriesBuilderTest {
     }
 
     /**
-     * A series containing triplets should be computed when the health
-     * descriptor is enabled.
+     * If healthDescriptor is enabled, the data-set triples should be
+     * calculated accordingly.
      */
     @Test
-    void shouldComputeTripleOnHealthDescriptorEnabled() {
+    void shouldComputeSeriesOnHealthDescriptorEnabled() {
         GraphConfiguration cfg = createGraphConfig();
         ResultTime resTime = mock(ResultTime.class);
         SeriesBuilder builder = new HealthSeriesBuilder(createHealthDescriptor(), resTime);
 
         SoftAssertions.assertSoftly(softly-> {
-            CategoryDataset dataSet = builder.createDataSet(cfg, getInputAnalysisRuns());
+            CategoryDataset dataSet = builder.createDataSet(cfg, createAnalysisRuns());
             softly.assertThat(dataSet.getRowCount()).isEqualTo(3);
             softly.assertThat(dataSet.getColumnCount()).isEqualTo(5);
 
@@ -208,7 +206,7 @@ class HealthSeriesBuilderTest {
         when(cfg.useBuildDateAsDomain()).thenReturn(false);
 
         SoftAssertions.assertSoftly(softly -> {
-            CategoryDataset dataSet = builder.createDataSet(cfg, getInputAnalysisRuns());
+            CategoryDataset dataSet = builder.createDataSet(cfg, createAnalysisRuns());
             softly.assertThat(dataSet.getRowCount()).isOne();
             softly.assertThat(dataSet.getColumnCount())
                     .as("There should be one data-entry for every build")
@@ -220,8 +218,125 @@ class HealthSeriesBuilderTest {
         });
     }
 
+    /**
+     * Explicitly ensures C2a (boundary interior) coverage of createSeriesPerBuild().
+     * This tests every path that can be reached with 1 iteration.
+     */
+    @Test
+    void createSeriesPerBuildBoundaryInteriorEnterOnce() {
+        GraphConfiguration cfg = createGraphConfig();
+        ResultTime resTime = mock(ResultTime.class);
+        SeriesBuilder builder = new HealthSeriesBuilder(createDisabledHealthDescriptor(), resTime);
+
+        List<StaticAnalysisRun> oneRun = Lists.newArrayList();
+        oneRun.add(createAnalysisRun(1, 1, 2, 3, 1));
+
+        SoftAssertions.assertSoftly(softly -> {
+            // empty data
+            CategoryDataset dataSet1 = builder.createDataSet(cfg, Lists.emptyList());
+            softly.assertThat(dataSet1.getRowCount()).isZero();
+            softly.assertThat(dataSet1.getColumnCount()).isZero();
+
+            // enter once, break on resultTime
+            when(resTime.areResultsTooOld(any(), any())).thenReturn(true);
+            CategoryDataset dataSet2 = builder.createDataSet(cfg, oneRun);
+            softly.assertThat(dataSet2.getRowCount()).isZero();
+            softly.assertThat(dataSet2.getColumnCount()).isZero();
+
+            // enter once, no build count defined
+            when(resTime.areResultsTooOld(any(), any())).thenReturn(false);
+            CategoryDataset dataSet3 = builder.createDataSet(cfg, oneRun);
+            softly.assertThat(dataSet3.getRowCount()).isOne();
+            softly.assertThat(dataSet3.getColumnCount()).isOne();
+
+            // enter once, build count is defined but not reached
+            when(cfg.isBuildCountDefined()).thenReturn(true);
+            when(cfg.getBuildCount()).thenReturn(2);
+            CategoryDataset dataSet4 = builder.createDataSet(cfg, oneRun);
+            softly.assertThat(dataSet4.getRowCount()).isOne();
+            softly.assertThat(dataSet4.getColumnCount()).isOne();
+
+            // enter once, build count is defined and reached
+            when(cfg.isBuildCountDefined()).thenReturn(true);
+            when(cfg.getBuildCount()).thenReturn(-1);
+            CategoryDataset dataSet5 = builder.createDataSet(cfg, oneRun);
+            softly.assertThat(dataSet5.getRowCount()).isOne();
+            softly.assertThat(dataSet5.getColumnCount()).isOne();
+        });
+    }
 
     /**
+     * Explicitly ensures C2a (boundary interior) coverage of createSeriesPerBuild().
+     * This tests every path that can be reached with 2 iteration.
+     */
+    @Test
+    void createSeriesPerBuildBoundaryInteriorEnterTwice() {
+        GraphConfiguration cfg = createGraphConfig();
+        ResultTime resTime = mock(ResultTime.class);
+        SeriesBuilder builder = new HealthSeriesBuilder(createDisabledHealthDescriptor(), resTime);
+
+        List<StaticAnalysisRun> twoRuns = Lists.newArrayList();
+        twoRuns.add(createAnalysisRun(1, 1, 2, 3, 1));
+        twoRuns.add(createAnalysisRun(2, 2, 3, 4, 2));
+
+        SoftAssertions.assertSoftly(softly -> {
+            // enter twice, no resultTime, no buildCount defined
+            when(resTime.areResultsTooOld(any(), any())).thenReturn(false);
+            when(cfg.isBuildCountDefined()).thenReturn(false);
+            CategoryDataset dataSet6 = builder.createDataSet(cfg, twoRuns);
+            softly.assertThat(dataSet6.getRowCount()).isOne();
+            softly.assertThat(dataSet6.getColumnCount()).isEqualTo(2);
+
+            // enter twice, no resultTime, buildCount is defined but not reached
+            when(resTime.areResultsTooOld(any(), any())).thenReturn(false);
+            when(cfg.isBuildCountDefined()).thenReturn(true);
+            when(cfg.getBuildCount()).thenReturn(3);
+            CategoryDataset dataSet7 = builder.createDataSet(cfg, twoRuns);
+            softly.assertThat(dataSet7.getRowCount()).isOne();
+            softly.assertThat(dataSet7.getColumnCount()).isEqualTo(2);
+
+            // enter twice, no resultTime, buildCount is defined and reached on first
+            when(resTime.areResultsTooOld(any(), any())).thenReturn(false);
+            when(cfg.isBuildCountDefined()).thenReturn(true);
+            when(cfg.getBuildCount()).thenReturn(1);
+            CategoryDataset dataSet8 = builder.createDataSet(cfg, twoRuns);
+            softly.assertThat(dataSet8.getRowCount()).isOne();
+            softly.assertThat(dataSet8.getColumnCount()).isEqualTo(1);
+
+            // enter twice, no resultTime, buildCount is defined and reached on second
+            when(resTime.areResultsTooOld(any(), any())).thenReturn(false);
+            when(cfg.isBuildCountDefined()).thenReturn(true);
+            when(cfg.getBuildCount()).thenReturn(2);
+            CategoryDataset dataSet9 = builder.createDataSet(cfg, twoRuns);
+            softly.assertThat(dataSet9.getRowCount()).isOne();
+            softly.assertThat(dataSet9.getColumnCount()).isEqualTo(2);
+
+            // enter twice, resultTime on second, buildCount is not defined
+            when(resTime.areResultsTooOld(any(), any())).thenReturn(false, true);
+            when(cfg.isBuildCountDefined()).thenReturn(false);
+            CategoryDataset dataSet10 = builder.createDataSet(cfg, twoRuns);
+            softly.assertThat(dataSet10.getRowCount()).isOne();
+            softly.assertThat(dataSet10.getColumnCount()).isOne();
+
+            // enter twice, resultTime on second, buildCount is defined but not reached
+            when(resTime.areResultsTooOld(any(), any())).thenReturn(false, true);
+            when(cfg.isBuildCountDefined()).thenReturn(true);
+            when(cfg.getBuildCount()).thenReturn(3);
+            CategoryDataset dataSet11 = builder.createDataSet(cfg, twoRuns);
+            softly.assertThat(dataSet11.getRowCount()).isOne();
+            softly.assertThat(dataSet11.getColumnCount()).isOne();
+
+            // enter twice, resultTime on second, buildCount is defined and reached after first
+            when(resTime.areResultsTooOld(any(), any())).thenReturn(false, true);
+            when(cfg.isBuildCountDefined()).thenReturn(true);
+            when(cfg.getBuildCount()).thenReturn(1);
+            CategoryDataset dataSet12 = builder.createDataSet(cfg, twoRuns);
+            softly.assertThat(dataSet12.getRowCount()).isOne();
+            softly.assertThat(dataSet12.getColumnCount()).isOne();
+        });
+    }
+
+    /*
      * Provides a set of sample input data:
      *  build 1-2, day 1, avg. 9 issues
      *  build 3, day 2, 12 issues
@@ -229,14 +344,14 @@ class HealthSeriesBuilderTest {
      *  build 6, day 4, 9 issues
      *  build 7, day 5, 18 issues
      */
-    private List<StaticAnalysisRun> getInputAnalysisRuns() {
-        StaticAnalysisRun r1 = createBuildResult(1, 1, 2, 3, 1);
-        StaticAnalysisRun r2 = createBuildResult(2, 2, 3, 7, 1);
-        StaticAnalysisRun r3 = createBuildResult(3, 3, 4, 5, 2);
-        StaticAnalysisRun r4 = createBuildResult(4, 6, 7, 8, 3);
-        StaticAnalysisRun r5 = createBuildResult(5, 9, 0, 1, 3);
-        StaticAnalysisRun r6 = createBuildResult(6, 2, 3, 4, 4);
-        StaticAnalysisRun r7 = createBuildResult(7, 5, 6, 7, 5);
+    private List<StaticAnalysisRun> createAnalysisRuns() {
+        StaticAnalysisRun r1 = createAnalysisRun(1, 1, 2, 3, 1);
+        StaticAnalysisRun r2 = createAnalysisRun(2, 2, 3, 7, 1);
+        StaticAnalysisRun r3 = createAnalysisRun(3, 3, 4, 5, 2);
+        StaticAnalysisRun r4 = createAnalysisRun(4, 6, 7, 8, 3);
+        StaticAnalysisRun r5 = createAnalysisRun(5, 9, 0, 1, 3);
+        StaticAnalysisRun r6 = createAnalysisRun(6, 2, 3, 4, 4);
+        StaticAnalysisRun r7 = createAnalysisRun(7, 5, 6, 7, 5);
         return Lists.newArrayList(r1, r2, r3, r4, r5, r6, r7);
     }
 
@@ -278,7 +393,7 @@ class HealthSeriesBuilderTest {
     /*
      * Creates a StaticAnalysisRun with given parameters
      */
-    private StaticAnalysisRun createBuildResult(final int buildNumber, final int numHighPrio,
+    private StaticAnalysisRun createAnalysisRun(final int buildNumber, final int numHighPrio,
             final int numNormalPrio, final int numLowPrio, final int day) {
         StaticAnalysisRun buildResult = mock(StaticAnalysisRun.class);
 
@@ -288,10 +403,10 @@ class HealthSeriesBuilderTest {
         when(buildResult.getTotalLowPrioritySize()).thenReturn(numLowPrio);
 
         // Total size
-        when(buildResult.getTotalSize()).thenReturn(numHighPrio +
-                numNormalPrio + numLowPrio);
+        when(buildResult.getTotalSize()).thenReturn(numHighPrio
+                + numNormalPrio + numLowPrio);
 
-        AnalysisBuild build = createBuild(buildNumber, day*24*60*60*1000);
+        AnalysisBuild build = createAnalysisBuild(buildNumber, day * 24 * 60 * 60 * 1000);
         when(buildResult.getBuild()).thenReturn(build);
 
         return buildResult;
@@ -300,7 +415,7 @@ class HealthSeriesBuilderTest {
     /*
      * Creates an AnalysisBuild with given parameters
      */
-    private AnalysisBuild createBuild(final int number, final long time) {
+    private AnalysisBuild createAnalysisBuild(final int number, final long time) {
         AnalysisBuild run = mock(AnalysisBuild.class);
         when(run.getNumber()).thenReturn(number);
         when(run.getDisplayName()).thenReturn("#" + number);
