@@ -19,24 +19,36 @@ import static org.mockito.Mockito.*;
  * @author Joscha Behrmann
  */
 // TODO: custom assertions? CHECKSTYLE
+@SuppressWarnings("Duplicates")
 class HealthSeriesBuilderTest {
 
     /**
-     * Covers both branches of createDataSet() when given an empty list as input.
-     * This should result in empty output.
+     * When given empty runs as input, no data should be generated when
+     * using build-number as domain.
      */
     @Test
-    void emptyAnalysisInputShouldReturnEmptyDataSet() {
+    void emptyAnalysisInputOnBuildNumberShouldReturnEmptyDataSet() {
         GraphConfiguration cfg = createGraphConfig();
         SeriesBuilder builder = new HealthSeriesBuilder(createDisabledHealthDescriptor());
 
         SoftAssertions.assertSoftly(softly -> {
-            // createDataSetPerBuildNumber
             when(cfg.useBuildDateAsDomain()).thenReturn(false);
             CategoryDataset dataSet = builder.createDataSet(cfg, Lists.newArrayList());
+            softly.assertThat(dataSet.getRowCount()).isEqualTo(0);
             softly.assertThat(dataSet.getColumnCount()).isEqualTo(0);
-            softly.assertThat(dataSet.getColumnCount()).isEqualTo(0);
+        });
+    }
 
+    /**
+     * When given empty runs as input, no data should be generated when
+     * using build-date as domain.
+     */
+    @Test
+    void emptyAnalysisInputOnDateDomainShouldReturnEmptyDataSet() {
+        GraphConfiguration cfg = createGraphConfig();
+        SeriesBuilder builder = new HealthSeriesBuilder(createDisabledHealthDescriptor());
+
+        SoftAssertions.assertSoftly(softly -> {
             // createDataSetPerDay
             CategoryDataset dataSet2 = builder.createDataSet(cfg, Lists.newArrayList());
             softly.assertThat(dataSet2.getColumnCount()).isEqualTo(0);
@@ -53,14 +65,17 @@ class HealthSeriesBuilderTest {
         ResultTime resTime = mock(ResultTime.class);
         SeriesBuilder builder = new HealthSeriesBuilder(createDisabledHealthDescriptor(), resTime);
 
-        // Last two runs are too old to be added
-        when(resTime.areResultsTooOld(any(), any())).thenReturn(false, false, true, true);
+        // Only first 3 runs are "fresh" enough to be added
+        when(resTime.areResultsTooOld(any(), any())).thenReturn(false, false, false, true);
 
         SoftAssertions.assertSoftly(softly -> {
             CategoryDataset dataSet = builder.createDataSet(cfg, Lists.newArrayList(getInputAnalysisRuns()));
             softly.assertThat(dataSet.getRowCount()).isOne();
-            softly.assertThat(dataSet.getColumnCount()).isOne();
+            softly.assertThat(dataSet.getColumnCount())
+                    .as("Old runs shouldn't be added to the dataset")
+                    .isEqualTo(2);
             softly.assertThat(dataSet.getValue(0, 0)).isEqualTo(9);
+            softly.assertThat(dataSet.getValue(0, 1)).isEqualTo(12);
         });
     }
 
@@ -131,8 +146,8 @@ class HealthSeriesBuilderTest {
     }
 
     /**
-     * If healthDescriptor is disabled, the total count of issues should be contained
-     * in the resulting data set.
+     * If healthDescriptor is disabled, only the total count of issues should be
+     * contained in the resulting data set.
      */
     @Test
     void shouldAddRemainderIfNoHealthDescriptor() {
@@ -166,6 +181,7 @@ class HealthSeriesBuilderTest {
             CategoryDataset dataSet = builder.createDataSet(cfg, getInputAnalysisRuns());
             softly.assertThat(dataSet.getRowCount()).isEqualTo(3);
             softly.assertThat(dataSet.getColumnCount()).isEqualTo(5);
+
             softly.assertThat(dataSet.getValue(0, 0)).isEqualTo(8);
             softly.assertThat(dataSet.getValue(0, 1)).isEqualTo(10);
             softly.assertThat(dataSet.getValue(0, 2)).isEqualTo(10);
@@ -180,6 +196,30 @@ class HealthSeriesBuilderTest {
         });
     }
 
+    /**
+     * When using build-numbers as the data-domain, builds should be
+     * added accordingly.
+     */
+    @Test
+    void shouldCreateDataSetPerBuildNumber() {
+        GraphConfiguration cfg = createGraphConfig();
+        SeriesBuilder builder = new HealthSeriesBuilder(createDisabledHealthDescriptor());
+
+        when(cfg.useBuildDateAsDomain()).thenReturn(false);
+
+        SoftAssertions.assertSoftly(softly -> {
+            CategoryDataset dataSet = builder.createDataSet(cfg, getInputAnalysisRuns());
+            softly.assertThat(dataSet.getRowCount()).isOne();
+            softly.assertThat(dataSet.getColumnCount())
+                    .as("There should be one data-entry for every build")
+                    .isEqualTo(7);
+            softly.assertThat(dataSet.getValue(0, 0)).isEqualTo(6);
+            softly.assertThat(dataSet.getValue(0, 1)).isEqualTo(12);
+            softly.assertThat(dataSet.getValue(0, 2)).isEqualTo(12);
+            softly.assertThat(dataSet.getValue(0, 3)).isEqualTo(21);
+        });
+    }
+
 
     /**
      * Provides a set of sample input data:
@@ -189,7 +229,7 @@ class HealthSeriesBuilderTest {
      *  build 6, day 4, 9 issues
      *  build 7, day 5, 18 issues
      */
-    List<StaticAnalysisRun> getInputAnalysisRuns() {
+    private List<StaticAnalysisRun> getInputAnalysisRuns() {
         StaticAnalysisRun r1 = createBuildResult(1, 1, 2, 3, 1);
         StaticAnalysisRun r2 = createBuildResult(2, 2, 3, 7, 1);
         StaticAnalysisRun r3 = createBuildResult(3, 3, 4, 5, 2);
@@ -200,7 +240,7 @@ class HealthSeriesBuilderTest {
         return Lists.newArrayList(r1, r2, r3, r4, r5, r6, r7);
     }
 
-    /**
+    /*
      * Mocks a GraphConfiguration whose useBuildDateDomain is set to true.
      */
     private GraphConfiguration createGraphConfig() {
@@ -209,14 +249,23 @@ class HealthSeriesBuilderTest {
         return graphConfiguration;
     }
 
+    /*
+     * Creates a mocked HealthDescriptor which is disabled
+     */
     private HealthDescriptor createDisabledHealthDescriptor() {
         return createHealthDescriptor(10, 20, Priority.NORMAL, false);
     }
 
+    /*
+     * Creates a HealthDescriptor with default-settings
+     */
     private HealthDescriptor createHealthDescriptor() {
         return createHealthDescriptor(10, 20, Priority.NORMAL, true);
     }
 
+    /*
+     * Creates a HealthDescriptor with given parameters
+     */
     private HealthDescriptor createHealthDescriptor(int healthy, int unhealthy, Priority minPriority, boolean enabled) {
         HealthDescriptor hc = mock(HealthDescriptor.class);
         when(hc.getHealthy()).thenReturn(healthy);
@@ -226,6 +275,9 @@ class HealthSeriesBuilderTest {
         return hc;
     }
 
+    /*
+     * Creates a StaticAnalysisRun with given parameters
+     */
     private StaticAnalysisRun createBuildResult(final int buildNumber, final int numHighPrio,
             final int numNormalPrio, final int numLowPrio, final int day) {
         StaticAnalysisRun buildResult = mock(StaticAnalysisRun.class);
@@ -245,6 +297,9 @@ class HealthSeriesBuilderTest {
         return buildResult;
     }
 
+    /*
+     * Creates an AnalysisBuild with given parameters
+     */
     private AnalysisBuild createBuild(final int number, final long time) {
         AnalysisBuild run = mock(AnalysisBuild.class);
         when(run.getNumber()).thenReturn(number);
