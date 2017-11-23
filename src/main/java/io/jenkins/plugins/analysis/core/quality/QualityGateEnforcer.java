@@ -8,6 +8,7 @@ import hudson.model.Result;
  * @author Ullrich Hafner
  */
 public class QualityGateEnforcer {
+
     /**
      * Evaluates the specified quality gate for the given run.
      *
@@ -18,9 +19,11 @@ public class QualityGateEnforcer {
      *
      * @return the result of the evaluation
      */
+
+    // Failed Success Unstable
     public Result evaluate(final StaticAnalysisRun run, final QualityGate qualityGate) {
         if (qualityGate.hasFailureThreshold()) {
-            if (run.getTotalSize() >= qualityGate.getFailureThreshold()) {
+            if (run.getTotalHighPrioritySize() >= qualityGate.getFailureThreshold()) {
                 return Result.FAILURE;
             }
         }

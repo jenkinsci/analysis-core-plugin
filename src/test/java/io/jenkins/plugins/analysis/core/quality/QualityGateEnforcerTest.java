@@ -43,14 +43,49 @@ class QualityGateEnforcerTest {
     void shouldFailBuildIfFailureThresholdIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
-        when(run.getTotalSize()).thenReturn(1);
+        when(run.getTotalHighPrioritySize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(1);
+        when(run.getTotalSize()).thenReturn(5);
+
+
+        QualityGate qualityGate = new QualityGate(5);
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
         assertThat(failure)
-                .as("One issue should return a FAILURE")
+                .as("same number of issue abd threshold should return a FAILURE")
+                .isEqualTo(Result.FAILURE);
+    }
+
+    @Test
+    void shouldSuccessIfIssuesSamlerThanThreshold() {
+        QualityGateEnforcer enforcer = new QualityGateEnforcer();
+        StaticAnalysisRun run = mock(StaticAnalysisRun.class);
+        when(run.getTotalSize()).thenReturn(4);
+
+        QualityGate qualityGate = new QualityGate(5);
+
+        Result failure = enforcer.evaluate(run, qualityGate);
+
+        assertThat(failure)
+                .as("same number of issue abd threshold should return a FAILURE")
+                .isEqualTo(Result.SUCCESS);
+    }
+
+    @Test
+    void shouldFailIfIssuesBiggerThanThreshold() {
+        QualityGateEnforcer enforcer = new QualityGateEnforcer();
+        StaticAnalysisRun run = mock(StaticAnalysisRun.class);
+        when(run.getTotalSize()).thenReturn(6);
+
+        QualityGate qualityGate = new QualityGate(5);
+
+        Result failure = enforcer.evaluate(run, qualityGate);
+
+        assertThat(failure).as("One issue should return FAILURE").isEqualTo(Result.FAILURE);
+
+        assertThat(failure)
+                .as("same number of issue abd threshold should return a FAILURE")
                 .isEqualTo(Result.FAILURE);
     }
 }
