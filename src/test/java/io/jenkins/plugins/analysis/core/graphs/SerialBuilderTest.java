@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -23,7 +22,7 @@ import static org.mockito.Mockito.*;
  * Test Class for SerialBuilder.
  */
 class SerialBuilderTest {
-
+    final String assertErrorMessage = "\nCurrent Build is the <%d> failed to check:";
 
     private static int buildCounter = 0;
 
@@ -55,18 +54,20 @@ class SerialBuilderTest {
         return list;
     }
 
-    private void check(CategoryDataset data, int healthy, int unHealthy, int... list) {
+    private void checkDataSet(CategoryDataset data, int healthy, int unHealthy, int... list) {
         ArrayUtils.reverse(list);
         assertThat(data.getColumnCount()).isEqualTo(list.length);
         for (int i = 0; i < list.length; i++) {
             StaticAnalysisRun stub = mock(StaticAnalysisRun.class);
             when(stub.getTotalSize()).thenReturn(list[i]);
             List<Integer> result = new HealthSeriesBuilder(GenerateHealthStub.
-                    generateHealthDescriptor(true,healthy,unHealthy)).computeSeries(stub);
-            assertThat(data.getValue(0, i)).isEqualTo(result.get(0))
-                    .as(" expected: that the <%d>th build  had in row <%d> : <%d> but was:<%d>",i,1,data.getValue(0, i));
-            assertThat(data.getValue(1, i)).isEqualTo(result.get(1));
-            assertThat(data.getValue(2, i)).isEqualTo(result.get(2));
+                    generateHealthDescriptor(true, healthy, unHealthy)).computeSeries(stub);
+            assertThat(data.getValue(0, i)).as(assertErrorMessage + " <healthy>\n", i)
+                    .isEqualTo(result.get(0));
+            assertThat(data.getValue(1, i)).as(assertErrorMessage + " <medium healthy>\n", i)
+                    .isEqualTo(result.get(1));
+            assertThat(data.getValue(2, i)).as(assertErrorMessage + " <unhealthy>\n", i)
+                    .isEqualTo(result.get(2));
         }
     }
 
@@ -88,7 +89,7 @@ class SerialBuilderTest {
         long[] values = {1, 0, 2, 8, 3, 10, 4, 16, 20, 99};
         int[] newValues = {0, 8, 10, 16};
         CategoryDataset t = b.createDataSet(stub, getIterator(values));
-        check(t, 5, 8, newValues);
+        checkDataSet(t, 5, 8, newValues);
 
     }
 
@@ -100,7 +101,7 @@ class SerialBuilderTest {
         long[] values = {1, 0, 2, 8, 3, 10, 4, 16, 20, 99};
         int[] newValues = {0, 8, 10};
         CategoryDataset t = b.createDataSet(stub, getIterator(values));
-        check(t, 10, 20, newValues);
+        checkDataSet(t, 10, 20, newValues);
 
     }
 
@@ -112,7 +113,7 @@ class SerialBuilderTest {
         long[] values = {1, 0, 2, 8, 3, 10, 4, 16, 20, 99};
         int[] newValues = {0, 8, 10};
         CategoryDataset t = b.createDataSet(stub, getIterator(values));
-        check(t, 5, 8, newValues);
+        checkDataSet(t, 5, 8, newValues);
 
     }
 
@@ -123,7 +124,7 @@ class SerialBuilderTest {
         long[] values = {};
         int[] newValues = {};
         CategoryDataset t = b.createDataSet(stub, getIterator(values));
-        check(t, 5, 8, newValues);
+        checkDataSet(t, 5, 8, newValues);
 
     }
 
@@ -135,7 +136,7 @@ class SerialBuilderTest {
         long[] values = {1, 10, 1, 16, 4, 20, 4, 22, 4, 24, 7, 50};
         int[] newValues = {13, 22, 50};
         CategoryDataset t = b.createDataSet(stub, getIterator(values));
-        check(t, 5, 8, newValues);
+        checkDataSet(t, 5, 8, newValues);
     }
 
     @Test
@@ -145,7 +146,7 @@ class SerialBuilderTest {
         long[] values = {1, 10, 1, 16, 4, 20, 4, 22, 4, 24, 7, 50};
         int[] newValues = {13, 21};
         CategoryDataset t = b.createDataSet(stub, getIterator(values));
-        check(t, 5, 8, newValues);
+        checkDataSet(t, 5, 8, newValues);
     }
 
     @Test
@@ -155,7 +156,7 @@ class SerialBuilderTest {
         long[] values = {1, 10, 1, 16, 4, 20, 4, 22, 4, 24, 7, 50};
         int[] newValues = {13};
         CategoryDataset t = b.createDataSet(stub, getIterator(values));
-        check(t, 5, 8, newValues);
+        checkDataSet(t, 5, 8, newValues);
     }
 
     @Test
@@ -165,7 +166,7 @@ class SerialBuilderTest {
         long[] values = {};
         int[] newValues = {};
         CategoryDataset t = b.createDataSet(stub, getIterator(values));
-        check(t, 5, 8, newValues);
+        checkDataSet(t, 5, 8, newValues);
     }
 
 }
