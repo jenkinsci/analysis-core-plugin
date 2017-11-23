@@ -48,7 +48,7 @@ public class ResultTime {
      * @return {@code true} if the build is too old
      */
     public boolean areResultsTooOld(final GraphConfiguration configuration, final StaticAnalysisRun analysisRun) {
-        return configuration.isDayCountDefined() && computeDayDelta(analysisRun) > configuration.getDayCount();
+        return configuration.isDayCountDefined() && computeDayDelta(analysisRun) >= configuration.getDayCount();
     }
 
     private int computeDayDelta(final StaticAnalysisRun analysisRun) {
