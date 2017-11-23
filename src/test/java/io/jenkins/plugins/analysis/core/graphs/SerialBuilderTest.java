@@ -5,8 +5,11 @@ import java.util.ArrayList;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
 
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.jfree.data.category.CategoryDataset;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +43,7 @@ class SerialBuilderTest {
             AnalysisBuild build = mock(AnalysisBuild.class);
             when(build.getNumber()).thenReturn(buildTime.length - i / 2);
 
-            when(build.getDisplayName()).thenReturn("magic" + buildCounter++);
+            when(build.getDisplayName()).thenReturn("magic" + (buildCounter += 2)); // some build are removed
             when(build.getTimeInMillis()).thenReturn(today.getTimeInMillis() - buildTime[i] * dayMS);
             when(stub.getBuild()).thenReturn(build);
 
@@ -52,16 +55,18 @@ class SerialBuilderTest {
         return list;
     }
 
-    private void check(CategoryDataset data, long healthy, long unHealthy, long... list) {
+    private void check(CategoryDataset data, int healthy, int unHealthy, int... list) {
+        ArrayUtils.reverse(list);
         assertThat(data.getColumnCount()).isEqualTo(list.length);
         for (int i = 0; i < list.length; i++) {
-            long numberOfUnhealthy = list[list.length - i - 1] - unHealthy;
-            if (numberOfUnhealthy < 0) {
-                numberOfUnhealthy = 0;
-            }
-            assertThat(data.getValue(0, i).longValue()).isBetween((long) 0, healthy);
-            assertThat(data.getValue(1, i).longValue()).isBetween((long) 0, unHealthy - healthy);
-            assertThat(data.getValue(2, i).longValue()).isBetween((long) 0, numberOfUnhealthy);
+            StaticAnalysisRun stub = mock(StaticAnalysisRun.class);
+            when(stub.getTotalSize()).thenReturn(list[i]);
+            List<Integer> result = new HealthSeriesBuilder(GenerateHealthStub.
+                    generateHealthDescriptor(true,healthy,unHealthy)).computeSeries(stub);
+            assertThat(data.getValue(0, i)).isEqualTo(result.get(0))
+                    .as(" expected: that the <%d>th build  had in row <%d> : <%d> but was:<%d>",i,1,data.getValue(0, i));
+            assertThat(data.getValue(1, i)).isEqualTo(result.get(1));
+            assertThat(data.getValue(2, i)).isEqualTo(result.get(2));
         }
     }
 
@@ -81,7 +86,7 @@ class SerialBuilderTest {
 
         HealthSeriesBuilder b = new HealthSeriesBuilder(GenerateHealthStub.generateHealthDescriptor(true, 5, 8));
         long[] values = {1, 0, 2, 8, 3, 10, 4, 16, 20, 99};
-        long[] newValues = {0, 8, 10, 16};
+        int[] newValues = {0, 8, 10, 16};
         CategoryDataset t = b.createDataSet(stub, getIterator(values));
         check(t, 5, 8, newValues);
 
@@ -93,7 +98,7 @@ class SerialBuilderTest {
 
         HealthSeriesBuilder b = new HealthSeriesBuilder(GenerateHealthStub.generateHealthDescriptor(true, 10, 20));
         long[] values = {1, 0, 2, 8, 3, 10, 4, 16, 20, 99};
-        long[] newValues = {0, 8, 10};
+        int[] newValues = {0, 8, 10};
         CategoryDataset t = b.createDataSet(stub, getIterator(values));
         check(t, 10, 20, newValues);
 
@@ -105,7 +110,7 @@ class SerialBuilderTest {
 
         HealthSeriesBuilder b = new HealthSeriesBuilder(GenerateHealthStub.generateHealthDescriptor(true, 5, 8));
         long[] values = {1, 0, 2, 8, 3, 10, 4, 16, 20, 99};
-        long[] newValues = {0, 8, 10};
+        int[] newValues = {0, 8, 10};
         CategoryDataset t = b.createDataSet(stub, getIterator(values));
         check(t, 5, 8, newValues);
 
@@ -116,7 +121,7 @@ class SerialBuilderTest {
         GraphConfiguration stub = generateGraphConfiguration(false, 0, 0);
         HealthSeriesBuilder b = new HealthSeriesBuilder(GenerateHealthStub.generateHealthDescriptor(true, 5, 8));
         long[] values = {};
-        long[] newValues = {};
+        int[] newValues = {};
         CategoryDataset t = b.createDataSet(stub, getIterator(values));
         check(t, 5, 8, newValues);
 
@@ -128,7 +133,7 @@ class SerialBuilderTest {
         GraphConfiguration stub = generateGraphConfiguration(true, 0, 0);
         HealthSeriesBuilder b = new HealthSeriesBuilder(GenerateHealthStub.generateHealthDescriptor(true, 5, 8));
         long[] values = {1, 10, 1, 16, 4, 20, 4, 22, 4, 24, 7, 50};
-        long[] newValues = {13, 23, 50};
+        int[] newValues = {13, 22, 50};
         CategoryDataset t = b.createDataSet(stub, getIterator(values));
         check(t, 5, 8, newValues);
     }
@@ -138,7 +143,7 @@ class SerialBuilderTest {
         GraphConfiguration stub = generateGraphConfiguration(true, 0, 4);
         HealthSeriesBuilder b = new HealthSeriesBuilder(GenerateHealthStub.generateHealthDescriptor(true, 5, 8));
         long[] values = {1, 10, 1, 16, 4, 20, 4, 22, 4, 24, 7, 50};
-        long[] newValues = {13, 21};
+        int[] newValues = {13, 21};
         CategoryDataset t = b.createDataSet(stub, getIterator(values));
         check(t, 5, 8, newValues);
     }
@@ -148,7 +153,7 @@ class SerialBuilderTest {
         GraphConfiguration stub = generateGraphConfiguration(true, 3, 0);
         HealthSeriesBuilder b = new HealthSeriesBuilder(GenerateHealthStub.generateHealthDescriptor(true, 5, 8));
         long[] values = {1, 10, 1, 16, 4, 20, 4, 22, 4, 24, 7, 50};
-        long[] newValues = {13};
+        int[] newValues = {13};
         CategoryDataset t = b.createDataSet(stub, getIterator(values));
         check(t, 5, 8, newValues);
     }
@@ -158,7 +163,7 @@ class SerialBuilderTest {
         GraphConfiguration stub = generateGraphConfiguration(true, 4, 5);
         HealthSeriesBuilder b = new HealthSeriesBuilder(GenerateHealthStub.generateHealthDescriptor(true, 5, 8));
         long[] values = {};
-        long[] newValues = {};
+        int[] newValues = {};
         CategoryDataset t = b.createDataSet(stub, getIterator(values));
         check(t, 5, 8, newValues);
     }
