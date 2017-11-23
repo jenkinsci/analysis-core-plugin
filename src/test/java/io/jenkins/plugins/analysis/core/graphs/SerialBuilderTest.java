@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -62,11 +61,14 @@ class SerialBuilderTest {
             StaticAnalysisRun stub = mock(StaticAnalysisRun.class);
             when(stub.getTotalSize()).thenReturn(list[i]);
             List<Integer> result = new HealthSeriesBuilder(GenerateHealthStub.
-                    generateHealthDescriptor(true,healthy,unHealthy)).computeSeries(stub);
-            assertThat(data.getValue(0, i)).isEqualTo(result.get(0))
-                    .as(" expected: that the <%d>th build  had in row <%d> : <%d> but was:<%d>",i,1,data.getValue(0, i));
-            assertThat(data.getValue(1, i)).isEqualTo(result.get(1));
-            assertThat(data.getValue(2, i)).isEqualTo(result.get(2));
+                    generateHealthDescriptor(true, healthy, unHealthy)).computeSeries(stub);
+            assertThat(data.getValue(0, i)).as("\nCurrent Build is the <%d> failed to check <healthy>\n", i)
+                    .isEqualTo(result.get(0));
+
+            assertThat(data.getValue(1, i)).as("\nCurrent Build is the <%d> failed to check <medium healthy>\n", i)
+                    .isEqualTo(result.get(1));
+            assertThat(data.getValue(2, i)).as("\nCurrent Build is the <%d> failed to check <unhealthy>\n", i)
+                    .isEqualTo(result.get(2));
         }
     }
 
@@ -86,7 +88,7 @@ class SerialBuilderTest {
 
         HealthSeriesBuilder b = new HealthSeriesBuilder(GenerateHealthStub.generateHealthDescriptor(true, 5, 8));
         long[] values = {1, 0, 2, 8, 3, 10, 4, 16, 20, 99};
-        int[] newValues = {0, 8, 10, 16};
+        int[] newValues = {1, 8, 10, 16};
         CategoryDataset t = b.createDataSet(stub, getIterator(values));
         check(t, 5, 8, newValues);
 
