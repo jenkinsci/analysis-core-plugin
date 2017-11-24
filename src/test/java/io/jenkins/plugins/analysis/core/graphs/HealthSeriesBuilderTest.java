@@ -336,7 +336,7 @@ class HealthSeriesBuilderTest {
         final GraphConfiguration graphConfig = mock(GraphConfiguration.class);
         when(graphConfig.useBuildDateAsDomain()).thenReturn(false);
         when(graphConfig.isDayCountDefined()).thenReturn(true);
-        when(graphConfig.getDayCount()).thenReturn(1);
+        when(graphConfig.getDayCount()).thenReturn(0);
 
         final List<StaticAnalysisRun> runs = new ArrayList<>();
         for (int i = 1; i <= 2; i++) {
