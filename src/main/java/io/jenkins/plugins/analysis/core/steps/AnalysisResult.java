@@ -779,6 +779,20 @@ public class AnalysisResult implements Serializable, StaticAnalysisRun2 {
     }
 
     @Override
+    public int getNewSize(final Priority priority) {
+        if (priority == Priority.HIGH) {
+            return getNewHighPrioritySize();
+        }
+        else if (priority == Priority.NORMAL) {
+            return getNewNormalPrioritySize();
+        }
+        else if (priority == Priority.LOW) {
+            return getNewLowPrioritySize();
+        }
+        return 0;
+    }
+
+    @Override
     public int getNewHighPrioritySize() {
         return highNewWarnings;
     }

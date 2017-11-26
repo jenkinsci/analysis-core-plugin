@@ -56,6 +56,16 @@ public interface StaticAnalysisRun {
     int getNewSize();
 
     /**
+     * Returns the number of new issues in this analysis run, that have the specified {@link Priority}.
+     *
+     * @param priority
+     *         the priority of the issues to match
+     *
+     * @return number of new issues
+     */
+    int getNewSize(Priority priority);
+
+    /**
      * Returns the number of new high priority issues in this analysis run.
      *
      * @return number of new high priority issues
