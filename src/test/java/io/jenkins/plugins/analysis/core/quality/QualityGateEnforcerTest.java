@@ -59,7 +59,7 @@ class QualityGateEnforcerTest {
             .withValue(THRESHOLD_VALUE)
             .build();
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0}")
     @MethodSource("evaluateArguments")
     void evaluate(final String testDescription, final QualityGate qualityGate, final StaticAnalysisRun run, final Result expectedResult) {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
