@@ -17,7 +17,9 @@ class QualityGateEnforcerTest {
     void shouldBeSuccessfulWhenNoIssuesPresentAndNoQualityGateIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
-        QualityGate qualityGate = new QualityGate();
+        QualityGateBuilder builder = new QualityGateBuilder();
+
+        QualityGate qualityGate = builder.build();
 
         Result success = enforcer.evaluate(run, qualityGate);
 
@@ -28,7 +30,10 @@ class QualityGateEnforcerTest {
     void shouldBeSuccessfulWhenNoIssuesPresentAndFailureQualityGateIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
-        QualityGate qualityGate = new QualityGate(1);
+        QualityGateBuilder builder = new QualityGateBuilder();
+        builder.setFailureTotalThreshold(1);
+
+        QualityGate qualityGate = builder.build();
 
         Result success = enforcer.evaluate(run, qualityGate);
 
@@ -41,7 +46,10 @@ class QualityGateEnforcerTest {
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalHighPrioritySize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(1);
+        QualityGateBuilder builder = new QualityGateBuilder();
+        builder.setFailureTotalThreshold(1);
+
+        QualityGate qualityGate = builder.build();
 
         Result failure = enforcer.evaluate(run, qualityGate);
 

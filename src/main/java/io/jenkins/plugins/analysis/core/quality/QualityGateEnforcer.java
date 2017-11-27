@@ -9,8 +9,8 @@ import hudson.model.Result;
  */
 public class QualityGateEnforcer {
     public Result evaluate(final StaticAnalysisRun run, final QualityGate qualityGate) {
-        if (qualityGate.hasFailureThreshold()) {
-            if (run.getTotalHighPrioritySize() >= qualityGate.getFailureThreshold()) {
+        if (qualityGate.hasFailureTotalThreshold()) {
+            if (run.getTotalHighPrioritySize() >= qualityGate.getFailureTotalThreshold()) {
                 return Result.FAILURE;
             }
         }
