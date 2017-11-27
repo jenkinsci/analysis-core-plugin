@@ -50,7 +50,7 @@ public abstract class IssueCountThreshold {
             return thisBuilder();
         }
 
-        public Builder withResult(final Result result) {
+        public BuilderImpl withResult(final Result result) {
             this.result = result;
             return thisBuilder();
         }
