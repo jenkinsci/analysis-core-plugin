@@ -9,6 +9,7 @@ import io.jenkins.plugins.analysis.core.quality.thresholds.UnstableThresholds;
  * Defines quality gates for a static analysis run.
  *
  * @author Ullrich Hafner
+ * @author Aykut Yilmaz
  */
 public class QualityGate {
     private final FailureThresholds failureThresholds;
