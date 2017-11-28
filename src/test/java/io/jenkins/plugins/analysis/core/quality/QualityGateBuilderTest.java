@@ -66,25 +66,25 @@ class QualityGateBuilderTest {
     void shouldBuiltQualityGateWithZeroValues() {
         QualityGateBuilder builder = new QualityGateBuilder();
 
-        builder.setFailureTotalThreshold(0);
-        builder.setFailureLowPriorityThreshold(0);
-        builder.setFailureNormalPriorityThreshold(0);
-        builder.setFailureHighPriorityThreshold(0);
+        builder.setFailureTotalThreshold(0)
+                .setFailureLowPriorityThreshold(0)
+                .setFailureNormalPriorityThreshold(0)
+                .setFailureHighPriorityThreshold(0)
 
-        builder.setFailureNewTotalThreshold(0);
-        builder.setFailureNewLowPriorityThreshold(0);
-        builder.setFailureNewNormalPriorityThreshold(0);
-        builder.setFailureNewHighPriorityThreshold(0);
+                .setFailureNewTotalThreshold(0)
+                .setFailureNewLowPriorityThreshold(0)
+                .setFailureNewNormalPriorityThreshold(0)
+                .setFailureNewHighPriorityThreshold(0)
 
-        builder.setUnstableTotalThreshold(0);
-        builder.setUnstableLowPriorityThreshold(0);
-        builder.setUnstableNormalPriorityThreshold(0);
-        builder.setUnstableHighPriorityThreshold(0);
+                .setUnstableTotalThreshold(0)
+                .setUnstableLowPriorityThreshold(0)
+                .setUnstableNormalPriorityThreshold(0)
+                .setUnstableHighPriorityThreshold(0)
 
-        builder.setUnstableNewTotalThreshold(0);
-        builder.setUnstableNewLowPriorityThreshold(0);
-        builder.setUnstableNewNormalPriorityThreshold(0);
-        builder.setUnstableNewHighPriorityThreshold(0);
+                .setUnstableNewTotalThreshold(0)
+                .setUnstableNewLowPriorityThreshold(0)
+                .setUnstableNewNormalPriorityThreshold(0)
+                .setUnstableNewHighPriorityThreshold(0);
 
 
         QualityGate qualityGate = builder.build();
@@ -139,25 +139,25 @@ class QualityGateBuilderTest {
     void shouldBuiltQualityGateWithIncrementValues() {
         QualityGateBuilder builder = new QualityGateBuilder();
 
-        builder.setFailureTotalThreshold(0);
-        builder.setFailureLowPriorityThreshold(1);
-        builder.setFailureNormalPriorityThreshold(2);
-        builder.setFailureHighPriorityThreshold(3);
+        builder.setFailureTotalThreshold(0)
+                .setFailureLowPriorityThreshold(1)
+                .setFailureNormalPriorityThreshold(2)
+                .setFailureHighPriorityThreshold(3)
 
-        builder.setFailureNewTotalThreshold(4);
-        builder.setFailureNewLowPriorityThreshold(5);
-        builder.setFailureNewNormalPriorityThreshold(6);
-        builder.setFailureNewHighPriorityThreshold(7);
+                .setFailureNewTotalThreshold(4)
+                .setFailureNewLowPriorityThreshold(5)
+                .setFailureNewNormalPriorityThreshold(6)
+                .setFailureNewHighPriorityThreshold(7)
 
-        builder.setUnstableTotalThreshold(8);
-        builder.setUnstableLowPriorityThreshold(9);
-        builder.setUnstableNormalPriorityThreshold(10);
-        builder.setUnstableHighPriorityThreshold(11);
+                .setUnstableTotalThreshold(8)
+                .setUnstableLowPriorityThreshold(9)
+                .setUnstableNormalPriorityThreshold(10)
+                .setUnstableHighPriorityThreshold(11)
 
-        builder.setUnstableNewTotalThreshold(12);
-        builder.setUnstableNewLowPriorityThreshold(13);
-        builder.setUnstableNewNormalPriorityThreshold(14);
-        builder.setUnstableNewHighPriorityThreshold(15);
+                .setUnstableNewTotalThreshold(12)
+                .setUnstableNewLowPriorityThreshold(13)
+                .setUnstableNewNormalPriorityThreshold(14)
+                .setUnstableNewHighPriorityThreshold(15);
 
 
         QualityGate qualityGate = builder.build();

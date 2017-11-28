@@ -48,75 +48,91 @@ public class QualityGateBuilder {
 
     }
 
-    public void setFailureTotalThreshold(final int failureTotalThreshold) {
+    public QualityGateBuilder setFailureTotalThreshold(final int failureTotalThreshold) {
         this.failureTotalThreshold = failureTotalThreshold;
+        return this;
     }
 
-    public void setFailureHighPriorityThreshold(final int failureHighPriorityThreshold) {
+    public QualityGateBuilder setFailureHighPriorityThreshold(final int failureHighPriorityThreshold) {
         this.failureHighPriorityThreshold = failureHighPriorityThreshold;
+        return this;
     }
 
-    public void setFailureNormalPriorityThreshold(final int failureNormalPriorityThreshold) {
+    public QualityGateBuilder setFailureNormalPriorityThreshold(final int failureNormalPriorityThreshold) {
         this.failureNormalPriorityThreshold = failureNormalPriorityThreshold;
+        return this;
     }
 
-    public void setFailureLowPriorityThreshold(final int failureLowPriorityThreshold) {
+    public QualityGateBuilder setFailureLowPriorityThreshold(final int failureLowPriorityThreshold) {
         this.failureLowPriorityThreshold = failureLowPriorityThreshold;
+        return this;
     }
 
-    public void setFailureNewTotalThreshold(final int failureNewTotalThreshold) {
+    public QualityGateBuilder setFailureNewTotalThreshold(final int failureNewTotalThreshold) {
         this.failureNewTotalThreshold = failureNewTotalThreshold;
+        return this;
     }
 
-    public void setFailureNewHighPriorityThreshold(final int failureNewHighPriorityThreshold) {
+    public QualityGateBuilder setFailureNewHighPriorityThreshold(final int failureNewHighPriorityThreshold) {
         this.failureNewHighPriorityThreshold = failureNewHighPriorityThreshold;
+        return this;
     }
 
-    public void setFailureNewNormalPriorityThreshold(final int failureNewNormalPriorityThreshold) {
+    public QualityGateBuilder setFailureNewNormalPriorityThreshold(final int failureNewNormalPriorityThreshold) {
         this.failureNewNormalPriorityThreshold = failureNewNormalPriorityThreshold;
+        return this;
     }
 
-    public void setFailureNewLowPriorityThreshold(final int failureNewLowPriorityThreshold) {
+    public QualityGateBuilder setFailureNewLowPriorityThreshold(final int failureNewLowPriorityThreshold) {
         this.failureNewLowPriorityThreshold = failureNewLowPriorityThreshold;
+        return this;
     }
 
-    public void setUnstableTotalThreshold(final int unstableTotalThreshold) {
+    public QualityGateBuilder setUnstableTotalThreshold(final int unstableTotalThreshold) {
         this.unstableTotalThreshold = unstableTotalThreshold;
+        return this;
     }
 
-    public void setUnstableHighPriorityThreshold(final int unstableHighPriorityThreshold) {
+    public QualityGateBuilder setUnstableHighPriorityThreshold(final int unstableHighPriorityThreshold) {
         this.unstableHighPriorityThreshold = unstableHighPriorityThreshold;
+        return this;
     }
 
-    public void setUnstableNormalPriorityThreshold(final int unstableNormalPriorityThreshold) {
+    public QualityGateBuilder setUnstableNormalPriorityThreshold(final int unstableNormalPriorityThreshold) {
         this.unstableNormalPriorityThreshold = unstableNormalPriorityThreshold;
+        return this;
     }
 
-    public void setUnstableLowPriorityThreshold(final int unstableLowPriorityThreshold) {
+    public QualityGateBuilder setUnstableLowPriorityThreshold(final int unstableLowPriorityThreshold) {
         this.unstableLowPriorityThreshold = unstableLowPriorityThreshold;
+        return this;
     }
 
-    public void setUnstableNewTotalThreshold(final int unstableNewTotalThreshold) {
+    public QualityGateBuilder setUnstableNewTotalThreshold(final int unstableNewTotalThreshold) {
         this.unstableNewTotalThreshold = unstableNewTotalThreshold;
+        return this;
     }
 
-    public void setUnstableNewHighPriorityThreshold(final int unstableNewHighPriorityThreshold) {
+    public QualityGateBuilder setUnstableNewHighPriorityThreshold(final int unstableNewHighPriorityThreshold) {
         this.unstableNewHighPriorityThreshold = unstableNewHighPriorityThreshold;
+        return this;
     }
 
-    public void setUnstableNewNormalPriorityThreshold(final int unstableNewNormalPriorityThreshold) {
+    public QualityGateBuilder setUnstableNewNormalPriorityThreshold(final int unstableNewNormalPriorityThreshold) {
         this.unstableNewNormalPriorityThreshold = unstableNewNormalPriorityThreshold;
+        return this;
     }
 
-    public void setUnstableNewLowPriorityThreshold(final int unstableNewLowPriorityThreshold) {
+    public QualityGateBuilder setUnstableNewLowPriorityThreshold(final int unstableNewLowPriorityThreshold) {
         this.unstableNewLowPriorityThreshold = unstableNewLowPriorityThreshold;
+        return this;
     }
 
     public QualityGate build() {
 
         return new QualityGate(failureTotalThreshold, failureHighPriorityThreshold, failureNormalPriorityThreshold, failureLowPriorityThreshold,
                 unstableTotalThreshold, unstableHighPriorityThreshold, unstableNormalPriorityThreshold, unstableLowPriorityThreshold,
-                failureNewTotalThreshold,  failureNewHighPriorityThreshold, failureNewNormalPriorityThreshold, failureNewLowPriorityThreshold,
+                failureNewTotalThreshold, failureNewHighPriorityThreshold, failureNewNormalPriorityThreshold, failureNewLowPriorityThreshold,
                 unstableNewTotalThreshold, unstableNewHighPriorityThreshold, unstableNewNormalPriorityThreshold, unstableNewLowPriorityThreshold);
     }
 }
