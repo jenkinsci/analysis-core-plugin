@@ -23,9 +23,7 @@ class QualityGateEnforcerTest {
 
         Result success = enforcer.evaluate(run, qualityGate);
 
-        assertThat(success)
-                .as("No issues and no quality gate should always be a SUCCESS")
-                .isEqualTo(Result.SUCCESS);
+        assertSuccess(success, "No issues and no quality gate should always be a SUCCESS");
     }
 
     @Test
@@ -36,9 +34,7 @@ class QualityGateEnforcerTest {
 
         Result success = enforcer.evaluate(run, qualityGate);
 
-        assertThat(success)
-                .as("No issues and any failure quality gate should always be a SUCCESS")
-                .isEqualTo(Result.SUCCESS);
+        assertSuccess(success, "No issues and any failure quality gate should always be a SUCCESS");
     }
 
     @Test
@@ -51,9 +47,7 @@ class QualityGateEnforcerTest {
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
-        assertThat(failure)
-                .as("One issue should return a FAILURE")
-                .isEqualTo(Result.FAILURE);
+        assertFailure(failure, "One issue should return a FAILURE");
     }
 
     @Test
@@ -64,9 +58,7 @@ class QualityGateEnforcerTest {
 
         Result success = enforcer.evaluate(run, qualityGate);
 
-        assertThat(success)
-                .as("No issues and any unstable quality gate should always be a SUCCESS")
-                .isEqualTo(Result.SUCCESS);
+        assertSuccess(success, "No issues and any unstable quality gate should always be a SUCCESS");
     }
 
     @Test
@@ -80,9 +72,7 @@ class QualityGateEnforcerTest {
 
         Result unstable = enforcer.evaluate(run, qualityGate);
 
-        assertThat(unstable)
-                .as("One issue should return a UNSTABLE")
-                .isEqualTo(Result.UNSTABLE);
+        assertUnstable(unstable, "One issue should return a UNSTABLE");
     }
 
     @Test
@@ -96,9 +86,7 @@ class QualityGateEnforcerTest {
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
-        assertThat(failure)
-                .as("One high priority issue should return a FAILURE")
-                .isEqualTo(Result.FAILURE);
+        assertFailure(failure, "One high priority issue should return a FAILURE");
     }
 
     @Test
@@ -113,9 +101,7 @@ class QualityGateEnforcerTest {
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
-        assertThat(failure)
-                .as("One high priority issue is allowed but one normal priority issue should return a FAILURE")
-                .isEqualTo(Result.FAILURE);
+        assertFailure(failure, "One high priority issue is allowed but one normal priority issue should return a FAILURE");
     }
 
     @Test
@@ -131,9 +117,7 @@ class QualityGateEnforcerTest {
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
-        assertThat(failure)
-                .as("One high and normal priority issue are allowed but one low priority issue should return a FAILURE")
-                .isEqualTo(Result.FAILURE);
+        assertFailure(failure, "One high and normal priority issue are allowed but one low priority issue should return a FAILURE");
 
     }
 
@@ -148,9 +132,7 @@ class QualityGateEnforcerTest {
 
         Result unstable = enforcer.evaluate(run, qualityGate);
 
-        assertThat(unstable)
-                .as("One high priority issue should return a UNSTABLE")
-                .isEqualTo(Result.UNSTABLE);
+        assertUnstable(unstable, "One high priority issue should return a UNSTABLE");
     }
 
     @Test
@@ -165,9 +147,7 @@ class QualityGateEnforcerTest {
 
         Result unstable = enforcer.evaluate(run, qualityGate);
 
-        assertThat(unstable)
-                .as("One high priority issue is allowed but one normal priority issue should return a UNSTABLE")
-                .isEqualTo(Result.UNSTABLE);
+        assertUnstable(unstable, "One high priority issue is allowed but one normal priority issue should return a UNSTABLE");
     }
 
     @Test
@@ -183,9 +163,7 @@ class QualityGateEnforcerTest {
 
         Result unstable = enforcer.evaluate(run, qualityGate);
 
-        assertThat(unstable)
-                .as("One high and normal priority issue are allowed but one low priority issue should return a UNSTABLE")
-                .isEqualTo(Result.UNSTABLE);
+        assertUnstable(unstable, "One high and normal priority issue are allowed but one low priority issue should return a UNSTABLE");
     }
 
     @Test
@@ -196,9 +174,7 @@ class QualityGateEnforcerTest {
 
         Result success = enforcer.evaluate(run, qualityGate);
 
-        assertThat(success)
-                .as("No issues and any failure quality gate should always be a SUCCESS")
-                .isEqualTo(Result.SUCCESS);
+        assertSuccess(success, "No issues and any failure quality gate should always be a SUCCESS");
     }
 
     @Test
@@ -211,9 +187,7 @@ class QualityGateEnforcerTest {
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
-        assertThat(failure)
-                .as("One new issue should return a FAILURE")
-                .isEqualTo(Result.FAILURE);
+        assertFailure(failure, "One new issue should return a FAILURE");
     }
 
     @Test
@@ -224,11 +198,9 @@ class QualityGateEnforcerTest {
 
         when(run.getNewSize()).thenReturn(1);
 
-        Result success = enforcer.evaluate(run, qualityGate);
+        Result unstable = enforcer.evaluate(run, qualityGate);
 
-        assertThat(success)
-                .as("No new issues should return UNSTABLE")
-                .isEqualTo(Result.UNSTABLE);
+        assertUnstable(unstable, "No new issues should return UNSTABLE");
     }
 
     @Test
@@ -242,9 +214,7 @@ class QualityGateEnforcerTest {
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
-        assertThat(failure)
-                .as("One new high priority issue should return a FAILURE")
-                .isEqualTo(Result.FAILURE);
+        assertFailure(failure, "One new high priority issue should return a FAILURE");
     }
 
     @Test
@@ -259,9 +229,7 @@ class QualityGateEnforcerTest {
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
-        assertThat(failure)
-                .as("One new high priority issue is allowed but one new normal priority issue should return a FAILURE")
-                .isEqualTo(Result.FAILURE);
+        assertFailure(failure, "One new high priority issue is allowed but one new normal priority issue should return a FAILURE");
     }
 
     @Test
@@ -277,9 +245,7 @@ class QualityGateEnforcerTest {
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
-        assertThat(failure)
-                .as("One new high and normal priority issue are allowed but one new low priority issue should return a FAILURE")
-                .isEqualTo(Result.FAILURE);
+        assertFailure(failure, "One new high and normal priority issue are allowed but one new low priority issue should return a FAILURE");
     }
 
     @Test
@@ -293,9 +259,7 @@ class QualityGateEnforcerTest {
 
         Result unstable = enforcer.evaluate(run, qualityGate);
 
-        assertThat(unstable)
-                .as("One new high priority issue should return a UNSTABLE")
-                .isEqualTo(Result.UNSTABLE);
+        assertUnstable(unstable, "One new high priority issue should return a UNSTABLE");
     }
 
     @Test
@@ -310,9 +274,7 @@ class QualityGateEnforcerTest {
 
         Result unstable = enforcer.evaluate(run, qualityGate);
 
-        assertThat(unstable)
-                .as("One new high priority issue is allowed but one new normal priority issue should return a UNSTABLE")
-                .isEqualTo(Result.UNSTABLE);
+        assertUnstable(unstable, "One new high priority issue is allowed but one new normal priority issue should return a UNSTABLE");
     }
 
     @Test
@@ -328,9 +290,7 @@ class QualityGateEnforcerTest {
 
         Result unstable = enforcer.evaluate(run, qualityGate);
 
-        assertThat(unstable)
-                .as("One new high and normal priority issue are allowed but one new low priority issue should return a UNSTABLE")
-                .isEqualTo(Result.UNSTABLE);
+        assertUnstable(unstable, "One new high and normal priority issue are allowed but one new low priority issue should return a UNSTABLE");
     }
 
     @Test
@@ -344,8 +304,24 @@ class QualityGateEnforcerTest {
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
+        assertFailure(failure, "When FailureThresholds and UnstableThresholds are equal then it should rather fail");
+    }
+
+    private void assertSuccess(Result success, String description) {
+        assertThat(success)
+                .as(description)
+                .isEqualTo(Result.SUCCESS);
+    }
+
+    private static void assertFailure(Result failure, String description) {
         assertThat(failure)
-                .as("When FailureThresholds and UnstableThresholds are equal then it should rather fail")
+                .as(description)
                 .isEqualTo(Result.FAILURE);
+    }
+
+    private static void assertUnstable(Result unstable, String description) {
+        assertThat(unstable)
+                .as(description)
+                .isEqualTo(Result.UNSTABLE);
     }
 }
