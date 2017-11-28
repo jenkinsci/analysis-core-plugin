@@ -306,21 +306,21 @@ class QualityGateEnforcerTest {
         assertFailure(failure, "When FailureThresholds and UnstableThresholds are equal then it should rather fail");
     }
 
-    private void assertSuccess(Result success, String description) {
-        assertThat(success)
-                .as(description)
-                .isEqualTo(Result.SUCCESS);
+    private static void assertSuccess(Result success, String description) {
+        assertResult(success, Result.SUCCESS, description);
     }
 
     private static void assertFailure(Result failure, String description) {
-        assertThat(failure)
-                .as(description)
-                .isEqualTo(Result.FAILURE);
+        assertResult(failure, Result.FAILURE, description);
     }
 
     private static void assertUnstable(Result unstable, String description) {
-        assertThat(unstable)
+        assertResult(unstable, Result.UNSTABLE, description);
+    }
+
+    private static void assertResult(Result actual, Result expected, String description) {
+        assertThat(actual)
                 .as(description)
-                .isEqualTo(Result.UNSTABLE);
+                .isEqualTo(expected);
     }
 }
