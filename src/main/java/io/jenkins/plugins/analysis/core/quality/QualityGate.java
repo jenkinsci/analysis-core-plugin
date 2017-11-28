@@ -28,6 +28,7 @@ public class QualityGate {
     private final int unstableNewLowPriorityThreshold;
 
 
+
     public QualityGate(final int failureTotalThreshold, final int failureHighPriorityThreshold, final int failureNormalPriorityThreshold,
             final int failureLowPriorityThreshold, final int unstableTotalThreshold, final int unstableHighPriorityThreshold,
             final int unstableNormalPriorityThreshold, final int unstableLowPriorityThreshold, final int failureNewTotalThreshold,
@@ -51,6 +52,8 @@ public class QualityGate {
         this.unstableNewNormalPriorityThreshold = unstableNewNormalPriorityThreshold;
         this.unstableNewLowPriorityThreshold = unstableNewLowPriorityThreshold;
     }
+
+    //TODO default CTOR with -1
 
 
     public int getFailureTotalThreshold() {
