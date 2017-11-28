@@ -1,7 +1,6 @@
 package io.jenkins.plugins.analysis.core.quality;
 
 import hudson.model.Result;
-import io.jenkins.plugins.analysis.core.quality.thresholds.*;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

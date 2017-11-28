@@ -1,4 +1,4 @@
-package io.jenkins.plugins.analysis.core.quality.thresholds;
+package io.jenkins.plugins.analysis.core.quality;
 
 /**
  * Warnings threshold to determine the quality of a build.

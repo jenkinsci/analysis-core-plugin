@@ -1,7 +1,5 @@
 package io.jenkins.plugins.analysis.core.quality;
 
-import io.jenkins.plugins.analysis.core.quality.thresholds.*;
-
 /**
  * Defines quality gates for a static analysis run.
  *
