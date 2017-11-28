@@ -251,7 +251,6 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.FAILURE);
     }
 
-
     @Test
     void shouldBeSuccessfulWhenNoIssuesPresentAndNewFailureAllPrioritiesQualityGateIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();

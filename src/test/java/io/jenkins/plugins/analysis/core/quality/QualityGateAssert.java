@@ -158,7 +158,6 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
         return this;
     }
 
-
     public QualityGateAssert hasIsTotalFailedAllPriorities(final boolean isTotalFailedAllPriorities) {
         isNotNull();
 
