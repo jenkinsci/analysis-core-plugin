@@ -1,16 +1,16 @@
 package io.jenkins.plugins.analysis.core.graphs;
 
-import java.util.List;
-
+import com.google.common.collect.Lists;
+import io.jenkins.plugins.analysis.core.quality.AnalysisBuild;
+import io.jenkins.plugins.analysis.core.quality.StaticAnalysisRun;
 import org.jfree.data.category.CategoryDataset;
 import org.junit.jupiter.api.Test;
 
-import com.google.common.collect.Lists;
+import java.util.List;
 
-import io.jenkins.plugins.analysis.core.quality.AnalysisBuild;
-import io.jenkins.plugins.analysis.core.quality.StaticAnalysisRun;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Tests the class {@link PrioritySeriesBuilder}.

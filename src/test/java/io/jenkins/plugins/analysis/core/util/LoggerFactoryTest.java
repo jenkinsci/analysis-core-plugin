@@ -1,88 +1,50 @@
 package io.jenkins.plugins.analysis.core.util;
 
-import java.io.PrintStream;
-
+import hudson.plugins.analysis.core.Settings;
 import org.junit.jupiter.api.Test;
 
-import static java.util.Arrays.*;
-import static java.util.Collections.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-import hudson.plugins.analysis.core.Settings;
+import io.jenkins.plugins.analysis.core.util.LoggerFactory;
+import io.jenkins.plugins.analysis.core.util.Logger;
 
-/**
- * Tests the class {@link LoggerFactory}.
- *
- * @author Ullrich Hafner
- */
+import java.io.PrintStream;
+import java.util.Arrays;
+
 class LoggerFactoryTest {
-    private static final String LOG_MESSAGE = "Hello Logger!";
-    private static final String TOOL_NAME = "test";
-    private static final String EXPECTED_TOOL_PREFIX = "[test]";
-    private static final String FIRST_MESSAGE = "One";
-    private static final String SECOND_MESSAGE = "Two";
 
-    /**
-     * Verifies that all logger methods print to the print stream if the quite mode in Jenkins global configuration has
-     * been disabled.
-     */
+    private static final PrintStream PRINT_STREAM = mock(PrintStream.class);
+    private static final Settings SETTINGS = mock(Settings.class);
+
     @Test
-    void shouldReturnLoggerIfQuietModeIsDeactivated() {
-        Settings settings = createSettings(false);
-
-        LoggerFactory factory = new LoggerFactory(settings);
-        PrintStream printStream = mock(PrintStream.class);
-        Logger logger = factory.createLogger(printStream, TOOL_NAME);
-
-        logger.log(LOG_MESSAGE);
-
-        verify(printStream).println(EXPECTED_TOOL_PREFIX + " " + LOG_MESSAGE);
-
-        Logger loggerWithBraces = factory.createLogger(printStream, EXPECTED_TOOL_PREFIX);
-
-        loggerWithBraces.log(LOG_MESSAGE);
-
-        verify(printStream, times(2)).println(EXPECTED_TOOL_PREFIX + " " + LOG_MESSAGE);
-
-        logger.logEachLine(emptyList());
-
-        verifyNoMoreInteractions(printStream);
-
-        logger.logEachLine(singletonList(FIRST_MESSAGE));
-
-        verify(printStream).println(EXPECTED_TOOL_PREFIX + " " + FIRST_MESSAGE);
-
-        logger.logEachLine(asList(FIRST_MESSAGE, SECOND_MESSAGE));
-        verify(printStream, times(2)).println(EXPECTED_TOOL_PREFIX + " " + FIRST_MESSAGE);
-        verify(printStream).println(EXPECTED_TOOL_PREFIX + " " + SECOND_MESSAGE);
+    void captureLog() {
+        when(SETTINGS.getQuietMode()).thenReturn(false);
+        Logger logger = new LoggerFactory(SETTINGS).createLogger(PRINT_STREAM, "[mock]");
+        logger.log("%s", "mock");
+        logger.logEachLine(Arrays.asList("mock1", "mock2", "mock3"));
+        verify(PRINT_STREAM, times(4)).println(anyString());
     }
 
-    /**
-     * Verifies that all logger methods do not print anything if the quite mode in Jenkins global configuration has been
-     * enabled.
-     */
     @Test
-    void shouldReturnNullLoggerIfQuietModeIsEnabled() {
-        Settings settings = createSettings(true);
-
-        LoggerFactory factory = new LoggerFactory(settings);
+    void logOnNullLogger() {
         PrintStream printStream = mock(PrintStream.class);
-        Logger logger = factory.createLogger(printStream, TOOL_NAME);
-
-        logger.log(LOG_MESSAGE);
-
-        verifyZeroInteractions(printStream);
-
-        logger.logEachLine(emptyList());
-        logger.logEachLine(singletonList(FIRST_MESSAGE));
-        logger.logEachLine(asList(FIRST_MESSAGE, SECOND_MESSAGE));
-
-        verifyZeroInteractions(printStream);
+        when(SETTINGS.getQuietMode()).thenReturn(true);
+        Logger logger = new LoggerFactory(SETTINGS).createLogger(printStream, "mock");
+        logger.log("%s", "mock");
+        verify(printStream, times(0)).println(anyString());
+        when(SETTINGS.getQuietMode()).thenReturn(false);
+        logger = new LoggerFactory(SETTINGS).createLogger(null, "mock");
+        logger.log("%s", "mock");
+        verify(printStream, times(0)).println(anyString());
     }
 
-    private Settings createSettings(final boolean value) {
-        Settings settings = mock(Settings.class);
-        when(settings.getQuietMode()).thenReturn(value);
-        return settings;
+    @Test
+    void defaultLoggerFactoryThrowingNull() {
+        assertThatThrownBy(() -> {
+            new LoggerFactory().createLogger(PRINT_STREAM, "mock");
+        }).isInstanceOf(NullPointerException.class);
     }
 }
