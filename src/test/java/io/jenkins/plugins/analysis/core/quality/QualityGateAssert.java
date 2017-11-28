@@ -1,6 +1,7 @@
 package io.jenkins.plugins.analysis.core.quality;
 
 import org.assertj.core.api.AbstractAssert;
+import org.assertj.core.description.Description;
 
 /**
  * Costum assertions for {@link QualityGate}
@@ -23,6 +24,10 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
 
         return this;
 
+    }
+
+    public QualityGateAssert assertThat(final QualityGate actual) {
+        return new QualityGateAssert(actual);
     }
 
     public QualityGateAssert hasFailureHighPriorityThreshold(int failureHighPriorityThreshold) {
