@@ -4,6 +4,7 @@ package io.jenkins.plugins.analysis.core.quality;
  * Defines quality gates for a static analysis run.
  *
  * @author Ullrich Hafner
+ * @author Aykut Yilmaz
  */
 public class QualityGate {
     private final WarningsThreshold.FailureThresholds failureThresholds;
