@@ -1,10 +1,7 @@
 package io.jenkins.plugins.analysis.core.quality;
 
 import hudson.model.Result;
-import io.jenkins.plugins.analysis.core.quality.thresholds.FailureThresholds;
-import io.jenkins.plugins.analysis.core.quality.thresholds.NewFailureThresholds;
-import io.jenkins.plugins.analysis.core.quality.thresholds.NewUnstableThresholds;
-import io.jenkins.plugins.analysis.core.quality.thresholds.UnstableThresholds;
+import io.jenkins.plugins.analysis.core.quality.thresholds.*;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,7 +32,7 @@ class QualityGateEnforcerTest {
     void shouldBeSuccessfulWhenNoIssuesPresentAndFailureQualityGateIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
-        QualityGate qualityGate = new QualityGate(new FailureThresholds(1));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.FailureThresholds(1));
 
         Result success = enforcer.evaluate(run, qualityGate);
 
@@ -50,7 +47,7 @@ class QualityGateEnforcerTest {
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalSize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(new FailureThresholds(1));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.FailureThresholds(1));
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
@@ -63,7 +60,7 @@ class QualityGateEnforcerTest {
     void shouldBeSuccessfulWhenNoIssuesPresentAndUnstableQualityGateIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
-        QualityGate qualityGate = new QualityGate(new UnstableThresholds(1));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.UnstableThresholds(1));
 
         Result success = enforcer.evaluate(run, qualityGate);
 
@@ -79,7 +76,7 @@ class QualityGateEnforcerTest {
 
         when(run.getTotalSize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(new UnstableThresholds(1));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.UnstableThresholds(1));
 
         Result unstable = enforcer.evaluate(run, qualityGate);
 
@@ -95,7 +92,7 @@ class QualityGateEnforcerTest {
 
         when(run.getTotalHighPrioritySize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(new FailureThresholds(1, 0, 0));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.FailureThresholds(1, 0, 0));
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
@@ -112,7 +109,7 @@ class QualityGateEnforcerTest {
         when(run.getTotalNormalPrioritySize()).thenReturn(1);
         when(run.getTotalHighPrioritySize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(new FailureThresholds(2, 1, 0));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.FailureThresholds(2, 1, 0));
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
@@ -130,7 +127,7 @@ class QualityGateEnforcerTest {
         when(run.getTotalNormalPrioritySize()).thenReturn(1);
         when(run.getTotalHighPrioritySize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(new FailureThresholds(2, 2, 1));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.FailureThresholds(2, 2, 1));
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
@@ -147,7 +144,7 @@ class QualityGateEnforcerTest {
 
         when(run.getTotalHighPrioritySize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(new UnstableThresholds(1, 0, 0));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.UnstableThresholds(1, 0, 0));
 
         Result unstable = enforcer.evaluate(run, qualityGate);
 
@@ -164,7 +161,7 @@ class QualityGateEnforcerTest {
         when(run.getTotalNormalPrioritySize()).thenReturn(1);
         when(run.getTotalHighPrioritySize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(new UnstableThresholds(2, 1, 0));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.UnstableThresholds(2, 1, 0));
 
         Result unstable = enforcer.evaluate(run, qualityGate);
 
@@ -182,7 +179,7 @@ class QualityGateEnforcerTest {
         when(run.getTotalNormalPrioritySize()).thenReturn(1);
         when(run.getTotalHighPrioritySize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(new UnstableThresholds(2, 2, 1));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.UnstableThresholds(2, 2, 1));
 
         Result unstable = enforcer.evaluate(run, qualityGate);
 
@@ -195,7 +192,7 @@ class QualityGateEnforcerTest {
     void shouldBeSuccessfulWhenNoNewIssuesPresentAndNewFailureQualityGateIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
-        QualityGate qualityGate = new QualityGate(new NewFailureThresholds(1));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.NewFailureThresholds(1));
 
         Result success = enforcer.evaluate(run, qualityGate);
 
@@ -210,7 +207,7 @@ class QualityGateEnforcerTest {
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewSize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(new NewFailureThresholds(1));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.NewFailureThresholds(1));
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
@@ -223,7 +220,7 @@ class QualityGateEnforcerTest {
     void shouldBeUnstableWhenNewIssuesPresentAndNewUnstableQualityGateIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
-        QualityGate qualityGate = new QualityGate(new NewUnstableThresholds(1));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.NewUnstableThresholds(1));
 
         when(run.getNewSize()).thenReturn(1);
 
@@ -241,7 +238,7 @@ class QualityGateEnforcerTest {
 
         when(run.getNewHighPrioritySize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(new NewFailureThresholds(1, 0, 0));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.NewFailureThresholds(1, 0, 0));
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
@@ -258,7 +255,7 @@ class QualityGateEnforcerTest {
         when(run.getNewNormalPrioritySize()).thenReturn(1);
         when(run.getNewHighPrioritySize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(new NewFailureThresholds(2, 1, 0));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.NewFailureThresholds(2, 1, 0));
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
@@ -276,7 +273,7 @@ class QualityGateEnforcerTest {
         when(run.getNewNormalPrioritySize()).thenReturn(1);
         when(run.getNewHighPrioritySize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(new NewFailureThresholds(2, 2, 1));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.NewFailureThresholds(2, 2, 1));
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
@@ -292,7 +289,7 @@ class QualityGateEnforcerTest {
 
         when(run.getNewHighPrioritySize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(new NewUnstableThresholds(1, 0, 0));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.NewUnstableThresholds(1, 0, 0));
 
         Result unstable = enforcer.evaluate(run, qualityGate);
 
@@ -309,7 +306,7 @@ class QualityGateEnforcerTest {
         when(run.getNewNormalPrioritySize()).thenReturn(1);
         when(run.getNewHighPrioritySize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(new NewUnstableThresholds(2, 1, 0));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.NewUnstableThresholds(2, 1, 0));
 
         Result unstable = enforcer.evaluate(run, qualityGate);
 
@@ -327,7 +324,7 @@ class QualityGateEnforcerTest {
         when(run.getNewNormalPrioritySize()).thenReturn(1);
         when(run.getNewHighPrioritySize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(new NewUnstableThresholds(2, 2, 1));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.NewUnstableThresholds(2, 2, 1));
 
         Result unstable = enforcer.evaluate(run, qualityGate);
 
@@ -343,7 +340,7 @@ class QualityGateEnforcerTest {
 
         when(run.getTotalSize()).thenReturn(1);
 
-        QualityGate qualityGate = new QualityGate(new FailureThresholds(1), new UnstableThresholds(1));
+        QualityGate qualityGate = new QualityGate(new WarningsThreshold.FailureThresholds(1), new WarningsThreshold.UnstableThresholds(1));
 
         Result failure = enforcer.evaluate(run, qualityGate);
 
