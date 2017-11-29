@@ -10,9 +10,11 @@ import hudson.model.Result;
 /**
  * Tests the class {@link QualityGateEnforcer}.
  *
- * @author Ullrich Hafner
+ * @author Andreas Moser
  */
 class QualityGateEnforcerTest {
+
+    /** Verifies that a build is successful if no issues present and no quality gate is set. */
     @Test
     void shouldBeSuccessfulWhenNoIssuesPresentAndNoQualityGateIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -27,6 +29,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.SUCCESS);
     }
 
+    /** Verifies that a build is successful if no issues present and quality gate is set. */
     @Test
     void shouldBeSuccessfulWhenNoIssuesPresentAndFailureQualityGateIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -42,6 +45,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.SUCCESS);
     }
 
+    /** Verifies that a build is successful if issues are present but no quality gate is set. */
     @Test
     void shouldBeSuccessfulWithIssuesButNoQualityGateIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -57,6 +61,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.SUCCESS);
     }
 
+    /** Verifies that a build fails if the number of issues is equal the failure threshold. */
     @Test
     void shouldFailBuildIfFailureThresholdIsSetIssuesSizeEqualThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -74,6 +79,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.FAILURE);
     }
 
+    /** Verifies that a build fails if the number of issues is greater than the failure threshold. */
     @Test
     void shouldFailBuildIfFailureThresholdIsSetIssuesSizeGreaterThanThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -91,6 +97,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.FAILURE);
     }
 
+    /** Verifies that a build is successful if number of issues less than failure threshold. */
     @Test
     void shouldBeSuccessfulIfFailureThresholdIsSetIssuesSizeLessThanThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -109,6 +116,8 @@ class QualityGateEnforcerTest {
     }
 
     //New warnings
+
+    /** Verifies that a build fails if the number of new issues is equal the new issues failure threshold. */
     @Test
     void shouldFailBuildIfNewIssuesEqualNewIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -126,6 +135,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.FAILURE);
     }
 
+    /** Verifies that a build fails if the number of new issues is greater than the new issues failure threshold. */
     @Test
     void shouldFailBuildIfNewIssuesGreaterThanNewIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -143,6 +153,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.FAILURE);
     }
 
+    /** Verifies that a build is successful if number of new issues less than new issues failure threshold. */
     @Test
     void shouldBeSuccessfulIfNewIssuesLessThanNewIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -160,6 +171,10 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.SUCCESS);
     }
 
+    /**
+     * Verifies that a build is successful if number of new issues greater than failure threshold but check new issues
+     * is disabled.
+     */
     @Test
     void shouldBeSuccessfulIfNewIssuesGreaterThanNewIssuesThresholdButCheckNewIssuesDisabled() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -178,6 +193,8 @@ class QualityGateEnforcerTest {
     }
 
     //Low
+
+    /** Verifies that a build fails if the number of low priority issues is equal the failure threshold. */
     @Test
     void shouldFailBuildIfLowIssuesSizeEqualLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -196,6 +213,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.FAILURE);
     }
 
+    /** Verifies that a build fails if the number of low priority issues is greater than the failure threshold. */
     @Test
     void shouldFailBuildIfLowIssuesSizeGreaterLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -214,6 +232,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.FAILURE);
     }
 
+    /** Verifies that a build is successful if number of normal priority issues less than failure threshold. */
     @Test
     void shouldBeSuccessfulIfLowIssuesSizeLessLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -231,6 +250,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.SUCCESS);
     }
 
+    /** Verifies that a build fails if the number of new low priority issues is equal the failure threshold. */
     @Test
     void shouldFailBuildIfNewLowIssuesSizeEqualNewLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -248,6 +268,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.FAILURE);
     }
 
+    /** Verifies that a build fails if the number of new low priority issues is greater the failure threshold. */
     @Test
     void shouldFailBuildIfNewLowIssuesSizeGreaterNewLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -265,6 +286,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.FAILURE);
     }
 
+    /** Verifies that a build is successful if number of new low priority issues less than failure threshold. */
     @Test
     void shouldBeSuccessfulIfNewLowIssuesSizeLessNewLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -282,6 +304,10 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.SUCCESS);
     }
 
+    /**
+     * Verifies that a build is successful if number of new low priority issues greater than failure threshold but check
+     * new issues is disabled.
+     */
     @Test
     void shouldBeSuccessfulIfNewLowIssuesGreaterThanNewLowIssuesThresholdButCheckNewIssuesDisabled() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -300,6 +326,8 @@ class QualityGateEnforcerTest {
     }
 
     //Normal
+
+    /** Verifies that a build fails if the number of normal priority issues is equal the failure threshold. */
     @Test
     void shouldFailBuildIfNormalIssuesSizeEqualNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -317,6 +345,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.FAILURE);
     }
 
+    /** Verifies that a build fails if the number of normal priority issues is greater than the failure threshold. */
     @Test
     void shouldFailBuildIfNormalIssuesSizeGreaterNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -334,6 +363,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.FAILURE);
     }
 
+    /** Verifies that a build is successful if number of normal priority issues less than failure threshold. */
     @Test
     void shouldBeSuccessfulIfNormalIssuesSizeLessNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -351,6 +381,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.SUCCESS);
     }
 
+    /** Verifies that a build fails if the number of new normal priority issues is equal the failure threshold. */
     @Test
     void shouldFailBuildIfNewNormalIssuesSizeEqualNewNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -368,6 +399,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.FAILURE);
     }
 
+    /** Verifies that a build fails if the number of new normal priority issues is greater than the failure threshold. */
     @Test
     void shouldFailBuildIfNewNormalIssuesSizeGreaterNewNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -385,6 +417,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.FAILURE);
     }
 
+    /** Verifies that a build is successful if number of new normal priority issues less than failure threshold. */
     @Test
     void shouldBeSuccessfulIfNewNormalIssuesSizeLessNewNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -402,6 +435,10 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.SUCCESS);
     }
 
+    /**
+     * Verifies that a build is successful if number of new normal priority issues greater than failure threshold but
+     * check new issues is disabled.
+     */
     @Test
     void shouldBeSuccessfulIfNewNormalIssuesGreaterThanNewNormalIssuesThresholdButCheckNewIssuesDisabled() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -420,6 +457,8 @@ class QualityGateEnforcerTest {
     }
 
     //High
+
+    /** Verifies that a build fails if the number of high priority issues is equal the failure threshold. */
     @Test
     void shouldFailBuildIfHighIssuesSizeEqualHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -437,6 +476,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.FAILURE);
     }
 
+    /** Verifies that a build fails if the number of high priority issues is greater the failure threshold. */
     @Test
     void shouldFailBuildIfHighIssuesSizeGreaterHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -454,6 +494,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.FAILURE);
     }
 
+    /** Verifies that a build is successful if number of high priority issues less than failure threshold. */
     @Test
     void shouldBeSuccessfulIfHighIssuesSizeLessHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -471,6 +512,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.SUCCESS);
     }
 
+    /** Verifies that a build fails if the number of new high priority issues is equal the failure threshold. */
     @Test
     void shouldFailBuildIfNewHighIssuesSizeEqualNewHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -488,6 +530,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.FAILURE);
     }
 
+    /** Verifies that a build fails if the number of new high priority issues is greater than the failure threshold. */
     @Test
     void shouldFailBuildIfNewHighIssuesSizeGreaterNewHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -505,6 +548,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.FAILURE);
     }
 
+    /** Verifies that a build is successful if number of new high priority issues less than failure threshold. */
     @Test
     void shouldBeSuccessfulIfNewHighIssuesSizeLessNewHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -521,6 +565,10 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.SUCCESS);
     }
 
+    /**
+     * Verifies that a build is successful if number of new high priority issues greater than failure threshold but
+     * check new issues is disabled.
+     */
     @Test
     void shouldBeSuccessfulIfNewHighIssuesGreaterThanNewHighIssuesThresholdButCheckNewIssuesDisabled() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -539,8 +587,10 @@ class QualityGateEnforcerTest {
     }
 
     //isUnstable
+
+    /** Verifies that a build is unstable if the number of issues is equal the unstable threshold. */
     @Test
-    void shouldBeUnstableBuildIfFailureThresholdIsSetIssuesSizeEqualThreshold() {
+    void shouldBeUnstableBuildIfUnstableThresholdIsSetIssuesSizeEqualThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalSize()).thenReturn(2);
@@ -556,8 +606,9 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.UNSTABLE);
     }
 
+    /** Verifies that a build is unstable if the number of issues is greater than the unstable threshold. */
     @Test
-    void shouldBeUnstableBuildIfFailureThresholdIsSetIssuesSizeGreaterThanThreshold() {
+    void shouldBeUnstableBuildIfUnstableThresholdIsSetIssuesSizeGreaterThanThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalSize()).thenReturn(3);
@@ -573,7 +624,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.UNSTABLE);
     }
 
-
+    /** Verifies that a build is unstable if the number of new issues is equal the new issues unstable threshold. */
     @Test
     void shouldBeUnstableBuildIfNewIssuesEqualNewIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -591,6 +642,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.UNSTABLE);
     }
 
+    /** Verifies that a build is unstable if the number of new issues is greater than the new issues unstable threshold. */
     @Test
     void shouldBeUnstableBuildIfNewIssuesGreaterThanNewIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -609,6 +661,7 @@ class QualityGateEnforcerTest {
     }
 
 
+    /** Verifies that a build is unstable if the number of low priority issues is equal the unstable threshold. */
     @Test
     void shouldBeUnstableBuildIfLowIssuesSizeEqualLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -627,6 +680,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.UNSTABLE);
     }
 
+    /** Verifies that a build is unstable if the number of low priority issues is greater than the unstable threshold. */
     @Test
     void shouldBeUnstableBuildIfLowIssuesSizeGreaterLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -645,6 +699,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.UNSTABLE);
     }
 
+    /** Verifies that a build is unstable if the number of new low priority issues is equal the new unstable threshold. */
     @Test
     void shouldBeUnstableBuildIfNewLowIssuesSizeEqualNewLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -662,6 +717,10 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.UNSTABLE);
     }
 
+    /**
+     * Verifies that a build is unstable if the number of new low priority issues is greater than the new unstable
+     * threshold.
+     */
     @Test
     void shouldBeUnstableBuildIfNewLowIssuesSizeGreaterNewLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -680,6 +739,7 @@ class QualityGateEnforcerTest {
     }
 
 
+    /** Verifies that a build is unstable if the number of normal priority issues is equal the unstable threshold. */
     @Test
     void shouldBeUnstableBuildIfNormalIssuesSizeEqualNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -697,6 +757,10 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.UNSTABLE);
     }
 
+    /**
+     * Verifies that a build is unstable if the number of normal priority issues is greater than the unstable
+     * threshold.
+     */
     @Test
     void shouldBeUnstableBuildIfNormalIssuesSizeGreaterNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -714,6 +778,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.UNSTABLE);
     }
 
+    /** Verifies that a build is unstable if the number of new normal priority issues is equal the new unstable threshold. */
     @Test
     void shouldBeUnstableBuildIfNewNormalIssuesSizeEqualNewNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -731,6 +796,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.UNSTABLE);
     }
 
+    /** Verifies that a build is unstable if the number of new normal priority issues is greater than the new unstable threshold. */
     @Test
     void shouldBeUnstableBuildIfNewNormalIssuesSizeGreaterNewNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -749,6 +815,7 @@ class QualityGateEnforcerTest {
     }
 
 
+    /** Verifies that a build is unstable if the number of high priority issues is equal the unstable threshold. */
     @Test
     void shouldBeUnstableBuildIfHighIssuesSizeEqualHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -766,6 +833,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.UNSTABLE);
     }
 
+    /** Verifies that a build is unstable if the number of high priority issues is greater than the unstable threshold. */
     @Test
     void shouldBeUnstableBuildIfHighIssuesSizeGreaterHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -783,6 +851,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.UNSTABLE);
     }
 
+    /** Verifies that a build is unstable if the number of new high priority issues is equal the new unstable threshold. */
     @Test
     void shouldBeUnstableBuildIfNewHighIssuesSizeEqualNewHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -800,6 +869,7 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.UNSTABLE);
     }
 
+    /** Verifies that a build is unstable if the number of new high priority issues is greater than the new unstable threshold. */
     @Test
     void shouldBeUnstableBuildIfNewHighIssuesSizeGreaterNewHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();

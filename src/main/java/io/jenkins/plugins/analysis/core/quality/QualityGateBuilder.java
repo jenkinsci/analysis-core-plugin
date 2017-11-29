@@ -1,27 +1,34 @@
 package io.jenkins.plugins.analysis.core.quality;
 
+/**
+ * Creates new {@link QualityGate} using the builder pattern. All properties that have not been set in the builder will
+ * be set to their default value.
+ *
+ * @author Andreas Moser
+ */
+@SuppressWarnings("JavaDocMethod")
 public class QualityGateBuilder {
-    private int failureThreshold;
-    private int newIssuesFailureThreshold;
+    private int failureThreshold = 0;
+    private int newIssuesFailureThreshold = 0;
 
-    private int unstableThreshold;
-    private int newIssuesUnstableThreshold;
+    private int unstableThreshold = 0;
+    private int newIssuesUnstableThreshold = 0;
 
-    private int failureThresholdLow;
-    private int failureThresholdNormal;
-    private int failureThresholdHigh;
-    private int newIssuesFailureThresholdLow;
-    private int newIssuesFailureThresholdNormal;
-    private int newIssuesFailureThresholdHigh;
+    private int failureThresholdLow = 0;
+    private int failureThresholdNormal = 0;
+    private int failureThresholdHigh = 0;
+    private int newIssuesFailureThresholdLow = 0;
+    private int newIssuesFailureThresholdNormal = 0;
+    private int newIssuesFailureThresholdHigh = 0;
 
-    private int unstableThresholdLow;
-    private int unstableThresholdNormal;
-    private int unstableThresholdHigh;
-    private int newIssuesUnstableThresholdLow;
-    private int newIssuesUnstableThresholdNormal;
-    private int newIssuesUnstableThresholdHigh;
+    private int unstableThresholdLow = 0;
+    private int unstableThresholdNormal = 0;
+    private int unstableThresholdHigh = 0;
+    private int newIssuesUnstableThresholdLow = 0;
+    private int newIssuesUnstableThresholdNormal = 0;
+    private int newIssuesUnstableThresholdHigh = 0;
 
-    private boolean checkNewIssues;
+    private boolean checkNewIssues = false;
 
     public QualityGateBuilder setFailureThreshold(final int failureThreshold) {
         this.failureThreshold = failureThreshold;
@@ -108,6 +115,11 @@ public class QualityGateBuilder {
         return this;
     }
 
+    /**
+     * Creates a new {@link QualityGate} based on the specified properties.
+     *
+     * @return the created quality gate.
+     */
     public QualityGate build() {
         return new QualityGate(failureThreshold, newIssuesFailureThreshold, unstableThreshold, newIssuesUnstableThreshold,
                 failureThresholdLow, failureThresholdNormal, failureThresholdHigh, newIssuesFailureThresholdLow,

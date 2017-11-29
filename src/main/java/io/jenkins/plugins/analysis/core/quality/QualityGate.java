@@ -3,7 +3,7 @@ package io.jenkins.plugins.analysis.core.quality;
 /**
  * Defines quality gates for a static analysis run.
  *
- * @author Ullrich Hafner
+ * @author Andreas Moser
  */
 public class QualityGate {
     private final int failureThreshold;
@@ -28,6 +28,44 @@ public class QualityGate {
 
     private final boolean checkNewIssues;
 
+    /**
+     * Creates a new instance using the specified properties.
+     *
+     * @param failureThreshold
+     *         The failure threshold of total issues.
+     * @param newIssuesFailureThreshold
+     *         The failure threshold of new issues.
+     * @param unstableThreshold
+     *         The unstable threshold of total issues.
+     * @param newIssuesUnstableThreshold
+     *         The unstable threshold of new issues.
+     * @param failureThresholdLow
+     *         The failure threshold for total low priority issues.
+     * @param failureThresholdNormal
+     *         The failure threshold for total normal priority issues.
+     * @param failureThresholdHigh
+     *         The failure threshold for total high priority issues.
+     * @param newIssuesFailureThresholdLow
+     *         The failure threshold for new low priority issues.
+     * @param newIssuesFailureThresholdNormal
+     *         The failure threshold for new normal priority issues.
+     * @param newIssuesFailureThresholdHigh
+     *         The failure threshold for new high priority issues.
+     * @param unstableThresholdLow
+     *         The unstable threshold for low priority issues.
+     * @param unstableThresholdNormal
+     *         The unstable threshold for normal priority issues.
+     * @param unstableThresholdHigh
+     *         The unstable threshold for high priority issues.
+     * @param newIssuesUnstableThresholdLow
+     *         The unstable threshold for new low priority issues.
+     * @param newIssuesUnstableThresholdNormal
+     *         The unstable threshold for new normal priority issues.
+     * @param newIssuesUnstableThresholdHigh
+     *         The unstable threshold for new high priority issues.
+     * @param checkNewIssues
+     *         A flag indicating if the gate should check number of new issues.
+     */
     @SuppressWarnings("ParameterNumber")
     QualityGate(final int failureThreshold, final int newIssuesFailureThreshold, final int unstableThreshold,
             final int newIssuesUnstableThreshold, final int failureThresholdLow, final int failureThresholdNormal,
@@ -64,12 +102,17 @@ public class QualityGate {
         return failureThreshold > 0;
     }
 
+    /**
+     * Determines if a unstable threshold for the total number of issues is set.
+     *
+     * @return {@code true} if the unstable threshold for the total number of issues is set
+     */
     public boolean hasUnstableThreshold() {
         return unstableThreshold > 0;
     }
 
     /**
-     * Determines if new issues size should be checked and a new issues threshold is set.
+     * Determines if new issues size should be checked for failure and a new issues failure threshold is set.
      *
      * @return {@code true} if the failure threshold for number of new issues is set and the checkNewIssues flag is
      *         set.
@@ -78,6 +121,12 @@ public class QualityGate {
         return checkNewIssues && newIssuesFailureThreshold > 0;
     }
 
+    /**
+     * Determines if new issues size should be checked for unstable and a new issues unstable threshold is set.
+     *
+     * @return {@code true} if the unstable threshold for number of new issues is set and the checkNewIssues flag is
+     *         set.
+     */
     public boolean shouldCheckNewIssuesForUnstable() {
         return checkNewIssues && newIssuesUnstableThreshold > 0;
     }
@@ -91,6 +140,11 @@ public class QualityGate {
         return failureThresholdLow > 0;
     }
 
+    /**
+     * Determines if a unstable threshold for the total number of low priority issues is set.
+     *
+     * @return {@code true} if the unstable threshold for the total number of low priority issues is set
+     */
     public boolean hasLowPriorityUnstableThreshold() {
         return unstableThresholdLow > 0;
     }
@@ -104,6 +158,11 @@ public class QualityGate {
         return failureThresholdNormal > 0;
     }
 
+    /**
+     * Determines if a unstable threshold for the total number of normal priority issues is set.
+     *
+     * @return {@code true} if the unstable threshold for the total number of normal priority issues is set
+     */
     public boolean hasNormalPriorityUnstableThreshold() {
         return unstableThresholdNormal > 0;
     }
@@ -117,57 +176,82 @@ public class QualityGate {
         return failureThresholdHigh > 0;
     }
 
+    /**
+     * Determines if a unstable threshold for the total number of high priority issues is set.
+     *
+     * @return {@code true} if the unstable threshold for the total number of high priority issues is set
+     */
     public boolean hasHighPriorityUnstableThreshold() {
         return unstableThresholdHigh > 0;
     }
 
     /**
-     * Determines if a failure threshold for the number of new low priority issues is set.
+     * Determines if new issues size should be checked for failure and a failure threshold for the number of new low
+     * priority issues is set.
      *
-     * @return {@code true} if the failure threshold for the number of new low priority issues is set
+     * @return {@code true} if the failure threshold for the number of new low priority issues and the checkNewIssues
+     *         flag is set.
      */
     public boolean hasNewLowIssuesPriorityFailureThreshold() {
         return newIssuesFailureThresholdLow > 0 && checkNewIssues;
     }
 
+    /**
+     * Determines if new issues size should be checked for unstable and a unstable threshold for the number of new low
+     * priority issues is set.
+     *
+     * @return {@code true} if the unstable threshold for the number of new low priority issues and the checkNewIssues
+     *         flag is set.
+     */
     public boolean hasNewLowIssuesPriorityUnstableThreshold() {
         return newIssuesUnstableThresholdLow > 0 && checkNewIssues;
     }
 
     /**
-     * Determines if a failure threshold for the number of new normal priority issues is set.
+     * Determines if new issues size should be checked for failure and a failure threshold for the number of new normal
+     * priority issues is set.
      *
-     * @return {@code true} if the failure threshold for the number of new normal priority issues is set
+     * @return {@code true} if the failure threshold for the number of new normal priority issues and the checkNewIssues
+     *         flag is set.
      */
     public boolean hasNewNormalIssuesPriorityFailureThreshold() {
         return newIssuesFailureThresholdNormal > 0 && checkNewIssues;
     }
 
+    /**
+     * Determines if new issues size should be checked for unstable and a unstable threshold for the number of new
+     * normal priority issues is set.
+     *
+     * @return {@code true} if the unstable threshold for the number of new normal priority issues and the
+     *         checkNewIssues flag is set.
+     */
     public boolean hasNewNormalIssuesPriorityUnstableThreshold() {
         return newIssuesUnstableThresholdNormal > 0 && checkNewIssues;
     }
 
     /**
-     * Determines if a failure threshold for the number of new high priority issues is set.
+     * Determines if new issues size should be checked for failure and a failure threshold for the number of new high
+     * priority issues is set.
      *
-     * @return {@code true} if the failure threshold for the number of new high priority issues is set
+     * @return {@code true} if the failure threshold for the number of new high priority issues and the checkNewIssues
+     *         flag is set.
      */
     public boolean hasNewHighIssuesPriorityFailureThreshold() {
         return newIssuesFailureThresholdHigh > 0 && checkNewIssues;
     }
 
+    /**
+     * Determines if new issues size should be checked for unstable and a unstable threshold for the number of new high
+     * priority issues is set.
+     *
+     * @return {@code true} if the unstable threshold for the number of new high priority issues and the checkNewIssues
+     *         flag is set.
+     */
     public boolean hasNewHighIssuesPriorityUnstableThreshold() {
         return newIssuesUnstableThresholdHigh > 0 && checkNewIssues;
     }
 
 
-
-
-    /**
-     * Returns the failure threshold for the total number of issues.
-     *
-     * @return the failure threshold for the total number of issues
-     */
     public int getFailureThreshold() {
         return failureThreshold;
     }

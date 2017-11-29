@@ -24,35 +24,35 @@ public class QualityGateEnforcer {
     public Result evaluate(final StaticAnalysisRun run, final QualityGate qualityGate) {
         Result result = Result.SUCCESS;
 
-        List<Boolean> failures = new ArrayList<>();
-        List<Boolean> unstables = new ArrayList<>();
+        List<Boolean> failureFlags = new ArrayList<>();
+        List<Boolean> unstableFlags = new ArrayList<>();
 
-        unstables.add(qualityGate.hasUnstableThreshold() && run.getTotalSize() >= qualityGate.getUnstableThreshold());
-        unstables.add(qualityGate.shouldCheckNewIssuesForUnstable() && run.getNewSize() >= qualityGate.getNewIssuesUnstableThreshold());
-        unstables.add(qualityGate.hasLowPriorityUnstableThreshold() && run.getTotalLowPrioritySize() >= qualityGate.getUnstableThresholdLow());
-        unstables.add(qualityGate.hasNormalPriorityUnstableThreshold() && run.getTotalNormalPrioritySize() >= qualityGate.getUnstableThresholdNormal());
-        unstables.add(qualityGate.hasHighPriorityUnstableThreshold() && run.getTotalHighPrioritySize() >= qualityGate.getUnstableThresholdHigh());
-        unstables.add(qualityGate.hasNewLowIssuesPriorityUnstableThreshold() && run.getNewLowPrioritySize() >= qualityGate.getNewIssuesUnstableThresholdLow());
-        unstables.add(qualityGate.hasNewNormalIssuesPriorityUnstableThreshold() && run.getNewNormalPrioritySize() >= qualityGate.getNewIssuesUnstableThresholdNormal());
-        unstables.add(qualityGate.hasNewHighIssuesPriorityUnstableThreshold() && run.getNewHighPrioritySize() >= qualityGate.getNewIssuesUnstableThresholdHigh());
+        unstableFlags.add(qualityGate.hasUnstableThreshold() && run.getTotalSize() >= qualityGate.getUnstableThreshold());
+        unstableFlags.add(qualityGate.shouldCheckNewIssuesForUnstable() && run.getNewSize() >= qualityGate.getNewIssuesUnstableThreshold());
+        unstableFlags.add(qualityGate.hasLowPriorityUnstableThreshold() && run.getTotalLowPrioritySize() >= qualityGate.getUnstableThresholdLow());
+        unstableFlags.add(qualityGate.hasNormalPriorityUnstableThreshold() && run.getTotalNormalPrioritySize() >= qualityGate.getUnstableThresholdNormal());
+        unstableFlags.add(qualityGate.hasHighPriorityUnstableThreshold() && run.getTotalHighPrioritySize() >= qualityGate.getUnstableThresholdHigh());
+        unstableFlags.add(qualityGate.hasNewLowIssuesPriorityUnstableThreshold() && run.getNewLowPrioritySize() >= qualityGate.getNewIssuesUnstableThresholdLow());
+        unstableFlags.add(qualityGate.hasNewNormalIssuesPriorityUnstableThreshold() && run.getNewNormalPrioritySize() >= qualityGate.getNewIssuesUnstableThresholdNormal());
+        unstableFlags.add(qualityGate.hasNewHighIssuesPriorityUnstableThreshold() && run.getNewHighPrioritySize() >= qualityGate.getNewIssuesUnstableThresholdHigh());
 
-        failures.add(qualityGate.hasFailureThreshold() && run.getTotalSize() >= qualityGate.getFailureThreshold());
-        failures.add(qualityGate.shouldCheckNewIssuesForFailure() && run.getNewSize() >= qualityGate.getNewIssuesFailureThreshold());
-        failures.add(qualityGate.hasLowPriorityFailureThreshold() && run.getTotalLowPrioritySize() >= qualityGate.getFailureThresholdLow());
-        failures.add(qualityGate.hasNormalPriorityFailureThreshold() && run.getTotalNormalPrioritySize() >= qualityGate.getFailureThresholdNormal());
-        failures.add(qualityGate.hasHighPriorityFailureThreshold() && run.getTotalHighPrioritySize() >= qualityGate.getFailureThresholdHigh());
-        failures.add(qualityGate.hasNewLowIssuesPriorityFailureThreshold() && run.getNewLowPrioritySize() >= qualityGate.getNewIssuesFailureThresholdLow());
-        failures.add(qualityGate.hasNewNormalIssuesPriorityFailureThreshold() && run.getNewNormalPrioritySize() >= qualityGate.getNewIssuesFailureThresholdNormal());
-        failures.add(qualityGate.hasNewHighIssuesPriorityFailureThreshold() && run.getNewHighPrioritySize() >= qualityGate.getNewIssuesFailureThresholdHigh());
+        failureFlags.add(qualityGate.hasFailureThreshold() && run.getTotalSize() >= qualityGate.getFailureThreshold());
+        failureFlags.add(qualityGate.shouldCheckNewIssuesForFailure() && run.getNewSize() >= qualityGate.getNewIssuesFailureThreshold());
+        failureFlags.add(qualityGate.hasLowPriorityFailureThreshold() && run.getTotalLowPrioritySize() >= qualityGate.getFailureThresholdLow());
+        failureFlags.add(qualityGate.hasNormalPriorityFailureThreshold() && run.getTotalNormalPrioritySize() >= qualityGate.getFailureThresholdNormal());
+        failureFlags.add(qualityGate.hasHighPriorityFailureThreshold() && run.getTotalHighPrioritySize() >= qualityGate.getFailureThresholdHigh());
+        failureFlags.add(qualityGate.hasNewLowIssuesPriorityFailureThreshold() && run.getNewLowPrioritySize() >= qualityGate.getNewIssuesFailureThresholdLow());
+        failureFlags.add(qualityGate.hasNewNormalIssuesPriorityFailureThreshold() && run.getNewNormalPrioritySize() >= qualityGate.getNewIssuesFailureThresholdNormal());
+        failureFlags.add(qualityGate.hasNewHighIssuesPriorityFailureThreshold() && run.getNewHighPrioritySize() >= qualityGate.getNewIssuesFailureThresholdHigh());
 
-        for (Boolean unstable : unstables) {
+        for (Boolean unstable : unstableFlags) {
             if (unstable) {
                 result = Result.UNSTABLE;
                 break;
             }
         }
 
-        for (Boolean failure : failures) {
+        for (Boolean failure : failureFlags) {
             if (failure) {
                 result = Result.FAILURE;
                 break;
@@ -60,7 +60,5 @@ public class QualityGateEnforcer {
         }
 
         return result;
-
-        //return null;
     }
 }
