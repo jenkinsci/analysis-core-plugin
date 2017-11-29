@@ -40,17 +40,19 @@ class QualityGateEnforcerTest {
                 .as("No issues and no quality gate should always be a SUCCESS")
                 .isEqualTo(Result.SUCCESS);
     }
+
     @Test
     void shouldBeSuccessfulWhenNoIssuesPresentAndEmptyQualityGateIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
-        enforcer.addQualityGate(new QualityGate(0,Result.FAILURE,QualityGatePriority.All,false));
+        enforcer.addQualityGate(new QualityGate(0, Result.FAILURE, QualityGatePriority.All, false));
         Result success = enforcer.evaluate(run);
 
         assertThat(success)
                 .as("No issues and no quality gate should always be a SUCCESS")
                 .isEqualTo(Result.SUCCESS);
     }
+
     @Test
     void shouldBeSuccessfulWhenNoIssuesPresentAndFailureQualityGateIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -81,7 +83,7 @@ class QualityGateEnforcerTest {
     }
 
     @Test
-    void shouldSuccessIfIssuesSamlerThanThreshold() {
+    void shouldSuccessIfIssuesSmallerThanThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = getStaticAnalysisRunWithTotalSize(4);
 
@@ -144,8 +146,9 @@ class QualityGateEnforcerTest {
         assertThat(failure).as("Two Tests and just none should fail").isEqualTo(Result.SUCCESS);
 
     }
+
     @Test
-    void addMultipleQualityEnforcerAndSuccessIfUnsable() {
+    void addMultipleQualityEnforcerAndSuccessIfUnstable() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = getStaticAnalysisRunWithTotalSize(5);
 
@@ -157,6 +160,7 @@ class QualityGateEnforcerTest {
         assertThat(failure).as("Two Tests and just none should fail").isEqualTo(Result.UNSTABLE);
 
     }
+
     @Test
     void addMultipleQualityEnforcerAndSuccessIfFailed() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -184,6 +188,7 @@ class QualityGateEnforcerTest {
         assertThat(failure).as("Two Tests and just none should fail").isEqualTo(Result.SUCCESS);
 
     }
+
     @Test
     void inspectJustTheNewIssuesAndFail() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -213,6 +218,7 @@ class QualityGateEnforcerTest {
         assertThat(failure).as("Two Tests and just none should fail").isEqualTo(Result.FAILURE);
 
     }
+
     @Test
     void inspectJustTheNormalPrioIssues() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -228,6 +234,7 @@ class QualityGateEnforcerTest {
         assertThat(failure).as("Two Tests and just none should fail").isEqualTo(Result.FAILURE);
 
     }
+
     @Test
     void inspectJustTheHighPrioIssues() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -243,6 +250,7 @@ class QualityGateEnforcerTest {
         assertThat(failure).as("Two Tests and just none should fail").isEqualTo(Result.FAILURE);
 
     }
+
     @Test
     void inspectJustTheNewLowPrioIssues() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -258,6 +266,7 @@ class QualityGateEnforcerTest {
         assertThat(failure).as("Two Tests and just none should fail").isEqualTo(Result.FAILURE);
 
     }
+
     @Test
     void inspectJustTheNewNormalPrioIssues() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
@@ -273,6 +282,7 @@ class QualityGateEnforcerTest {
         assertThat(failure).as("Two Tests and just none should fail").isEqualTo(Result.FAILURE);
 
     }
+
     @Test
     void inspectJustTheNewHighPrioIssues() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();

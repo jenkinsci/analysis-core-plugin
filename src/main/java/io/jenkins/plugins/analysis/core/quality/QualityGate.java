@@ -9,9 +9,9 @@ import hudson.model.Result;
  */
 public class QualityGate {
     private final int failureThreshold;
-    boolean checkJustNew;
-    hudson.model.Result ifFail;
-    QualityGatePriority inspect;
+    private final boolean checkJustNew;
+    private final hudson.model.Result ifFail;
+    private final QualityGatePriority inspect;
 
     /**
      * Creates a new instance of {@link QualityGate}.
@@ -85,6 +85,8 @@ public class QualityGate {
                     case Low:
                         hasFailed = run.getNewLowPrioritySize() >= getFailureThreshold();
                         break;
+                    default:
+                        throw new UnsupportedOperationException("unhallowed priory");
                 }
             }
             else {
@@ -101,6 +103,8 @@ public class QualityGate {
                     case Low:
                         hasFailed = run.getTotalLowPrioritySize() >= getFailureThreshold();
                         break;
+                    default:
+                        throw new UnsupportedOperationException("unhallowed priory");
                 }
             }
         }

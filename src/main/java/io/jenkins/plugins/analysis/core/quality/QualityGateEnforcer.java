@@ -3,8 +3,6 @@ package io.jenkins.plugins.analysis.core.quality;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.hm.hafner.analysis.Issues;
-
 import hudson.model.Result;
 
 /**
@@ -14,7 +12,7 @@ import hudson.model.Result;
  */
 public class QualityGateEnforcer {
 
-    private List<QualityGate> allChecks;
+    private final List<QualityGate> allChecks;
 
     QualityGateEnforcer() {
         allChecks = new ArrayList<>();
@@ -22,10 +20,10 @@ public class QualityGateEnforcer {
     }
 
     /**
-     * Return the worser Result.
+     * Return the worse Result.
      * @param r1 result a
      * @param r2 result b
-     * @return the worser one
+     * @return the worse one
      */
     private Result getWorserOne(Result r1, Result r2) {
         Result out;
