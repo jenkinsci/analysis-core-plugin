@@ -1,45 +1,36 @@
 package io.jenkins.plugins.analysis.core.quality;
 
-/**
- * Defines quality gates for a static analysis run.
- *
- * @author Ullrich Hafner
- */
-public class QualityGate {
-    private final int failureThreshold;
+import java.util.Collection;
+import java.util.Collections;
+
+import hudson.model.Result;
+
+public interface QualityGate {
 
     /**
-     * Creates a new instance of {@link QualityGate}.
+     * Checks whether the quality gate is enabled.
      *
-     * @param failureThreshold
-     *         the number of issues that will fail a build
+     * @return gate enabled?
      */
-    public QualityGate(final int failureThreshold) {
-        this.failureThreshold = failureThreshold;
-    }
+    boolean isEnabled();
 
     /**
-     * Creates a new instance of {@link QualityGate}. No thresholds are set.
-     */
-    public QualityGate() {
-        this(0);
-    }
-
-    /**
-     * Determines if a failure threshold for the total number of issues is set.
+     * Retrieve the build result.
      *
-     * @return {@code true} if the failure threshold for the total number of issues is set
+     * @return build result
      */
-    public boolean hasFailureThreshold() {
-        return failureThreshold > 0;
-    }
+    Result getResult(final StaticAnalysisRun run);
 
     /**
-     * Returns the failure threshold for the total number of issues.
+     * Combine gates, gates will be executed in-order. More important gates must be passed in, execution ends on first
+     * hit. i.e. combine(FAILURE GATE, UNSTABLE GATE)
      *
-     * @return the failure threshold for the total number of issues
+     * @param gates
+     *         to combine
+     *
+     * @return combined quality gate
      */
-    public int getFailureThreshold() {
-        return failureThreshold;
+    static QualityGate combine(Collection<QualityGate> gates) {
+        return new AggregateQualityGate(Collections.unmodifiableCollection(gates));
     }
 }
