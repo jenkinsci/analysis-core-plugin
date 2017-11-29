@@ -1,11 +1,27 @@
 package io.jenkins.plugins.analysis.core.quality;
 
+import edu.hm.hafner.analysis.Priority;
+
+import hudson.model.Result;
+
 /**
- * Defines quality gates for a static analysis run.
+ * Defines a quality gate for a {@link StaticAnalysisRun}. This class
+ * represents the data the user has put into the GUI and is used
+ * to express the different thresholds for the 3 different {@link Priority}
+ * with their corresponding {@link Result}.
  *
  * @author Joscha Behrmann
  */
 public class QualityGate {
+    /**
+     * The default value when a field is left empty.
+     */
+    public static final int UNSET = Integer.MAX_VALUE;
+
+    /* Should 'new' thresholds be considered */
+    private final boolean computeNewWarnings;
+
+    /* The 'total' thresholds for the different priorities and their resulting states */
     private final int totalPriorityAllUnstable;
     private final int totalPriorityAllFailed;
     private final int totalPriorityHighUnstable;
@@ -15,6 +31,7 @@ public class QualityGate {
     private final int totalPriorityLowUnstable;
     private final int totalPriorityLowFailed;
 
+    /* The 'new' thresholds for the different priorities and their resulting states */
     private final int newPriorityAllUnstable;
     private final int newPriorityAllFailed;
     private final int newPriorityHighUnstable;
@@ -24,7 +41,10 @@ public class QualityGate {
     private final int newPriorityLowUnstable;
     private final int newPriorityLowFailed;
 
+    /* Instances of this class are constructed by using a builder. */
     private QualityGate(Builder builder) {
+        this.computeNewWarnings = builder.computeNewWarnings;
+
         this.totalPriorityAllUnstable = builder.totalPriorityAllUnstable;
         this.totalPriorityAllFailed = builder.totalPriorityAllFailed;
         this.totalPriorityHighUnstable = builder.totalPriorityHighUnstable;
@@ -45,29 +65,144 @@ public class QualityGate {
     }
 
     /**
+     * Check if the user has set any thresholds in the GUI.
+     *
+     * @return true if any thresholds were set, false if not
+     */
+    public boolean hasFailureThreshold() {
+        return hasTotalFailureThreshold() || hasNewFailureThreshold();
+    }
+
+    /* Check if any 'total'-thresholds were set. */
+    private boolean hasTotalFailureThreshold() {
+        return totalPriorityAllUnstable < UNSET
+                || totalPriorityAllFailed < UNSET
+                || totalPriorityHighUnstable < UNSET
+                || totalPriorityHighFailed < UNSET
+                || totalPriorityNormalUnstable < UNSET
+                || totalPriorityNormalFailed < UNSET
+                || totalPriorityLowUnstable < UNSET
+                || totalPriorityLowFailed < UNSET;
+    }
+
+    /* Check if 'new'-tresholds should be considered and were set. */
+    private boolean hasNewFailureThreshold() {
+        if (!computeNewWarnings) {
+            return false;
+        }
+
+        return newPriorityAllUnstable < UNSET
+                || newPriorityAllFailed < UNSET
+                || newPriorityHighUnstable < UNSET
+                || newPriorityHighFailed < UNSET
+                || newPriorityNormalUnstable < UNSET
+                || newPriorityNormalFailed < UNSET
+                || newPriorityLowUnstable < UNSET
+                || newPriorityLowFailed < UNSET;
+    }
+
+    public boolean shouldComputeNewWarnings() { return computeNewWarnings; }
+
+    public int getTotalPriorityAllUnstable() {
+        return totalPriorityAllUnstable;
+    }
+
+    public int getTotalPriorityAllFailed() {
+        return totalPriorityAllFailed;
+    }
+
+    public int getTotalPriorityHighUnstable() {
+        return totalPriorityHighUnstable;
+    }
+
+    public int getTotalPriorityHighFailed() {
+        return totalPriorityHighFailed;
+    }
+
+    public int getTotalPriorityNormalUnstable() {
+        return totalPriorityNormalUnstable;
+    }
+
+    public int getTotalPriorityNormalFailed() {
+        return totalPriorityNormalFailed;
+    }
+
+    public int getTotalPriorityLowUnstable() {
+        return totalPriorityLowUnstable;
+    }
+
+    public int getTotalPriorityLowFailed() {
+        return totalPriorityLowFailed;
+    }
+
+    public int getNewPriorityAllUnstable() {
+        return newPriorityAllUnstable;
+    }
+
+    public int getNewPriorityAllFailed() {
+        return newPriorityAllFailed;
+    }
+
+    public int getNewPriorityHighUnstable() {
+        return newPriorityHighUnstable;
+    }
+
+    public int getNewPriorityHighFailed() {
+        return newPriorityHighFailed;
+    }
+
+    public int getNewPriorityNormalUnstable() {
+        return newPriorityNormalUnstable;
+    }
+
+    public int getNewPriorityNormalFailed() {
+        return newPriorityNormalFailed;
+    }
+
+    public int getNewPriorityLowUnstable() {
+        return newPriorityLowUnstable;
+    }
+
+    public int getNewPriorityLowFailed() {
+        return newPriorityLowFailed;
+    }
+
+    /**
      * Builder to create a QualityGate.
      */
     public static class Builder {
-        private int totalPriorityAllUnstable;
-        private int totalPriorityAllFailed;
-        private int totalPriorityHighUnstable;
-        private int totalPriorityHighFailed;
-        private int totalPriorityNormalUnstable;
-        private int totalPriorityNormalFailed;
-        private int totalPriorityLowUnstable;
-        private int totalPriorityLowFailed;
+        private boolean computeNewWarnings;
 
-        private int newPriorityAllUnstable;
-        private int newPriorityAllFailed;
-        private int newPriorityHighUnstable;
-        private int newPriorityHighFailed;
-        private int newPriorityNormalUnstable;
-        private int newPriorityNormalFailed;
-        private int newPriorityLowUnstable;
-        private int newPriorityLowFailed;
+        private int totalPriorityAllUnstable = UNSET;
+        private int totalPriorityAllFailed = UNSET;
+        private int totalPriorityHighUnstable = UNSET;
+        private int totalPriorityHighFailed = UNSET;
+        private int totalPriorityNormalUnstable = UNSET;
+        private int totalPriorityNormalFailed = UNSET;
+        private int totalPriorityLowUnstable = UNSET;
+        private int totalPriorityLowFailed = UNSET;
 
+        private int newPriorityAllUnstable = UNSET;
+        private int newPriorityAllFailed = UNSET;
+        private int newPriorityHighUnstable = UNSET;
+        private int newPriorityHighFailed = UNSET;
+        private int newPriorityNormalUnstable = UNSET;
+        private int newPriorityNormalFailed = UNSET;
+        private int newPriorityLowUnstable = UNSET;
+        private int newPriorityLowFailed = UNSET;
+
+        /**
+         * Creates a new instance {@link QualityGate}.
+         *
+         * @return an instance of QualityGate with specified properties
+         */
         public QualityGate build() {
             return new QualityGate(this);
+        }
+
+        public Builder setComputeNewWarnings(final boolean computeNewWarnings) {
+            this.computeNewWarnings = computeNewWarnings;
+            return this;
         }
 
         public Builder setTotalPriorityAllUnstable(final int totalPriorityAllUnstable) {
@@ -149,69 +284,5 @@ public class QualityGate {
             this.newPriorityLowFailed = newPriorityLowFailed;
             return this;
         }
-    }
-
-    public int getTotalPriorityAllUnstable() {
-        return totalPriorityAllUnstable;
-    }
-
-    public int getTotalPriorityAllFailed() {
-        return totalPriorityAllFailed;
-    }
-
-    public int getTotalPriorityHighUnstable() {
-        return totalPriorityHighUnstable;
-    }
-
-    public int getTotalPriorityHighFailed() {
-        return totalPriorityHighFailed;
-    }
-
-    public int getTotalPriorityNormalUnstable() {
-        return totalPriorityNormalUnstable;
-    }
-
-    public int getTotalPriorityNormalFailed() {
-        return totalPriorityNormalFailed;
-    }
-
-    public int getTotalPriorityLowUnstable() {
-        return totalPriorityLowUnstable;
-    }
-
-    public int getTotalPriorityLowFailed() {
-        return totalPriorityLowFailed;
-    }
-
-    public int getNewPriorityAllUnstable() {
-        return newPriorityAllUnstable;
-    }
-
-    public int getNewPriorityAllFailed() {
-        return newPriorityAllFailed;
-    }
-
-    public int getNewPriorityHighUnstable() {
-        return newPriorityHighUnstable;
-    }
-
-    public int getNewPriorityHighFailed() {
-        return newPriorityHighFailed;
-    }
-
-    public int getNewPriorityNormalUnstable() {
-        return newPriorityNormalUnstable;
-    }
-
-    public int getNewPriorityNormalFailed() {
-        return newPriorityNormalFailed;
-    }
-
-    public int getNewPriorityLowUnstable() {
-        return newPriorityLowUnstable;
-    }
-
-    public int getNewPriorityLowFailed() {
-        return newPriorityLowFailed;
     }
 }
