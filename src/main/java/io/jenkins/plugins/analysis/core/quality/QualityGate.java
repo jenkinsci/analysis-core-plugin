@@ -41,7 +41,7 @@ public class QualityGate {
      * @param failureNewTotalThreshold number of new total issues from when on the build is failed
      * @param failureNewHighPriorityThreshold number of new issues with high priority from when on the build is failed
      * @param failureNewNormalPriorityThreshold number of new issues with normal priority from when on the build is failed
-     * @param failureNewLowPriorityThreshold number of  new issues with normal priority from when on the build is failed
+     * @param failureNewLowPriorityThreshold number of  new issues with low priority from when on the build is failed
      * @param unstableNewTotalThreshold number of new total issues from when on the build is unstable
      * @param unstableNewHighPriorityThreshold number of new issues with high priority from when on the build is unstable
      * @param unstableNewNormalPriorityThreshold number of new issues with normal priority from when on the build is unstable
@@ -153,93 +153,208 @@ public class QualityGate {
         return failureNewTotalThreshold;
     }
 
+    /**Getter of the number of new issues with high priority from when on the build is failed.
+     *
+     * @return number of new issues with high priority from when on the build is failed
+     */
+
     public int getFailureNewHighPriorityThreshold() {
         return failureNewHighPriorityThreshold;
     }
+
+    /**Getter of the number of new issues with normal priority from when on the build is failed.
+     *
+     * @return number of new issues with normal priority from when on the build is failed
+     */
 
     public int getFailureNewNormalPriorityThreshold() {
         return failureNewNormalPriorityThreshold;
     }
 
+    /**Getter of the number of  new issues with low priority from when on the build is failed.
+     *
+     * @return  number of  new issues with low priority from when on the build is failed
+     */
+
     public int getFailureNewLowPriorityThreshold() {
         return failureNewLowPriorityThreshold;
     }
+
+    /**Getter of the number of new total issues from when on the build is unstable.
+     *
+     * @return number of new total issues from when on the build is unstable
+     */
 
     public int getUnstableNewTotalThreshold() {
         return unstableNewTotalThreshold;
     }
 
+    /**Getter of the number of new issues with high priority from when on the build is unstable.
+     *
+     * @return number of new issues with high priority from when on the build is unstable s
+     */
+
     public int getUnstableNewHighPriorityThreshold() {
         return unstableNewHighPriorityThreshold;
     }
+
+    /**Getter of the number of new issues with normal priority from when on the build is unstable.
+     *
+     * @return number of new issues with normal priority from when on the build is unstable
+     */
 
     public int getUnstableNewNormalPriorityThreshold() {
         return unstableNewNormalPriorityThreshold;
     }
 
+    /**Getter of the number of new issues with low priority from when on the build is unstable.
+     *
+     * @return  number of new issues with low priority from when on the build is unstable
+     */
     public int getUnstableNewLowPriorityThreshold() {
         return unstableNewLowPriorityThreshold;
     }
+
+    /**If the failureTotalThreshold is bigger than -1 the failureTotalThreshold is set.
+     *
+     * @return true if the failureTotalThreshold is set otherwise false
+     */
 
     public boolean hasFailureTotalThreshold() {
         return failureTotalThreshold >= 0;
     }
 
+    /**If the failureLowPriorityThreshold is bigger than -1 the failureTotalThreshold is set.
+     *
+     * @return true if the failureLowPriorityThreshold is set otherwise false
+     */
+
+
     public boolean hasFailureLowPriorityThreshold() {
         return failureLowPriorityThreshold >= 0;
     }
+
+    /**If the failureNormalPriorityThreshold is bigger than -1 the failureTotalThreshold is set.
+     *
+     * @return return true if the failureNormalPriorityThreshold is set otherwise false.
+     */
 
     public boolean hasFailureNormalPriorityThreshold() {
         return failureNormalPriorityThreshold >= 0;
     }
 
+    /**If the failureHighPriorityThreshold is bigger than -1 the failureTotalThreshold is set.
+     *
+     * @return true if the failureHighPriorityThreshold is set otherwise false
+     */
+
     public boolean hasFailureHighPriorityThreshold() {
         return failureHighPriorityThreshold >= 0;
     }
+
+    /**If the unstableTotalThreshold is bigger than -1 the failureTotalThreshold is set.
+     *
+     * @return true if the  unstableTotalThreshold is set otherwise false
+     */
 
     public boolean hasFailureNewTotalThreshold() {
         return failureNewTotalThreshold >= 0;
     }
 
+    /** If the unstableLowPriorityThreshold is bigger than -1 the failureTotalThreshold is set.
+     *
+     * @return true if the unstableLowPriorityThreshold is set otherwise false
+     */
+
     public boolean hasFailureNewLowPriorityThreshold() {
         return failureNewLowPriorityThreshold >= 0;
     }
+
+    /**If the unstableNormalPriorityThreshold is bigger than -1 the failureTotalThreshold is set.
+     *
+     * @return true if the  unstableNormalPriorityThreshold is set otherwise false
+     */
 
     public boolean hasFailureNewNormalPriorityThreshold() {
         return failureNewNormalPriorityThreshold >= 0;
     }
 
+    /**If the unstableHighPriorityThreshold is bigger than -1 the failureTotalThreshold is set.
+     *
+     * @return true if the unstableHighPriorityThreshold is set otherwise false
+     */
+
     public boolean hasFailureNewHighPriorityThreshold() {
         return failureNewHighPriorityThreshold >= 0;
     }
+
+    /** If the failureNewTotalThreshold is bigger than -1 the failureTotalThreshold is set.
+     *
+     * @return true if the failureNewTotalThreshold is set otherwise false
+     */
 
     public boolean hasUnstableTotalThreshold() {
         return unstableTotalThreshold >= 0;
     }
 
+    /** If the failureNewLowPriorityThreshold is bigger than -1 the failureTotalThreshold is set.
+     *
+     * @return true if the failureNewLowPriorityThreshold is set otherwise false
+     */
+
     public boolean hasUnstableLowPriorityThreshold() {
         return unstableLowPriorityThreshold >= 0;
     }
+
+    /**If the failureNewNormalPriorityThreshold is bigger than -1 the failureTotalThreshold is set.
+     *
+     * @return true if the failureNewNormalPriorityThreshold is set otherwise false
+     */
 
     public boolean hasUnstableNormalPriorityThreshold() {
         return unstableNormalPriorityThreshold >= 0;
     }
 
+    /**If the failureNewHighPriorityThreshold is bigger than -1 the failureTotalThreshold is set.
+     *
+     * @return  true if the failureNewHighPriorityThreshold is set otherwise false
+     */
+
     public boolean hasUnstableHighPriorityThreshold() {
         return unstableHighPriorityThreshold >= 0;
     }
+
+    /**If the unstableNewTotalThreshold is bigger than -1 the failureTotalThreshold is set.
+     *
+     * @return true if  the unstableNewTotalThreshold is set otherwise false
+     */
 
     public boolean hasUnstableNewTotalThreshold() {
         return unstableNewTotalThreshold >= 0;
     }
 
+    /**If the unstableNewLowPriorityThreshold is bigger than -1 the failureTotalThreshold is set.
+     *
+     * @return true if the unstableNewLowPriorityThreshold is set otherwise false
+     */
+
     public boolean hasUnstableNewLowPriorityThreshold() {
         return unstableNewLowPriorityThreshold >= 0;
     }
 
+    /**If the unstableNewNormalPriorityThreshold is bigger than -1 the failureTotalThreshold is set.
+     *
+     * @return  true if the unstableNewNormalPriorityThreshold is set otherwise false
+     */
+
     public boolean hasUnstableNewNormalPriorityThreshold() {
         return unstableNewNormalPriorityThreshold >= 0;
     }
+
+    /**If the unstableNewHighPriorityThreshold is bigger than -1 the failureTotalThreshold is set.
+     *
+     * @return true if  the unstableNewHighPriorityThreshold is set otherwise false
+     */
 
     public boolean hasUnstableNewHighPriorityThreshold() {
         return unstableNewHighPriorityThreshold >= 0;
