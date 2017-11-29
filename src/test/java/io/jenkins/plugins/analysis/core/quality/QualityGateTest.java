@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 import hudson.model.Result;
 
 /**
- *
+ * Tests the classes {@link QualityGate}, {@link QualityGateBuilder}.
  * @author Raphael Furch
  */
 class QualityGateTest {
