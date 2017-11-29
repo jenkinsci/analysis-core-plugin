@@ -1,5 +1,12 @@
 package io.jenkins.plugins.analysis.core.quality;
 
+/**
+ * Creates new {@link QualityGate qualityGate} using the builder pattern. All properties that have not been set in the builder will
+ * be set to their default value.
+ *
+ * @author Tom Maier
+ */
+@SuppressWarnings("JavaDocMethod")
 public class QualityGateBuilder {
 
     private int totalUnstableAllPriorities;

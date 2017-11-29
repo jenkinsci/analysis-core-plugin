@@ -2,18 +2,41 @@ package io.jenkins.plugins.analysis.core.quality;
 
 import org.assertj.core.api.AbstractAssert;
 
+/**
+ * Assertions for {@link QualityGate}.
+ *
+ * @author Tom Maier
+ */
 public class QualityGateAssert extends AbstractAssert<QualityGateAssert, QualityGate> {
 
     private static final String EXPECTED_BUT_WAS_MESSAGE = "Expected to be <%s> but was <%s>.";
 
+    /**
+     * Creates a new {@link QualityGateAssert} to make assertions on actual {@link QualityGate}.
+     *
+     * @param qualityGate
+     *         the issue we want to make assertions on
+     */
     public QualityGateAssert(final QualityGate qualityGate) {
         super(qualityGate, QualityGateAssert.class);
     }
 
+    /**
+     * Creates a new {@link QualityGateAssert} to make assertions on actual {@link QualityGate}.
+     *
+     * @param actual the issue we want to make assertions on
+     * @return a new {@link QualityGateAssert}
+     */
     public static QualityGateAssert assertThat(final QualityGate actual) {
         return new QualityGateAssert(actual);
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param totalFailedAllPriorities int specific priority.
+     * @return this
+     */
     public QualityGateAssert hasTotalFailedAllPriorities(final int totalFailedAllPriorities) {
         isNotNull();
 
@@ -23,6 +46,12 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param totalFailedHighPriority int specific priority.
+     * @return this
+     */
     public QualityGateAssert hasTotalFailedHighPriority(final int totalFailedHighPriority) {
         isNotNull();
 
@@ -32,6 +61,12 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param totalFailedNormalPriority int specific priority.
+     * @return this
+     */
     public QualityGateAssert hasTotalFailedNormalPriority(final int totalFailedNormalPriority) {
         isNotNull();
 
@@ -41,6 +76,12 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param totalFailedLowPriority int specific priority.
+     * @return this
+     */
     public QualityGateAssert hasTotalFailedLowPriority(final int totalFailedLowPriority) {
         isNotNull();
 
@@ -50,6 +91,12 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param totalUnstableAllPriorities int specific priority.
+     * @return this
+     */
     public QualityGateAssert hasTotalUnstableAllPriorities(final int totalUnstableAllPriorities) {
         isNotNull();
 
@@ -59,6 +106,12 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param totalUnstableHighPriority int specific priority.
+     * @return this
+     */
     public QualityGateAssert hasTotalUnstableHighPriority(final int totalUnstableHighPriority) {
         isNotNull();
 
@@ -68,6 +121,12 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param totalUnstableNormalPriority int specific priority.
+     * @return this
+     */
     public QualityGateAssert hasTotalUnstableNormalPriority(final int totalUnstableNormalPriority) {
         isNotNull();
 
@@ -77,6 +136,12 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param totalUnstableLowPriority int specific priority.
+     * @return this
+     */
     public QualityGateAssert hasTotalUnstableLowPriority(final int totalUnstableLowPriority) {
         isNotNull();
 
@@ -86,6 +151,12 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param newFailedAllPriorities int specific priority.
+     * @return this
+     */
     public QualityGateAssert hasNewFailedAllPriorities(final int newFailedAllPriorities) {
         isNotNull();
 
@@ -95,6 +166,12 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param newFailedHighPriority int specific priority.
+     * @return this
+     */
     public QualityGateAssert hasNewFailedHighPriority(final int newFailedHighPriority) {
         isNotNull();
 
@@ -104,6 +181,12 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param newFailedNormalPriority int specific priority.
+     * @return this
+     */
     public QualityGateAssert hasNewFailedNormalPriority(final int newFailedNormalPriority) {
         isNotNull();
 
@@ -113,6 +196,12 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param newFailedLowPriority int specific priority.
+     * @return this
+     */
     public QualityGateAssert hasNewFailedLowPriority(final int newFailedLowPriority) {
         isNotNull();
 
@@ -122,6 +211,12 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param newUnstableAllPriorities int specific priority.
+     * @return this
+     */
     public QualityGateAssert hasNewUnstableAllPriorities(final int newUnstableAllPriorities) {
         isNotNull();
 
@@ -131,6 +226,12 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param newUnstableHighPriority int specific priority.
+     * @return this
+     */
     public QualityGateAssert hasNewUnstableHighPriority(final int newUnstableHighPriority) {
         isNotNull();
 
@@ -140,6 +241,12 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param newUnstableNormalPriority int specific priority.
+     * @return this
+     */
     public QualityGateAssert hasNewUnstableNormalPriority(final int newUnstableNormalPriority) {
         isNotNull();
 
@@ -149,6 +256,12 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param newUnstableLowPriority int specific priority.
+     * @return this
+     */
     public QualityGateAssert hasNewUnstableLowPriority(final int newUnstableLowPriority) {
         isNotNull();
 
@@ -158,149 +271,244 @@ public class QualityGateAssert extends AbstractAssert<QualityGateAssert, Quality
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param isTotalFailedAllPriorities boolean specific priority exists.
+     * @return this
+     */
     public QualityGateAssert hasIsTotalFailedAllPriorities(final boolean isTotalFailedAllPriorities) {
         isNotNull();
 
-        if (actual.isTotalFailedAllPriorities() != isTotalFailedAllPriorities) {
-            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isTotalFailedAllPriorities, actual.isTotalFailedAllPriorities());
+        if (actual.hasTotalFailedAllPriorities() != isTotalFailedAllPriorities) {
+            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isTotalFailedAllPriorities, actual.hasTotalFailedAllPriorities());
         }
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param isTotalFailedHighPriority boolean specific priority exists.
+     * @return this
+     */
     public QualityGateAssert hasIsTotalFailedHighPriority(final boolean isTotalFailedHighPriority) {
         isNotNull();
 
-        if (actual.isTotalFailedHighPriority() != isTotalFailedHighPriority) {
-            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isTotalFailedHighPriority, actual.isTotalFailedHighPriority());
+        if (actual.hasTotalFailedHighPriority() != isTotalFailedHighPriority) {
+            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isTotalFailedHighPriority, actual.hasTotalFailedHighPriority());
         }
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param isTotalFailedNormalPriority boolean specific priority exists.
+     * @return this
+     */
     public QualityGateAssert hasIsTotalFailedNormalPriority(final boolean isTotalFailedNormalPriority) {
         isNotNull();
 
-        if (actual.isTotalFailedNormalPriority() != isTotalFailedNormalPriority) {
-            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isTotalFailedNormalPriority, actual.isTotalFailedNormalPriority());
+        if (actual.hasTotalFailedNormalPriority() != isTotalFailedNormalPriority) {
+            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isTotalFailedNormalPriority, actual.hasTotalFailedNormalPriority());
         }
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param isTotalFailedLowPriority boolean specific priority exists.
+     * @return this
+     */
     public QualityGateAssert hasIsTotalFailedLowPriority(final boolean isTotalFailedLowPriority) {
         isNotNull();
 
-        if (actual.isTotalFailedLowPriority() != isTotalFailedLowPriority) {
-            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isTotalFailedLowPriority, actual.isTotalFailedLowPriority());
+        if (actual.hasTotalFailedLowPriority() != isTotalFailedLowPriority) {
+            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isTotalFailedLowPriority, actual.hasTotalFailedLowPriority());
         }
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param isTotalUnstableAllPriorities boolean specific priority exists.
+     * @return this
+     */
     public QualityGateAssert hasIsTotalUnstableAllPriorities(final boolean isTotalUnstableAllPriorities) {
         isNotNull();
 
-        if (actual.isTotalUnstableAllPriorities() != isTotalUnstableAllPriorities) {
-            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isTotalUnstableAllPriorities, actual.isTotalUnstableAllPriorities());
+        if (actual.hasTotalUnstableAllPriorities() != isTotalUnstableAllPriorities) {
+            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isTotalUnstableAllPriorities, actual.hasTotalUnstableAllPriorities());
         }
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param isTotalUnstableHighPriority boolean specific priority exists.
+     * @return this
+     */
     public QualityGateAssert hasIsTotalUnstableHighPriority(final boolean isTotalUnstableHighPriority) {
         isNotNull();
 
-        if (actual.isTotalUnstableHighPriority() != isTotalUnstableHighPriority) {
-            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isTotalUnstableHighPriority, actual.isTotalUnstableHighPriority());
+        if (actual.hasTotalUnstableHighPriority() != isTotalUnstableHighPriority) {
+            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isTotalUnstableHighPriority, actual.hasTotalUnstableHighPriority());
         }
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param isTotalUnstableNormalPriority boolean specific priority exists.
+     * @return this
+     */
     public QualityGateAssert hasIsTotalUnstableNormalPriority(final boolean isTotalUnstableNormalPriority) {
         isNotNull();
 
-        if (actual.isTotalUnstableNormalPriority() != isTotalUnstableNormalPriority) {
-            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isTotalUnstableNormalPriority, actual.isTotalUnstableNormalPriority());
+        if (actual.hasTotalUnstableNormalPriority() != isTotalUnstableNormalPriority) {
+            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isTotalUnstableNormalPriority, actual.hasTotalUnstableNormalPriority());
         }
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param isTotalUnstableLowPriority boolean specific priority exists.
+     * @return this
+     */
     public QualityGateAssert hasIsTotalUnstableLowPriority(final boolean isTotalUnstableLowPriority) {
         isNotNull();
 
-        if (actual.isTotalUnstableLowPriority() != isTotalUnstableLowPriority) {
-            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isTotalUnstableLowPriority, actual.isTotalUnstableLowPriority());
+        if (actual.hasTotalUnstableLowPriority() != isTotalUnstableLowPriority) {
+            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isTotalUnstableLowPriority, actual.hasTotalUnstableLowPriority());
         }
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param isNewFailedAllPriorities boolean specific priority exists.
+     * @return this
+     */
     public QualityGateAssert hasIsNewFailedAllPriorities(final boolean isNewFailedAllPriorities) {
         isNotNull();
 
-        if (actual.isNewFailedAllPriorities() != isNewFailedAllPriorities) {
-            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isNewFailedAllPriorities, actual.isNewFailedAllPriorities());
+        if (actual.hasNewFailedAllPriorities() != isNewFailedAllPriorities) {
+            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isNewFailedAllPriorities, actual.hasNewFailedAllPriorities());
         }
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param isNewFailedHighPriority boolean specific priority exists.
+     * @return this
+     */
     public QualityGateAssert hasIsNewFailedHighPriority(final boolean isNewFailedHighPriority) {
         isNotNull();
 
-        if (actual.isNewFailedHighPriority() != isNewFailedHighPriority) {
-            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isNewFailedHighPriority, actual.isNewFailedHighPriority());
+        if (actual.hasNewFailedHighPriority() != isNewFailedHighPriority) {
+            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isNewFailedHighPriority, actual.hasNewFailedHighPriority());
         }
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param isNewFailedNormalPriority boolean specific priority exists.
+     * @return this
+     */
     public QualityGateAssert hasIsNewFailedNormalPriority(final boolean isNewFailedNormalPriority) {
         isNotNull();
 
-        if (actual.isNewFailedNormalPriority() != isNewFailedNormalPriority) {
-            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isNewFailedNormalPriority, actual.isNewFailedNormalPriority());
+        if (actual.hasNewFailedNormalPriority() != isNewFailedNormalPriority) {
+            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isNewFailedNormalPriority, actual.hasNewFailedNormalPriority());
         }
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param isNewFailedLowPriority boolean specific priority exists.
+     * @return this
+     */
     public QualityGateAssert hasIsNewFailedLowPriority(final boolean isNewFailedLowPriority) {
         isNotNull();
 
-        if (actual.isNewFailedLowPriority() != isNewFailedLowPriority) {
-            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isNewFailedLowPriority, actual.isNewFailedLowPriority());
+        if (actual.hasNewFailedLowPriority() != isNewFailedLowPriority) {
+            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isNewFailedLowPriority, actual.hasNewFailedLowPriority());
         }
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param isNewUnstableAllPriorities boolean specific priority exists.
+     * @return this
+     */
     public QualityGateAssert hasIsNewUnstableAllPriorities(final boolean isNewUnstableAllPriorities) {
         isNotNull();
 
-        if (actual.isNewUnstableAllPriorities() != isNewUnstableAllPriorities) {
-            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isNewUnstableAllPriorities, actual.isNewUnstableAllPriorities());
+        if (actual.hasNewUnstableAllPriorities() != isNewUnstableAllPriorities) {
+            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isNewUnstableAllPriorities, actual.hasNewUnstableAllPriorities());
         }
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param isNewUnstableHighPriority boolean specific priority exists.
+     * @return this
+     */
     public QualityGateAssert hasIsNewUnstableHighPriority(final boolean isNewUnstableHighPriority) {
         isNotNull();
 
-        if (actual.isNewUnstableHighPriority() != isNewUnstableHighPriority) {
-            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isNewUnstableHighPriority, actual.isNewUnstableHighPriority());
+        if (actual.hasNewUnstableHighPriority() != isNewUnstableHighPriority) {
+            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isNewUnstableHighPriority, actual.hasNewUnstableHighPriority());
         }
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param isNewUnstableNormalPriority boolean specific priority exists.
+     * @return this
+     */
     public QualityGateAssert hasIsNewUnstableNormalPriority(final boolean isNewUnstableNormalPriority) {
         isNotNull();
 
-        if (actual.isNewUnstableNormalPriority() != isNewUnstableNormalPriority) {
-            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isNewUnstableNormalPriority, actual.isNewUnstableNormalPriority());
+        if (actual.hasNewUnstableNormalPriority() != isNewUnstableNormalPriority) {
+            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isNewUnstableNormalPriority, actual.hasNewUnstableNormalPriority());
         }
         return this;
     }
 
+    /**
+     * Checks whether an QualityGate has a specific priority.
+     *
+     * @param isNewUnstableLowPriority boolean specific priority exists.
+     * @return this
+     */
     public QualityGateAssert hasIsNewUnstableLowPriority(final boolean isNewUnstableLowPriority) {
         isNotNull();
 
-        if (actual.isNewUnstableLowPriority() != isNewUnstableLowPriority) {
-            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isNewUnstableLowPriority, actual.isNewUnstableLowPriority());
+        if (actual.hasNewUnstableLowPriority() != isNewUnstableLowPriority) {
+            failWithMessage(EXPECTED_BUT_WAS_MESSAGE, isNewUnstableLowPriority, actual.hasNewUnstableLowPriority());
         }
         return this;
     }
-
 
 }

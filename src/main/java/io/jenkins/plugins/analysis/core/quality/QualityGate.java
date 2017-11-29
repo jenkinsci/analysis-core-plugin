@@ -27,6 +27,7 @@ public class QualityGate {
     private int newFailedNormalPriority;
     private int newFailedLowPriority;
 
+    @SuppressWarnings("ParameterNumber")
     public QualityGate(final int totalUnstableAllPriorities, final int totalUnstableHighPriority, final int totalUnstableNormalPriority,
             final int totalUnstableLowPriority, final int totalFailedAllPriorities, final int totalFailedHighPriority, final int totalFailedNormalPriority,
             final int totalFailedLowPriority, final int newUnstableAllPriorities, final int newUnstableHighPriority, final int newUnstableNormalPriority,
@@ -48,8 +49,6 @@ public class QualityGate {
         this.newFailedNormalPriority = newFailedNormalPriority;
         this.newFailedLowPriority = newFailedLowPriority;
     }
-
-
 
     public int getTotalUnstableAllPriorities() {
         return totalUnstableAllPriorities;
@@ -115,67 +114,147 @@ public class QualityGate {
         return newFailedLowPriority;
     }
 
-    public boolean isTotalUnstableAllPriorities() {
+    /**
+     * Checks if totalUnstableAllPriorities are >= 0.
+     *
+     * @return true if >= 0
+     */
+    public boolean hasTotalUnstableAllPriorities() {
         return totalUnstableAllPriorities >= 0;
     }
 
-    public boolean isTotalUnstableHighPriority() {
+    /**
+     * Checks if totalUnstableHighPriority are >= 0.
+     *
+     * @return true if >= 0
+     */
+    public boolean hasTotalUnstableHighPriority() {
         return totalUnstableHighPriority >= 0;
     }
 
-    public boolean isTotalUnstableNormalPriority() {
+    /**
+     * Checks if totalUnstableNormalPriority are >= 0.
+     *
+     * @return true if >= 0
+     */
+    public boolean hasTotalUnstableNormalPriority() {
         return totalUnstableNormalPriority >= 0;
     }
 
-    public boolean isTotalUnstableLowPriority() {
+    /**
+     * Checks if totalUnstableLowPriority are >= 0.
+     *
+     * @return true if >= 0
+     */
+    public boolean hasTotalUnstableLowPriority() {
         return totalUnstableLowPriority >= 0;
     }
 
-    public boolean isTotalFailedAllPriorities() {
+    /**
+     * Checks if totalFailedAllPriorities are >= 0.
+     *
+     * @return true if >= 0
+     */
+    public boolean hasTotalFailedAllPriorities() {
         return totalFailedAllPriorities >= 0;
     }
 
-    public boolean isTotalFailedHighPriority() {
+    /**
+     * Checks if totalFailedHighPriority are >= 0.
+     *
+     * @return true if >= 0
+     */
+    public boolean hasTotalFailedHighPriority() {
         return totalFailedHighPriority >= 0;
     }
 
-    public boolean isTotalFailedNormalPriority() {
+    /**
+     * Checks if totalFailedNormalPriority are >= 0.
+     *
+     * @return true if >= 0
+     */
+    public boolean hasTotalFailedNormalPriority() {
         return totalFailedNormalPriority >= 0;
     }
 
-    public boolean isTotalFailedLowPriority() {
+    /**
+     * Checks if totalFailedLowPriority are >= 0.
+     *
+     * @return true if >= 0
+     */
+    public boolean hasTotalFailedLowPriority() {
         return totalFailedLowPriority >= 0;
     }
 
-    public boolean isNewUnstableAllPriorities() {
+    /**
+     * Checks if newUnstableAllPriorities are >= 0.
+     *
+     * @return true if >= 0
+     */
+    public boolean hasNewUnstableAllPriorities() {
         return newUnstableAllPriorities >= 0;
     }
 
-    public boolean isNewUnstableHighPriority() {
+    /**
+     * Checks if newUnstableHighPriority are >= 0.
+     *
+     * @return true if >= 0
+     */
+    public boolean hasNewUnstableHighPriority() {
         return newUnstableHighPriority >= 0;
     }
 
-    public boolean isNewUnstableNormalPriority() {
+    /**
+     * Checks if newUnstableNormalPriority are >= 0.
+     *
+     * @return true if >= 0
+     */
+    public boolean hasNewUnstableNormalPriority() {
         return newUnstableNormalPriority >= 0;
     }
 
-    public boolean isNewUnstableLowPriority() {
+    /**
+     * Checks if newUnstableLowPriority are >= 0.
+     *
+     * @return true if >= 0
+     */
+    public boolean hasNewUnstableLowPriority() {
         return newUnstableLowPriority >= 0;
     }
 
-    public boolean isNewFailedAllPriorities() {
+    /**
+     * Checks if newFailedAllPriorities are >= 0.
+     *
+     * @return true if >= 0
+     */
+    public boolean hasNewFailedAllPriorities() {
         return newFailedAllPriorities >= 0;
     }
 
-    public boolean isNewFailedHighPriority() {
+    /**
+     * Checks if newFailedHighPriority are >= 0.
+     *
+     * @return true if >= 0
+     */
+    public boolean hasNewFailedHighPriority() {
         return newFailedHighPriority >= 0;
     }
 
-    public boolean isNewFailedNormalPriority() {
+    /**
+     * Checks if newFailedNormalPriority are >= 0.
+     *
+     * @return true if >= 0
+     */
+    public boolean hasNewFailedNormalPriority() {
         return newFailedNormalPriority >= 0;
     }
 
-    public boolean isNewFailedLowPriority() {
+    /**
+     * Checks if newFailedLowPriority are >= 0.
+     *
+     * @return true if >= 0
+     */
+    public boolean hasNewFailedLowPriority() {
         return newFailedLowPriority >= 0;
     }
 

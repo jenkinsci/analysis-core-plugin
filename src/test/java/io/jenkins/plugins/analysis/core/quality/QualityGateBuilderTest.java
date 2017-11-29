@@ -12,7 +12,7 @@ import static io.jenkins.plugins.analysis.core.quality.QualityGateSoftAssertions
 class QualityGateBuilderTest {
 
     @Test
-    void shouldCreateFalseQualityGate() {
+    void noQualityGateIsSet() {
 
         QualityGate qualityGate = new QualityGateBuilder()
                 .setTotalFailedAllPriorities(-1)
@@ -38,7 +38,6 @@ class QualityGateBuilderTest {
 
         assertSoftly(softly ->
                 softly.assertThat(qualityGate)
-
                         .hasTotalFailedAllPriorities(-1)
                         .hasTotalFailedHighPriority(-1)
                         .hasTotalFailedNormalPriority(-1)
@@ -82,7 +81,7 @@ class QualityGateBuilderTest {
     }
 
     @Test
-    void shouldCreateTrueQualityGate() {
+    void qualityGateIsSetButNoThresholds() {
 
         QualityGate qualityGate = new QualityGateBuilder()
                 .setTotalFailedAllPriorities(0)
@@ -152,7 +151,7 @@ class QualityGateBuilderTest {
     }
 
     @Test
-    void shouldCreateTrue2QualityGate() {
+    void qualityGateIsSetWithThresholds() {
 
         QualityGate qualityGate = new QualityGateBuilder()
                 .setTotalFailedAllPriorities(1)
