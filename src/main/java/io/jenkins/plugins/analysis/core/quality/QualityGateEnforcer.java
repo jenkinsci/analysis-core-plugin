@@ -8,7 +8,20 @@ import hudson.model.Result;
  * @author Ullrich Hafner
  */
 public class QualityGateEnforcer {
+
+    /**
+     * Compare the issues in a Build and the in the quality gate defined properties. And return if the Build is UNSTABLE
+     * or FAILURE or STABLE
+     *
+     * @param run
+     *         issues
+     * @param qualityGate
+     *         properties for the run
+     *
+     * @return the result of the evaluation
+     */
     public Result evaluate(final StaticAnalysisRun run, final QualityGate qualityGate) {
+
         if (qualityGate.hasFailureTotalThreshold() && run.getTotalSize() >= qualityGate.getFailureTotalThreshold()) {
             return Result.FAILURE;
         }
