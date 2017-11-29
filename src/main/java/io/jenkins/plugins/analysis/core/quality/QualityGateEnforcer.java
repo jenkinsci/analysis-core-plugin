@@ -19,11 +19,7 @@ public class QualityGateEnforcer {
      * @return the result of the evaluation
      */
     public Result evaluate(final StaticAnalysisRun run, final QualityGate qualityGate) {
-        if (qualityGate.hasFailureThreshold()) {
-            if (run.getTotalSize() >= qualityGate.getFailureThreshold()) {
-                return Result.FAILURE;
-            }
-        }
-        return Result.SUCCESS;
+
+        return qualityGate.isEnabled() ? qualityGate.getResult(run) : Result.SUCCESS;
     }
 }

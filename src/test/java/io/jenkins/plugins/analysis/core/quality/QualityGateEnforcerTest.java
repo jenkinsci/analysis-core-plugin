@@ -13,44 +13,29 @@ import hudson.model.Result;
  * @author Ullrich Hafner
  */
 class QualityGateEnforcerTest {
+
     @Test
-    void shouldBeSuccessfulWhenNoIssuesPresentAndNoQualityGateIsSet() {
-        QualityGateEnforcer enforcer = new QualityGateEnforcer();
+    void shouldSucceedWhenGateDisabled() {
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
-        QualityGate qualityGate = new QualityGate();
+        QualityGate gate = mock(QualityGate.class);
 
-        Result success = enforcer.evaluate(run, qualityGate);
+        QualityGateEnforcer enforcer = new QualityGateEnforcer();
+        Result success = enforcer.evaluate(run, gate);
 
-        assertThat(success)
-                .as("No issues and no quality gate should always be a SUCCESS")
-                .isEqualTo(Result.SUCCESS);
+        assertThat(success).isEqualTo(Result.SUCCESS);
     }
 
     @Test
-    void shouldBeSuccessfulWhenNoIssuesPresentAndFailureQualityGateIsSet() {
-        QualityGateEnforcer enforcer = new QualityGateEnforcer();
+    void shouldUseGateResultWhenEnabled() {
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
-        QualityGate qualityGate = new QualityGate(1);
+        QualityGate gate = mock(QualityGate.class);
 
-        Result success = enforcer.evaluate(run, qualityGate);
+        when(gate.isEnabled()).thenReturn(true);
+        when(gate.getResult(run)).thenReturn(Result.FAILURE);
 
-        assertThat(success)
-                .as("No issues and any failure quality gate should always be a SUCCESS")
-                .isEqualTo(Result.SUCCESS);
-    }
-
-    @Test
-    void shouldFailBuildIfFailureThresholdIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
-        StaticAnalysisRun run = mock(StaticAnalysisRun.class);
-        when(run.getTotalSize()).thenReturn(1);
+        Result failure = enforcer.evaluate(run, gate);
 
-        QualityGate qualityGate = new QualityGate(1);
-
-        Result failure = enforcer.evaluate(run, qualityGate);
-
-        assertThat(failure)
-                .as("One issue should return a FAILURE")
-                .isEqualTo(Result.FAILURE);
+        assertThat(failure).isEqualTo(Result.FAILURE);
     }
 }
