@@ -35,17 +35,17 @@ public class QualityGate {
      * @param failureNormalPriorityThreshold number of issues with normal priority  from when on the build is failed
      * @param failureLowPriorityThreshold number of issues with low priority from when on the build is failed
      * @param unstableTotalThreshold number of total issues from when on the build is unstable
-     * @param unstableHighPriorityThreshold
-     * @param unstableNormalPriorityThreshold
-     * @param unstableLowPriorityThreshold
-     * @param failureNewTotalThreshold
-     * @param failureNewHighPriorityThreshold
-     * @param failureNewNormalPriorityThreshold
-     * @param failureNewLowPriorityThreshold
-     * @param unstableNewTotalThreshold
-     * @param unstableNewHighPriorityThreshold
-     * @param unstableNewNormalPriorityThreshold
-     * @param unstableNewLowPriorityThreshold
+     * @param unstableHighPriorityThreshold number of issues with high priority from when on the build is unstable
+     * @param unstableNormalPriorityThreshold number of issues with normal priority from when on the build is unstable
+     * @param unstableLowPriorityThreshold number of issues with low priority from when on the build is unstable
+     * @param failureNewTotalThreshold number of new total issues from when on the build is failed
+     * @param failureNewHighPriorityThreshold number of new issues with high priority from when on the build is failed
+     * @param failureNewNormalPriorityThreshold number of new issues with normal priority from when on the build is failed
+     * @param failureNewLowPriorityThreshold number of  new issues with normal priority from when on the build is failed
+     * @param unstableNewTotalThreshold number of new total issues from when on the build is unstable
+     * @param unstableNewHighPriorityThreshold number of new issues with high priority from when on the build is unstable
+     * @param unstableNewNormalPriorityThreshold number of new issues with normal priority from when on the build is unstable
+     * @param unstableNewLowPriorityThreshold number of new issues with low priority from when on the build is unstable
      */
 
     public QualityGate(final int failureTotalThreshold, final int failureHighPriorityThreshold, final int failureNormalPriorityThreshold,
@@ -74,38 +74,80 @@ public class QualityGate {
 
     //TODO default CTOR with -1
 
+    /**Getter of the number of total issues from when on the build is failed.
+     *
+     * @return number of total issues from when on the build is failed
+     */
 
     public int getFailureTotalThreshold() {
         return failureTotalThreshold;
     }
 
+    /**Getter of the number of issues with high priority from when on the build is failed.
+     *
+     * @return number of issues with high priority from when on the build is failed
+     */
+
     public int getFailureHighPriorityThreshold() {
         return failureHighPriorityThreshold;
     }
+
+    /**Getter of the number of issues with normal priority  from when on the build is failed.
+     *
+     * @return number of issues with normal priority  from when on the build is failed
+     */
 
     public int getFailureNormalPriorityThreshold() {
         return failureNormalPriorityThreshold;
     }
 
+    /**Getter of the number of issues with low priority from when on the build is failed.
+     *
+     * @return number of issues with low priority from when on the build is failed.
+     */
     public int getFailureLowPriorityThreshold() {
         return failureLowPriorityThreshold;
     }
+
+    /**Getter of the number of total issues from when on the build is unstable.
+     *
+     * @return number of total issues from when on the build is unstable.
+     */
 
     public int getUnstableTotalThreshold() {
         return unstableTotalThreshold;
     }
 
+    /** Getter of the number of issues with high priority from when on the build is unstable.
+     *
+     * @return number of issues with high priority from when on the build is unstable
+     */
+
     public int getUnstableHighPriorityThreshold() {
         return unstableHighPriorityThreshold;
     }
+
+    /**Getter of the number of issues with normal priority from when on the build is unstable.
+     *
+     * @return number of issues with normal priority from when on the build is unstable
+     */
 
     public int getUnstableNormalPriorityThreshold() {
         return unstableNormalPriorityThreshold;
     }
 
+    /**Getter of the number of issues with low priority from when on the build is unstable.
+     *
+     * @return number of issues with low priority from when on the build is unstable
+     */
     public int getUnstableLowPriorityThreshold() {
         return unstableLowPriorityThreshold;
     }
+
+    /**Getter of the number of new total issues from when on the build is failed.
+     *
+     * @return number of new total issues from when on the build is failed
+     */
 
     public int getFailureNewTotalThreshold() {
         return failureNewTotalThreshold;
