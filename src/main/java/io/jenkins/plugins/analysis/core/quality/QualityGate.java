@@ -2,34 +2,47 @@ package io.jenkins.plugins.analysis.core.quality;
 
 /**
  * Defines quality gates for a static analysis run.
- *
- * @author Ullrich Hafner
  */
 public class QualityGate {
+    /** How many issues does it take to fail. **/
     private final int totalFailureThreshold;
+    /** How many high priority issues does it take to fail. **/
     private final int highPriorityFailureThreshold;
+    /** How many normal priority issues does it take to fail. **/
     private final int normalPriorityFailureThreshold;
+    /** How many low priority issues does it take to fail. **/
     private final int lowPriorityFailureThreshold;
 
+    /** How many issues does it take to be unstable. **/
     private final int totalUnstableThreshold;
+    /** How many high priority issues does it take to be unstable. **/
     private final int highPriorityUnstableThreshold;
+    /** How many normal priority issues does it take to be unstable. **/
     private final int normalPriorityUnstableThreshold;
+    /** How many low priority issues does it take to be unstable. **/
     private final int lowPriorityUnstableThreshold;
 
+    /** How many new issues does it take to fail. **/
     private final int newTotalFailureThreshold;
+    /** How many new high priority issues does it take to fail. **/
     private final int newHighPriorityFailureThreshold;
+    /** How many new normal priority issues does it take to fail. **/
     private final int newNormalPriorityFailureThreshold;
+    /** How many new low priority issues does it take to fail. **/
     private final int newLowPriorityFailureThreshold;
 
+    /** How many new issues does it take to be unstable. **/
     private final int newTotalUnstableThreshold;
+    /** How many new high priority issues does it take to be unstable. **/
     private final int newHighPriorityUnstableThreshold;
+    /** How many new normal priority issues does it take to be unstable. **/
     private final int newNormalPriorityUnstableThreshold;
+    /** How many new low priority issues does it take to be unstable. **/
     private final int newLowPriorityUnstableThreshold;
 
     /**
-     * Creates a new instance of {@link QualityGate}.
-     * TODO change comment
-    **/
+     * Creates new instance of {@link QualityGate}
+     */
     public QualityGate(final int totalFailureThreshold,
             final int highPriorityFailureThreshold,
             final int normalPriorityFailureThreshold,
@@ -75,66 +88,204 @@ public class QualityGate {
     public boolean hasTotalFailureThreshold() {
         return totalFailureThreshold > 0;
     }
-    public boolean hasHighFailureThreshold(){ return highPriorityFailureThreshold > 0;}
-    public boolean hasNormalFailureThreshold(){ return normalPriorityFailureThreshold > 0;}
-    public boolean hasLowFailureThreshold(){ return lowPriorityFailureThreshold > 0;}
 
-    public boolean hasTotalUnstableThreshold(){ return totalUnstableThreshold > 0;}
-    public boolean hasHighUnstableThreshold(){ return highPriorityUnstableThreshold > 0;}
-    public boolean hasNormalUnstableThreshold(){ return normalPriorityUnstableThreshold > 0;}
-    public boolean hasLowUnstableThreshold(){ return lowPriorityUnstableThreshold > 0;}
+    /**
+     * Determines if a failure threshold for the total number of high priority issues is set
+     *
+     * @return {@code true} if the failure threshold for the total number of high priority issues is set
+     */
+    public boolean hasHighFailureThreshold() {
+        return highPriorityFailureThreshold > 0;
+    }
 
+    /**
+     * Determines if a failure threshold for the total number of normal priority issues is set
+     *
+     * @return {@code true} if the failure threshold for the total number of normal priority issues is set
+     */
+    public boolean hasNormalFailureThreshold() {
+        return normalPriorityFailureThreshold > 0;
+    }
+
+    /**
+     * Determines if a failure threshold for the total number of low priority issues is set
+     *
+     * @return {@code true} if the failure threshold for the total number of low priority issues is set
+     */
+    public boolean hasLowFailureThreshold() {
+        return lowPriorityFailureThreshold > 0;
+    }
+
+    /**
+     * Determines if a unstable threshold for the total number of issues is set
+     *
+     * @return {@code true} if the unstable threshold for the total number of issues is set
+     */
+    public boolean hasTotalUnstableThreshold() {
+        return totalUnstableThreshold > 0;
+    }
+
+    /**
+     * Determines if a unstable threshold for the total number of high priority issues is set
+     *
+     * @return {@code true} if the unstable threshold for the total number of high priority issues is set
+     */
+    public boolean hasHighUnstableThreshold() {
+        return highPriorityUnstableThreshold > 0;
+    }
+
+    /**
+     * Determines if a unstable threshold for the total number of normal priority issues is set
+     *
+     * @return {@code true} if the unstable threshold for the total number of normal priority issues is set
+     */
+    public boolean hasNormalUnstableThreshold() {
+        return normalPriorityUnstableThreshold > 0;
+    }
+
+    /**
+     * Determines if a unstable threshold for the total number of low priority issues is set
+     *
+     * @return {@code true} if the unstable threshold for the total number of low priority issues is set
+     */
+    public boolean hasLowUnstableThreshold() {
+        return lowPriorityUnstableThreshold > 0;
+    }
+
+    /**
+     * Determines if a failure threshold for the total number of new issues is set
+     *
+     * @return {@code true} if the failure threshold for the total number of new issues is set
+     */
     public boolean hasNewTotalFailureThreshold() {
         return newTotalFailureThreshold > 0;
     }
-    public boolean hasNewHighFailureThreshold(){ return newHighPriorityFailureThreshold > 0;}
-    public boolean hasNewNormalFailureThreshold(){ return newNormalPriorityFailureThreshold > 0;}
-    public boolean hasNewLowFailureThreshold(){ return newLowPriorityFailureThreshold > 0;}
-
-    public boolean hasNewTotalUnstableThreshold(){ return newTotalUnstableThreshold > 0;}
-    public boolean hasNewHighUnstableThreshold(){ return newHighPriorityUnstableThreshold > 0;}
-    public boolean hasNewNormalUnstableThreshold(){ return newNormalPriorityUnstableThreshold > 0;}
-    public boolean hasNewLowUnstableThreshold(){ return newLowPriorityUnstableThreshold > 0;}
-
 
     /**
-     * Returns the failure threshold for the total number of issues.
+     * Determines if a failure threshold for the total number of new high priority issues is set
      *
-     * @return the failure threshold for the total number of issues
+     * @return {@code true} if the failure threshold for the total number of new high priority issues is set
      */
+    public boolean hasNewHighFailureThreshold() {
+        return newHighPriorityFailureThreshold > 0;
+    }
+
+    /**
+     * Determines if a failure threshold for the total number of new normal priority issues is set
+     *
+     * @return {@code true} if the failure threshold for the total number of new normal priority issues is set
+     */
+    public boolean hasNewNormalFailureThreshold() {
+        return newNormalPriorityFailureThreshold > 0;
+    }
+
+    /**
+     * Determines if a failure threshold for the total number of new low priority issues is set
+     *
+     * @return {@code true} if the failure threshold for the total number of new low priority issues is set
+     */
+    public boolean hasNewLowFailureThreshold() {
+        return newLowPriorityFailureThreshold > 0;
+    }
+
+    /**
+     * Determines if a unstable threshold for the total number of new issues is set
+     *
+     * @return {@code true} if the unstable threshold for the total number of new issues is set
+     */
+    public boolean hasNewTotalUnstableThreshold() {
+        return newTotalUnstableThreshold > 0;
+    }
+
+    /**
+     * Determines if a unstable threshold for the total number of new high priority issues is set
+     *
+     * @return {@code true} if the unstable threshold for the total number of new high priority issues is set
+     */
+    public boolean hasNewHighUnstableThreshold() {
+        return newHighPriorityUnstableThreshold > 0;
+    }
+
+    /**
+     * Determines if a unstable threshold for the total number of new normal priority issues is set
+     *
+     * @return {@code true} if the unstable threshold for the total number of new normal priority issues is set
+     */
+    public boolean hasNewNormalUnstableThreshold() {
+        return newNormalPriorityUnstableThreshold > 0;
+    }
+
+    /**
+     * Determines if a unstable threshold for the total number of new low priority issues is set
+     *
+     * @return {@code true} if the unstable threshold for the total number of new low priority issues is set
+     */
+    public boolean hasNewLowUnstableThreshold() {
+        return newLowPriorityUnstableThreshold > 0;
+    }
+
+
     public int getTotalFailureThreshold() {
         return totalFailureThreshold;
     }
 
-    public int getHighPriorityFailureThreshold() { return highPriorityFailureThreshold; }
+    public int getHighPriorityFailureThreshold() {
+        return highPriorityFailureThreshold;
+    }
 
-    public int getNormalPriorityFailureThreshold() { return normalPriorityFailureThreshold; }
+    public int getNormalPriorityFailureThreshold() {
+        return normalPriorityFailureThreshold;
+    }
 
-    public int getLowPriorityFailureThreshold() { return lowPriorityFailureThreshold; }
+    public int getLowPriorityFailureThreshold() {
+        return lowPriorityFailureThreshold;
+    }
 
-    public int getTotalUnstableThreshold() { return totalUnstableThreshold; }
+    public int getTotalUnstableThreshold() {
+        return totalUnstableThreshold;
+    }
 
-    public int getHighPriorityUnstableThreshold() { return highPriorityUnstableThreshold; }
+    public int getHighPriorityUnstableThreshold() {
+        return highPriorityUnstableThreshold;
+    }
 
-    public int getNormalPriorityUnstableThreshold() { return normalPriorityUnstableThreshold; }
+    public int getNormalPriorityUnstableThreshold() {
+        return normalPriorityUnstableThreshold;
+    }
 
-    public int getLowPriorityUnstableThreshold() { return lowPriorityUnstableThreshold; }
+    public int getLowPriorityUnstableThreshold() {
+        return lowPriorityUnstableThreshold;
+    }
 
     public int getNewTotalFailureThreshold() {
         return newTotalFailureThreshold;
     }
 
-    public int getNewHighPriorityFailureThreshold() { return newHighPriorityFailureThreshold; }
+    public int getNewHighPriorityFailureThreshold() {
+        return newHighPriorityFailureThreshold;
+    }
 
-    public int getNewNormalPriorityFailureThreshold() { return newNormalPriorityFailureThreshold; }
+    public int getNewNormalPriorityFailureThreshold() {
+        return newNormalPriorityFailureThreshold;
+    }
 
-    public int getNewLowPriorityFailureThreshold() { return newLowPriorityFailureThreshold; }
+    public int getNewLowPriorityFailureThreshold() {
+        return newLowPriorityFailureThreshold;
+    }
 
-    public int getNewTotalUnstableThreshold() { return newTotalUnstableThreshold; }
+    public int getNewTotalUnstableThreshold() {
+        return newTotalUnstableThreshold;
+    }
 
-    public int getNewHighPriorityUnstableThreshold() { return newHighPriorityUnstableThreshold; }
+    public int getNewHighPriorityUnstableThreshold() {
+        return newHighPriorityUnstableThreshold;
+    }
 
-    public int getNewNormalPriorityUnstableThreshold() { return newNormalPriorityUnstableThreshold; }
+    public int getNewNormalPriorityUnstableThreshold() {
+        return newNormalPriorityUnstableThreshold;
+    }
 
-    public int getNewLowPriorityUnstableThreshold() { return newLowPriorityUnstableThreshold; }
+    public int getNewLowPriorityUnstableThreshold() {
+        return newLowPriorityUnstableThreshold;
+    }
 }
