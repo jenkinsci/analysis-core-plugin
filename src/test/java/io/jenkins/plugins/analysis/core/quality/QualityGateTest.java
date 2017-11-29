@@ -277,8 +277,19 @@ class QualityGateTest {
         assertThat(fail).isEqualTo(Result.FAILURE);
     }
 
+    /**
+     * Tests testcase for all priorities.
+     * @param fillBuilderTemplate = template for needed thresholds.
+     * @param totalValue = count of totalBuilds with warnings.
+     * @param newsValue = count of newBuilds with warnings.
+     * @param totalWarningThreshold = warningThreshold for all total priorities.
+     * @param newWarningThreshold = warningThreshold for all new priorities.
+     * @param assertedResultTotal = asserted result for total.
+     * @param assertedResultNew = asserted resulted for new.
+     */
     private void testWithAllPriorities(final BiFunction<ThresholdSet,ThresholdSet, QualityGateBuilder> fillBuilderTemplate, int totalValue, int newsValue, int totalWarningThreshold, int newWarningThreshold, Result assertedResultTotal, Result assertedResultNew){
 
+        // Create a quality gate for all priority group.
         QualityGate allPriorities = fillBuilderTemplate.apply(  new ThresholdSet(totalWarningThreshold,-1,-1,-1),
                                                                 new ThresholdSet(newWarningThreshold,-1,-1,-1))
                                                                 .createQualityGate();
@@ -295,7 +306,7 @@ class QualityGateTest {
                                                                 new ThresholdSet(-1,-1,-1, newWarningThreshold))
                                                                 .createQualityGate();
 
-        // AnalysisRun
+        // Create a AnalysisRun for all priority group total and new.
         // Total
         StaticAnalysisRun runTotalSize = mock(StaticAnalysisRun.class);
         when(runTotalSize.getTotalSize()).thenReturn(totalValue);
