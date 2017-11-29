@@ -1,7 +1,14 @@
 package io.jenkins.plugins.analysis.core.quality;
 
-public class QualityGateBuilder {
+/**Builder class for the {@link QualityGate}.
+ * Not all values have to been set because all values set to deactivate (-1) per default.
+ *
+ * @author Johannes Arzt
+ */
 
+
+@SuppressWarnings("JavaDocMethod")
+public class QualityGateBuilder {
 
     private int failureTotalThreshold;
     private int failureHighPriorityThreshold;
@@ -24,6 +31,7 @@ public class QualityGateBuilder {
     private int unstableNewLowPriorityThreshold;
 
     public QualityGateBuilder() {
+
 
         failureTotalThreshold = -1;
         failureHighPriorityThreshold = -1;

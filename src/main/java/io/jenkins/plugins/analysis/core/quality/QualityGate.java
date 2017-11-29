@@ -28,6 +28,25 @@ public class QualityGate {
     private final int unstableNewLowPriorityThreshold;
 
 
+    /**CTOR for the {@link QualityGateBuilder}.
+     *
+     * @param failureTotalThreshold number of total issues from when on the build is failed
+     * @param failureHighPriorityThreshold number of issues with high priority from when on the build is failed
+     * @param failureNormalPriorityThreshold number of issues with normal priority  from when on the build is failed
+     * @param failureLowPriorityThreshold number of issues with low priority from when on the build is failed
+     * @param unstableTotalThreshold number of total issues from when on the build is unstable
+     * @param unstableHighPriorityThreshold
+     * @param unstableNormalPriorityThreshold
+     * @param unstableLowPriorityThreshold
+     * @param failureNewTotalThreshold
+     * @param failureNewHighPriorityThreshold
+     * @param failureNewNormalPriorityThreshold
+     * @param failureNewLowPriorityThreshold
+     * @param unstableNewTotalThreshold
+     * @param unstableNewHighPriorityThreshold
+     * @param unstableNewNormalPriorityThreshold
+     * @param unstableNewLowPriorityThreshold
+     */
 
     public QualityGate(final int failureTotalThreshold, final int failureHighPriorityThreshold, final int failureNormalPriorityThreshold,
             final int failureLowPriorityThreshold, final int unstableTotalThreshold, final int unstableHighPriorityThreshold,
