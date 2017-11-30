@@ -1,5 +1,8 @@
 package io.jenkins.plugins.analysis.core.quality;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hudson.model.Result;
 
 /**
@@ -8,22 +11,44 @@ import hudson.model.Result;
  * @author Ullrich Hafner
  */
 public class QualityGateEnforcer {
-    /**
-     * Evaluates the specified quality gate for the given run.
-     *
-     * @param run
-     *         the run to evaluate
-     * @param qualityGate
-     *         the quality gate settings
-     *
-     * @return the result of the evaluation
-     */
-    public Result evaluate(final StaticAnalysisRun run, final QualityGate qualityGate) {
-        if (qualityGate.hasFailureThreshold()) {
-            if (run.getTotalSize() >= qualityGate.getFailureThreshold()) {
-                return Result.FAILURE;
-            }
-        }
-        return Result.SUCCESS;
+
+    private final List<QualityGate> allChecks;
+
+    QualityGateEnforcer() {
+        allChecks = new ArrayList<>();
+
     }
+
+    /**
+     * Return the worse Result.
+     * @param r1 result a
+     * @param r2 result b
+     * @return the worse one
+     */
+    private Result getWorserOne(Result r1, Result r2) {
+        Result out;
+        if (r1.isWorseOrEqualTo(r2)) {
+            out = r1;
+        }
+        else {
+            out = r2;
+        }
+        return out;
+
+    }
+
+    void addQualityGate(QualityGate toAdd) {
+        allChecks.add(toAdd);
+    }
+
+    Result evaluate(final StaticAnalysisRun run) {
+        Result output = Result.SUCCESS;
+
+        for (QualityGate toCheck : allChecks) {
+            output = getWorserOne(toCheck.evaluate(run), output);
+        }
+        return output;
+    }
+
+
 }
