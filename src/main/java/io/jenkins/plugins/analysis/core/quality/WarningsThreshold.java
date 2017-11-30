@@ -3,7 +3,7 @@ package io.jenkins.plugins.analysis.core.quality;
 /**
  * Warnings threshold to determine the quality of a build.
  */
-public abstract class WarningsThreshold {
+public class WarningsThreshold {
 
     private final int totalThreshold;
     private final int highThreshold;
@@ -111,129 +111,5 @@ public abstract class WarningsThreshold {
      */
     public boolean hasLowThreshold() {
         return getLowThreshold() > 0;
-    }
-
-    /**
-     * Warning threshold to determine a failed build.
-     */
-    public static class FailureThresholds extends WarningsThreshold {
-
-        /**
-         * Creates an instance of {@link FailureThresholds}. Only the total threshold is set.
-         */
-        public FailureThresholds() {
-            super();
-        }
-
-        /**
-         * Creates an instance of {@link WarningsThreshold}. Only the total threshold is set.
-         * @param failureThreshold limit of issues in total
-         */
-        public FailureThresholds(int failureThreshold) {
-            super(failureThreshold);
-        }
-
-        /**
-         * Creates an instance of {@link FailureThresholds}. Only the total threshold is set.
-         * @param high threshold for issues with priority high
-         * @param normal threshold for issues with priority normal
-         * @param low threshold for issues with priority low
-         */
-        public FailureThresholds(int high, int normal, int low) {
-            super(high, normal, low);
-        }
-    }
-
-    /**
-     * New warning threshold to determine a failed build.
-     */
-    public static class NewFailureThresholds extends WarningsThreshold {
-
-        /**
-         * Creates an instance of {@link NewFailureThresholds}. Only the total threshold is set.
-         */
-        public NewFailureThresholds() {
-            super();
-        }
-
-        /**
-         * Creates an instance of {@link NewFailureThresholds}. Only the total threshold is set.
-         * @param newTotalThreshold limit of issues in total
-         */
-        public NewFailureThresholds(int newTotalThreshold) {
-            super(newTotalThreshold);
-        }
-
-        /**
-         * Creates an instance of {@link NewFailureThresholds}. Only the total threshold is set.
-         * @param high threshold for issues with priority high
-         * @param normal threshold for issues with priority normal
-         * @param low threshold for issues with priority low
-         */
-        public NewFailureThresholds(int high, int normal, int low) {
-            super(high, normal, low);
-        }
-    }
-
-    /**
-     * New warning threshold to determine a unstable build.
-     */
-    public static class NewUnstableThresholds extends WarningsThreshold {
-
-        /**
-         * Creates an instance of {@link NewUnstableThresholds}. Only the total threshold is set.
-         */
-        public NewUnstableThresholds() {
-            super();
-        }
-
-        /**
-         * Creates an instance of {@link NewUnstableThresholds}. Only the total threshold is set.
-         * @param newTotalThreshold limit of issues in total
-         */
-        public NewUnstableThresholds(int newTotalThreshold) {
-            super(newTotalThreshold);
-        }
-
-        /**
-         * Creates an instance of {@link NewUnstableThresholds}. Only the total threshold is set.
-         * @param high threshold for issues with priority high
-         * @param normal threshold for issues with priority normal
-         * @param low threshold for issues with priority low
-         */
-        public NewUnstableThresholds(int high, int normal, int low) {
-            super(high, normal, low);
-        }
-    }
-
-    /**
-     * Warning threshold to determine a unstable build.
-     */
-    public static class UnstableThresholds extends WarningsThreshold {
-
-        /**
-         * Creates an instance of {@link UnstableThresholds}. Only the total threshold is set.
-         */
-        public UnstableThresholds() {
-            super();
-        }
-
-        /**
-         * Creates an instance of {@link UnstableThresholds}. Only the total threshold is set.
-         * @param unstableThreshold limit of issues in total
-         */
-        public UnstableThresholds(int unstableThreshold) {
-            super(unstableThreshold);
-        }
-
-        /**
-         * Creates an instance of {@link UnstableThresholds}. Only the total threshold is set.
-         * @param high threshold for issues with priority high
-         * @param normal threshold for issues with priority normal
-         * @param low threshold for issues with priority low
-         */
-        public UnstableThresholds(int high, int normal, int low) {
-            super(high, normal, low);
-        }
     }
 }

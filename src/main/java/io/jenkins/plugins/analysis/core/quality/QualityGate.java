@@ -1,7 +1,5 @@
 package io.jenkins.plugins.analysis.core.quality;
 
-import static io.jenkins.plugins.analysis.core.quality.WarningsThreshold.*;
-
 /**
  * Defines quality gates for a static analysis run.
  *
@@ -9,80 +7,33 @@ import static io.jenkins.plugins.analysis.core.quality.WarningsThreshold.*;
  * @author Aykut Yilmaz
  */
 public class QualityGate {
-    private final FailureThresholds failureThresholds;
-    private final UnstableThresholds unstableThresholds;
-    private final NewFailureThresholds newFailureThresholds;
-    private final NewUnstableThresholds newUnstableThresholds;
+    private final WarningsThreshold failureThreshold;
+    private final WarningsThreshold unstableThreshold;
+    private final WarningsThreshold newFailureThreshold;
+    private final WarningsThreshold newUnstableThreshold;
 
     /**
      * Creates a new instance of {@link QualityGate}. No thresholds are set.
      */
     public QualityGate() {
-        this.failureThresholds = new FailureThresholds();
-        this.unstableThresholds = new UnstableThresholds();
-        this.newFailureThresholds = new NewFailureThresholds();
-        this.newUnstableThresholds = new NewUnstableThresholds();
+        this.failureThreshold = new WarningsThreshold();
+        this.unstableThreshold = new WarningsThreshold();
+        this.newFailureThreshold = new WarningsThreshold();
+        this.newUnstableThreshold = new WarningsThreshold();
     }
 
-    /**
-     * Creates a new instance of {@link QualityGate}. Only failure thresholds are set.
-     *
-     * @param failureThresholds to determine a failed build
-     */
-    public QualityGate(FailureThresholds failureThresholds) {
-        this.failureThresholds = failureThresholds;
-        this.unstableThresholds = new UnstableThresholds();
-        this.newFailureThresholds = new NewFailureThresholds();
-        this.newUnstableThresholds = new NewUnstableThresholds();
+    public QualityGate(WarningsThreshold failureThreshold,
+                       WarningsThreshold unstableThreshold,
+                       WarningsThreshold newFailureThreshold,
+                       WarningsThreshold newUnstableThreshold) {
+        this.failureThreshold = defaultIfAbsent(failureThreshold);
+        this.unstableThreshold = defaultIfAbsent(unstableThreshold);
+        this.newFailureThreshold = defaultIfAbsent(newFailureThreshold);
+        this.newUnstableThreshold = defaultIfAbsent(newUnstableThreshold);
     }
 
-    /**
-     * Creates a new instance of {@link QualityGate}. Only unstable thresholds are set.
-     *
-     * @param unstableThresholds to determine an unstable build
-     */
-    public QualityGate(UnstableThresholds unstableThresholds) {
-        this.failureThresholds = new FailureThresholds();
-        this.unstableThresholds = unstableThresholds;
-        this.newFailureThresholds = new NewFailureThresholds();
-        this.newUnstableThresholds = new NewUnstableThresholds();
-    }
-
-    /**
-     * Creates a new instance of {@link QualityGate}. Only failure thresholds for new build are set.
-     *
-     * @param newFailureThresholds to determine a failed build
-     */
-    public QualityGate(NewFailureThresholds newFailureThresholds) {
-        this.failureThresholds = new FailureThresholds();
-        this.unstableThresholds = new UnstableThresholds();
-        this.newFailureThresholds = newFailureThresholds;
-        this.newUnstableThresholds = new NewUnstableThresholds();
-    }
-
-    /**
-     * Creates a new instance of {@link QualityGate}. Only unstable threshold for new build are set.
-     *
-     * @param newUnstableThresholds to determine an unstable build
-     */
-    public QualityGate(NewUnstableThresholds newUnstableThresholds) {
-        this.failureThresholds = new FailureThresholds();
-        this.unstableThresholds = new UnstableThresholds();
-        this.newFailureThresholds = new NewFailureThresholds();
-        this.newUnstableThresholds = newUnstableThresholds;
-    }
-
-    /**
-     * Creates a new instance of {@link QualityGate}. Only failure and unstable thresholds are set.
-     *
-     * @param failureThresholds  to determine a failed build
-     * @param unstableThresholds to determine an unstable build
-     */
-    public QualityGate(FailureThresholds failureThresholds, UnstableThresholds unstableThresholds) {
-        this.failureThresholds = failureThresholds;
-        this.unstableThresholds = unstableThresholds;
-        this.newFailureThresholds = new NewFailureThresholds();
-        this.newUnstableThresholds = new NewUnstableThresholds();
+    private WarningsThreshold defaultIfAbsent(WarningsThreshold threshold) {
+        return threshold == null ? new WarningsThreshold() : threshold;
     }
 
     /**
@@ -91,7 +42,7 @@ public class QualityGate {
      * @return {@code true} if the failure threshold for the total number of issues is set
      */
     public boolean hasFailureThreshold() {
-        return failureThresholds.hasThreshold();
+        return failureThreshold.hasThreshold();
     }
 
     /**
@@ -100,7 +51,7 @@ public class QualityGate {
      * @return {@code true} if the high failure threshold for the total number of issues is set
      */
     public boolean hasHighFailureThreshold() {
-        return failureThresholds.hasHighThreshold();
+        return failureThreshold.hasHighThreshold();
     }
 
     /**
@@ -109,7 +60,7 @@ public class QualityGate {
      * @return {@code true} if the normal failure threshold for the total number of issues is set
      */
     public boolean hasNormalFailureThreshold() {
-        return failureThresholds.hasNormalThreshold();
+        return failureThreshold.hasNormalThreshold();
     }
 
     /**
@@ -118,7 +69,7 @@ public class QualityGate {
      * @return {@code true} if the low failure threshold for the total number of issues is set
      */
     public boolean hasLowFailureThreshold() {
-        return failureThresholds.hasLowThreshold();
+        return failureThreshold.hasLowThreshold();
     }
 
     /**
@@ -127,7 +78,7 @@ public class QualityGate {
      * @return the failure threshold for the total number of issues
      */
     public int getFailureThreshold() {
-        return failureThresholds.getTotalThreshold();
+        return failureThreshold.getTotalThreshold();
     }
 
     /**
@@ -136,7 +87,7 @@ public class QualityGate {
      * @return high failure threshold
      */
     public int getHighFailureThreshold() {
-        return failureThresholds.getHighThreshold();
+        return failureThreshold.getHighThreshold();
     }
 
     /**
@@ -145,7 +96,7 @@ public class QualityGate {
      * @return normal failure threshold
      */
     public int getNormalFailureThreshold() {
-        return failureThresholds.getNormalThreshold();
+        return failureThreshold.getNormalThreshold();
     }
 
     /**
@@ -154,7 +105,7 @@ public class QualityGate {
      * @return low failure threshold
      */
     public int getLowFailureThreshold() {
-        return failureThresholds.getLowThreshold();
+        return failureThreshold.getLowThreshold();
     }
 
     /**
@@ -163,7 +114,7 @@ public class QualityGate {
      * @return {@code true} if the unstable threshold for the total number of issues is set
      */
     public boolean hasUnstableThreshold() {
-        return unstableThresholds.hasThreshold();
+        return unstableThreshold.hasThreshold();
     }
 
     /**
@@ -172,7 +123,7 @@ public class QualityGate {
      * @return {@code true} if the high unstable threshold for the total number of issues is set
      */
     public boolean hasHighUnstableThreshold() {
-        return unstableThresholds.hasHighThreshold();
+        return unstableThreshold.hasHighThreshold();
     }
 
     /**
@@ -181,7 +132,7 @@ public class QualityGate {
      * @return {@code true} if the normal unstable threshold for the total number of issues is set
      */
     public boolean hasNormalUnstableThreshold() {
-        return unstableThresholds.hasNormalThreshold();
+        return unstableThreshold.hasNormalThreshold();
     }
 
     /**
@@ -190,7 +141,7 @@ public class QualityGate {
      * @return {@code true} if the low unstable threshold for the total number of issues is set
      */
     public boolean hasLowUnstableThreshold() {
-        return unstableThresholds.hasLowThreshold();
+        return unstableThreshold.hasLowThreshold();
     }
 
     /**
@@ -199,7 +150,7 @@ public class QualityGate {
      * @return the unstable threshold for the total number of issues
      */
     public int getUnstableThreshold() {
-        return unstableThresholds.getTotalThreshold();
+        return unstableThreshold.getTotalThreshold();
     }
 
     /**
@@ -208,7 +159,7 @@ public class QualityGate {
      * @return the high unstable threshold for the total number of issues
      */
     public int getHighUnstableThreshold() {
-        return unstableThresholds.getHighThreshold();
+        return unstableThreshold.getHighThreshold();
     }
 
     /**
@@ -217,7 +168,7 @@ public class QualityGate {
      * @return the normal unstable threshold for the total number of issues
      */
     public int getNormalUnstableThreshold() {
-        return unstableThresholds.getNormalThreshold();
+        return unstableThreshold.getNormalThreshold();
     }
 
     /**
@@ -226,7 +177,7 @@ public class QualityGate {
      * @return the low unstable threshold for the total number of issues
      */
     public int getLowUnstableThreshold() {
-        return unstableThresholds.getLowThreshold();
+        return unstableThreshold.getLowThreshold();
     }
 
     /**
@@ -235,7 +186,7 @@ public class QualityGate {
      * @return {@code true} if the new failure threshold for the total number of issues is set
      */
     public boolean hasNewFailureThreshold() {
-        return newFailureThresholds.hasThreshold();
+        return newFailureThreshold.hasThreshold();
     }
 
     /**
@@ -244,7 +195,7 @@ public class QualityGate {
      * @return {@code true} if the new high failure threshold for the total number of issues is set
      */
     public boolean hasNewHighFailureThreshold() {
-        return newFailureThresholds.hasHighThreshold();
+        return newFailureThreshold.hasHighThreshold();
     }
 
     /**
@@ -253,7 +204,7 @@ public class QualityGate {
      * @return {@code true} if the normal high failure threshold for the total number of issues is set
      */
     public boolean hasNewNormalFailureThreshold() {
-        return newFailureThresholds.hasNormalThreshold();
+        return newFailureThreshold.hasNormalThreshold();
     }
 
     /**
@@ -262,7 +213,7 @@ public class QualityGate {
      * @return {@code true} if the low high failure threshold for the total number of issues is set
      */
     public boolean hasNewLowFailureThreshold() {
-        return newFailureThresholds.hasLowThreshold();
+        return newFailureThreshold.hasLowThreshold();
     }
 
     /**
@@ -271,7 +222,7 @@ public class QualityGate {
      * @return the new failure threshold for the total number of issues
      */
     public int getNewFailureThreshold() {
-        return newFailureThresholds.getTotalThreshold();
+        return newFailureThreshold.getTotalThreshold();
     }
 
     /**
@@ -280,7 +231,7 @@ public class QualityGate {
      * @return the new high failure threshold for the total number of issues
      */
     public int getNewHighFailureThreshold() {
-        return newFailureThresholds.getHighThreshold();
+        return newFailureThreshold.getHighThreshold();
     }
 
     /**
@@ -289,7 +240,7 @@ public class QualityGate {
      * @return the new normal failure threshold for the total number of issues
      */
     public int getNewNormalFailureThreshold() {
-        return newFailureThresholds.getNormalThreshold();
+        return newFailureThreshold.getNormalThreshold();
     }
 
     /**
@@ -298,7 +249,7 @@ public class QualityGate {
      * @return the new low failure threshold for the total number of issues
      */
     public int getNewLowFailureThreshold() {
-        return newFailureThresholds.getLowThreshold();
+        return newFailureThreshold.getLowThreshold();
     }
 
     /**
@@ -307,7 +258,7 @@ public class QualityGate {
      * @return {@code true} if the new unstable threshold for the total number of issues is set
      */
     public boolean hasNewUnstableThreshold() {
-        return newUnstableThresholds.hasThreshold();
+        return newUnstableThreshold.hasThreshold();
     }
 
     /**
@@ -316,7 +267,7 @@ public class QualityGate {
      * @return {@code true} if the new high unstable threshold for the total number of issues is set
      */
     public boolean hasNewHighUnstableThreshold() {
-        return newUnstableThresholds.hasHighThreshold();
+        return newUnstableThreshold.hasHighThreshold();
     }
 
     /**
@@ -325,7 +276,7 @@ public class QualityGate {
      * @return {@code true} if the new normal unstable threshold for the total number of issues is set
      */
     public boolean hasNewNormalUnstableThreshold() {
-        return newUnstableThresholds.hasNormalThreshold();
+        return newUnstableThreshold.hasNormalThreshold();
     }
 
     /**
@@ -334,7 +285,7 @@ public class QualityGate {
      * @return {@code true} if the new low unstable threshold for the total number of issues is set
      */
     public boolean hasNewLowUnstableThreshold() {
-        return newUnstableThresholds.hasLowThreshold();
+        return newUnstableThreshold.hasLowThreshold();
     }
 
     /**
@@ -343,7 +294,7 @@ public class QualityGate {
      * @return the new unstable threshold for the total number of issues
      */
     public int getNewUnstableThreshold() {
-        return newUnstableThresholds.getTotalThreshold();
+        return newUnstableThreshold.getTotalThreshold();
     }
 
     /**
@@ -352,7 +303,7 @@ public class QualityGate {
      * @return the new high unstable threshold for the total number of issues
      */
     public int getNewHighUnstableThreshold() {
-        return newUnstableThresholds.getHighThreshold();
+        return newUnstableThreshold.getHighThreshold();
     }
 
     /**
@@ -361,7 +312,7 @@ public class QualityGate {
      * @return the new normal unstable threshold for the total number of issues
      */
     public int getNewNormalUnstableThreshold() {
-        return newUnstableThresholds.getNormalThreshold();
+        return newUnstableThreshold.getNormalThreshold();
     }
 
     /**
@@ -370,6 +321,6 @@ public class QualityGate {
      * @return the new low unstable threshold for the total number of issues
      */
     public int getNewLowUnstableThreshold() {
-        return newUnstableThresholds.getLowThreshold();
+        return newUnstableThreshold.getLowThreshold();
     }
 }
