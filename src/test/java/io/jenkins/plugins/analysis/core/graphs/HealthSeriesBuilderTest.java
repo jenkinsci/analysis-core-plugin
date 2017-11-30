@@ -17,6 +17,7 @@ class HealthSeriesBuilderTest {
 
     /**
      * generate a stub parameter.
+     *
      * @return stub parameter
      */
     private StaticAnalysisRun generateParamStub() {
@@ -24,6 +25,7 @@ class HealthSeriesBuilderTest {
         when(paramStub.getTotalSize()).thenReturn(0).thenReturn(1).thenReturn(10).thenReturn(20);
         return paramStub;
     }
+
     @Test
     void healthReportWithDisabledHealthDescriptor() {
         HealthDescriptor healthDiscStub = GenerateHealthStub.generateHealthDescriptor(false, 0, 0);
@@ -35,6 +37,7 @@ class HealthSeriesBuilderTest {
         assertThat(b.computeSeries(paramStub)).containsExactly(10);
         assertThat(b.computeSeries(paramStub)).containsExactly(20);
     }
+
     @Test
     void healthReportWithDisabledHealthDescriptorAndHealthyDefinition() {
         HealthDescriptor healthDiscStub = GenerateHealthStub.generateHealthDescriptor(false, 9, 10);
@@ -52,6 +55,7 @@ class HealthSeriesBuilderTest {
         assertThat(fourthList).containsExactly(20);
 
     }
+
     @Test
     void healthReportWithNoPreviousHeath() {
         HealthDescriptor healthDiscStub = GenerateHealthStub.generateHealthDescriptor(true, 0, 0);
@@ -86,6 +90,7 @@ class HealthSeriesBuilderTest {
         assertThat(fourthList).containsExactly(9, 0, 11);
 
     }
+
     @Test
     void healthReportHealthyOneLessUnhealthy() {
         HealthDescriptor healthDiscStub = GenerateHealthStub.generateHealthDescriptor(true, 9, 10);
@@ -103,6 +108,7 @@ class HealthSeriesBuilderTest {
         assertThat(fourthList).containsExactly(9, 1, 10);
 
     }
+
     @Test
     void healthReportMoreUnhealthyThanHealthy() {
         HealthDescriptor healthDiscStub = GenerateHealthStub.generateHealthDescriptor(true, 9, 15);
@@ -121,7 +127,17 @@ class HealthSeriesBuilderTest {
 
     }
 
+    @Test
+    void GetFirstReminderBoarder() {
+        HealthDescriptor healthDiscStub = GenerateHealthStub.generateHealthDescriptor(true, 1, 0);
+        StaticAnalysisRun paramStub = mock(StaticAnalysisRun.class);
+        when(paramStub.getTotalSize()).thenReturn(1);
+        HealthSeriesBuilder b = new HealthSeriesBuilder(healthDiscStub);
+        List<Integer> first = b.computeSeries(paramStub);
 
+        assertThat(first).containsExactly(1, 0, 0);
+        assertThat(first.size()).isEqualTo(3);
+    }
 
 
 }
