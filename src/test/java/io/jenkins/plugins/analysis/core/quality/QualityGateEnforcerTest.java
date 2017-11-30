@@ -15,6 +15,11 @@ import hudson.model.Result;
  */
 class QualityGateEnforcerTest {
 
+    private static final String SUCCESS_BELOW = "Count of Issues below threshold should be a SUCCESS";
+    private static final String SUCCESS_EQUAL = "Count of Issues equal to threshold should be a SUCCESS";
+    private static final String UNSTABLE = "Count of Issues exceeding unstable-threshold should be UNSTABLE";
+    private static final String FAILURE = "Count of Issues exceeding failure-threshold should be FAILURE";
+
     /*
      * The following tests test special cases
      */
@@ -42,12 +47,14 @@ class QualityGateEnforcerTest {
 
         Result success = enforcer.evaluate(run, qualityGate);
 
-        assertThat(success).as("No issues and failure quality gate should always be a SUCCESS").isEqualTo(Result.SUCCESS);
+        assertThat(success)
+                .as("No issues and failure quality gate should always be a SUCCESS")
+                .isEqualTo(Result.SUCCESS);
     }
 
     /*
      * The following tests test the 8 different 'totals'-fields, one test for each
-     * field. Each field is tested for its boundaries (e.g. one below, one equal
+     * field. Each field is tested for its boundaries (e.g. one below, one equal to
      * and one above the corresponding threshold) and checked for the correct
      * result.
      */
@@ -63,15 +70,15 @@ class QualityGateEnforcerTest {
         SoftAssertions.assertSoftly(softly -> {
             when(run.getTotalSize()).thenReturn(0);
             Result success = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success).as(SUCCESS_BELOW).isEqualTo(Result.SUCCESS);
 
             when(run.getTotalSize()).thenReturn(1);
             Result success2 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success2).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success2).as(SUCCESS_EQUAL).isEqualTo(Result.SUCCESS);
 
             when(run.getTotalSize()).thenReturn(2);
             Result unstable = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(unstable).as("").isEqualTo(Result.UNSTABLE);
+            softly.assertThat(unstable).as(UNSTABLE).isEqualTo(Result.UNSTABLE);
         });
     }
 
@@ -86,15 +93,15 @@ class QualityGateEnforcerTest {
         SoftAssertions.assertSoftly(softly -> {
             when(run.getTotalSize()).thenReturn(0);
             Result success = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success).as(SUCCESS_BELOW).isEqualTo(Result.SUCCESS);
 
             when(run.getTotalSize()).thenReturn(1);
             Result success2 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success2).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success2).as(SUCCESS_EQUAL).isEqualTo(Result.SUCCESS);
 
             when(run.getTotalSize()).thenReturn(2);
             Result fail = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(fail).as("").isEqualTo(Result.FAILURE);
+            softly.assertThat(fail).as(FAILURE).isEqualTo(Result.FAILURE);
         });
     }
 
@@ -109,15 +116,15 @@ class QualityGateEnforcerTest {
         SoftAssertions.assertSoftly(softly -> {
             when(run.getTotalHighPrioritySize()).thenReturn(0);
             Result success = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success).as(SUCCESS_BELOW).isEqualTo(Result.SUCCESS);
 
             when(run.getTotalHighPrioritySize()).thenReturn(1);
             Result success2 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success2).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success2).as(SUCCESS_EQUAL).isEqualTo(Result.SUCCESS);
 
             when(run.getTotalHighPrioritySize()).thenReturn(2);
             Result unstable = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(unstable).as("").isEqualTo(Result.UNSTABLE);
+            softly.assertThat(unstable).as(UNSTABLE).isEqualTo(Result.UNSTABLE);
         });
     }
 
@@ -132,15 +139,15 @@ class QualityGateEnforcerTest {
         SoftAssertions.assertSoftly(softly -> {
             when(run.getTotalHighPrioritySize()).thenReturn(0);
             Result success = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success).as(SUCCESS_BELOW).isEqualTo(Result.SUCCESS);
 
             when(run.getTotalHighPrioritySize()).thenReturn(1);
             Result success2 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success2).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success2).as(SUCCESS_EQUAL).isEqualTo(Result.SUCCESS);
 
             when(run.getTotalHighPrioritySize()).thenReturn(2);
             Result fail = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(fail).as("").isEqualTo(Result.FAILURE);
+            softly.assertThat(fail).as(FAILURE).isEqualTo(Result.FAILURE);
         });
     }
 
@@ -155,15 +162,15 @@ class QualityGateEnforcerTest {
         SoftAssertions.assertSoftly(softly -> {
             when(run.getTotalNormalPrioritySize()).thenReturn(0);
             Result success = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success).as(SUCCESS_BELOW).isEqualTo(Result.SUCCESS);
 
             when(run.getTotalNormalPrioritySize()).thenReturn(1);
             Result success2 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success2).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success2).as(SUCCESS_EQUAL).isEqualTo(Result.SUCCESS);
 
             when(run.getTotalNormalPrioritySize()).thenReturn(2);
             Result unstable = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(unstable).as("").isEqualTo(Result.UNSTABLE);
+            softly.assertThat(unstable).as(UNSTABLE).isEqualTo(Result.UNSTABLE);
         });
     }
 
@@ -178,15 +185,15 @@ class QualityGateEnforcerTest {
         SoftAssertions.assertSoftly(softly -> {
             when(run.getTotalNormalPrioritySize()).thenReturn(0);
             Result success = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success).as(SUCCESS_BELOW).isEqualTo(Result.SUCCESS);
 
             when(run.getTotalNormalPrioritySize()).thenReturn(1);
             Result success2 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success2).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success2).as(SUCCESS_EQUAL).isEqualTo(Result.SUCCESS);
 
             when(run.getTotalNormalPrioritySize()).thenReturn(2);
             Result fail = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(fail).as("").isEqualTo(Result.FAILURE);
+            softly.assertThat(fail).as(FAILURE).isEqualTo(Result.FAILURE);
         });
     }
 
@@ -201,15 +208,15 @@ class QualityGateEnforcerTest {
         SoftAssertions.assertSoftly(softly -> {
             when(run.getTotalLowPrioritySize()).thenReturn(0);
             Result success = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success).as(SUCCESS_BELOW).isEqualTo(Result.SUCCESS);
 
             when(run.getTotalLowPrioritySize()).thenReturn(1);
             Result success2 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success2).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success2).as(SUCCESS_EQUAL).isEqualTo(Result.SUCCESS);
 
             when(run.getTotalLowPrioritySize()).thenReturn(2);
             Result unstable = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(unstable).as("").isEqualTo(Result.UNSTABLE);
+            softly.assertThat(unstable).as(UNSTABLE).isEqualTo(Result.UNSTABLE);
         });
     }
 
@@ -224,21 +231,21 @@ class QualityGateEnforcerTest {
         SoftAssertions.assertSoftly(softly -> {
             when(run.getTotalLowPrioritySize()).thenReturn(0);
             Result success = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success).as(SUCCESS_BELOW).isEqualTo(Result.SUCCESS);
 
             when(run.getTotalLowPrioritySize()).thenReturn(1);
             Result success2 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success2).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success2).as(SUCCESS_EQUAL).isEqualTo(Result.SUCCESS);
 
             when(run.getTotalLowPrioritySize()).thenReturn(2);
             Result fail = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(fail).as("").isEqualTo(Result.FAILURE);
+            softly.assertThat(fail).as(FAILURE).isEqualTo(Result.FAILURE);
         });
     }
 
     /*
      * The following tests test the 8 different 'new'-fields, one test for each
-     * field. Each field is tested for its boundaries (e.g. one below, one equal
+     * field. Each field is tested for its boundaries (e.g. one below, one equal to
      * and one above the corresponding threshold) and checked for the correct
      * result.
      */
@@ -255,15 +262,15 @@ class QualityGateEnforcerTest {
         SoftAssertions.assertSoftly(softly -> {
             when(run.getNewSize()).thenReturn(0);
             Result success = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success).as(SUCCESS_BELOW).isEqualTo(Result.SUCCESS);
 
             when(run.getNewSize()).thenReturn(1);
             Result success2 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success2).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success2).as(SUCCESS_EQUAL).isEqualTo(Result.SUCCESS);
 
             when(run.getNewSize()).thenReturn(2);
             Result unstable = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(unstable).as("").isEqualTo(Result.UNSTABLE);
+            softly.assertThat(unstable).as(UNSTABLE).isEqualTo(Result.UNSTABLE);
         });
     }
 
@@ -279,15 +286,15 @@ class QualityGateEnforcerTest {
         SoftAssertions.assertSoftly(softly -> {
             when(run.getNewSize()).thenReturn(0);
             Result success = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success).as(SUCCESS_BELOW).isEqualTo(Result.SUCCESS);
 
             when(run.getNewSize()).thenReturn(1);
             Result success2 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success2).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success2).as(SUCCESS_EQUAL).isEqualTo(Result.SUCCESS);
 
             when(run.getNewSize()).thenReturn(2);
             Result fail = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(fail).as("").isEqualTo(Result.FAILURE);
+            softly.assertThat(fail).as(FAILURE).isEqualTo(Result.FAILURE);
         });
     }
 
@@ -303,15 +310,15 @@ class QualityGateEnforcerTest {
         SoftAssertions.assertSoftly(softly -> {
             when(run.getNewHighPrioritySize()).thenReturn(0);
             Result success = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success).as(SUCCESS_BELOW).isEqualTo(Result.SUCCESS);
 
             when(run.getNewHighPrioritySize()).thenReturn(1);
             Result success2 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success2).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success2).as(SUCCESS_EQUAL).isEqualTo(Result.SUCCESS);
 
             when(run.getNewHighPrioritySize()).thenReturn(2);
             Result unstable = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(unstable).as("").isEqualTo(Result.UNSTABLE);
+            softly.assertThat(unstable).as(UNSTABLE).isEqualTo(Result.UNSTABLE);
         });
     }
 
@@ -327,15 +334,15 @@ class QualityGateEnforcerTest {
         SoftAssertions.assertSoftly(softly -> {
             when(run.getNewHighPrioritySize()).thenReturn(0);
             Result success = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success).as(SUCCESS_BELOW).isEqualTo(Result.SUCCESS);
 
             when(run.getNewHighPrioritySize()).thenReturn(1);
             Result success2 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success2).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success2).as(SUCCESS_EQUAL).isEqualTo(Result.SUCCESS);
 
             when(run.getNewHighPrioritySize()).thenReturn(2);
             Result fail = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(fail).as("").isEqualTo(Result.FAILURE);
+            softly.assertThat(fail).as(FAILURE).isEqualTo(Result.FAILURE);
         });
     }
 
@@ -351,15 +358,15 @@ class QualityGateEnforcerTest {
         SoftAssertions.assertSoftly(softly -> {
             when(run.getNewNormalPrioritySize()).thenReturn(0);
             Result success = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success).as(SUCCESS_BELOW).isEqualTo(Result.SUCCESS);
 
             when(run.getNewNormalPrioritySize()).thenReturn(1);
             Result success2 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success2).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success2).as(SUCCESS_EQUAL).isEqualTo(Result.SUCCESS);
 
             when(run.getNewNormalPrioritySize()).thenReturn(2);
             Result unstable = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(unstable).as("").isEqualTo(Result.UNSTABLE);
+            softly.assertThat(unstable).as(UNSTABLE).isEqualTo(Result.UNSTABLE);
         });
     }
 
@@ -375,15 +382,15 @@ class QualityGateEnforcerTest {
         SoftAssertions.assertSoftly(softly -> {
             when(run.getNewNormalPrioritySize()).thenReturn(0);
             Result success = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success).as(SUCCESS_BELOW).isEqualTo(Result.SUCCESS);
 
             when(run.getNewNormalPrioritySize()).thenReturn(1);
             Result success2 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success2).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success2).as(SUCCESS_EQUAL).isEqualTo(Result.SUCCESS);
 
             when(run.getNewNormalPrioritySize()).thenReturn(2);
             Result fail = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(fail).as("").isEqualTo(Result.FAILURE);
+            softly.assertThat(fail).as(FAILURE).isEqualTo(Result.FAILURE);
         });
     }
 
@@ -399,15 +406,15 @@ class QualityGateEnforcerTest {
         SoftAssertions.assertSoftly(softly -> {
             when(run.getNewLowPrioritySize()).thenReturn(0);
             Result success = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success).as(SUCCESS_BELOW).isEqualTo(Result.SUCCESS);
 
             when(run.getNewLowPrioritySize()).thenReturn(1);
             Result success2 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success2).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success2).as(SUCCESS_EQUAL).isEqualTo(Result.SUCCESS);
 
             when(run.getNewLowPrioritySize()).thenReturn(2);
             Result unstable = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(unstable).as("").isEqualTo(Result.UNSTABLE);
+            softly.assertThat(unstable).as(UNSTABLE).isEqualTo(Result.UNSTABLE);
         });
     }
 
@@ -423,15 +430,15 @@ class QualityGateEnforcerTest {
         SoftAssertions.assertSoftly(softly -> {
             when(run.getNewLowPrioritySize()).thenReturn(0);
             Result success = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success).as(SUCCESS_BELOW).isEqualTo(Result.SUCCESS);
 
             when(run.getNewLowPrioritySize()).thenReturn(1);
             Result success2 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(success2).as("").isEqualTo(Result.SUCCESS);
+            softly.assertThat(success2).as(SUCCESS_EQUAL).isEqualTo(Result.SUCCESS);
 
             when(run.getNewLowPrioritySize()).thenReturn(2);
             Result fail = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(fail).as("").isEqualTo(Result.FAILURE);
+            softly.assertThat(fail).as(FAILURE).isEqualTo(Result.FAILURE);
         });
     }
 }
