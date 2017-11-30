@@ -19,37 +19,36 @@ public class QualityGateEnforcer {
      *         {@link Result#SUCCESS} if the run passed the qualityGate
      */
     public Result evaluate(final StaticAnalysisRun run, final QualityGate qualityGate) {
-        if (qualityGate.hasFailureThreshold()) {
-            if (run.getTotalSize() > qualityGate.getTotalPriorityAllFailed()
-                    || run.getTotalHighPrioritySize() > qualityGate.getTotalPriorityHighFailed()
-                    || run.getTotalNormalPrioritySize() > qualityGate.getTotalPriorityNormalFailed()
-                    || run.getTotalLowPrioritySize() > qualityGate.getTotalPriorityLowFailed()) {
+        if (run.getTotalSize() > qualityGate.getTotalPriorityAllFailed()
+                || run.getTotalHighPrioritySize() > qualityGate.getTotalPriorityHighFailed()
+                || run.getTotalNormalPrioritySize() > qualityGate.getTotalPriorityNormalFailed()
+                || run.getTotalLowPrioritySize() > qualityGate.getTotalPriorityLowFailed()) {
+            return Result.FAILURE;
+        }
+
+        if (run.getTotalSize() > qualityGate.getTotalPriorityAllUnstable()
+                || run.getTotalHighPrioritySize() > qualityGate.getTotalPriorityHighUnstable()
+                || run.getTotalNormalPrioritySize() > qualityGate.getTotalPriorityNormalUnstable()
+                || run.getTotalLowPrioritySize() > qualityGate.getTotalPriorityLowUnstable()) {
+            return Result.UNSTABLE;
+        }
+
+        if (qualityGate.shouldComputeNewWarnings()) {
+            if (run.getNewSize() > qualityGate.getNewPriorityAllFailed()
+                    || run.getNewHighPrioritySize() > qualityGate.getNewPriorityHighFailed()
+                    || run.getNewNormalPrioritySize() > qualityGate.getNewPriorityNormalFailed()
+                    || run.getNewLowPrioritySize() > qualityGate.getNewPriorityLowFailed()) {
                 return Result.FAILURE;
             }
 
-            if (run.getTotalSize() > qualityGate.getTotalPriorityAllUnstable()
-                    || run.getTotalHighPrioritySize() > qualityGate.getTotalPriorityHighUnstable()
-                    || run.getTotalNormalPrioritySize() > qualityGate.getTotalPriorityNormalUnstable()
-                    || run.getTotalLowPrioritySize() > qualityGate.getTotalPriorityLowUnstable()) {
+            if (run.getNewSize() > qualityGate.getNewPriorityAllUnstable()
+                    || run.getNewHighPrioritySize() > qualityGate.getNewPriorityHighUnstable()
+                    || run.getNewNormalPrioritySize() > qualityGate.getNewPriorityNormalUnstable()
+                    || run.getNewLowPrioritySize() > qualityGate.getNewPriorityLowUnstable()) {
                 return Result.UNSTABLE;
             }
-
-            if (qualityGate.shouldComputeNewWarnings()) {
-                if (run.getNewSize() > qualityGate.getNewPriorityAllFailed()
-                        || run.getNewHighPrioritySize() > qualityGate.getNewPriorityHighFailed()
-                        || run.getNewNormalPrioritySize() > qualityGate.getNewPriorityNormalFailed()
-                        || run.getNewLowPrioritySize() > qualityGate.getNewPriorityLowFailed()) {
-                    return Result.FAILURE;
-                }
-
-                if (run.getNewSize() > qualityGate.getNewPriorityAllUnstable()
-                        || run.getNewHighPrioritySize() > qualityGate.getNewPriorityHighUnstable()
-                        || run.getNewNormalPrioritySize() > qualityGate.getNewPriorityNormalUnstable()
-                        || run.getNewLowPrioritySize() > qualityGate.getNewPriorityLowUnstable()) {
-                    return Result.UNSTABLE;
-                }
-            }
         }
+
         return Result.SUCCESS;
     }
 }
