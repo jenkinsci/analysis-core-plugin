@@ -101,7 +101,7 @@ public abstract class AbstractBlamer implements Blamer {
      * @return a mapping of absolute to relative file names of the conflicting files
      */
     protected Map<String, BlameRequest> extractConflictingFiles(final Set<FileAnnotation> annotations) {
-        Map<String, BlameRequest> pathsByFileName = new HashMap<String, BlameRequest>();
+        Map<String, BlameRequest> pathsByFileName = new HashMap<>();
 
         String workspacePath = getWorkspacePath();
         for (FileAnnotation annotation : annotations) {
@@ -121,7 +121,7 @@ public abstract class AbstractBlamer implements Blamer {
                         pathsByFileName.put(storedFileName, new BlameRequest(relativeFileName, annotation.getPrimaryLineNumber()));
                     }
                     else {
-                        log("Skipping non-workspace file %s (workspace = %s, absolute = %s.%n",
+                        log("Skipping non-workspace file %s (workspace = %s, absolute = %s).%n",
                                 storedFileName, workspacePath, absoluteFileName);
                     }
                 }
