@@ -1,6 +1,6 @@
 package io.jenkins.plugins.analysis.core.quality;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -12,11 +12,11 @@ import hudson.model.Result;
  *
  * @author Andreas Moser
  */
-class QualityGateEnforcerTest {
+public class QualityGateEnforcerTest {
 
     /** Verifies that a build is successful if no issues present and no quality gate is set. */
     @Test
-    void shouldBeSuccessfulWhenNoIssuesPresentAndNoQualityGateIsSet() {
+    public void shouldBeSuccessfulWhenNoIssuesPresentAndNoQualityGateIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         QualityGateBuilder qualityGateBuilder = new QualityGateBuilder();
@@ -31,7 +31,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is successful if no issues present and quality gate is set. */
     @Test
-    void shouldBeSuccessfulWhenNoIssuesPresentAndFailureQualityGateIsSet() {
+    public void shouldBeSuccessfulWhenNoIssuesPresentAndFailureQualityGateIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         QualityGateBuilder qualityGateBuilder = new QualityGateBuilder();
@@ -47,7 +47,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is successful if issues are present but no quality gate is set. */
     @Test
-    void shouldBeSuccessfulWithIssuesButNoQualityGateIsSet() {
+    public void shouldBeSuccessfulWithIssuesButNoQualityGateIsSet() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalSize()).thenReturn(2);
@@ -63,7 +63,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build fails if the number of issues is equal the failure threshold. */
     @Test
-    void shouldFailBuildIfFailureThresholdIsSetIssuesSizeEqualThreshold() {
+    public void shouldFailBuildIfFailureThresholdIsSetIssuesSizeEqualThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalSize()).thenReturn(2);
@@ -81,7 +81,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build fails if the number of issues is greater than the failure threshold. */
     @Test
-    void shouldFailBuildIfFailureThresholdIsSetIssuesSizeGreaterThanThreshold() {
+    public void shouldFailBuildIfFailureThresholdIsSetIssuesSizeGreaterThanThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalSize()).thenReturn(3);
@@ -99,7 +99,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is successful if number of issues less than failure threshold. */
     @Test
-    void shouldBeSuccessfulIfFailureThresholdIsSetIssuesSizeLessThanThreshold() {
+    public void shouldBeSuccessfulIfFailureThresholdIsSetIssuesSizeLessThanThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalSize()).thenReturn(1);
@@ -119,7 +119,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build fails if the number of new issues is equal the new issues failure threshold. */
     @Test
-    void shouldFailBuildIfNewIssuesEqualNewIssuesThreshold() {
+    public void shouldFailBuildIfNewIssuesEqualNewIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewSize()).thenReturn(2);
@@ -137,7 +137,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build fails if the number of new issues is greater than the new issues failure threshold. */
     @Test
-    void shouldFailBuildIfNewIssuesGreaterThanNewIssuesThreshold() {
+    public void shouldFailBuildIfNewIssuesGreaterThanNewIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewSize()).thenReturn(3);
@@ -155,7 +155,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is successful if number of new issues less than new issues failure threshold. */
     @Test
-    void shouldBeSuccessfulIfNewIssuesLessThanNewIssuesThreshold() {
+    public void shouldBeSuccessfulIfNewIssuesLessThanNewIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewSize()).thenReturn(1);
@@ -176,7 +176,7 @@ class QualityGateEnforcerTest {
      * is disabled.
      */
     @Test
-    void shouldBeSuccessfulIfNewIssuesGreaterThanNewIssuesThresholdButCheckNewIssuesDisabled() {
+    public void shouldBeSuccessfulIfNewIssuesGreaterThanNewIssuesThresholdButCheckNewIssuesDisabled() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewSize()).thenReturn(3);
@@ -196,7 +196,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build fails if the number of low priority issues is equal the failure threshold. */
     @Test
-    void shouldFailBuildIfLowIssuesSizeEqualLowIssuesThreshold() {
+    public void shouldFailBuildIfLowIssuesSizeEqualLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalLowPrioritySize()).thenReturn(2);
@@ -215,7 +215,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build fails if the number of low priority issues is greater than the failure threshold. */
     @Test
-    void shouldFailBuildIfLowIssuesSizeGreaterLowIssuesThreshold() {
+    public void shouldFailBuildIfLowIssuesSizeGreaterLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalLowPrioritySize()).thenReturn(3);
@@ -234,7 +234,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is successful if number of normal priority issues less than failure threshold. */
     @Test
-    void shouldBeSuccessfulIfLowIssuesSizeLessLowIssuesThreshold() {
+    public void shouldBeSuccessfulIfLowIssuesSizeLessLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalLowPrioritySize()).thenReturn(1);
@@ -252,7 +252,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build fails if the number of new low priority issues is equal the failure threshold. */
     @Test
-    void shouldFailBuildIfNewLowIssuesSizeEqualNewLowIssuesThreshold() {
+    public void shouldFailBuildIfNewLowIssuesSizeEqualNewLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewLowPrioritySize()).thenReturn(2);
@@ -270,7 +270,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build fails if the number of new low priority issues is greater the failure threshold. */
     @Test
-    void shouldFailBuildIfNewLowIssuesSizeGreaterNewLowIssuesThreshold() {
+    public void shouldFailBuildIfNewLowIssuesSizeGreaterNewLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewLowPrioritySize()).thenReturn(3);
@@ -288,7 +288,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is successful if number of new low priority issues less than failure threshold. */
     @Test
-    void shouldBeSuccessfulIfNewLowIssuesSizeLessNewLowIssuesThreshold() {
+    public void shouldBeSuccessfulIfNewLowIssuesSizeLessNewLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewLowPrioritySize()).thenReturn(1);
@@ -309,7 +309,7 @@ class QualityGateEnforcerTest {
      * new issues is disabled.
      */
     @Test
-    void shouldBeSuccessfulIfNewLowIssuesGreaterThanNewLowIssuesThresholdButCheckNewIssuesDisabled() {
+    public void shouldBeSuccessfulIfNewLowIssuesGreaterThanNewLowIssuesThresholdButCheckNewIssuesDisabled() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewLowPrioritySize()).thenReturn(3);
@@ -329,7 +329,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build fails if the number of normal priority issues is equal the failure threshold. */
     @Test
-    void shouldFailBuildIfNormalIssuesSizeEqualNormalIssuesThreshold() {
+    public void shouldFailBuildIfNormalIssuesSizeEqualNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalNormalPrioritySize()).thenReturn(2);
@@ -347,7 +347,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build fails if the number of normal priority issues is greater than the failure threshold. */
     @Test
-    void shouldFailBuildIfNormalIssuesSizeGreaterNormalIssuesThreshold() {
+    public void shouldFailBuildIfNormalIssuesSizeGreaterNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalNormalPrioritySize()).thenReturn(3);
@@ -365,7 +365,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is successful if number of normal priority issues less than failure threshold. */
     @Test
-    void shouldBeSuccessfulIfNormalIssuesSizeLessNormalIssuesThreshold() {
+    public void shouldBeSuccessfulIfNormalIssuesSizeLessNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalNormalPrioritySize()).thenReturn(1);
@@ -383,7 +383,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build fails if the number of new normal priority issues is equal the failure threshold. */
     @Test
-    void shouldFailBuildIfNewNormalIssuesSizeEqualNewNormalIssuesThreshold() {
+    public void shouldFailBuildIfNewNormalIssuesSizeEqualNewNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewNormalPrioritySize()).thenReturn(2);
@@ -401,7 +401,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build fails if the number of new normal priority issues is greater than the failure threshold. */
     @Test
-    void shouldFailBuildIfNewNormalIssuesSizeGreaterNewNormalIssuesThreshold() {
+    public void shouldFailBuildIfNewNormalIssuesSizeGreaterNewNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewNormalPrioritySize()).thenReturn(3);
@@ -419,7 +419,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is successful if number of new normal priority issues less than failure threshold. */
     @Test
-    void shouldBeSuccessfulIfNewNormalIssuesSizeLessNewNormalIssuesThreshold() {
+    public void shouldBeSuccessfulIfNewNormalIssuesSizeLessNewNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewNormalPrioritySize()).thenReturn(1);
@@ -440,7 +440,7 @@ class QualityGateEnforcerTest {
      * check new issues is disabled.
      */
     @Test
-    void shouldBeSuccessfulIfNewNormalIssuesGreaterThanNewNormalIssuesThresholdButCheckNewIssuesDisabled() {
+    public void shouldBeSuccessfulIfNewNormalIssuesGreaterThanNewNormalIssuesThresholdButCheckNewIssuesDisabled() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewNormalPrioritySize()).thenReturn(3);
@@ -460,7 +460,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build fails if the number of high priority issues is equal the failure threshold. */
     @Test
-    void shouldFailBuildIfHighIssuesSizeEqualHighIssuesThreshold() {
+    public void shouldFailBuildIfHighIssuesSizeEqualHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalHighPrioritySize()).thenReturn(2);
@@ -478,7 +478,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build fails if the number of high priority issues is greater the failure threshold. */
     @Test
-    void shouldFailBuildIfHighIssuesSizeGreaterHighIssuesThreshold() {
+    public void shouldFailBuildIfHighIssuesSizeGreaterHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalHighPrioritySize()).thenReturn(3);
@@ -496,7 +496,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is successful if number of high priority issues less than failure threshold. */
     @Test
-    void shouldBeSuccessfulIfHighIssuesSizeLessHighIssuesThreshold() {
+    public void shouldBeSuccessfulIfHighIssuesSizeLessHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalHighPrioritySize()).thenReturn(1);
@@ -514,7 +514,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build fails if the number of new high priority issues is equal the failure threshold. */
     @Test
-    void shouldFailBuildIfNewHighIssuesSizeEqualNewHighIssuesThreshold() {
+    public void shouldFailBuildIfNewHighIssuesSizeEqualNewHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewHighPrioritySize()).thenReturn(2);
@@ -532,7 +532,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build fails if the number of new high priority issues is greater than the failure threshold. */
     @Test
-    void shouldFailBuildIfNewHighIssuesSizeGreaterNewHighIssuesThreshold() {
+    public void shouldFailBuildIfNewHighIssuesSizeGreaterNewHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewHighPrioritySize()).thenReturn(3);
@@ -550,7 +550,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is successful if number of new high priority issues less than failure threshold. */
     @Test
-    void shouldBeSuccessfulIfNewHighIssuesSizeLessNewHighIssuesThreshold() {
+    public void shouldBeSuccessfulIfNewHighIssuesSizeLessNewHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewNormalPrioritySize()).thenReturn(1);
@@ -570,7 +570,7 @@ class QualityGateEnforcerTest {
      * check new issues is disabled.
      */
     @Test
-    void shouldBeSuccessfulIfNewHighIssuesGreaterThanNewHighIssuesThresholdButCheckNewIssuesDisabled() {
+    public void shouldBeSuccessfulIfNewHighIssuesGreaterThanNewHighIssuesThresholdButCheckNewIssuesDisabled() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewHighPrioritySize()).thenReturn(3);
@@ -590,7 +590,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is unstable if the number of issues is equal the unstable threshold. */
     @Test
-    void shouldBeUnstableBuildIfUnstableThresholdIsSetIssuesSizeEqualThreshold() {
+    public void shouldBeUnstableBuildIfUnstableThresholdIsSetIssuesSizeEqualThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalSize()).thenReturn(2);
@@ -608,7 +608,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is unstable if the number of issues is greater than the unstable threshold. */
     @Test
-    void shouldBeUnstableBuildIfUnstableThresholdIsSetIssuesSizeGreaterThanThreshold() {
+    public void shouldBeUnstableBuildIfUnstableThresholdIsSetIssuesSizeGreaterThanThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalSize()).thenReturn(3);
@@ -626,7 +626,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is unstable if the number of new issues is equal the new issues unstable threshold. */
     @Test
-    void shouldBeUnstableBuildIfNewIssuesEqualNewIssuesThreshold() {
+    public void shouldBeUnstableBuildIfNewIssuesEqualNewIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewSize()).thenReturn(2);
@@ -644,7 +644,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is unstable if the number of new issues is greater than the new issues unstable threshold. */
     @Test
-    void shouldBeUnstableBuildIfNewIssuesGreaterThanNewIssuesThreshold() {
+    public void shouldBeUnstableBuildIfNewIssuesGreaterThanNewIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewSize()).thenReturn(3);
@@ -663,7 +663,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is unstable if the number of low priority issues is equal the unstable threshold. */
     @Test
-    void shouldBeUnstableBuildIfLowIssuesSizeEqualLowIssuesThreshold() {
+    public void shouldBeUnstableBuildIfLowIssuesSizeEqualLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalLowPrioritySize()).thenReturn(2);
@@ -682,7 +682,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is unstable if the number of low priority issues is greater than the unstable threshold. */
     @Test
-    void shouldBeUnstableBuildIfLowIssuesSizeGreaterLowIssuesThreshold() {
+    public void shouldBeUnstableBuildIfLowIssuesSizeGreaterLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalLowPrioritySize()).thenReturn(3);
@@ -701,7 +701,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is unstable if the number of new low priority issues is equal the new unstable threshold. */
     @Test
-    void shouldBeUnstableBuildIfNewLowIssuesSizeEqualNewLowIssuesThreshold() {
+    public void shouldBeUnstableBuildIfNewLowIssuesSizeEqualNewLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewLowPrioritySize()).thenReturn(2);
@@ -722,7 +722,7 @@ class QualityGateEnforcerTest {
      * threshold.
      */
     @Test
-    void shouldBeUnstableBuildIfNewLowIssuesSizeGreaterNewLowIssuesThreshold() {
+    public void shouldBeUnstableBuildIfNewLowIssuesSizeGreaterNewLowIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewLowPrioritySize()).thenReturn(3);
@@ -741,7 +741,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is unstable if the number of normal priority issues is equal the unstable threshold. */
     @Test
-    void shouldBeUnstableBuildIfNormalIssuesSizeEqualNormalIssuesThreshold() {
+    public void shouldBeUnstableBuildIfNormalIssuesSizeEqualNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalNormalPrioritySize()).thenReturn(2);
@@ -762,7 +762,7 @@ class QualityGateEnforcerTest {
      * threshold.
      */
     @Test
-    void shouldBeUnstableBuildIfNormalIssuesSizeGreaterNormalIssuesThreshold() {
+    public void shouldBeUnstableBuildIfNormalIssuesSizeGreaterNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalNormalPrioritySize()).thenReturn(3);
@@ -778,9 +778,12 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.UNSTABLE);
     }
 
-    /** Verifies that a build is unstable if the number of new normal priority issues is equal the new unstable threshold. */
+    /**
+     * Verifies that a build is unstable if the number of new normal priority issues is equal the new unstable
+     * threshold.
+     */
     @Test
-    void shouldBeUnstableBuildIfNewNormalIssuesSizeEqualNewNormalIssuesThreshold() {
+    public void shouldBeUnstableBuildIfNewNormalIssuesSizeEqualNewNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewNormalPrioritySize()).thenReturn(2);
@@ -796,9 +799,12 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.UNSTABLE);
     }
 
-    /** Verifies that a build is unstable if the number of new normal priority issues is greater than the new unstable threshold. */
+    /**
+     * Verifies that a build is unstable if the number of new normal priority issues is greater than the new unstable
+     * threshold.
+     */
     @Test
-    void shouldBeUnstableBuildIfNewNormalIssuesSizeGreaterNewNormalIssuesThreshold() {
+    public void shouldBeUnstableBuildIfNewNormalIssuesSizeGreaterNewNormalIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewNormalPrioritySize()).thenReturn(3);
@@ -817,7 +823,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is unstable if the number of high priority issues is equal the unstable threshold. */
     @Test
-    void shouldBeUnstableBuildIfHighIssuesSizeEqualHighIssuesThreshold() {
+    public void shouldBeUnstableBuildIfHighIssuesSizeEqualHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalHighPrioritySize()).thenReturn(2);
@@ -835,7 +841,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is unstable if the number of high priority issues is greater than the unstable threshold. */
     @Test
-    void shouldBeUnstableBuildIfHighIssuesSizeGreaterHighIssuesThreshold() {
+    public void shouldBeUnstableBuildIfHighIssuesSizeGreaterHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getTotalHighPrioritySize()).thenReturn(3);
@@ -853,7 +859,7 @@ class QualityGateEnforcerTest {
 
     /** Verifies that a build is unstable if the number of new high priority issues is equal the new unstable threshold. */
     @Test
-    void shouldBeUnstableBuildIfNewHighIssuesSizeEqualNewHighIssuesThreshold() {
+    public void shouldBeUnstableBuildIfNewHighIssuesSizeEqualNewHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewHighPrioritySize()).thenReturn(2);
@@ -869,9 +875,12 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.UNSTABLE);
     }
 
-    /** Verifies that a build is unstable if the number of new high priority issues is greater than the new unstable threshold. */
+    /**
+     * Verifies that a build is unstable if the number of new high priority issues is greater than the new unstable
+     * threshold.
+     */
     @Test
-    void shouldBeUnstableBuildIfNewHighIssuesSizeGreaterNewHighIssuesThreshold() {
+    public void shouldBeUnstableBuildIfNewHighIssuesSizeGreaterNewHighIssuesThreshold() {
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
         StaticAnalysisRun run = mock(StaticAnalysisRun.class);
         when(run.getNewHighPrioritySize()).thenReturn(3);
@@ -887,4 +896,62 @@ class QualityGateEnforcerTest {
                 .isEqualTo(Result.UNSTABLE);
     }
 
+    /** Verifies that the unstable threshold not overrules the failure threshold for new issues. */
+    @Test
+    public void shouldBeFailBuildIfNewUnstableAndNewFailureThresholdIsSetAndNewIssueSizeEqualFailureThreshold() {
+        QualityGateEnforcer enforcer = new QualityGateEnforcer();
+        StaticAnalysisRun run = mock(StaticAnalysisRun.class);
+        when(run.getNewLowPrioritySize()).thenReturn(2);
+        when(run.getNewNormalPrioritySize()).thenReturn(3);
+        when(run.getNewHighPrioritySize()).thenReturn(4);
+        when(run.getNewSize()).thenReturn(9);
+
+        QualityGateBuilder qualityGateBuilder = new QualityGateBuilder();
+        qualityGateBuilder.setCheckNewIssues(true)
+                .setNewIssuesUnstableThresholdLow(1)
+                .setNewIssuesUnstableThresholdNormal(1)
+                .setNewIssuesUnstableThresholdHigh(1)
+                .setUnstableThreshold(3)
+                .setNewIssuesFailureThresholdLow(2)
+                .setNewIssuesFailureThresholdNormal(3)
+                .setNewIssuesFailureThresholdHigh(4)
+                .setFailureThreshold(9);
+        QualityGate qualityGate = qualityGateBuilder.build();
+
+        Result failure = enforcer.evaluate(run, qualityGate);
+
+        assertThat(failure)
+                .as("New issues failure threshold equal to new issues sizes and new issues unstable threshold"
+                        + " lower than new issues sizes should be a FAILURE.")
+                .isEqualTo(Result.FAILURE);
+    }
+
+    /** Verifies that the unstable threshold not overrules the failure threshold for total amount of issues. */
+    @Test
+    public void shouldBeFailBuildIfUnstableAndFailureThresholdIsSetAndIssueSizeEqualFailureThreshold() {
+        QualityGateEnforcer enforcer = new QualityGateEnforcer();
+        StaticAnalysisRun run = mock(StaticAnalysisRun.class);
+        when(run.getTotalLowPrioritySize()).thenReturn(2);
+        when(run.getTotalNormalPrioritySize()).thenReturn(3);
+        when(run.getTotalHighPrioritySize()).thenReturn(4);
+        when(run.getTotalSize()).thenReturn(9);
+
+        QualityGateBuilder qualityGateBuilder = new QualityGateBuilder();
+        qualityGateBuilder.setUnstableThresholdLow(1)
+                .setUnstableThresholdNormal(1)
+                .setUnstableThresholdHigh(1)
+                .setUnstableThreshold(3)
+                .setFailureThresholdLow(2)
+                .setFailureThresholdNormal(3)
+                .setFailureThresholdHigh(4)
+                .setFailureThreshold(9);
+        QualityGate qualityGate = qualityGateBuilder.build();
+
+        Result failure = enforcer.evaluate(run, qualityGate);
+
+        assertThat(failure)
+                .as("Failure threshold equal to issues sizes and unstable threshold lower than issues sizes "
+                        + "should be a FAILURE.")
+                .isEqualTo(Result.FAILURE);
+    }
 }

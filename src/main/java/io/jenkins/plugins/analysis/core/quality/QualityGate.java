@@ -99,7 +99,7 @@ public class QualityGate {
      * @return {@code true} if the failure threshold for the total number of issues is set
      */
     public boolean hasFailureThreshold() {
-        return failureThreshold > 0;
+        return getFailureThreshold() > 0;
     }
 
     /**
@@ -108,7 +108,7 @@ public class QualityGate {
      * @return {@code true} if the unstable threshold for the total number of issues is set
      */
     public boolean hasUnstableThreshold() {
-        return unstableThreshold > 0;
+        return getUnstableThreshold() > 0;
     }
 
     /**
@@ -118,7 +118,7 @@ public class QualityGate {
      *         set.
      */
     public boolean shouldCheckNewIssuesForFailure() {
-        return checkNewIssues && newIssuesFailureThreshold > 0;
+        return checkNewIssues && getNewIssuesFailureThreshold() > 0;
     }
 
     /**
@@ -128,7 +128,7 @@ public class QualityGate {
      *         set.
      */
     public boolean shouldCheckNewIssuesForUnstable() {
-        return checkNewIssues && newIssuesUnstableThreshold > 0;
+        return checkNewIssues && getNewIssuesUnstableThreshold() > 0;
     }
 
     /**
@@ -137,7 +137,7 @@ public class QualityGate {
      * @return {@code true} if the failure threshold for the total number of low priority issues is set
      */
     public boolean hasLowPriorityFailureThreshold() {
-        return failureThresholdLow > 0;
+        return getFailureThresholdLow() > 0;
     }
 
     /**
@@ -146,7 +146,7 @@ public class QualityGate {
      * @return {@code true} if the unstable threshold for the total number of low priority issues is set
      */
     public boolean hasLowPriorityUnstableThreshold() {
-        return unstableThresholdLow > 0;
+        return getUnstableThresholdLow() > 0;
     }
 
     /**
@@ -155,7 +155,7 @@ public class QualityGate {
      * @return {@code true} if the failure threshold for the total number of normal priority issues is set
      */
     public boolean hasNormalPriorityFailureThreshold() {
-        return failureThresholdNormal > 0;
+        return getFailureThresholdNormal() > 0;
     }
 
     /**
@@ -164,7 +164,7 @@ public class QualityGate {
      * @return {@code true} if the unstable threshold for the total number of normal priority issues is set
      */
     public boolean hasNormalPriorityUnstableThreshold() {
-        return unstableThresholdNormal > 0;
+        return getUnstableThresholdNormal() > 0;
     }
 
     /**
@@ -173,7 +173,7 @@ public class QualityGate {
      * @return {@code true} if the failure threshold for the total number of high priority issues is set
      */
     public boolean hasHighPriorityFailureThreshold() {
-        return failureThresholdHigh > 0;
+        return getFailureThresholdHigh() > 0;
     }
 
     /**
@@ -182,7 +182,7 @@ public class QualityGate {
      * @return {@code true} if the unstable threshold for the total number of high priority issues is set
      */
     public boolean hasHighPriorityUnstableThreshold() {
-        return unstableThresholdHigh > 0;
+        return getUnstableThresholdHigh() > 0;
     }
 
     /**
@@ -193,7 +193,7 @@ public class QualityGate {
      *         flag is set.
      */
     public boolean hasNewLowIssuesPriorityFailureThreshold() {
-        return newIssuesFailureThresholdLow > 0 && checkNewIssues;
+        return getNewIssuesFailureThresholdLow() > 0 && checkNewIssues;
     }
 
     /**
@@ -204,7 +204,7 @@ public class QualityGate {
      *         flag is set.
      */
     public boolean hasNewLowIssuesPriorityUnstableThreshold() {
-        return newIssuesUnstableThresholdLow > 0 && checkNewIssues;
+        return getNewIssuesUnstableThresholdLow() > 0 && checkNewIssues;
     }
 
     /**
@@ -215,7 +215,7 @@ public class QualityGate {
      *         flag is set.
      */
     public boolean hasNewNormalIssuesPriorityFailureThreshold() {
-        return newIssuesFailureThresholdNormal > 0 && checkNewIssues;
+        return getNewIssuesFailureThresholdNormal() > 0 && checkNewIssues;
     }
 
     /**
@@ -226,7 +226,7 @@ public class QualityGate {
      *         checkNewIssues flag is set.
      */
     public boolean hasNewNormalIssuesPriorityUnstableThreshold() {
-        return newIssuesUnstableThresholdNormal > 0 && checkNewIssues;
+        return getNewIssuesUnstableThresholdNormal() > 0 && checkNewIssues;
     }
 
     /**
@@ -237,7 +237,7 @@ public class QualityGate {
      *         flag is set.
      */
     public boolean hasNewHighIssuesPriorityFailureThreshold() {
-        return newIssuesFailureThresholdHigh > 0 && checkNewIssues;
+        return getNewIssuesFailureThresholdHigh() > 0 && checkNewIssues;
     }
 
     /**
@@ -248,7 +248,7 @@ public class QualityGate {
      *         flag is set.
      */
     public boolean hasNewHighIssuesPriorityUnstableThreshold() {
-        return newIssuesUnstableThresholdHigh > 0 && checkNewIssues;
+        return getNewIssuesUnstableThresholdHigh() > 0 && checkNewIssues;
     }
 
 
