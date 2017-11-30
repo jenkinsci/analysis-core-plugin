@@ -19,11 +19,31 @@ public class QualityGateEnforcer {
      * @return the result of the evaluation
      */
     public Result evaluate(final StaticAnalysisRun run, final QualityGate qualityGate) {
-        if (qualityGate.hasFailureThreshold()) {
-            if (run.getTotalSize() >= qualityGate.getFailureThreshold()) {
-                return Result.FAILURE;
-            }
+        int highFail = qualityGate.getHighPriorityFailure();;
+        if (highFail >0 && run.getTotalHighPrioritySize() >= highFail) {
+            return Result.FAILURE;
         }
+        int highUnstab = qualityGate.getHighPriorityUnstable();
+        if (highUnstab>0 && run.getTotalHighPrioritySize() >= highUnstab){
+            return Result.UNSTABLE;
+        }
+        int normFail = qualityGate.getNormalPriorityFailure();
+        if (normFail>0 && run.getTotalNormalPrioritySize() >= normFail){
+            return Result.FAILURE;
+        }
+        int normUnstab = qualityGate.getNormalPriorityUnstable();
+        if (normUnstab>0 && run.getTotalNormalPrioritySize() >= normUnstab){
+            return Result.UNSTABLE;
+        }
+        int lowFail = qualityGate.getLowPriorityFailure();
+        if (lowFail>0 && run.getTotalLowPrioritySize() >= lowFail){
+            return Result.FAILURE;
+        }
+        int lowUnstab = qualityGate.getLowPriorityUnstable();
+        if (lowUnstab>0 && run.getTotalLowPrioritySize() >= lowUnstab){
+            return Result.UNSTABLE;
+        }
+
         return Result.SUCCESS;
     }
 }
