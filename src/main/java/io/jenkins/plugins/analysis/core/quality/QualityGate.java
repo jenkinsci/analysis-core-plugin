@@ -1,5 +1,7 @@
 package io.jenkins.plugins.analysis.core.quality;
 
+import static io.jenkins.plugins.analysis.core.quality.WarningsThreshold.*;
+
 /**
  * Defines quality gates for a static analysis run.
  *
@@ -7,19 +9,19 @@ package io.jenkins.plugins.analysis.core.quality;
  * @author Aykut Yilmaz
  */
 public class QualityGate {
-    private final WarningsThreshold.FailureThresholds failureThresholds;
-    private final WarningsThreshold.UnstableThresholds unstableThresholds;
-    private final WarningsThreshold.NewFailureThresholds newFailureThresholds;
-    private final WarningsThreshold.NewUnstableThresholds newUnstableThresholds;
+    private final FailureThresholds failureThresholds;
+    private final UnstableThresholds unstableThresholds;
+    private final NewFailureThresholds newFailureThresholds;
+    private final NewUnstableThresholds newUnstableThresholds;
 
     /**
      * Creates a new instance of {@link QualityGate}. No thresholds are set.
      */
     public QualityGate() {
-        this.failureThresholds = new WarningsThreshold.FailureThresholds();
-        this.unstableThresholds = new WarningsThreshold.UnstableThresholds();
-        this.newFailureThresholds = new WarningsThreshold.NewFailureThresholds();
-        this.newUnstableThresholds = new WarningsThreshold.NewUnstableThresholds();
+        this.failureThresholds = new FailureThresholds();
+        this.unstableThresholds = new UnstableThresholds();
+        this.newFailureThresholds = new NewFailureThresholds();
+        this.newUnstableThresholds = new NewUnstableThresholds();
     }
 
     /**
@@ -27,11 +29,11 @@ public class QualityGate {
      *
      * @param failureThresholds to determine a failed build
      */
-    public QualityGate(WarningsThreshold.FailureThresholds failureThresholds) {
+    public QualityGate(FailureThresholds failureThresholds) {
         this.failureThresholds = failureThresholds;
-        this.unstableThresholds = new WarningsThreshold.UnstableThresholds();
-        this.newFailureThresholds = new WarningsThreshold.NewFailureThresholds();
-        this.newUnstableThresholds = new WarningsThreshold.NewUnstableThresholds();
+        this.unstableThresholds = new UnstableThresholds();
+        this.newFailureThresholds = new NewFailureThresholds();
+        this.newUnstableThresholds = new NewUnstableThresholds();
     }
 
     /**
@@ -39,11 +41,11 @@ public class QualityGate {
      *
      * @param unstableThresholds to determine an unstable build
      */
-    public QualityGate(WarningsThreshold.UnstableThresholds unstableThresholds) {
-        this.failureThresholds = new WarningsThreshold.FailureThresholds();
+    public QualityGate(UnstableThresholds unstableThresholds) {
+        this.failureThresholds = new FailureThresholds();
         this.unstableThresholds = unstableThresholds;
-        this.newFailureThresholds = new WarningsThreshold.NewFailureThresholds();
-        this.newUnstableThresholds = new WarningsThreshold.NewUnstableThresholds();
+        this.newFailureThresholds = new NewFailureThresholds();
+        this.newUnstableThresholds = new NewUnstableThresholds();
     }
 
     /**
@@ -51,11 +53,11 @@ public class QualityGate {
      *
      * @param newFailureThresholds to determine a failed build
      */
-    public QualityGate(WarningsThreshold.NewFailureThresholds newFailureThresholds) {
-        this.failureThresholds = new WarningsThreshold.FailureThresholds();
-        this.unstableThresholds = new WarningsThreshold.UnstableThresholds();
+    public QualityGate(NewFailureThresholds newFailureThresholds) {
+        this.failureThresholds = new FailureThresholds();
+        this.unstableThresholds = new UnstableThresholds();
         this.newFailureThresholds = newFailureThresholds;
-        this.newUnstableThresholds = new WarningsThreshold.NewUnstableThresholds();
+        this.newUnstableThresholds = new NewUnstableThresholds();
     }
 
     /**
@@ -63,10 +65,10 @@ public class QualityGate {
      *
      * @param newUnstableThresholds to determine an unstable build
      */
-    public QualityGate(WarningsThreshold.NewUnstableThresholds newUnstableThresholds) {
-        this.failureThresholds = new WarningsThreshold.FailureThresholds();
-        this.unstableThresholds = new WarningsThreshold.UnstableThresholds();
-        this.newFailureThresholds = new WarningsThreshold.NewFailureThresholds();
+    public QualityGate(NewUnstableThresholds newUnstableThresholds) {
+        this.failureThresholds = new FailureThresholds();
+        this.unstableThresholds = new UnstableThresholds();
+        this.newFailureThresholds = new NewFailureThresholds();
         this.newUnstableThresholds = newUnstableThresholds;
     }
 
@@ -76,11 +78,11 @@ public class QualityGate {
      * @param failureThresholds  to determine a failed build
      * @param unstableThresholds to determine an unstable build
      */
-    public QualityGate(WarningsThreshold.FailureThresholds failureThresholds, WarningsThreshold.UnstableThresholds unstableThresholds) {
+    public QualityGate(FailureThresholds failureThresholds, UnstableThresholds unstableThresholds) {
         this.failureThresholds = failureThresholds;
         this.unstableThresholds = unstableThresholds;
-        this.newFailureThresholds = new WarningsThreshold.NewFailureThresholds();
-        this.newUnstableThresholds = new WarningsThreshold.NewUnstableThresholds();
+        this.newFailureThresholds = new NewFailureThresholds();
+        this.newUnstableThresholds = new NewUnstableThresholds();
     }
 
     /**
