@@ -169,4 +169,25 @@ class SerialBuilderTest {
         checkDataSet(t, 5, 8, newValues);
     }
 
+    @Test
+    public void dataSetAsDomainAndNotTimeLimitationButSetInverse() {
+        GraphConfiguration stub = generateGraphConfiguration(true, 3, 0);
+        HealthSeriesBuilder b = new HealthSeriesBuilder(GenerateHealthStub.generateHealthDescriptor(true, 5, 8));
+        long[] values = {7, 50, 4, 24, 4, 22, 4, 20, 1, 16, 1, 10};
+        int[] newValues = {};
+        CategoryDataset t = b.createDataSet(stub, getIterator(values));
+        checkDataSet(t, 5, 8, newValues);
+    }
+
+
+    @Test
+    public void dataSetAsDomainAndTimeLimitationWithTimeBoundary() {
+        GraphConfiguration stub = generateGraphConfiguration(true, 3, 0);
+        HealthSeriesBuilder b = new HealthSeriesBuilder(GenerateHealthStub.generateHealthDescriptor(true, 5, 8));
+        long[] values = {1, 10, 1, 16, 3, 20, 3, 22, 3, 24, 7, 50};
+        int[] newValues = {13, 22};
+        CategoryDataset t = b.createDataSet(stub, getIterator(values));
+        checkDataSet(t, 5, 8, newValues);
+    }
+
 }
