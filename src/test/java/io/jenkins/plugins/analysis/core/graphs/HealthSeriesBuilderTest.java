@@ -309,11 +309,11 @@ class HealthSeriesBuilderTest {
         assertThat(categoryDataset.getColumnCount()).isEqualTo(2);
         assertThat(categoryDataset.getRowCount()).isEqualTo(3);
 
-        assertThat(categoryDataset.getValue(0, 0)).isEqualTo(10);
+        assertThat(categoryDataset.getValue(0, 0)).isEqualTo(5);
         assertThat(categoryDataset.getValue(1, 0)).isEqualTo(0);
         assertThat(categoryDataset.getValue(2, 0)).isEqualTo(0);
 
-        assertThat(categoryDataset.getValue(0, 1)).isEqualTo(5);
+        assertThat(categoryDataset.getValue(0, 1)).isEqualTo(10);
         assertThat(categoryDataset.getValue(1, 1)).isEqualTo(0);
         assertThat(categoryDataset.getValue(2, 1)).isEqualTo(0);
     }
@@ -327,7 +327,7 @@ class HealthSeriesBuilderTest {
 
         final GraphConfiguration configuration = mock(GraphConfiguration.class);
         when(configuration.isDayCountDefined()).thenReturn(true);
-        when(configuration.getDayCount()).thenReturn(1);
+        when(configuration.getDayCount()).thenReturn(0);
 
         final List<StaticAnalysisRun> analysisRuns = getStaticAnalysisRunsByDays();
 
@@ -335,7 +335,7 @@ class HealthSeriesBuilderTest {
 
         final CategoryDataset categoryDataset = builder.createDataSet(configuration, analysisRuns);
 
-        assertThat(categoryDataset.getColumnCount()).isEqualTo(2);
+        assertThat(categoryDataset.getColumnCount()).isEqualTo(1);
         assertThat(categoryDataset.getRowCount()).isEqualTo(3);
 
         assertThat(categoryDataset.getValue(0, 0)).isEqualTo(5);
@@ -469,6 +469,7 @@ class HealthSeriesBuilderTest {
             when(analysisRun.getTotalSize()).thenReturn(5 * i);
 
             final AnalysisBuild analysisBuild = mock(AnalysisBuild.class);
+            when(analysisBuild.getNumber()).thenReturn(i);
             when(analysisRun.getBuild()).thenReturn(analysisBuild);
 
             analysisRuns.add(analysisRun);
