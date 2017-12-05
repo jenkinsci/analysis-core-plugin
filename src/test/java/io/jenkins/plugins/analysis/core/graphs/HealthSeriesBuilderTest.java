@@ -255,9 +255,9 @@ class HealthSeriesBuilderTest {
                                 result(build(TWO_DAYS_AGO), 9)
                         ),
                         asList(
-                                asList(2, 13 / 3, 1 / 3),
+                                asList(2, 4, 0),
                                 asList(2, 2, 0),
-                                asList(3 / 2, 0, 0)
+                                asList(1, 0, 0)
                         ))
         );
     }
