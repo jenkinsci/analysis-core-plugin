@@ -1,5 +1,6 @@
 package io.jenkins.plugins.analysis.core.graphs;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.assertj.core.api.SoftAssertions;
@@ -35,19 +36,7 @@ class HealthSeriesBuilderTest {
             CategoryDataset dataSet = builder.createDataSet(cfg, Lists.newArrayList());
             softly.assertThat(dataSet.getRowCount()).isEqualTo(0);
             softly.assertThat(dataSet.getColumnCount()).isEqualTo(0);
-        });
-    }
 
-    /**
-     * When given empty runs as input, no data should be generated when
-     * using build-date as domain.
-     */
-    @Test
-    void emptyAnalysisInputOnDateDomainShouldReturnEmptyDataSet() {
-        GraphConfiguration cfg = createGraphConfig();
-        SeriesBuilder builder = new HealthSeriesBuilder(createDisabledHealthDescriptor());
-
-        SoftAssertions.assertSoftly(softly -> {
             CategoryDataset dataSet2 = builder.createDataSet(cfg, Lists.newArrayList());
             softly.assertThat(dataSet2.getColumnCount()).isEqualTo(0);
             softly.assertThat(dataSet2.getRowCount()).isEqualTo(0);
@@ -67,13 +56,21 @@ class HealthSeriesBuilderTest {
         when(resTime.areResultsTooOld(any(), any())).thenReturn(false, false, false, true);
 
         SoftAssertions.assertSoftly(softly -> {
-            CategoryDataset dataSet = builder.createDataSet(cfg, Lists.newArrayList(createAnalysisRuns()));
+            CategoryDataset dataSet = builder.createDataSet(cfg, Arrays.asList(
+                    createAnalysisRun(1, 2, 3, 4, 1),
+                    createAnalysisRun(2, 5, 3, 4, 2),
+                    createAnalysisRun(3, 7, 3, 4, 3),
+                    createAnalysisRun(4, 2, 3, 4, 99),
+                    createAnalysisRun(5, 2, 3, 4, 99)
+            ));
+
             softly.assertThat(dataSet.getRowCount()).isOne();
             softly.assertThat(dataSet.getColumnCount())
                     .as("Old runs shouldn't be added to the dataset")
-                    .isEqualTo(2);
+                    .isEqualTo(3);
             softly.assertThat(dataSet.getValue(0, 0)).isEqualTo(9);
             softly.assertThat(dataSet.getValue(0, 1)).isEqualTo(12);
+            softly.assertThat(dataSet.getValue(0, 2)).isEqualTo(14);
         });
     }
 
@@ -90,22 +87,19 @@ class HealthSeriesBuilderTest {
         when(cfg.isBuildCountDefined()).thenReturn(true);
 
         SoftAssertions.assertSoftly(softly -> {
-            // Number of builds to add is capped at 1, only add first run
-            when(cfg.getBuildCount()).thenReturn(1);
+            // Cap at 1, 7, 10 builds
+            when(cfg.getBuildCount()).thenReturn(1, 7, 10);
+
             CategoryDataset dataSet = builder.createDataSet(cfg, createAnalysisRuns());
             softly.assertThat(dataSet.getRowCount()).isOne();
             softly.assertThat(dataSet.getColumnCount()).isOne();
             softly.assertThat(dataSet.getValue(0, 0)).isEqualTo(6);
 
-            // Number of builds to add is capped at 7, add all runs
-            when(cfg.getBuildCount()).thenReturn(7);
             CategoryDataset dataSet1 = builder.createDataSet(cfg, createAnalysisRuns());
             softly.assertThat(dataSet1.getRowCount()).isOne();
             softly.assertThat(dataSet1.getColumnCount()).isEqualTo(5);
             softly.assertThat(dataSet1.getValue(0, 0)).isEqualTo(9);
 
-            // Number of builds to add is capped at 10, add all runs
-            when(cfg.getBuildCount()).thenReturn(10);
             CategoryDataset dataSet2 = builder.createDataSet(cfg, createAnalysisRuns());
             softly.assertThat(dataSet2.getRowCount()).isOne();
             softly.assertThat(dataSet2.getColumnCount()).isEqualTo(5);
