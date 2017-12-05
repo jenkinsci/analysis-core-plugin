@@ -30,16 +30,12 @@ class HealthSeriesBuilderTest {
     private static final ResultTime RESULT_TIME_TODAY = new ResultTime(TODAY);
     private static final int HEALTHY_THRESHOLD = 2;
     private static final int UNHEALTHY_THRESHOLD = 8;
-    private static final int BELOW_HEALTHY_THRESHOLD = HEALTHY_THRESHOLD - 1;
-    private static final int ABOVE_HEALTHY_THRESHOLD = HEALTHY_THRESHOLD + 1;
-    private static final int BELOW_UNHEALTHY_THRESHOLD = UNHEALTHY_THRESHOLD - 1;
-    private static final int ABOVE_UNHEALTHY_THRESHOLD = UNHEALTHY_THRESHOLD + 1;
-    private static final List<Integer> SERIES_BELOW_HEALTHY_THRESHOLD = asList(BELOW_HEALTHY_THRESHOLD, 0, 0);
+    private static final List<Integer> SERIES_BELOW_HEALTHY_THRESHOLD = asList(HEALTHY_THRESHOLD - 1, 0, 0);
     private static final List<Integer> SERIES_AT_HEALTHY_THRESHOLD = asList(HEALTHY_THRESHOLD, 0, 0);
-    private static final List<Integer> SERIES_ABOVE_HEALTHY_THRESHOLD = asList(HEALTHY_THRESHOLD, ABOVE_HEALTHY_THRESHOLD - HEALTHY_THRESHOLD, 0);
-    private static final List<Integer> SERIES_BELOW_UNHEALTHY_THRESHOLD = asList(HEALTHY_THRESHOLD, BELOW_UNHEALTHY_THRESHOLD - HEALTHY_THRESHOLD, 0);
+    private static final List<Integer> SERIES_ABOVE_HEALTHY_THRESHOLD = asList(HEALTHY_THRESHOLD, HEALTHY_THRESHOLD + 1 - HEALTHY_THRESHOLD, 0);
+    private static final List<Integer> SERIES_BELOW_UNHEALTHY_THRESHOLD = asList(HEALTHY_THRESHOLD, UNHEALTHY_THRESHOLD - 1 - HEALTHY_THRESHOLD, 0);
     private static final List<Integer> SERIES_AT_UNHEALTHY_THRESHOLD = asList(HEALTHY_THRESHOLD, UNHEALTHY_THRESHOLD - HEALTHY_THRESHOLD, 0);
-    private static final List<Integer> SERIES_ABOVE_UNHEALTHY_THRESHOLD = asList(HEALTHY_THRESHOLD, UNHEALTHY_THRESHOLD - HEALTHY_THRESHOLD, ABOVE_UNHEALTHY_THRESHOLD - UNHEALTHY_THRESHOLD);
+    private static final List<Integer> SERIES_ABOVE_UNHEALTHY_THRESHOLD = asList(HEALTHY_THRESHOLD, UNHEALTHY_THRESHOLD - HEALTHY_THRESHOLD, UNHEALTHY_THRESHOLD + 1 - UNHEALTHY_THRESHOLD);
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("computeSeriesArguments")
@@ -56,8 +52,8 @@ class HealthSeriesBuilderTest {
                 Arguments.of(
                         "reporting disabled",
                         reportingDisabled(),
-                        result(ABOVE_UNHEALTHY_THRESHOLD),
-                        singletonList(ABOVE_UNHEALTHY_THRESHOLD)),
+                        result(UNHEALTHY_THRESHOLD + 1),
+                        singletonList(UNHEALTHY_THRESHOLD + 1)),
                 Arguments.of(
                         "issueCount = 0",
                         reportingEnabled(),
@@ -66,7 +62,7 @@ class HealthSeriesBuilderTest {
                 Arguments.of(
                         "issueCount < HEALTHY_THRESHOLD",
                         reportingEnabled(),
-                        result(BELOW_HEALTHY_THRESHOLD),
+                        result(HEALTHY_THRESHOLD - 1),
                         SERIES_BELOW_HEALTHY_THRESHOLD),
                 Arguments.of(
                         "issueCount = HEALTHY_THRESHOLD",
@@ -76,12 +72,12 @@ class HealthSeriesBuilderTest {
                 Arguments.of(
                         "issueCount > HEALTHY_THRESHOLD",
                         reportingEnabled(),
-                        result(ABOVE_HEALTHY_THRESHOLD),
+                        result(HEALTHY_THRESHOLD + 1),
                         SERIES_ABOVE_HEALTHY_THRESHOLD),
                 Arguments.of(
                         "issueCount < UNHEALTHY_THRESHOLD",
                         reportingEnabled(),
-                        result(BELOW_UNHEALTHY_THRESHOLD),
+                        result(UNHEALTHY_THRESHOLD - 1),
                         SERIES_BELOW_UNHEALTHY_THRESHOLD),
                 Arguments.of(
                         "issueCount = UNHEALTHY_THRESHOLD",
@@ -91,7 +87,7 @@ class HealthSeriesBuilderTest {
                 Arguments.of(
                         "issueCount > UNHEALTHY_COUNT",
                         reportingEnabled(),
-                        result(ABOVE_UNHEALTHY_THRESHOLD),
+                        result(UNHEALTHY_THRESHOLD + 1),
                         SERIES_ABOVE_UNHEALTHY_THRESHOLD)
         );
     }
@@ -190,7 +186,7 @@ class HealthSeriesBuilderTest {
                         "use build number, two results",
                         buildNumberDomain(),
                         asList(
-                                result(build(2), BELOW_HEALTHY_THRESHOLD),
+                                result(build(2), HEALTHY_THRESHOLD - 1),
                                 result(build(1), HEALTHY_THRESHOLD)
                         ),
                         asList(
@@ -201,7 +197,7 @@ class HealthSeriesBuilderTest {
                         "use build number, two results on different days, day count = 1",
                         dayCountSingleDay(),
                         asList(
-                                result(build(2, YESTERDAY), BELOW_HEALTHY_THRESHOLD),
+                                result(build(2, YESTERDAY), HEALTHY_THRESHOLD - 1),
                                 result(build(1, TWO_DAYS_AGO), HEALTHY_THRESHOLD)
                         ),
                         singletonList(SERIES_BELOW_HEALTHY_THRESHOLD)),
@@ -209,9 +205,9 @@ class HealthSeriesBuilderTest {
                         "use build number, three results, build count = 2",
                         buildCount(2),
                         asList(
-                                result(build(3), BELOW_HEALTHY_THRESHOLD),
+                                result(build(3), HEALTHY_THRESHOLD - 1),
                                 result(build(2), HEALTHY_THRESHOLD),
-                                result(build(1), ABOVE_HEALTHY_THRESHOLD)
+                                result(build(1), HEALTHY_THRESHOLD + 1)
                         ),
                         asList(
                                 SERIES_AT_HEALTHY_THRESHOLD,
@@ -228,7 +224,7 @@ class HealthSeriesBuilderTest {
                         "use build date, single day, multiple results",
                         buildDateDomain(),
                         asList(
-                                result(build(TODAY), BELOW_HEALTHY_THRESHOLD),
+                                result(build(TODAY), HEALTHY_THRESHOLD - 1),
                                 result(build(TODAY), HEALTHY_THRESHOLD)
                         ),
                         singletonList(
@@ -238,9 +234,9 @@ class HealthSeriesBuilderTest {
                         "use build date, multiple days, single result per day",
                         buildDateDomain(),
                         asList(
-                                result(build(TODAY), BELOW_HEALTHY_THRESHOLD),
+                                result(build(TODAY), HEALTHY_THRESHOLD - 1),
                                 result(build(YESTERDAY), HEALTHY_THRESHOLD),
-                                result(build(TWO_DAYS_AGO), ABOVE_HEALTHY_THRESHOLD)
+                                result(build(TWO_DAYS_AGO), HEALTHY_THRESHOLD + 1)
                         ),
                         asList(
                                 SERIES_ABOVE_HEALTHY_THRESHOLD,
