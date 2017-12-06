@@ -213,6 +213,108 @@ class HealthSeriesBuilderTest {
     }
 
     /**
+     * When the getTotalSize() of a run is bigger than the healthy-threshold.
+     */
+    @Test
+    void totalSizeOverHealthy() {
+        GraphConfiguration cfg = createGraphConfig();
+        HealthDescriptor healthDescriptor = createHealthDescriptor(10, 20, Priority.NORMAL, true);
+        SeriesBuilder builder = new HealthSeriesBuilder(healthDescriptor);
+        final StaticAnalysisRun run = createAnalysisRun(1, 7, 3, 5, 1);
+
+
+        SoftAssertions.assertSoftly(softly -> {
+            CategoryDataset dataSet = builder.createDataSet(cfg, Arrays.asList(run));
+            softly.assertThat(dataSet.getValue(0, 0)).isEqualTo(10);
+            softly.assertThat(dataSet.getValue(1, 0)).isEqualTo(5);
+            softly.assertThat(dataSet.getValue(2, 0)).isEqualTo(0);
+        });
+    }
+
+    /**
+     * When the getTotalSize() of a run is equal to the healthy-threshold, the last two rows should be zero.
+     */
+    @Test
+    void totalSizeEqualsHealthy() {
+        GraphConfiguration cfg = createGraphConfig();
+        HealthDescriptor healthDescriptor = createHealthDescriptor(19, 30, Priority.NORMAL, true);
+        SeriesBuilder builder = new HealthSeriesBuilder(healthDescriptor);
+        final StaticAnalysisRun run = createAnalysisRun(1, 8, 2, 9, 1);
+
+
+        SoftAssertions.assertSoftly(softly -> {
+            CategoryDataset dataSet = builder.createDataSet(cfg, Arrays.asList(run));
+            softly.assertThat(dataSet.getValue(0, 0)).isEqualTo(19);
+            softly.assertThat(dataSet.getValue(1, 0)).isEqualTo(0);
+            softly.assertThat(dataSet.getValue(2, 0)).isEqualTo(0);
+        });
+    }
+
+    @Test
+    void totalSizeOneAboveHealthy() {
+        GraphConfiguration cfg = createGraphConfig();
+        HealthDescriptor healthDescriptor = createHealthDescriptor(12, 30, Priority.NORMAL, true);
+        SeriesBuilder builder = new HealthSeriesBuilder(healthDescriptor);
+        final StaticAnalysisRun run = createAnalysisRun(1, 7, 4, 2, 1);
+
+
+        SoftAssertions.assertSoftly(softly -> {
+            CategoryDataset dataSet = builder.createDataSet(cfg, Arrays.asList(run));
+            softly.assertThat(dataSet.getValue(0, 0)).isEqualTo(12);
+            softly.assertThat(dataSet.getValue(1, 0)).isEqualTo(1);
+            softly.assertThat(dataSet.getValue(2, 0)).isEqualTo(0);
+        });
+    }
+
+    @Test
+    void totalSizeEqualsUnhealthy() {
+        GraphConfiguration cfg = createGraphConfig();
+        HealthDescriptor healthDescriptor = createHealthDescriptor(20, 30, Priority.NORMAL, true);
+        SeriesBuilder builder = new HealthSeriesBuilder(healthDescriptor);
+        final StaticAnalysisRun run = createAnalysisRun(1, 20, 8, 2, 1);
+
+
+        SoftAssertions.assertSoftly(softly -> {
+            CategoryDataset dataSet = builder.createDataSet(cfg, Arrays.asList(run));
+            softly.assertThat(dataSet.getValue(0, 0)).isEqualTo(20);
+            softly.assertThat(dataSet.getValue(1, 0)).isEqualTo(10);
+            softly.assertThat(dataSet.getValue(2, 0)).isEqualTo(0);
+        });
+    }
+
+    @Test
+    void totalSizeOneAboveUnhealthy() {
+        GraphConfiguration cfg = createGraphConfig();
+        HealthDescriptor healthDescriptor = createHealthDescriptor(20, 30, Priority.NORMAL, true);
+        SeriesBuilder builder = new HealthSeriesBuilder(healthDescriptor);
+        final StaticAnalysisRun run = createAnalysisRun(1, 12, 8, 11, 1);
+
+
+        SoftAssertions.assertSoftly(softly -> {
+            CategoryDataset dataSet = builder.createDataSet(cfg, Arrays.asList(run));
+            softly.assertThat(dataSet.getValue(0, 0)).isEqualTo(20);
+            softly.assertThat(dataSet.getValue(1, 0)).isEqualTo(10);
+            softly.assertThat(dataSet.getValue(2, 0)).isEqualTo(1);
+        });
+    }
+
+    @Test
+    void healthyEqualsUnhealthy() {
+        GraphConfiguration cfg = createGraphConfig();
+        HealthDescriptor healthDescriptor = createHealthDescriptor(20, 20, Priority.NORMAL, true);
+        SeriesBuilder builder = new HealthSeriesBuilder(healthDescriptor);
+        final StaticAnalysisRun run = createAnalysisRun(1, 12, 8, 11, 1);
+
+
+        SoftAssertions.assertSoftly(softly -> {
+            CategoryDataset dataSet = builder.createDataSet(cfg, Arrays.asList(run));
+            softly.assertThat(dataSet.getValue(0, 0)).isEqualTo(20);
+            softly.assertThat(dataSet.getValue(1, 0)).isEqualTo(0);
+            softly.assertThat(dataSet.getValue(2, 0)).isEqualTo(11);
+        });
+    }
+
+    /**
      * Explicitly ensures C2a (boundary interior) coverage of createSeriesPerBuild().
      * This tests every path that can be reached with 1 iteration.
      */
