@@ -50,19 +50,22 @@ class HealthSeriesBuilderTest {
         return configuration;
     }
 
+    private HealthSeriesBuilder createBuilder(String healthy, String unhealthy, Priority priority) {
+        HealthDescriptor descriptor = new HealthDescriptor(healthy, unhealthy, priority);
+        return new HealthSeriesBuilder(descriptor);
+    }
+
     /**
      * Verifies correct list output if no health report is required (more healthy than unhealthy). This constellation is
      * not possible in the productive environment.
      */
     @Test
     void nonEnabledHealthReport() {
-        HealthDescriptor descriptor = new HealthDescriptor("2", "1", Priority.NORMAL);
-        HealthSeriesBuilder builder = new HealthSeriesBuilder(descriptor);
+        HealthSeriesBuilder builder = createBuilder("2", "1", Priority.NORMAL);
         StaticAnalysisRun run = createSimpleBuildResult(3);
         List<Integer> computeResult = builder.computeSeries(run);
 
-        assertThat(computeResult).hasSize(1);
-        assertThat(computeResult).startsWith(3);
+        assertThat(computeResult).containsExactly(3);
     }
 
     /**
@@ -72,12 +75,11 @@ class HealthSeriesBuilderTest {
     @Test
     void fullyHealthyReport() {
         StaticAnalysisRun run = createSimpleBuildResult(4);
-        HealthDescriptor descriptor = new HealthDescriptor("4", "5", Priority.NORMAL);
-        HealthSeriesBuilder builder = new HealthSeriesBuilder(descriptor);
+        HealthSeriesBuilder builder = createBuilder("4", "5", Priority.NORMAL);
 
         List<Integer> computeResult = builder.computeSeries(run);
-        assertThat(computeResult).hasSize(3);
-        assertThat(computeResult).startsWith(4, 0, 0);
+
+        assertThat(computeResult).containsExactly(4, 0, 0);
     }
 
     /**
@@ -87,12 +89,25 @@ class HealthSeriesBuilderTest {
     @Test
     void mediocreHealthReport() {
         StaticAnalysisRun run = createSimpleBuildResult(5);
-        HealthDescriptor descriptor = new HealthDescriptor("3", "5", Priority.NORMAL);
-        HealthSeriesBuilder builder = new HealthSeriesBuilder(descriptor);
+        HealthSeriesBuilder builder = createBuilder("3", "5", Priority.NORMAL);
 
         List<Integer> computeResult = builder.computeSeries(run);
-        assertThat(computeResult).hasSize(3);
-        assertThat(computeResult).startsWith(3, 2, 0);
+
+        assertThat(computeResult).containsExactly(3, 2, 0);
+    }
+
+    /**
+     * Verifies correct list output of a health report with more warnings than healthy-border and unhealthy-border. This
+     * build-graph would  be green, yellow and red.
+     */
+    @Test
+    void badHealthReport() {
+        StaticAnalysisRun run = createSimpleBuildResult(8);
+        HealthSeriesBuilder builder = createBuilder("3", "5", Priority.NORMAL);
+
+        List<Integer> computeResult = builder.computeSeries(run);
+
+        assertThat(computeResult).containsExactly(3, 2, 3);
     }
 
     /**
@@ -100,8 +115,7 @@ class HealthSeriesBuilderTest {
      */
     @Test
     void perBuildReportGraphWithoutAnyBuildsTest() {
-        HealthDescriptor descriptor = new HealthDescriptor("3", "5", Priority.NORMAL);
-        HealthSeriesBuilder builder = new HealthSeriesBuilder(descriptor);
+        HealthSeriesBuilder builder = createBuilder("3", "5", Priority.NORMAL);
         List<StaticAnalysisRun> results = Lists.newArrayList();
         GraphConfiguration configuration = createGraphConfiguration();
 
@@ -109,6 +123,7 @@ class HealthSeriesBuilderTest {
 
         assertThat(dataSet.getColumnCount()).isEqualTo(0);
         assertThat(dataSet.getRowCount()).isEqualTo(0);
+
     }
 
     /**
@@ -116,8 +131,7 @@ class HealthSeriesBuilderTest {
      */
     @Test
     void perDateReportGraphWithoutAnyBuildsTest() {
-        HealthDescriptor descriptor = new HealthDescriptor("3", "5", Priority.NORMAL);
-        HealthSeriesBuilder builder = new HealthSeriesBuilder(descriptor);
+        HealthSeriesBuilder builder = createBuilder("3", "5", Priority.NORMAL);
         List<StaticAnalysisRun> results = Lists.newArrayList();
         GraphConfiguration configuration = createGraphConfiguration();
         when(configuration.useBuildDateAsDomain()).thenReturn(true);
@@ -133,8 +147,7 @@ class HealthSeriesBuilderTest {
      */
     @Test
     void perBuildReportGraphTest() {
-        HealthDescriptor descriptor = new HealthDescriptor("3", "5", Priority.NORMAL);
-        HealthSeriesBuilder builder = new HealthSeriesBuilder(descriptor);
+        HealthSeriesBuilder builder = createBuilder("3", "5", Priority.NORMAL);
         StaticAnalysisRun resultBuildOne = createBuildResult(42, 6, System.currentTimeMillis());
         StaticAnalysisRun resultBuildTwo = createBuildResult(41, 8, System.currentTimeMillis());
         List<StaticAnalysisRun> results = Lists.newArrayList(resultBuildOne, resultBuildTwo);
@@ -161,11 +174,10 @@ class HealthSeriesBuilderTest {
      */
     @Test
     void reportGraphWithAncientBuild() {
-        HealthDescriptor descriptor = new HealthDescriptor("3", "5", Priority.NORMAL);
-        HealthSeriesBuilder builder = new HealthSeriesBuilder(descriptor);
+        HealthSeriesBuilder builder = createBuilder("3", "5", Priority.NORMAL);
         StaticAnalysisRun buildOfRecentTimes = createBuildResult(42, 8, System.currentTimeMillis());
-        StaticAnalysisRun buildOfAncientTimes = createBuildResult(41, 8, 1L);
-        List<StaticAnalysisRun> results = Lists.newArrayList(buildOfRecentTimes,buildOfAncientTimes);
+        StaticAnalysisRun buildOfAncientTimes = createBuildResult(41, 8, 0L);
+        List<StaticAnalysisRun> results = Lists.newArrayList(buildOfRecentTimes, buildOfAncientTimes);
 
         GraphConfiguration configuration = createGraphConfiguration();
         when(configuration.isDayCountDefined()).thenReturn(true);
@@ -184,8 +196,7 @@ class HealthSeriesBuilderTest {
      */
     @Test
     void reportGraphWithABuildTooMuch() {
-        HealthDescriptor descriptor = new HealthDescriptor("3", "5", Priority.NORMAL);
-        HealthSeriesBuilder builder = new HealthSeriesBuilder(descriptor);
+        HealthSeriesBuilder builder = createBuilder("3", "5", Priority.NORMAL);
         StaticAnalysisRun resultBuildOne = createBuildResult(42, 8, System.currentTimeMillis());
         StaticAnalysisRun resultBuildTwo = createBuildResult(41, 6, System.currentTimeMillis());
         StaticAnalysisRun aBuildTooMuch = createBuildResult(40, 10, System.currentTimeMillis());
@@ -209,8 +220,7 @@ class HealthSeriesBuilderTest {
      */
     @Test
     void perDateReportGraph() {
-        HealthDescriptor descriptor = new HealthDescriptor("3", "5", Priority.NORMAL);
-        HealthSeriesBuilder builder = new HealthSeriesBuilder(descriptor);
+        HealthSeriesBuilder builder = createBuilder("3", "5", Priority.NORMAL);
         LocalDate today = new LocalDate(System.currentTimeMillis());
         Long yesterday = today.minusDays(1).toDate().getTime();
         Long beforeYesterday = today.minusDays(2).toDate().getTime();
