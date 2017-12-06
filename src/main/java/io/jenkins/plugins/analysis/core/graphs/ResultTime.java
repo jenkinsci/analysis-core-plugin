@@ -52,7 +52,7 @@ public class ResultTime {
     }
 
     private long computeDayDelta(final StaticAnalysisRun analysisRun) {
-        return ChronoUnit.DAYS.between(toLocalDate(analysisRun.getBuild().getTimeInMillis()), today);
+        return Math.abs(ChronoUnit.DAYS.between(toLocalDate(analysisRun.getBuild().getTimeInMillis()), today));
     }
 
     private LocalDate toLocalDate(final long timeInMillis) {
