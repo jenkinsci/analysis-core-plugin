@@ -4,6 +4,10 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
+
+import org.joda.time.Days;
 
 import com.google.common.annotations.VisibleForTesting;
 
@@ -51,8 +55,8 @@ public class ResultTime {
         return configuration.isDayCountDefined() && computeDayDelta(analysisRun) > configuration.getDayCount();
     }
 
-    private int computeDayDelta(final StaticAnalysisRun analysisRun) {
-        return Math.abs(Period.between(toLocalDate(analysisRun.getBuild().getTimeInMillis()), today).getDays());
+    private long computeDayDelta(final StaticAnalysisRun analysisRun) {
+        return ChronoUnit.DAYS.between(toLocalDate(analysisRun.getBuild().getTimeInMillis()), today);
     }
 
     private LocalDate toLocalDate(final long timeInMillis) {
