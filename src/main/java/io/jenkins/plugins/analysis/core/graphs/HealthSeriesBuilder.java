@@ -19,7 +19,8 @@ public class HealthSeriesBuilder extends SeriesBuilder {
     /**
      * Creates a new instance of {@link HealthSeriesBuilder}.
      *
-     * @param healthDescriptor the health descriptor to determine the colors of the graph
+     * @param healthDescriptor
+     *         the health descriptor to determine the colors of the graph
      */
     public HealthSeriesBuilder(final HealthDescriptor healthDescriptor) {
         this.healthDescriptor = healthDescriptor;
@@ -45,12 +46,7 @@ public class HealthSeriesBuilder extends SeriesBuilder {
             if (remainder > 0) {
                 series.add(Math.min(remainder, range));
                 remainder -= range;
-                if (remainder > 0) {
-                    series.add(remainder);
-                }
-                else {
-                    series.add(0);
-                }
+                series.add(Math.max(remainder, 0));
             }
             else {
                 series.add(0);
