@@ -9,7 +9,7 @@ import java.util.List;
 
 
 import io.jenkins.plugins.analysis.core.quality.HealthDescriptor;
-import net.bytebuddy.implementation.bytecode.Throw;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.jfree.data.category.CategoryDataset;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 /**
  * Test Class for SerialBuilder.
  */
-class SerialBuilderTest {
+abstract class SerialBuilderTest {
     /**
      * Generate a stub HealthDescriptor.
      *
