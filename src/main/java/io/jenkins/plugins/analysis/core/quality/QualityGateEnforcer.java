@@ -27,13 +27,6 @@ public class QualityGateEnforcer {
             return Result.FAILURE;
         }
 
-        if (run.getTotalSize() > qualityGate.getTotalPriorityAllUnstable()
-                || run.getTotalHighPrioritySize() > qualityGate.getTotalPriorityHighUnstable()
-                || run.getTotalNormalPrioritySize() > qualityGate.getTotalPriorityNormalUnstable()
-                || run.getTotalLowPrioritySize() > qualityGate.getTotalPriorityLowUnstable()) {
-            return Result.UNSTABLE;
-        }
-
         if (qualityGate.shouldComputeNewWarnings()) {
             if (run.getNewSize() > qualityGate.getNewPriorityAllFailed()
                     || run.getNewHighPrioritySize() > qualityGate.getNewPriorityHighFailed()
@@ -48,6 +41,13 @@ public class QualityGateEnforcer {
                     || run.getNewLowPrioritySize() > qualityGate.getNewPriorityLowUnstable()) {
                 return Result.UNSTABLE;
             }
+        }
+
+        if (run.getTotalSize() > qualityGate.getTotalPriorityAllUnstable()
+                || run.getTotalHighPrioritySize() > qualityGate.getTotalPriorityHighUnstable()
+                || run.getTotalNormalPrioritySize() > qualityGate.getTotalPriorityNormalUnstable()
+                || run.getTotalLowPrioritySize() > qualityGate.getTotalPriorityLowUnstable()) {
+            return Result.UNSTABLE;
         }
 
         return Result.SUCCESS;

@@ -63,70 +63,65 @@ class QualityGateEnforcerTest {
      * the build should be reported as a fail.
      */
     @Test
-    void shouldPreferFailOverUnstable() {
+    void shouldPreferFailOverUnstableTotalTotal() {
+        // Total runs fail and are unstable
         QualityGateEnforcer enforcer = new QualityGateEnforcer();
-        StaticAnalysisRun run = mock(StaticAnalysisRun.class);
-        QualityGate qualityGate = new QualityGate.Builder()
-                .setTotalPriorityAllUnstable(1)
+        StaticAnalysisRun exceedsTotalFails = mock(StaticAnalysisRun.class);
+        when(exceedsTotalFails.getTotalSize()).thenReturn(2);
+        QualityGate totalFailGate = new QualityGate.Builder()
                 .setTotalPriorityAllFailed(1)
-                .setTotalPriorityHighUnstable(1)
-                .setTotalPriorityHighFailed(1)
-                .setTotalPriorityNormalUnstable(1)
-                .setTotalPriorityNormalFailed(1)
-                .setTotalPriorityLowUnstable(1)
-                .setTotalPriorityLowFailed(1)
-                .setNewPriorityAllUnstable(1)
-                .setNewPriorityAllFailed(1)
-                .setNewPriorityHighUnstable(1)
-                .setNewPriorityHighFailed(1)
-                .setNewPriorityNormalUnstable(1)
-                .setNewPriorityNormalFailed(1)
-                .setNewPriorityLowUnstable(1)
-                .setNewPriorityLowFailed(1)
-                .setComputeNewWarnings(true)
+                .setTotalPriorityAllUnstable(1)
                 .build();
 
-        SoftAssertions.assertSoftly(softly -> {
-            when(run.getTotalSize()).thenReturn(2);
-            Result fail = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(fail).as(FAILURE_OVER_UNSTABLE).isEqualTo(Result.FAILURE);
-            when(run.getTotalSize()).thenReturn(0);
+        Result fail = enforcer.evaluate(exceedsTotalFails, totalFailGate);
+        assertThat(fail).as(FAILURE_OVER_UNSTABLE).isEqualTo(Result.FAILURE);
+    }
 
-            when(run.getTotalHighPrioritySize()).thenReturn(2);
-            Result fail2 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(fail2).as(FAILURE_OVER_UNSTABLE).isEqualTo(Result.FAILURE);
-            when(run.getTotalHighPrioritySize()).thenReturn(0);
+    @Test
+    void shouldPreferFailOverUnstableTotalNew() {
+        // Total runs fail, new are unstable
+        QualityGateEnforcer enforcer = new QualityGateEnforcer();
+        StaticAnalysisRun exceedsNewFails = mock(StaticAnalysisRun.class);
+        when(exceedsNewFails.getTotalSize()).thenReturn(2);
+        when(exceedsNewFails.getNewSize()).thenReturn(2);
+        QualityGate newFailGate = new QualityGate.Builder()
+                .setTotalPriorityAllFailed(1)
+                .setNewPriorityAllUnstable(1)
+                .setComputeNewWarnings(true)
+                .build();
+        Result fail = enforcer.evaluate(exceedsNewFails, newFailGate);
+        assertThat(fail).as(FAILURE_OVER_UNSTABLE).isEqualTo(Result.FAILURE);
+    }
 
-            when(run.getTotalNormalPrioritySize()).thenReturn(2);
-            Result fail3 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(fail3).as(FAILURE_OVER_UNSTABLE).isEqualTo(Result.FAILURE);
-            when(run.getTotalNormalPrioritySize()).thenReturn(0);
+    @Test
+    void shouldPreferFailOverUnstableNewTotal() {
+        // Total runs unstable, new are fail
+        QualityGateEnforcer enforcer = new QualityGateEnforcer();
+        StaticAnalysisRun exceedsNewFails = mock(StaticAnalysisRun.class);
+        when(exceedsNewFails.getTotalSize()).thenReturn(2);
+        when(exceedsNewFails.getNewSize()).thenReturn(2);
+        QualityGate newFailGate = new QualityGate.Builder()
+                .setTotalPriorityAllUnstable(1)
+                .setNewPriorityAllFailed(1)
+                .setComputeNewWarnings(true)
+                .build();
+        Result fail = enforcer.evaluate(exceedsNewFails, newFailGate);
+        assertThat(fail).as(FAILURE_OVER_UNSTABLE).isEqualTo(Result.FAILURE);
+    }
 
-            when(run.getTotalLowPrioritySize()).thenReturn(2);
-            Result fail4 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(fail4).as(FAILURE_OVER_UNSTABLE).isEqualTo(Result.FAILURE);
-            when(run.getTotalLowPrioritySize()).thenReturn(0);
-
-            when(run.getNewSize()).thenReturn(2);
-            Result fail5 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(fail5).as(FAILURE_OVER_UNSTABLE).isEqualTo(Result.FAILURE);
-            when(run.getNewSize()).thenReturn(0);
-
-            when(run.getNewHighPrioritySize()).thenReturn(2);
-            Result fail6 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(fail6).as(FAILURE_OVER_UNSTABLE).isEqualTo(Result.FAILURE);
-            when(run.getNewHighPrioritySize()).thenReturn(0);
-
-            when(run.getNewNormalPrioritySize()).thenReturn(2);
-            Result fail7 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(fail7).as(FAILURE_OVER_UNSTABLE).isEqualTo(Result.FAILURE);
-            when(run.getNewNormalPrioritySize()).thenReturn(0);
-
-            when(run.getNewLowPrioritySize()).thenReturn(2);
-            Result fail8 = enforcer.evaluate(run, qualityGate);
-            softly.assertThat(fail8).as(FAILURE_OVER_UNSTABLE).isEqualTo(Result.FAILURE);
-            when(run.getNewLowPrioritySize()).thenReturn(0);
-        });
+    @Test
+    void shouldPreferFailOverUnstableNewNew() {
+        // New runs fail and are unstable
+        QualityGateEnforcer enforcer = new QualityGateEnforcer();
+        StaticAnalysisRun exceedsNewFails = mock(StaticAnalysisRun.class);
+        when(exceedsNewFails.getNewSize()).thenReturn(2);
+        QualityGate newFailGate = new QualityGate.Builder()
+                .setNewPriorityAllFailed(1)
+                .setNewPriorityAllUnstable(1)
+                .setComputeNewWarnings(true)
+                .build();
+        Result fail = enforcer.evaluate(exceedsNewFails, newFailGate);
+        assertThat(fail).as(FAILURE_OVER_UNSTABLE).isEqualTo(Result.FAILURE);
     }
 
     /**
