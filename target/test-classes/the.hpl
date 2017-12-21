@@ -1,0 +1,32 @@
+Manifest-Version: 1.0
+Plugin-Class: hudson.plugins.analysis.core.AnalysisCorePlugin
+Group-Id: org.jvnet.hudson.plugins
+Short-Name: analysis-core
+Long-Name: Static Analysis Utilities
+Url: http://wiki.jenkins-ci.org/x/CwDgAQ
+Plugin-Version: 1.93-SNAPSHOT (private-ec4e9a09-CorneliaChristof)
+Hudson-Version: 2.73.3
+Jenkins-Version: 2.73.3
+Plugin-Dependencies: maven-plugin:2.17,ant:1.1;resolution:=optional,an
+ tisamy-markup-formatter:1.5,dashboard-view:2.9.4;resolution:=optional
+ ,git:3.1.0;resolution:=optional,matrix-project:1.7.1,structs:1.10,tok
+ en-macro:2.1;resolution:=optional
+Plugin-Developers: Ulli Hafner:drulli:ullrich.hafner@gmail.com
+Libraries: /Users/CorneliaChristof/Development/Git_CorneliaChristof/an
+ alysis-core/src/main/resources,/Users/CorneliaChristof/Development/Gi
+ t_CorneliaChristof/analysis-core/target/classes,/Users/CorneliaChrist
+ of/.m2/repository/asm/asm/3.3.1/asm-3.3.1.jar,/Users/CorneliaChristof
+ /.m2/repository/cglib/cglib/2.2.2/cglib-2.2.2.jar,/Users/CorneliaChri
+ stof/.m2/repository/commons-beanutils/commons-beanutils/1.8.3/commons
+ -beanutils-1.8.3.jar,/Users/CorneliaChristof/.m2/repository/de/java2h
+ tml/java2html/5.0/java2html-5.0.jar,/Users/CorneliaChristof/.m2/repos
+ itory/joda-time/joda-time/2.9.5/joda-time-2.9.5.jar,/Users/CorneliaCh
+ ristof/.m2/repository/org/apache/commons/commons-digester3/3.2/common
+ s-digester3-3.2.jar,/Users/CorneliaChristof/.m2/repository/org/apache
+ /commons/commons-lang3/3.4/commons-lang3-3.4.jar,/Users/CorneliaChris
+ tof/.m2/repository/xerces/xercesImpl/2.11.0/xercesImpl-2.11.0.jar,/Us
+ ers/CorneliaChristof/.m2/repository/xml-apis/xml-apis/1.4.01/xml-apis
+ -1.4.01.jar
+Resource-Path: /Users/CorneliaChristof/Development/Git_CorneliaChristo
+ f/analysis-core/src/main/webapp
+

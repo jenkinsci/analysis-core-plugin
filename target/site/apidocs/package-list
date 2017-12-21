@@ -1,0 +1,8 @@
+hudson.plugins.analysis
+hudson.plugins.analysis.core
+hudson.plugins.analysis.dashboard
+hudson.plugins.analysis.graph
+hudson.plugins.analysis.tokens
+hudson.plugins.analysis.util
+hudson.plugins.analysis.util.model
+hudson.plugins.analysis.views

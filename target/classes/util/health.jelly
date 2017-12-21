@@ -1,0 +1,39 @@
+<!--
+  Section header
+
+  <%@attribute name="id" required="true" %>
+-->
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler"
+  xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson"
+  xmlns:f="/lib/form" xmlns:u="/util">
+
+  <f:entry title="${%Health thresholds}" description="${%description.health.limit}">
+    <table>
+      <tbody>
+        <tr>
+          <td style="vertical-align: middle;">
+            <img src="${resURL}/images/16x16/health-80plus.gif" alt="100%" title="${%description.healthy}" /> ${%threshold.100.percent}
+          </td>
+          <td>
+            <f:textbox name="healthy" value="${instance.healthy}" />
+          </td>
+          <td width="20"/>
+          <td style="vertical-align: middle;">
+            <img src="${resURL}/images/16x16/health-00to19.gif" alt="0%" title="${%description.unhealthy}" /> ${%threshold.0.percent}
+          </td>
+          <td>
+            <f:textbox name="unHealthy" value="${instance.unHealthy}" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </f:entry>
+  <f:entry title="${%Health priorities}" description="${%description.health.priorities}">
+    <j:set var="pfx" value="ac-health-${app.getPlugin('analysis-core').newId}"/>
+    <f:radio name="${pfx}.thresholdLimit" value="high" checked="${instance.thresholdLimit == 'high'}" title="${%Only priority high}"/>
+    <f:radio name="${pfx}.thresholdLimit" value="normal" checked="${instance.thresholdLimit == 'normal'}" title="${%Priorities high and normal}"/>
+    <f:radio name="${pfx}.thresholdLimit" value="low" checked="${(instance == null) ? 'true' : instance.thresholdLimit == 'low'}" title="${%All priorities}"/>
+  </f:entry>
+
+</j:jelly>

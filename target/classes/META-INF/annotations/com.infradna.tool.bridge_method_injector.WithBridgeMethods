@@ -1,0 +1,10 @@
+hudson.plugins.analysis.core.AbstractResultAction
+hudson.plugins.analysis.core.BuildHistory
+hudson.plugins.analysis.core.BuildResult
+hudson.plugins.analysis.core.MavenResultAction
+hudson.plugins.analysis.core.ParserResult
+hudson.plugins.analysis.graph.GraphConfigurationView
+hudson.plugins.analysis.views.AbstractAnnotationsDetail
+hudson.plugins.analysis.views.ConsoleDetail
+hudson.plugins.analysis.views.ErrorDetail
+hudson.plugins.analysis.views.SourceDetail

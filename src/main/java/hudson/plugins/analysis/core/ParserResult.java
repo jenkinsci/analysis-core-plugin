@@ -1,7 +1,6 @@
 package hudson.plugins.analysis.core;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,7 +55,7 @@ public class ParserResult implements Serializable {
     private final Workspace workspace;
     /** A mapping of relative file names to absolute file names. */
     @SuppressWarnings("Se")
-    private transient Multimap<String, String> fileNameCache = HashMultimap.create();
+    private final Multimap<String, String> fileNameCache = HashMultimap.create();
     /** The log messages. @since 1.20 **/
     private String logMessage;
     /** Total number of modules. @since 1.31 **/
@@ -456,15 +455,6 @@ public class ParserResult implements Serializable {
      */
     public String getLogMessages() {
         return StringUtils.defaultString(logMessage);
-    }
-
-    /**
-     * repopulate the transient fileNameCache
-     */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-
-        this.fileNameCache = HashMultimap.create();
     }
 
     /**

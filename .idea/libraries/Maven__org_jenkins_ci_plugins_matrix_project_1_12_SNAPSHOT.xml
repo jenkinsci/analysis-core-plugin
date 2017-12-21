@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.jenkins-ci.plugins:matrix-project:1.12-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/jenkins-ci/plugins/matrix-project/1.12-SNAPSHOT/matrix-project-1.12-20170922.195719-2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/jenkins-ci/plugins/matrix-project/1.12-SNAPSHOT/matrix-project-1.12-20170922.195719-2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/jenkins-ci/plugins/matrix-project/1.12-SNAPSHOT/matrix-project-1.12-20170922.195719-2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

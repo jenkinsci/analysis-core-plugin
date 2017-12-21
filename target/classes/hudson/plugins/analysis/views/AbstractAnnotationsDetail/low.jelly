@@ -1,0 +1,5 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
+  <j:set var="annotations" value="${it.container.low}" />
+  <st:include it="${it}" page="details.jelly"/>
+</j:jelly>
