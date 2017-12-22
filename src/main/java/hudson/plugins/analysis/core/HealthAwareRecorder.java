@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 
+import jenkins.model.Jenkins;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundSetter;
 
@@ -20,6 +21,8 @@ import hudson.matrix.MatrixAggregatable;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
+import hudson.model.Item;
+import hudson.model.Job;
 import hudson.model.Project;
 import hudson.model.Result;
 import hudson.model.Run;
@@ -30,7 +33,7 @@ import hudson.plugins.analysis.util.LoggerFactory;
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
-import hudson.remoting.VirtualChannel;
+import hudson.remoting.VirtualChannel;§
 import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Builder;
 import hudson.tasks.Maven;
@@ -71,6 +74,14 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
     private final String pluginName;
     /** The default encoding to be used when reading and parsing files. */
     private String defaultEncoding;
+    /**
+     * Determines which specific job should be used to resolve the reference build
+     */
+    private String referenceJobName;
+    /**
+     * Determines which specific build should be used as a reference when calculating annotation deltas
+     */
+    private String referenceBuildNumber;
     /**
      * Determines whether the plug-in should run for failed builds, too.
      *
@@ -350,6 +361,44 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
             throws IOException, FileNotFoundException, InterruptedException {
         new Files().copyFilesWithAnnotationsToBuildFolder(channel, new FilePath(rootDir), annotations,
                 EncodingValidator.getEncoding(getDefaultEncoding()));
+    }
+
+    protected Run<?, ?> getReferenceBuild(Run currentBuild, Jenkins jobResolver) {
+        final Job job;
+
+        if (referenceJobName != null && !referenceJobName.isEmpty()) {
+            final Item resolvedItem = jobResolver.getItemByFullName(referenceJobName);
+
+            if (!(resolvedItem instanceof Job)) {
+                throw new IllegalArgumentException("Could not resolve reference build: the provided reference job name points to a non-existent job");
+            }
+
+            job = ((Job) resolvedItem);
+        } else {
+            job = currentBuild.getParent();
+        }
+
+        if (referenceBuildNumber == null || referenceBuildNumber.isEmpty()) {
+            return job.getLastBuild();
+        }
+
+        final int buildNo;
+
+        try {
+            buildNo = Integer.valueOf(referenceBuildNumber);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Could not resolve reference build: the provided reference build number is not a valid number", e);
+        }
+
+        return job.getBuildByNumber(buildNo);
+    }
+
+    protected Run<?, ?> getReferenceBuildOrNull(Run currentBuild, Jenkins jobResolver) {
+        try {
+            return getReferenceBuild(currentBuild, jobResolver);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     /**
@@ -787,6 +836,25 @@ public abstract class HealthAwareRecorder extends Recorder implements HealthDesc
         thresholds.failedNewLow = failedNewLow;
     }
 
+    @CheckForNull
+    public String getReferenceJobName() {
+        return referenceJobName;
+    }
+
+    @DataBoundSetter
+    public void setReferenceJobName(final String refProject) {
+        this.referenceJobName = refProject;
+    }
+
+    @CheckForNull
+    public String getReferenceBuildNumber() {
+        return referenceBuildNumber;
+    }
+
+    @DataBoundSetter
+    public void setReferenceBuildNumber(final String refBuildNumber) {
+        this.referenceBuildNumber = refBuildNumber;
+    }
 
     private void setListener(final TaskListener listener) {
         this.listener = listener;

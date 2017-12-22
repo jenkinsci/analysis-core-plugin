@@ -134,7 +134,7 @@ public class BuildHistory {
     }
 
     private ResultAction<? extends BuildResult> getAction(final boolean isStatusRelevant, final boolean mustBeStable) {
-        for (Run<?, ?> build = baseline.getPreviousBuild(); build != null; build = build.getPreviousBuild()) {
+        for (Run<?, ?> build = baseline; build != null; build = build.getPreviousBuild()) { // FIXME: should still initialize with build = baseline.getPreviousBuild() in some cases
             ResultAction<? extends BuildResult> action = getResultAction(build);
             if (hasValidResult(build, mustBeStable, action) && isSuccessfulAction(action, isStatusRelevant)) {
                 return action;

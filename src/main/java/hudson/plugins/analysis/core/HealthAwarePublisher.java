@@ -75,7 +75,7 @@ public abstract class HealthAwarePublisher extends HealthAwareRecorder {
             }
 
             if (referenceBuild != null) {
-                logger.log("Computing warning deltas based on reference build " + referenceBuild.getDisplayName());
+                logger.log("Computing warning deltas based on reference build " + referenceBuild.getFullDisplayName());
             }
         }
         catch (InterruptedException exception) {
