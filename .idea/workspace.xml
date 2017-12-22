@@ -2,6 +2,454 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="16038329-5e11-4ef9-82b3-6afedc1e56c2" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_jnr_jffi_1_2_15.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_jnr_jffi_native_1_2_15.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_jnr_jnr_constants_0_9_8.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_jnr_jnr_ffi_2_1_4.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_jnr_jnr_posix_3_0_41.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_inject_guice_4_0.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_2_2.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_fileupload_commons_fileupload_1_3_1_jenkins_2.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_httpclient_commons_httpclient_3_1_jenkins_1.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_stephenc_crypto_self_signed_cert_generator_1_0_0.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jline_jline_2_12.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_17.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_i2p_crypto_eddsa_0_2_0.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_java_dev_jna_jna_4_2_1.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_java_sezpoz_sezpoz_1_12.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_compress_1_10.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_sshd_sshd_core_1_6_0.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_groovy_groovy_all_2_4_11.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_connectbot_jbcrypt_jbcrypt_1_0_0.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_fusesource_jansi_jansi_1_11.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jenkins_ci_annotation_indexer_1_12.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jenkins_ci_bytecode_compatibility_transformer_1_8.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jenkins_ci_main_cli_2_73_3.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jenkins_ci_main_jenkins_core_2_73_3.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jenkins_ci_main_remoting_3_10_2.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jenkins_ci_modules_instance_identity_2_1.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jenkins_ci_modules_ssh_cli_auth_1_4.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jenkins_ci_modules_sshd_2_0.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jenkins_ci_modules_windows_slave_installer_1_9_1.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jenkins_ci_trilead_ssh2_build_217_jenkins_11.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jenkins_ci_ui_bootstrap_core_assets_1_3_2.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jenkins_ci_ui_handlebars_core_assets_1_1_1.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jenkins_ci_ui_jquery_detached_1_2.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jenkins_ci_ui_jquery_detached_core_assets_1_2_1.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jenkins_ci_version_number_1_4.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jvnet_localizer_localizer_1_24.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jvnet_tiger_types_2_2.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jvnet_winp_winp_1_25.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_kohsuke_access_modifier_annotation_1_11.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_kohsuke_libzfs_0_8.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_kohsuke_stapler_stapler_1_250.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_kohsuke_stapler_stapler_adjunct_timeline_1_5.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_kohsuke_stapler_stapler_groovy_1_250.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_kohsuke_stapler_stapler_jelly_1_250.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_kohsuke_stapler_stapler_jrebel_1_250.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_kohsuke_windows_package_checker_1_2.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_commons_5_0_3.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/packages.jelly" afterPath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/packages.jelly" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/details.jelly" afterPath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/details.jelly" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/index.jelly" afterPath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/index.jelly" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/new.jelly" afterPath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/new.jelly" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/packages.jelly" afterPath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/packages.jelly" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/warnings.jelly" afterPath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/warnings.jelly" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/result/fixed.jelly" afterPath="$PROJECT_DIR$/src/main/resources/result/fixed.jelly" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/result/main.jelly" afterPath="$PROJECT_DIR$/src/main/resources/result/main.jelly" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/result/priorities-summary.jelly" afterPath="$PROJECT_DIR$/src/main/resources/result/priorities-summary.jelly" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/result/priority-graph.jelly" afterPath="$PROJECT_DIR$/src/main/resources/result/priority-graph.jelly" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/css/bootstrap-customized/bootstrap-customized.css" afterPath="$PROJECT_DIR$/src/main/webapp/css/bootstrap-customized/bootstrap-customized.css" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/css/material-blue-grey.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/data-tables.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/data-tables.js" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/priority-chart.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/doughnut-chart.js" />
+      <change beforePath="$PROJECT_DIR$/target/analysis-core.hpi" afterPath="$PROJECT_DIR$/target/analysis-core.hpi" />
+      <change beforePath="$PROJECT_DIR$/target/analysis-core.jar" afterPath="$PROJECT_DIR$/target/analysis-core.jar" />
+      <change beforePath="$PROJECT_DIR$/target/analysis-core/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/target/analysis-core/META-INF/MANIFEST.MF" />
+      <change beforePath="$PROJECT_DIR$/target/analysis-core/WEB-INF/lib/analysis-core.jar" afterPath="$PROJECT_DIR$/target/analysis-core/WEB-INF/lib/analysis-core.jar" />
+      <change beforePath="$PROJECT_DIR$/target/analysis-core/css/bootstrap-customized/bootstrap-customized.css" afterPath="$PROJECT_DIR$/target/analysis-core/css/bootstrap-customized/bootstrap-customized.css" />
+      <change beforePath="$PROJECT_DIR$/target/analysis-core/js/data-tables.js" afterPath="$PROJECT_DIR$/target/analysis-core/js/data-tables.js" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/AbstractHealthDescriptor.javadoc" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/AbstractHealthDescriptor.javadoc" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/AbstractProjectAction.javadoc" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/AbstractProjectAction.javadoc" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/AbstractResultAction.javadoc" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/AbstractResultAction.javadoc" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult.javadoc" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult.javadoc" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/packages.jelly" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/packages.jelly" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/Thresholds.javadoc" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/Thresholds.javadoc" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/util/model/AbstractAnnotation.javadoc" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/util/model/AbstractAnnotation.javadoc" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/views/AbstractAnnotationsDetail/details.jelly" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/views/AbstractAnnotationsDetail/details.jelly" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/views/AbstractAnnotationsDetail/index.jelly" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/views/AbstractAnnotationsDetail/index.jelly" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/views/AbstractAnnotationsDetail/packages.jelly" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/views/AbstractAnnotationsDetail/packages.jelly" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/views/AbstractAnnotationsDetail/warnings.jelly" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/views/AbstractAnnotationsDetail/warnings.jelly" />
+      <change beforePath="$PROJECT_DIR$/target/classes/result/fixed.jelly" afterPath="$PROJECT_DIR$/target/classes/result/fixed.jelly" />
+      <change beforePath="$PROJECT_DIR$/target/classes/result/priorities-summary.jelly" afterPath="$PROJECT_DIR$/target/classes/result/priorities-summary.jelly" />
+      <change beforePath="$PROJECT_DIR$/target/classes/result/priority-graph.jelly" afterPath="$PROJECT_DIR$/target/classes/result/priority-graph.jelly" />
+      <change beforePath="$PROJECT_DIR$/target/findbugs.xml" afterPath="$PROJECT_DIR$/target/findbugs.xml" />
+      <change beforePath="$PROJECT_DIR$/target/findbugsXml.xml" afterPath="$PROJECT_DIR$/target/findbugsXml.xml" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/allclasses-frame.html" afterPath="$PROJECT_DIR$/target/site/apidocs/allclasses-frame.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/allclasses-noframe.html" afterPath="$PROJECT_DIR$/target/site/apidocs/allclasses-noframe.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/constant-values.html" afterPath="$PROJECT_DIR$/target/site/apidocs/constant-values.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/deprecated-list.html" afterPath="$PROJECT_DIR$/target/site/apidocs/deprecated-list.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/help-doc.html" afterPath="$PROJECT_DIR$/target/site/apidocs/help-doc.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/Messages.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/Messages.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/class-use/Messages.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/class-use/Messages.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AbstractAnnotationParser.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AbstractAnnotationParser.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AbstractHealthDescriptor.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AbstractHealthDescriptor.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AbstractProjectAction.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AbstractProjectAction.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AbstractResultAction.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AbstractResultAction.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AnalysisCorePlugin.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AnalysisCorePlugin.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AnnotationDifferencer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AnnotationDifferencer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AnnotationParser.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AnnotationParser.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AnnotationsAggregator.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AnnotationsAggregator.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AnnotationsClassifier.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AnnotationsClassifier.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AntBuilderCheck.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/AntBuilderCheck.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/BuildHistory.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/BuildHistory.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/BuildResult.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/BuildResult.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/BuildResultEvaluator.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/BuildResultEvaluator.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/FilesParser.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/FilesParser.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/GlobalSettings.DescriptorImpl.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/GlobalSettings.DescriptorImpl.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/GlobalSettings.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/GlobalSettings.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/HealthAwareMavenReporter.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/HealthAwareMavenReporter.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/HealthAwarePublisher.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/HealthAwarePublisher.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/HealthAwareRecorder.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/HealthAwareRecorder.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/HealthAwareReporter.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/HealthAwareReporter.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/HealthDescriptor.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/HealthDescriptor.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/HealthReportBuilder.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/HealthReportBuilder.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/IssueDifference.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/IssueDifference.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/MavenProjectChecker.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/MavenProjectChecker.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/MavenResultAction.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/MavenResultAction.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/NullBuildHistory.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/NullBuildHistory.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/NullHealthDescriptor.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/NullHealthDescriptor.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/ParserResult.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/ParserResult.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/PluginDescriptor.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/PluginDescriptor.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/ReporterDescriptor.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/ReporterDescriptor.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/ResultAction.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/ResultAction.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/SerializableSettings.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/SerializableSettings.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/Settings.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/Settings.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/Thresholds.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/Thresholds.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AbstractAnnotationParser.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AbstractAnnotationParser.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AbstractHealthDescriptor.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AbstractHealthDescriptor.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AbstractProjectAction.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AbstractProjectAction.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AbstractResultAction.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AbstractResultAction.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AnalysisCorePlugin.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AnalysisCorePlugin.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AnnotationDifferencer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AnnotationDifferencer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AnnotationParser.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AnnotationParser.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AnnotationsAggregator.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AnnotationsAggregator.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AnnotationsClassifier.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AnnotationsClassifier.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AntBuilderCheck.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/AntBuilderCheck.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/BuildHistory.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/BuildHistory.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/BuildResult.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/BuildResult.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/BuildResultEvaluator.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/BuildResultEvaluator.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/FilesParser.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/FilesParser.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/GlobalSettings.DescriptorImpl.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/GlobalSettings.DescriptorImpl.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/GlobalSettings.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/GlobalSettings.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/HealthAwareMavenReporter.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/HealthAwareMavenReporter.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/HealthAwarePublisher.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/HealthAwarePublisher.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/HealthAwareRecorder.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/HealthAwareRecorder.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/HealthAwareReporter.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/HealthAwareReporter.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/HealthDescriptor.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/HealthDescriptor.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/HealthReportBuilder.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/HealthReportBuilder.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/IssueDifference.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/IssueDifference.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/MavenProjectChecker.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/MavenProjectChecker.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/MavenResultAction.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/MavenResultAction.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/NullBuildHistory.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/NullBuildHistory.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/NullHealthDescriptor.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/NullHealthDescriptor.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/ParserResult.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/ParserResult.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/PluginDescriptor.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/PluginDescriptor.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/ReporterDescriptor.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/ReporterDescriptor.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/ResultAction.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/ResultAction.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/SerializableSettings.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/SerializableSettings.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/Settings.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/Settings.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/Thresholds.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/class-use/Thresholds.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/package-frame.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/package-frame.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/package-summary.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/package-summary.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/package-tree.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/package-tree.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/package-use.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/core/package-use.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/AbstractPortlet.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/AbstractPortlet.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/AbstractWarningsGraphPortlet.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/AbstractWarningsGraphPortlet.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/AbstractWarningsTablePortlet.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/AbstractWarningsTablePortlet.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/DefaultGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/DefaultGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/class-use/AbstractPortlet.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/class-use/AbstractPortlet.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/class-use/AbstractWarningsGraphPortlet.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/class-use/AbstractWarningsGraphPortlet.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/class-use/AbstractWarningsTablePortlet.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/class-use/AbstractWarningsTablePortlet.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/class-use/DefaultGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/class-use/DefaultGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/package-frame.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/package-frame.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/package-summary.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/package-summary.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/package-tree.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/package-tree.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/package-use.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/dashboard/package-use.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/AnnotationsByUserGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/AnnotationsByUserGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/BuildResultGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/BuildResultGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/CategoryBuildResultGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/CategoryBuildResultGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/ColorPalette.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/ColorPalette.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/DefaultGraphConfigurationView.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/DefaultGraphConfigurationView.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/DifferenceGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/DifferenceGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/EmptyGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/EmptyGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/GraphConfiguration.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/GraphConfiguration.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/GraphConfigurationView.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/GraphConfigurationView.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/HealthGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/HealthGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/LocalDateLabel.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/LocalDateLabel.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/NewVersusFixedGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/NewVersusFixedGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/NullGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/NullGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/PriorityGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/PriorityGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/TotalsGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/TotalsGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/TrendDetails.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/TrendDetails.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/UserGraphConfigurationView.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/UserGraphConfigurationView.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/AnnotationsByUserGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/AnnotationsByUserGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/BuildResultGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/BuildResultGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/CategoryBuildResultGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/CategoryBuildResultGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/ColorPalette.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/ColorPalette.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/DefaultGraphConfigurationView.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/DefaultGraphConfigurationView.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/DifferenceGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/DifferenceGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/EmptyGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/EmptyGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/GraphConfiguration.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/GraphConfiguration.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/GraphConfigurationView.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/GraphConfigurationView.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/HealthGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/HealthGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/LocalDateLabel.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/LocalDateLabel.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/NewVersusFixedGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/NewVersusFixedGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/NullGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/NullGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/PriorityGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/PriorityGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/TotalsGraph.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/TotalsGraph.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/TrendDetails.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/TrendDetails.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/UserGraphConfigurationView.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/class-use/UserGraphConfigurationView.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/package-frame.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/package-frame.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/package-summary.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/package-summary.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/package-tree.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/package-tree.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/package-use.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/graph/package-use.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/package-frame.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/package-frame.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/package-summary.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/package-summary.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/package-tree.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/package-tree.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/package-use.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/package-use.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/AbstractAnnotationsCountTokenMacro.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/AbstractAnnotationsCountTokenMacro.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/AbstractFixedAnnotationsTokenMacro.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/AbstractFixedAnnotationsTokenMacro.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/AbstractNewAnnotationsTokenMacro.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/AbstractNewAnnotationsTokenMacro.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/AbstractResultTokenMacro.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/AbstractResultTokenMacro.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/AbstractTokenMacro.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/AbstractTokenMacro.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/class-use/AbstractAnnotationsCountTokenMacro.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/class-use/AbstractAnnotationsCountTokenMacro.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/class-use/AbstractFixedAnnotationsTokenMacro.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/class-use/AbstractFixedAnnotationsTokenMacro.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/class-use/AbstractNewAnnotationsTokenMacro.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/class-use/AbstractNewAnnotationsTokenMacro.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/class-use/AbstractResultTokenMacro.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/class-use/AbstractResultTokenMacro.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/class-use/AbstractTokenMacro.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/class-use/AbstractTokenMacro.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/package-frame.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/package-frame.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/package-summary.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/package-summary.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/package-tree.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/package-tree.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/package-use.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/tokens/package-use.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/AbstractBlamer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/AbstractBlamer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/AbstractPackageDetector.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/AbstractPackageDetector.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/AreaRenderer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/AreaRenderer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/BlameFactory.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/BlameFactory.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/BlameRequest.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/BlameRequest.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/Blamer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/Blamer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/BoxRenderer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/BoxRenderer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/CategoryUrlBuilder.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/CategoryUrlBuilder.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/Compatibility.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/Compatibility.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/ContextHashCode.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/ContextHashCode.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/CookieHandler.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/CookieHandler.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/CsharpNamespaceDetector.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/CsharpNamespaceDetector.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/EncodingValidator.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/EncodingValidator.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/FileFinder.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/FileFinder.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/FileInputStreamFactory.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/FileInputStreamFactory.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/Files.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/Files.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/GitBlamer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/GitBlamer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/GitChecker.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/GitChecker.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/HtmlPrinter.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/HtmlPrinter.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/JavaPackageDetector.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/JavaPackageDetector.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/LoggerFactory.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/LoggerFactory.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/ModuleDetector.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/ModuleDetector.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/NullBlamer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/NullBlamer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/NullLogger.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/NullLogger.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/NullModuleDetector.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/NullModuleDetector.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/PackageDetector.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/PackageDetector.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/PackageDetectors.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/PackageDetectors.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/Pair.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/Pair.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/PluginLogger.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/PluginLogger.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/SaxSetup.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/SaxSetup.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/SerializableToolTipGenerator.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/SerializableToolTipGenerator.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/SerializableUrlGenerator.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/SerializableUrlGenerator.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/StringPluginLogger.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/StringPluginLogger.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/ThresholdValidator.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/ThresholdValidator.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/ToolTipAreaRenderer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/ToolTipAreaRenderer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/ToolTipBoxRenderer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/ToolTipBoxRenderer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/ToolTipBuilder.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/ToolTipBuilder.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/ToolTipProvider.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/ToolTipProvider.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/TreeString.ConverterImpl.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/TreeString.ConverterImpl.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/TreeString.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/TreeString.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/TreeStringBuilder.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/TreeStringBuilder.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/TrendReportHeightValidator.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/TrendReportHeightValidator.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/Validator.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/Validator.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/AbstractBlamer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/AbstractBlamer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/AbstractPackageDetector.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/AbstractPackageDetector.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/AreaRenderer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/AreaRenderer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/BlameFactory.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/BlameFactory.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/BlameRequest.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/BlameRequest.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/Blamer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/Blamer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/BoxRenderer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/BoxRenderer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/CategoryUrlBuilder.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/CategoryUrlBuilder.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/Compatibility.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/Compatibility.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/ContextHashCode.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/ContextHashCode.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/CookieHandler.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/CookieHandler.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/CsharpNamespaceDetector.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/CsharpNamespaceDetector.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/EncodingValidator.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/EncodingValidator.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/FileFinder.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/FileFinder.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/FileInputStreamFactory.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/FileInputStreamFactory.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/Files.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/Files.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/GitBlamer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/GitBlamer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/GitChecker.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/GitChecker.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/HtmlPrinter.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/HtmlPrinter.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/JavaPackageDetector.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/JavaPackageDetector.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/LoggerFactory.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/LoggerFactory.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/ModuleDetector.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/ModuleDetector.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/NullBlamer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/NullBlamer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/NullLogger.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/NullLogger.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/NullModuleDetector.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/NullModuleDetector.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/PackageDetector.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/PackageDetector.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/PackageDetectors.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/PackageDetectors.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/Pair.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/Pair.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/PluginLogger.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/PluginLogger.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/SaxSetup.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/SaxSetup.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/SerializableToolTipGenerator.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/SerializableToolTipGenerator.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/SerializableUrlGenerator.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/SerializableUrlGenerator.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/StringPluginLogger.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/StringPluginLogger.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/ThresholdValidator.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/ThresholdValidator.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/ToolTipAreaRenderer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/ToolTipAreaRenderer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/ToolTipBoxRenderer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/ToolTipBoxRenderer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/ToolTipBuilder.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/ToolTipBuilder.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/ToolTipProvider.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/ToolTipProvider.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/TreeString.ConverterImpl.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/TreeString.ConverterImpl.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/TreeString.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/TreeString.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/TreeStringBuilder.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/TreeStringBuilder.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/TrendReportHeightValidator.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/TrendReportHeightValidator.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/Validator.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/class-use/Validator.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/AbstractAnnotation.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/AbstractAnnotation.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/AnnotationContainer.Hierarchy.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/AnnotationContainer.Hierarchy.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/AnnotationContainer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/AnnotationContainer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/AnnotationProvider.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/AnnotationProvider.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/AnnotationStream.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/AnnotationStream.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/AnnotationsLabelProvider.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/AnnotationsLabelProvider.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/Author.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/Author.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/DefaultAnnotationContainer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/DefaultAnnotationContainer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/FileAnnotation.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/FileAnnotation.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/JavaPackage.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/JavaPackage.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/JavaProject.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/JavaProject.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/LineRange.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/LineRange.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/LineRangeList.ConverterImpl.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/LineRangeList.ConverterImpl.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/LineRangeList.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/LineRangeList.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/MavenModule.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/MavenModule.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/Priority.PriorityConverter.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/Priority.PriorityConverter.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/Priority.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/Priority.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/WorkspaceFile.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/WorkspaceFile.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/AbstractAnnotation.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/AbstractAnnotation.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/AnnotationContainer.Hierarchy.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/AnnotationContainer.Hierarchy.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/AnnotationContainer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/AnnotationContainer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/AnnotationProvider.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/AnnotationProvider.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/AnnotationStream.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/AnnotationStream.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/AnnotationsLabelProvider.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/AnnotationsLabelProvider.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/Author.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/Author.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/DefaultAnnotationContainer.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/DefaultAnnotationContainer.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/FileAnnotation.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/FileAnnotation.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/JavaPackage.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/JavaPackage.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/JavaProject.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/JavaProject.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/LineRange.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/LineRange.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/LineRangeList.ConverterImpl.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/LineRangeList.ConverterImpl.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/LineRangeList.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/LineRangeList.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/MavenModule.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/MavenModule.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/Priority.PriorityConverter.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/Priority.PriorityConverter.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/Priority.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/Priority.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/WorkspaceFile.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/class-use/WorkspaceFile.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/package-frame.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/package-frame.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/package-summary.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/package-summary.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/package-tree.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/package-tree.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/package-use.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/model/package-use.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/package-frame.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/package-frame.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/package-summary.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/package-summary.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/package-tree.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/package-tree.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/package-use.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/util/package-use.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/AbstractAnnotationsDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/AbstractAnnotationsDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/AttributeDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/AttributeDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/AuthorDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/AuthorDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/ConsoleDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/ConsoleDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/DetailFactory.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/DetailFactory.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/ErrorDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/ErrorDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/FileDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/FileDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/FixedWarningsDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/FixedWarningsDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/ModuleDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/ModuleDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/NewWarningsDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/NewWarningsDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/PackageDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/PackageDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/PrioritiesDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/PrioritiesDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/PriorityDetailFactory.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/PriorityDetailFactory.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/SourceDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/SourceDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/TabDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/TabDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/WarningsCountColumn.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/WarningsCountColumn.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/AbstractAnnotationsDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/AbstractAnnotationsDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/AttributeDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/AttributeDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/AuthorDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/AuthorDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/ConsoleDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/ConsoleDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/DetailFactory.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/DetailFactory.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/ErrorDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/ErrorDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/FileDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/FileDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/FixedWarningsDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/FixedWarningsDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/ModuleDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/ModuleDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/NewWarningsDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/NewWarningsDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/PackageDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/PackageDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/PrioritiesDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/PrioritiesDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/PriorityDetailFactory.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/PriorityDetailFactory.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/SourceDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/SourceDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/TabDetail.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/TabDetail.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/WarningsCountColumn.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/class-use/WarningsCountColumn.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/package-frame.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/package-frame.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/package-summary.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/package-summary.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/package-tree.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/package-tree.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/package-use.html" afterPath="$PROJECT_DIR$/target/site/apidocs/hudson/plugins/analysis/views/package-use.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/index-all.html" afterPath="$PROJECT_DIR$/target/site/apidocs/index-all.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/index.html" afterPath="$PROJECT_DIR$/target/site/apidocs/index.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/overview-frame.html" afterPath="$PROJECT_DIR$/target/site/apidocs/overview-frame.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/overview-summary.html" afterPath="$PROJECT_DIR$/target/site/apidocs/overview-summary.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/overview-tree.html" afterPath="$PROJECT_DIR$/target/site/apidocs/overview-tree.html" />
+      <change beforePath="$PROJECT_DIR$/target/site/apidocs/serialized-form.html" afterPath="$PROJECT_DIR$/target/site/apidocs/serialized-form.html" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.BuildHistoryTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.BuildHistoryTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.BuildResultEvaluatorTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.BuildResultEvaluatorTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.BuildResultTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.BuildResultTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.HealthReportBuilderTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.HealthReportBuilderTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.IsOverriddenTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.IsOverriddenTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.ParserResultTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.ParserResultTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.SerializableSettingsTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.SerializableSettingsTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.graph.GraphConfigurationTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.graph.GraphConfigurationTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.graph.HealthGraphTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.graph.HealthGraphTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.CsharpNamespaceDetectorTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.CsharpNamespaceDetectorTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.EncodingValidatorTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.EncodingValidatorTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.HtmlPrinterTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.HtmlPrinterTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.JavaPackageDetectorTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.JavaPackageDetectorTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.LoggerFactoryTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.LoggerFactoryTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.ModuleDetectorTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.ModuleDetectorTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.ThresholdValidatorTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.ThresholdValidatorTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.TreeStringBuilderTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.TreeStringBuilderTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.TrendReportHeightValidatorTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.TrendReportHeightValidatorTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.model.AbstractAnnotationTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.model.AbstractAnnotationTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.model.LineRangeListTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.model.LineRangeListTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.model.WorkspaceFileTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.model.WorkspaceFileTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.views.SourceDetailTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.views.SourceDetailTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.BuildHistoryTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.BuildHistoryTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.BuildResultEvaluatorTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.BuildResultEvaluatorTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.HealthReportBuilderTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.HealthReportBuilderTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.IsOverriddenTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.IsOverriddenTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.ParserResultTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.ParserResultTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.SerializableSettingsTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.SerializableSettingsTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.graph.GraphConfigurationTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.graph.GraphConfigurationTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.graph.HealthGraphTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.graph.HealthGraphTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.CsharpNamespaceDetectorTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.CsharpNamespaceDetectorTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.EncodingValidatorTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.EncodingValidatorTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.JavaPackageDetectorTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.JavaPackageDetectorTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.LoggerFactoryTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.LoggerFactoryTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.ModuleDetectorTest-output.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.ModuleDetectorTest-output.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.ModuleDetectorTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.ModuleDetectorTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.ThresholdValidatorTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.ThresholdValidatorTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.TreeStringBuilderTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.TreeStringBuilderTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.TrendReportHeightValidatorTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.TrendReportHeightValidatorTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.model.AbstractAnnotationTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.model.AbstractAnnotationTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.model.WorkspaceFileTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.model.WorkspaceFileTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.views.SourceDetailTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.views.SourceDetailTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/the.hpl" afterPath="$PROJECT_DIR$/target/test-classes/the.hpl" />
       <change beforePath="$PROJECT_DIR$/../checkstyle-plugin/checkstyle.iml" afterPath="$PROJECT_DIR$/../checkstyle-plugin/checkstyle.iml" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -359,28 +807,18 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="data-tables.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/data-tables.js">
+      <file leaf-file-name="fixed.jelly" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/result/fixed.jelly">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+            <state relative-caret-position="555">
+              <caret line="37" column="43" lean-forward="false" selection-start-line="37" selection-start-column="43" selection-end-line="37" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="priorities-summary.jelly" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/result/priorities-summary.jelly">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="39" lean-forward="false" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="priority-chart.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/priority-chart.js">
+      <file leaf-file-name="doughnut-chart.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/doughnut-chart.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1020">
               <caret line="68" column="17" lean-forward="false" selection-start-line="68" selection-start-column="17" selection-end-line="68" selection-end-column="17" />
@@ -389,31 +827,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="trend-summary.jelly" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/result/trend-summary.jelly">
+      <file leaf-file-name="tabs.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/tabs.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="39" lean-forward="false" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="39" />
+            <state relative-caret-position="105">
+              <caret line="7" column="5" lean-forward="false" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bootstrap-customized.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/css/bootstrap-customized/bootstrap-customized.css">
+      <file leaf-file-name="main.jelly" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/result/main.jelly">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="155" column="18" lean-forward="false" selection-start-line="155" selection-start-column="18" selection-end-line="155" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="go.sh" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/go.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="671">
+              <caret line="176" column="74" lean-forward="false" selection-start-line="176" selection-start-column="74" selection-end-line="176" selection-end-column="74" />
               <folding />
             </state>
           </provider>
@@ -433,7 +861,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>7</find>
       <find>maven</find>
       <find>maven-p</find>
       <find>&lt;st:adjunct includes=&quot;org.jenkins.ui.jsmodules.analysis-core.tabs&quot;/&gt;</find>
@@ -463,6 +890,7 @@
       <find>priority-chart.js</find>
       <find>content=&quot;width</find>
       <find>colgroup</find>
+      <find>tabs.js</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/src/main/css</dir>
@@ -471,9 +899,9 @@
       <dir>$PROJECT_DIR$/src</dir>
       <dir>$PROJECT_DIR$/src/main/java</dir>
       <dir>$PROJECT_DIR$/src/main/java/hudson/plugins/analysis/util</dir>
-      <dir>$PROJECT_DIR$</dir>
       <dir>$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult</dir>
       <dir>$PROJECT_DIR$/src/main/resources</dir>
+      <dir>$PROJECT_DIR$</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -488,7 +916,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/css/data-tables/css/jquery-dataTables.css" />
         <option value="$PROJECT_DIR$/src/main/css/bootstrap337/css/bootstrap.css" />
         <option value="$PROJECT_DIR$/src/main/css/font-awesome470/font-awesome.css" />
         <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/all.jelly" />
@@ -520,25 +947,26 @@
         <option value="$PROJECT_DIR$/target/analysis-core/css/bootstrap-customized/bootstrap-customized.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/jQuery-noConflict.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/css/material-blue-grey.css" />
-        <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/packages.jelly" />
         <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/files.jelly" />
         <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/origin.jelly" />
-        <option value="$PROJECT_DIR$/src/main/resources/result/priority-graph.jelly" />
         <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/new.jelly" />
-        <option value="$PROJECT_DIR$/src/main/resources/result/fixed.jelly" />
-        <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/index.jelly" />
         <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/origin.jelly" />
         <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/warnings.jelly" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/tabs.js" />
         <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/index.jelly" />
         <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/warnings.jelly" />
         <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/details.jelly" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/data-tables.js" />
-        <option value="$PROJECT_DIR$/src/main/resources/result/main.jelly" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/priority-chart.js" />
         <option value="$PROJECT_DIR$/src/main/resources/result/trend-summary.jelly" />
+        <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/packages.jelly" />
+        <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/index.jelly" />
+        <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/packages.jelly" />
+        <option value="$PROJECT_DIR$/src/main/resources/result/priority-graph.jelly" />
         <option value="$PROJECT_DIR$/src/main/resources/result/priorities-summary.jelly" />
+        <option value="$PROJECT_DIR$/src/main/resources/result/fixed.jelly" />
         <option value="$PROJECT_DIR$/src/main/webapp/css/bootstrap-customized/bootstrap-customized.css" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/data-tables.js" />
+        <option value="$PROJECT_DIR$/src/main/resources/result/main.jelly" />
       </list>
     </option>
   </component>
@@ -605,61 +1033,54 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="analysis-core" type="b2602c69:ProjectViewProjectNode" />
-              <item name="analysis-core" type="462c0819:PsiDirectoryNode" />
+              <item name="analysis-core-plugin" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="analysis-core" type="b2602c69:ProjectViewProjectNode" />
-              <item name="analysis-core" type="462c0819:PsiDirectoryNode" />
+              <item name="analysis-core-plugin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="analysis-core" type="b2602c69:ProjectViewProjectNode" />
-              <item name="analysis-core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="analysis-core" type="b2602c69:ProjectViewProjectNode" />
-              <item name="analysis-core" type="462c0819:PsiDirectoryNode" />
+              <item name="analysis-core-plugin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="analysis-core" type="b2602c69:ProjectViewProjectNode" />
-              <item name="analysis-core" type="462c0819:PsiDirectoryNode" />
+              <item name="analysis-core-plugin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="analysis" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="analysis-core" type="b2602c69:ProjectViewProjectNode" />
-              <item name="analysis-core" type="462c0819:PsiDirectoryNode" />
+              <item name="analysis-core-plugin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="analysis" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="analysis-core" type="b2602c69:ProjectViewProjectNode" />
-              <item name="analysis-core" type="462c0819:PsiDirectoryNode" />
+              <item name="analysis-core-plugin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="analysis" type="462c0819:PsiDirectoryNode" />
               <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="BuildResult" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="analysis-core" type="b2602c69:ProjectViewProjectNode" />
-              <item name="analysis-core" type="462c0819:PsiDirectoryNode" />
+              <item name="analysis-core-plugin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
@@ -667,40 +1088,14 @@
             </path>
             <path>
               <item name="analysis-core" type="b2602c69:ProjectViewProjectNode" />
-              <item name="analysis-core" type="462c0819:PsiDirectoryNode" />
+              <item name="analysis-core-plugin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="webapp" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="analysis-core" type="b2602c69:ProjectViewProjectNode" />
-              <item name="analysis-core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="analysis-core" type="b2602c69:ProjectViewProjectNode" />
-              <item name="analysis-core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-              <item name="bootstrap-customized" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="analysis-core" type="b2602c69:ProjectViewProjectNode" />
-              <item name="analysis-core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-              <item name="data-tables" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="analysis-core" type="b2602c69:ProjectViewProjectNode" />
-              <item name="analysis-core" type="462c0819:PsiDirectoryNode" />
+              <item name="analysis-core-plugin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="webapp" type="462c0819:PsiDirectoryNode" />
@@ -710,10 +1105,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="AndroidView" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -730,19 +1122,19 @@
     <property name="SearchEverywhereHistoryKey" value="priority-chart.&#9;FILE&#9;file:///Users/CorneliaChristof/Development/Git_CorneliaChristof/analysis-core/src/main/webapp/js/priority-chart.js&#10;breadc&#9;FILE&#9;jar:///Users/CorneliaChristof/.m2/repository/org/jenkins-ci/main/jenkins-core/1.625.1/jenkins-core-1.625.1.jar!/lib/layout/breadcrumbs.js&#10;breadcrumbs&#9;FILE&#9;jar:///Users/CorneliaChristof/.m2/repository/org/jenkins-ci/main/jenkins-core/1.625.1/jenkins-core-1.625.1.jar!/lib/layout/breadcrumbs.css&#10;breadcrumbs.js&#9;FILE&#9;jar:///Users/CorneliaChristof/.m2/repository/org/jenkins-ci/main/jenkins-core/1.625.1/jenkins-core-1.625.1.jar!/lib/layout/breadcrumbs.js" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail" />
-      <recent name="$PROJECT_DIR$/src/main/webapp/css" />
-      <recent name="$PROJECT_DIR$/src/main/webapp/yui" />
-      <recent name="$PROJECT_DIR$/src/main/js" />
-      <recent name="$PROJECT_DIR$/src/main/resources/result" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/webapp" />
       <recent name="$PROJECT_DIR$/src/main" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/src/main/webapp/css" />
       <recent name="$PROJECT_DIR$/src/main/webapp/js" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/css" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/yui" />
+      <recent name="$PROJECT_DIR$/src/main/js" />
+      <recent name="$PROJECT_DIR$/src/main/resources/result" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -1278,7 +1670,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="235840000" />
+    <option name="totallyTimeSpent" value="238687000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1290,8 +1682,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1302,29 +1693,52 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882273" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14631197" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12384851" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21316166" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18437119" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21778488" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21778488" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882273" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3285568" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882273" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14631197" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21316166" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1344,27 +1758,10 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/bootstrap-detached-3.3/index.js" />
-    <entry file="file://$PROJECT_DIR$/node_modules/jquery-detached/js/index.js" />
-    <entry file="file://$PROJECT_DIR$/gulpfile.js" />
-    <entry file="file://$PROJECT_DIR$/package.json" />
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/data-tables.js" />
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/priority-chart.js" />
-    <entry file="file://$PROJECT_DIR$/package-lock.json" />
-    <entry file="file://$PROJECT_DIR$/target/analysis-core/js/jQuery-noConflict.js" />
     <entry file="file://$PROJECT_DIR$/target/analysis-core/css/bootstrap-customized/bootstrap-customized.css" />
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/jslib-samples.js" />
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/priority-chart-old.js" />
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/priority-chart-old2.js" />
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/material-blue-grey.css" />
-    <entry file="file://$PROJECT_DIR$/src/main/resources/index.jelly">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/javascript/extLibs/http_code.jquery.com_jquery-3.2.1.slim.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
@@ -1376,29 +1773,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="219">
           <caret line="15762" column="4" lean-forward="false" selection-start-line="15762" selection-start-column="4" selection-end-line="15762" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/jQuery-noConflict.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/files.jelly">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="95" lean-forward="false" selection-start-line="21" selection-start-column="95" selection-end-line="21" selection-end-column="95" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/packages.jelly">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="29" lean-forward="false" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1439,21 +1813,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/all.jelly">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/categories.jelly">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AuthorDetail/index.jelly">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1468,10 +1827,105 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/data-tables/jquery-dataTables.css">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/new.jelly">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-317">
+        <state relative-caret-position="30">
+          <caret line="2" column="53" lean-forward="false" selection-start-line="2" selection-start-column="53" selection-end-line="2" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/origin.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="701">
+          <caret line="71" column="25" lean-forward="false" selection-start-line="52" selection-start-column="20" selection-end-line="71" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/go.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/details.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/packages.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="40" column="12" lean-forward="false" selection-start-line="40" selection-start-column="12" selection-end-line="40" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/index.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="15" lean-forward="false" selection-start-line="25" selection-start-column="15" selection-end-line="25" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/all.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/authors.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="19" lean-forward="false" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/categories.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/files.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="11" lean-forward="false" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/details.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="28" lean-forward="true" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/fixed-table.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="10" lean-forward="true" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/index.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1483,25 +1937,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/packages.jelly">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/low.jelly">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/result/fixed.jelly">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="696">
-          <caret line="63" column="0" lean-forward="true" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+        <state relative-caret-position="60">
+          <caret line="4" column="10" lean-forward="true" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/new.jelly">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/modules.jelly">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="53" lean-forward="false" selection-start-line="2" selection-start-column="53" selection-end-line="2" selection-end-column="53" />
+        <state relative-caret-position="345">
+          <caret line="23" column="27" lean-forward="true" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/packages.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="40" column="12" lean-forward="false" selection-start-line="40" selection-start-column="12" selection-end-line="40" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/table.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="10" lean-forward="true" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/types.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="24" lean-forward="false" selection-start-line="27" selection-start-column="24" selection-end-line="27" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/warnings.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="37" lean-forward="true" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/categories.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/modules.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1509,34 +2005,103 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/details.jelly">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/low.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="10" lean-forward="true" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/warnings.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="29" column="20" lean-forward="false" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/result/priority-graph.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/result/trend-summary.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="22" lean-forward="true" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/result/priorities-summary.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="54" column="10" lean-forward="false" selection-start-line="54" selection-start-column="10" selection-end-line="54" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/index.jelly">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/warnings.jelly">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/bootstrap-customized/bootstrap-customized.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="22" column="37" lean-forward="true" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
+        <state relative-caret-position="782">
+          <caret line="153" column="21" lean-forward="false" selection-start-line="153" selection-start-column="21" selection-end-line="153" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/index.jelly">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/data-tables/jquery-dataTables.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="12" column="40" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="51" selection-end-column="10" />
+        <state relative-caret-position="-252">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/origin.jelly">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/material-blue-grey.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="701">
-          <caret line="71" column="25" lean-forward="false" selection-start-line="52" selection-start-column="20" selection-end-line="71" selection-end-column="25" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/data-tables.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/result/fixed.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="37" column="43" lean-forward="false" selection-start-line="37" selection-start-column="43" selection-end-line="37" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/jQuery-noConflict.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1544,66 +2109,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="5" lean-forward="false" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/index.jelly">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="23" lean-forward="false" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/categories.jelly">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="35" lean-forward="true" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/result/priority-graph.jelly">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="25" lean-forward="false" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/result/main.jelly">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="156" column="41" lean-forward="true" selection-start-line="156" selection-start-column="41" selection-end-line="156" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/warnings.jelly">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="64" lean-forward="false" selection-start-line="23" selection-start-column="64" selection-end-line="23" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/details.jelly">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="48" lean-forward="false" selection-start-line="17" selection-start-column="48" selection-end-line="17" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/data-tables.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/priority-chart.js">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/doughnut-chart.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1020">
           <caret line="68" column="17" lean-forward="false" selection-start-line="68" selection-start-column="17" selection-end-line="68" selection-end-column="17" />
@@ -1611,34 +2121,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/result/trend-summary.jelly">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/result/main.jelly">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="39" lean-forward="false" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/result/priorities-summary.jelly">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="39" lean-forward="false" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/bootstrap-customized/bootstrap-customized.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="155" column="18" lean-forward="false" selection-start-line="155" selection-start-column="18" selection-end-line="155" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/go.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="671">
+          <caret line="176" column="74" lean-forward="false" selection-start-line="176" selection-start-column="74" selection-end-line="176" selection-end-column="74" />
           <folding />
         </state>
       </provider>

@@ -54,13 +54,4 @@
         </div>
     </div>
 
-
-    <!--<st:adjunct includes="org.jenkins.ui.jsmodules.bootstrap400.bootstrap"/>-->
-    <!--<st:adjunct includes="org.jenkins.ui.jsmodules.font-awesome470.font-awesome"/>-->
-    <!--<st:adjunct includes="org.jenkins.ui.jsmodules.data-tables.jquery-dataTables"/>-->
-    <!--<st:adjunct includes="org.jenkins.ui.jsmodules.bootstrap-customized.bootstrap-customized"/>-->
-    <!--<st:adjunct includes="org.jenkins.ui.jsmodules.analysis-core.tabs"/>-->
-    <!--<st:adjunct includes="org.jenkins.ui.jsmodules.analysis-core.data-tables"/>-->
-    <!--<st:adjunct includes="org.jenkins.ui.jsmodules.analysis-core.priority-chart"/>-->
-
 </j:jelly>

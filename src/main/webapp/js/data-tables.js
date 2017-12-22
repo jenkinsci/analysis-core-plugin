@@ -1,8 +1,3 @@
-
-// function format() {
-//     return '<div> Test Hallo</div>';
-// }
-
 (function ($) {
     function format() {
         var warningMessage = $('#warning-message').text();

@@ -2,4 +2,5 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
   <j:set var="annotations" value="${it.container}" />
   <st:include it="${it}" page="details.jelly" />
+
 </j:jelly>

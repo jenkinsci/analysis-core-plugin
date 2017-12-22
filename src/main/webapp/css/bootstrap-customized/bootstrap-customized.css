@@ -139,7 +139,7 @@ td.details-control {
 }
 
 td.details-control:before {
-    content: "\f055"; /* this is your text. You can also use UTF-8 character codes as I do here */
+    content: "\f055";
     font-family: FontAwesome;
     padding: 12px;
     font-size: 1.5em;
@@ -151,7 +151,7 @@ tr.shown td.details-control {
 }
 
 tr.shown td.details-control:before {
-    content: "\f056"; /* this is your text. You can also use UTF-8 character codes as I do here */
+    content: "\f056";
     font-family: FontAwesome;
     padding: 12px;
     font-size: 1.5em;

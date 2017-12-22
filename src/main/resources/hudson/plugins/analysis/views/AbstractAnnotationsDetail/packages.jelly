@@ -39,28 +39,4 @@
             </tfoot>
         </tbody>
     </table>
-    <!--<script language="javascript">-->
-    <!--var high = "${container.numberOfHighAnnotations}";-->
-    <!--var normal = "${container.numberOfNormalAnnotations}";-->
-    <!--var low = "${container.numberOfHighAnnotations}";-->
-
-    <!--$('[data-toggle="popover"]').popover({-->
-    <!--html: true,-->
-    <!--content: '<canvas id="priorityChart" width="400" height="400"/>',-->
-    <!--}).on('shown.bs.popover', function() {-->
-
-    <!--var ctx = document.getElementById("priorityChart").getContext('2d');-->
-    <!--var myChart = new Chart(ctx, {-->
-    <!--type: 'doughnut',-->
-    <!--data: {-->
-    <!--labels: ["High", "Normal", "Low"],-->
-    <!--datasets: [{-->
-    <!--label: 'Priority distribution',-->
-    <!--data: [high, normal, low],-->
-    <!--backgroundColor: ['#f5c6cb', '#ffeeba', '#b8daff']-->
-    <!--}]-->
-    <!--}-->
-    <!--});-->
-    <!--});-->
-    <!--</script>-->
 </j:jelly>

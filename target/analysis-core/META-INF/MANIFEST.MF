@@ -12,7 +12,7 @@ Group-Id: org.jvnet.hudson.plugins
 Short-Name: analysis-core
 Long-Name: Static Analysis Utilities
 Url: http://wiki.jenkins-ci.org/x/CwDgAQ
-Plugin-Version: 1.93-SNAPSHOT (private-ec4e9a09-CorneliaChristof)
+Plugin-Version: 1.93-SNAPSHOT (private-401d46d2-CorneliaChristof)
 Hudson-Version: 2.73.3
 Jenkins-Version: 2.73.3
 Plugin-Dependencies: maven-plugin:2.17,ant:1.1;resolution:=optional,an
