@@ -33,7 +33,7 @@ import hudson.plugins.analysis.util.LoggerFactory;
 import hudson.plugins.analysis.util.PluginLogger;
 import hudson.plugins.analysis.util.model.FileAnnotation;
 import hudson.plugins.analysis.util.model.Priority;
-import hudson.remoting.VirtualChannel;§
+import hudson.remoting.VirtualChannel;
 import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Builder;
 import hudson.tasks.Maven;
