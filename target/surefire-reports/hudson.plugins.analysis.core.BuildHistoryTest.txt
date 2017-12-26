@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: hudson.plugins.analysis.core.BuildHistoryTest
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.58 s - in hudson.plugins.analysis.core.BuildHistoryTest
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.435 s - in hudson.plugins.analysis.core.BuildHistoryTest
