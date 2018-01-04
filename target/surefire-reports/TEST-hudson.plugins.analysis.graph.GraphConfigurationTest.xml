@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="hudson.plugins.analysis.graph.GraphConfigurationTest" time="0.126" tests="4" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="hudson.plugins.analysis.graph.GraphConfigurationTest" time="0.137" tests="4" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib"/>
@@ -63,8 +63,8 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase name="testValidConfiguations" classname="hudson.plugins.analysis.graph.GraphConfigurationTest" time="0.09"/>
-  <testcase name="testInvalidConfiguations" classname="hudson.plugins.analysis.graph.GraphConfigurationTest" time="0.001"/>
-  <testcase name="testUseBuildDate" classname="hudson.plugins.analysis.graph.GraphConfigurationTest" time="0"/>
-  <testcase name="testValidJSONConfiguations" classname="hudson.plugins.analysis.graph.GraphConfigurationTest" time="0.035"/>
+  <testcase name="testValidConfiguations" classname="hudson.plugins.analysis.graph.GraphConfigurationTest" time="0.092"/>
+  <testcase name="testInvalidConfiguations" classname="hudson.plugins.analysis.graph.GraphConfigurationTest" time="0"/>
+  <testcase name="testUseBuildDate" classname="hudson.plugins.analysis.graph.GraphConfigurationTest" time="0.001"/>
+  <testcase name="testValidJSONConfiguations" classname="hudson.plugins.analysis.graph.GraphConfigurationTest" time="0.044"/>
 </testsuite>

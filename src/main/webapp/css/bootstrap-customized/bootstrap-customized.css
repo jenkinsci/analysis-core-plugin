@@ -103,12 +103,6 @@
     padding-top: 20px;
 }
 
-.graph-size {
-    position: relative;
-    width: 20vw;
-    margin: auto;
-}
-
 table.dataTable {
     border-collapse: collapse !important;
 }
@@ -156,4 +150,26 @@ tr.shown td.details-control:before {
     padding: 12px;
     font-size: 1.5em;
     color: #b4b4b4;
+}
+
+@media only screen and (min-width: 576px) {
+    .graph-size {
+        position: relative;
+        width: 20vw;
+        margin: auto;
+    }
+
+    .table-responsive {
+        display: table;
+    }
+
+    .table-responsive-block {
+        display: block;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .card-marg-bot {
+        margin-bottom: 2rem;
+    }
 }

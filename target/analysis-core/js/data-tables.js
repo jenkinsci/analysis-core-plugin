@@ -9,6 +9,7 @@
 
     $('#modules').DataTable({
         "order": [],
+        "pagingType": "numbers",
         "columnDefs": [{
             "targets": 'no-sort',
             "orderable": false
@@ -16,6 +17,7 @@
     });
     $('#packages').DataTable({
         "order": [],
+        "pagingType": "numbers",
         "columnDefs": [{
             "targets": 'no-sort',
             "orderable": false
@@ -23,6 +25,7 @@
     });
     $('#files').DataTable({
         "order": [],
+        "pagingType": "numbers",
         "columnDefs": [{
             "targets": 'no-sort',
             "orderable": false
@@ -30,6 +33,7 @@
     });
     $('#categories').DataTable({
         "order": [],
+        "pagingType": "numbers",
         "columnDefs": [{
             "targets": 'no-sort',
             "orderable": false
@@ -37,6 +41,7 @@
     });
     $('#authors').DataTable({
         "order": [],
+        "pagingType": "numbers",
         "columnDefs": [{
             "targets": 'no-sort',
             "orderable": false
@@ -44,6 +49,7 @@
     });
     $('#types').DataTable({
         "order": [],
+        "pagingType": "numbers",
         "columnDefs": [{
             "targets": 'no-sort',
             "orderable": false
@@ -51,6 +57,7 @@
     });
     $('#origin').DataTable({
         "order": [],
+        "pagingType": "numbers",
         "columnDefs": [{
             "targets": 'no-sort',
             "orderable": false
@@ -58,6 +65,7 @@
     });
     var table = $('#warnings').DataTable({
         "order": [],
+        "pagingType": "numbers",
         "columnDefs": [{
             "targets": 'no-sort',
             "orderable": false

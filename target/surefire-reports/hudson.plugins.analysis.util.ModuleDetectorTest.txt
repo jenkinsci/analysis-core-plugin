@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: hudson.plugins.analysis.util.ModuleDetectorTest
 -------------------------------------------------------------------------------
-Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.286 s - in hudson.plugins.analysis.util.ModuleDetectorTest
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.288 s - in hudson.plugins.analysis.util.ModuleDetectorTest

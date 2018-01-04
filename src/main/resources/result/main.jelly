@@ -34,7 +34,7 @@
                             <i class="fa fa-coffee icon-right fa-2x" aria-hidden="true"/>
                         </h5>
 
-                        <ul class="nav nav-tabs" role="tablist" id="tab-details">
+                        <ul class="nav nav-tabs flex-wrap" role="tablist" id="tab-details">
                             <j:if test="${it.container.modules.size() > 1}">
                                 <li>
                                     <a data-toggle="tab" href="#modules1">${l.modules}</a>

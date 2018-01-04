@@ -2,7 +2,7 @@
 <j:jelly xmlns:j="jelly:core">
     <div class="col-sm-6">
 
-        <div class="card">
+        <div class="card card-marg-bot">
             <div class="card-body">
 
                 <h5 class="card-title">${%Warnings Trend}
@@ -17,36 +17,36 @@
                 <div class="graph-size">
                     <canvas id="doughnut-trend-summary" class="graph-cursor-pointer" width="100" height="100"/>
                 </div>
-                <table class="table table-hover" id="trend.summary">
-                    <thead>
-                        <tr>
-                            <th>${%All Warnings}</th>
-                            <th>${%New Warnings}</th>
-                            <th>${%Fixed Warnings}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td id="all">${it.numberOfAnnotations}</td>
-                            <td id="new">
-                                <j:if test="${it.numberOfNewWarnings == 0}">
-                                    0
-                                </j:if>
-                                <j:if test="${it.numberOfNewWarnings != 0}">
-                                    <a href="new">${it.numberOfNewWarnings}</a>
-                                </j:if>
-                            </td>
-                            <td id="fixed">
-                                <j:if test="${it.numberOfFixedWarnings == 0}">
-                                    0
-                                </j:if>
-                                <j:if test="${it.numberOfFixedWarnings != 0}">
-                                    <a href="fixed">${it.numberOfFixedWarnings}</a>
-                                </j:if>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <!--<table class="table table-hover" id="trend.summary">-->
+                    <!--<thead>-->
+                        <!--<tr>-->
+                            <!--<th>${%All Warnings}</th>-->
+                            <!--<th>${%New Warnings}</th>-->
+                            <!--<th>${%Fixed Warnings}</th>-->
+                        <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tbody>-->
+                        <!--<tr>-->
+                            <!--<td id="all">${it.numberOfAnnotations}</td>-->
+                            <!--<td id="new">-->
+                                <!--<j:if test="${it.numberOfNewWarnings == 0}">-->
+                                    <!--0-->
+                                <!--</j:if>-->
+                                <!--<j:if test="${it.numberOfNewWarnings != 0}">-->
+                                    <!--<a href="new">${it.numberOfNewWarnings}</a>-->
+                                <!--</j:if>-->
+                            <!--</td>-->
+                            <!--<td id="fixed">-->
+                                <!--<j:if test="${it.numberOfFixedWarnings == 0}">-->
+                                    <!--0-->
+                                <!--</j:if>-->
+                                <!--<j:if test="${it.numberOfFixedWarnings != 0}">-->
+                                    <!--<a href="fixed">${it.numberOfFixedWarnings}</a>-->
+                                <!--</j:if>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                    <!--</tbody>-->
+                <!--</table>-->
             </div>
         </div>
     </div>

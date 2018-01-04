@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="hudson.plugins.analysis.core.ParserResultTest" time="0.028" tests="9" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="hudson.plugins.analysis.core.ParserResultTest" time="0.06" tests="9" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib"/>
@@ -63,13 +63,13 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase name="testFileNameMappingWithPrefix" classname="hudson.plugins.analysis.core.ParserResultTest" time="0.013"/>
-  <testcase name="testSimpleFileNameMapping" classname="hudson.plugins.analysis.core.ParserResultTest" time="0.001"/>
-  <testcase name="testCountingOfAddAnnotations" classname="hudson.plugins.analysis.core.ParserResultTest" time="0.005"/>
-  <testcase name="shouldStripRelativePathPrefix" classname="hudson.plugins.analysis.core.ParserResultTest" time="0.001"/>
+  <testcase name="testFileNameMappingWithPrefix" classname="hudson.plugins.analysis.core.ParserResultTest" time="0.035"/>
+  <testcase name="testSimpleFileNameMapping" classname="hudson.plugins.analysis.core.ParserResultTest" time="0.002"/>
+  <testcase name="testCountingOfAddAnnotations" classname="hudson.plugins.analysis.core.ParserResultTest" time="0.008"/>
+  <testcase name="shouldStripRelativePathPrefix" classname="hudson.plugins.analysis.core.ParserResultTest" time="0"/>
   <testcase name="testCountingOfAddAnnotation" classname="hudson.plugins.analysis.core.ParserResultTest" time="0"/>
-  <testcase name="issue32150" classname="hudson.plugins.analysis.core.ParserResultTest" time="0.004"/>
+  <testcase name="issue32150" classname="hudson.plugins.analysis.core.ParserResultTest" time="0.007"/>
   <testcase name="testWindowsFileNameMappingWithPrefix" classname="hudson.plugins.analysis.core.ParserResultTest" time="0.002"/>
   <testcase name="testDuplicate" classname="hudson.plugins.analysis.core.ParserResultTest" time="0.001"/>
-  <testcase name="testUniquePrefixDuplicate" classname="hudson.plugins.analysis.core.ParserResultTest" time="0.001"/>
+  <testcase name="testUniquePrefixDuplicate" classname="hudson.plugins.analysis.core.ParserResultTest" time="0.003"/>
 </testsuite>
