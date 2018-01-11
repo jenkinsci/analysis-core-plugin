@@ -1,4 +1,4 @@
-Jan 04, 2018 5:09:24 PM org.apache.commons.digester3.Digester parse
+Jan 08, 2018 9:29:23 AM org.apache.commons.digester3.Digester parse
 SEVERE: An error occurred while reading stream from '(already loaded from stream)', see nested exceptions
 java.io.IOException: Stream closed
 	at java.io.BufferedInputStream.getBufIfOpen(BufferedInputStream.java:170)
@@ -46,7 +46,7 @@ java.io.IOException: Stream closed
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-Jan 04, 2018 5:09:24 PM org.apache.commons.digester3.Digester parse
+Jan 08, 2018 9:29:23 AM org.apache.commons.digester3.Digester parse
 SEVERE: An error occurred while reading stream from '(already loaded from stream)', see nested exceptions
 java.io.IOException: Stream closed
 	at java.io.BufferedInputStream.getBufIfOpen(BufferedInputStream.java:170)
@@ -94,7 +94,7 @@ java.io.IOException: Stream closed
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-Jan 04, 2018 5:09:24 PM org.apache.commons.digester3.Digester parse
+Jan 08, 2018 9:29:23 AM org.apache.commons.digester3.Digester parse
 SEVERE: An error occurred while reading stream from '(already loaded from stream)', see nested exceptions
 java.io.IOException: Stream closed
 	at java.io.BufferedInputStream.getBufIfOpen(BufferedInputStream.java:170)
@@ -142,7 +142,7 @@ java.io.IOException: Stream closed
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-Jan 04, 2018 5:09:24 PM org.apache.commons.digester3.Digester parse
+Jan 08, 2018 9:29:23 AM org.apache.commons.digester3.Digester parse
 SEVERE: An error occurred while reading stream from '(already loaded from stream)', see nested exceptions
 java.io.IOException: Stream closed
 	at java.io.BufferedInputStream.getBufIfOpen(BufferedInputStream.java:170)
@@ -190,7 +190,7 @@ java.io.IOException: Stream closed
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-Jan 04, 2018 5:09:24 PM org.apache.commons.digester3.Digester parse
+Jan 08, 2018 9:29:23 AM org.apache.commons.digester3.Digester parse
 SEVERE: An error occurred while reading stream from '(already loaded from stream)', see nested exceptions
 java.io.IOException: Stream closed
 	at java.io.BufferedInputStream.getBufIfOpen(BufferedInputStream.java:170)
@@ -238,7 +238,7 @@ java.io.IOException: Stream closed
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-Jan 04, 2018 5:09:24 PM org.apache.commons.digester3.Digester parse
+Jan 08, 2018 9:29:23 AM org.apache.commons.digester3.Digester parse
 SEVERE: An error occurred while reading stream from '(already loaded from stream)', see nested exceptions
 java.io.IOException: Stream closed
 	at java.io.BufferedInputStream.getBufIfOpen(BufferedInputStream.java:170)
@@ -286,7 +286,7 @@ java.io.IOException: Stream closed
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-Jan 04, 2018 5:09:24 PM org.apache.commons.digester3.Digester parse
+Jan 08, 2018 9:29:23 AM org.apache.commons.digester3.Digester parse
 SEVERE: An error occurred while reading stream from '(already loaded from stream)', see nested exceptions
 java.io.IOException: Stream closed
 	at java.io.BufferedInputStream.getBufIfOpen(BufferedInputStream.java:170)
@@ -333,7 +333,7 @@ java.io.IOException: Stream closed
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-Jan 04, 2018 5:09:24 PM org.apache.commons.digester3.Digester parse
+Jan 08, 2018 9:29:23 AM org.apache.commons.digester3.Digester parse
 SEVERE: An error occurred while reading stream from '(already loaded from stream)', see nested exceptions
 java.io.IOException: Stream closed
 	at java.io.BufferedInputStream.getBufIfOpen(BufferedInputStream.java:170)
@@ -381,7 +381,7 @@ java.io.IOException: Stream closed
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:323)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:143)
 
-Jan 04, 2018 5:09:24 PM org.apache.commons.digester3.Digester parse
+Jan 08, 2018 9:29:23 AM org.apache.commons.digester3.Digester parse
 SEVERE: An error occurred while reading stream from '(already loaded from stream)', see nested exceptions
 java.io.IOException: Stream closed
 	at java.io.BufferedInputStream.getBufIfOpen(BufferedInputStream.java:170)

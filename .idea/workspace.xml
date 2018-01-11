@@ -3,29 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="16038329-5e11-4ef9-82b3-6afedc1e56c2" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/authors.jelly" afterPath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/authors.jelly" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/categories.jelly" afterPath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/categories.jelly" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/details.jelly" afterPath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/details.jelly" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/files.jelly" afterPath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/files.jelly" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/modules.jelly" afterPath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/modules.jelly" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/origin.jelly" afterPath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/origin.jelly" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/packages.jelly" afterPath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/packages.jelly" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/types.jelly" afterPath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/types.jelly" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/warnings.jelly" afterPath="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/warnings.jelly" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/result/main.jelly" afterPath="$PROJECT_DIR$/src/main/resources/result/main.jelly" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/result/trend-summary.jelly" afterPath="$PROJECT_DIR$/src/main/resources/result/trend-summary.jelly" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/result/priority-graph.jelly" afterPath="$PROJECT_DIR$/src/main/resources/result/priority-graph.jelly" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/css/bootstrap-customized/bootstrap-customized.css" afterPath="$PROJECT_DIR$/src/main/webapp/css/bootstrap-customized/bootstrap-customized.css" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/data-tables.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/data-tables.js" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/authors.jelly" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/authors.jelly" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/categories.jelly" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/categories.jelly" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/details.jelly" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/details.jelly" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/files.jelly" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/files.jelly" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/modules.jelly" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/modules.jelly" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/origin.jelly" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/origin.jelly" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/packages.jelly" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/packages.jelly" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/types.jelly" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/types.jelly" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/warnings.jelly" afterPath="$PROJECT_DIR$/target/classes/hudson/plugins/analysis/core/BuildResult/warnings.jelly" />
-      <change beforePath="$PROJECT_DIR$/target/classes/result/trend-summary.jelly" afterPath="$PROJECT_DIR$/target/classes/result/trend-summary.jelly" />
+      <change beforePath="$PROJECT_DIR$/target/analysis-core.hpi" afterPath="$PROJECT_DIR$/target/analysis-core.hpi" />
+      <change beforePath="$PROJECT_DIR$/target/analysis-core.jar" afterPath="$PROJECT_DIR$/target/analysis-core.jar" />
+      <change beforePath="$PROJECT_DIR$/target/analysis-core/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/target/analysis-core/META-INF/MANIFEST.MF" />
+      <change beforePath="$PROJECT_DIR$/target/analysis-core/WEB-INF/lib/analysis-core.jar" afterPath="$PROJECT_DIR$/target/analysis-core/WEB-INF/lib/analysis-core.jar" />
+      <change beforePath="$PROJECT_DIR$/target/findbugsXml.xml" afterPath="$PROJECT_DIR$/target/findbugsXml.xml" />
       <change beforePath="$PROJECT_DIR$/target/site/apidocs/allclasses-frame.html" afterPath="$PROJECT_DIR$/target/site/apidocs/allclasses-frame.html" />
       <change beforePath="$PROJECT_DIR$/target/site/apidocs/allclasses-noframe.html" afterPath="$PROJECT_DIR$/target/site/apidocs/allclasses-noframe.html" />
       <change beforePath="$PROJECT_DIR$/target/site/apidocs/constant-values.html" afterPath="$PROJECT_DIR$/target/site/apidocs/constant-values.html" />
@@ -345,6 +329,46 @@
       <change beforePath="$PROJECT_DIR$/target/site/apidocs/overview-summary.html" afterPath="$PROJECT_DIR$/target/site/apidocs/overview-summary.html" />
       <change beforePath="$PROJECT_DIR$/target/site/apidocs/overview-tree.html" afterPath="$PROJECT_DIR$/target/site/apidocs/overview-tree.html" />
       <change beforePath="$PROJECT_DIR$/target/site/apidocs/serialized-form.html" afterPath="$PROJECT_DIR$/target/site/apidocs/serialized-form.html" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.BuildHistoryTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.BuildHistoryTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.BuildResultEvaluatorTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.BuildResultEvaluatorTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.BuildResultTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.BuildResultTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.HealthReportBuilderTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.HealthReportBuilderTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.IsOverriddenTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.IsOverriddenTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.ParserResultTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.ParserResultTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.SerializableSettingsTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.core.SerializableSettingsTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.graph.GraphConfigurationTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.graph.GraphConfigurationTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.CsharpNamespaceDetectorTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.CsharpNamespaceDetectorTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.EncodingValidatorTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.EncodingValidatorTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.HtmlPrinterTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.HtmlPrinterTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.JavaPackageDetectorTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.JavaPackageDetectorTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.LoggerFactoryTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.LoggerFactoryTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.ModuleDetectorTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.ModuleDetectorTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.ThresholdValidatorTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.ThresholdValidatorTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.TreeStringBuilderTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.TreeStringBuilderTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.model.LineRangeListTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.model.LineRangeListTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.model.WorkspaceFileTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.util.model.WorkspaceFileTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.views.SourceDetailTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-hudson.plugins.analysis.views.SourceDetailTest.xml" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.BuildHistoryTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.BuildHistoryTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.BuildResultEvaluatorTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.BuildResultEvaluatorTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.BuildResultTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.BuildResultTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.HealthReportBuilderTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.HealthReportBuilderTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.IsOverriddenTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.IsOverriddenTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.ParserResultTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.ParserResultTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.SerializableSettingsTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.core.SerializableSettingsTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.graph.GraphConfigurationTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.graph.GraphConfigurationTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.CsharpNamespaceDetectorTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.CsharpNamespaceDetectorTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.EncodingValidatorTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.EncodingValidatorTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.HtmlPrinterTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.HtmlPrinterTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.JavaPackageDetectorTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.JavaPackageDetectorTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.LoggerFactoryTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.LoggerFactoryTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.ModuleDetectorTest-output.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.ModuleDetectorTest-output.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.ModuleDetectorTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.ModuleDetectorTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.ThresholdValidatorTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.ThresholdValidatorTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.TreeStringBuilderTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.TreeStringBuilderTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.model.LineRangeListTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.model.LineRangeListTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.model.WorkspaceFileTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.util.model.WorkspaceFileTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.views.SourceDetailTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/hudson.plugins.analysis.views.SourceDetailTest.txt" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/the.hpl" afterPath="$PROJECT_DIR$/target/test-classes/the.hpl" />
       <change beforePath="$PROJECT_DIR$/../checkstyle-plugin/checkstyle.iml" afterPath="$PROJECT_DIR$/../checkstyle-plugin/checkstyle.iml" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -701,108 +725,116 @@
     </favorites_list>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="bootstrap-customized.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/css/bootstrap-customized/bootstrap-customized.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="142" column="13" lean-forward="false" selection-start-line="142" selection-start-column="13" selection-end-line="142" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="trend-summary.jelly" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/result/trend-summary.jelly">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="33" lean-forward="false" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.jelly" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/result/main.jelly">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="36" column="57" lean-forward="false" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="57" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="data-tables.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/data-tables.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="32" lean-forward="false" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="priorities-summary.jelly" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/result/priorities-summary.jelly">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="5" column="33" lean-forward="false" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="origin.jelly" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/origin.jelly">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="41" lean-forward="false" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="table.jelly" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/table.jelly">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="10" lean-forward="false" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="packages.jelly" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/packages.jelly">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="40" lean-forward="false" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="types.jelly" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/types.jelly">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="40" lean-forward="false" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="warnings.jelly" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/warnings.jelly">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="41" lean-forward="false" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.60946745">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="priority-graph.jelly" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/main/resources/result/priority-graph.jelly">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="45">
+                  <caret line="3" column="65" lean-forward="false" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="65" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="trend-summary.jelly" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/resources/result/trend-summary.jelly">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="75">
+                  <caret line="5" column="33" lean-forward="false" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="main.jelly" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/resources/result/main.jelly">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="365">
+                  <caret line="36" column="57" lean-forward="false" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="57" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="data-tables.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/webapp/js/data-tables.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-24">
+                  <caret line="11" column="32" lean-forward="false" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="priorities-summary.jelly" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/resources/result/priorities-summary.jelly">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="75">
+                  <caret line="5" column="33" lean-forward="false" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="origin.jelly" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/origin.jelly">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="45">
+                  <caret line="3" column="41" lean-forward="false" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="table.jelly" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/table.jelly">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="45">
+                  <caret line="3" column="10" lean-forward="false" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="packages.jelly" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/packages.jelly">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="45">
+                  <caret line="3" column="40" lean-forward="false" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="warnings.jelly" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/warnings.jelly">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="45">
+                  <caret line="3" column="41" lean-forward="false" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="bootstrap-customized.css" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/main/webapp/css/bootstrap-customized/bootstrap-customized.css">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="203">
+                  <caret line="33" column="1" lean-forward="false" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -906,7 +938,6 @@
         <option value="$PROJECT_DIR$/src/main/webapp/js/priority-chart.js" />
         <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/packages.jelly" />
         <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/views/AbstractAnnotationsDetail/index.jelly" />
-        <option value="$PROJECT_DIR$/src/main/resources/result/priority-graph.jelly" />
         <option value="$PROJECT_DIR$/src/main/resources/result/fixed.jelly" />
         <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/authors.jelly" />
         <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/categories.jelly" />
@@ -917,11 +948,12 @@
         <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/packages.jelly" />
         <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/types.jelly" />
         <option value="$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/warnings.jelly" />
-        <option value="$PROJECT_DIR$/src/main/webapp/css/bootstrap-customized/bootstrap-customized.css" />
         <option value="$PROJECT_DIR$/src/main/resources/result/priorities-summary.jelly" />
         <option value="$PROJECT_DIR$/src/main/resources/result/trend-summary.jelly" />
         <option value="$PROJECT_DIR$/src/main/resources/result/main.jelly" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/data-tables.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/css/bootstrap-customized/bootstrap-customized.css" />
+        <option value="$PROJECT_DIR$/src/main/resources/result/priority-graph.jelly" />
       </list>
     </option>
   </component>
@@ -967,8 +999,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="1680" />
-    <option name="height" value="1050" />
+    <option name="x" value="-1920" />
+    <option name="y" value="-133" />
+    <option name="width" value="1920" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -988,10 +1022,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -1088,6 +1118,10 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1220,18 +1254,6 @@
       </option>
       <envs />
       <patterns />
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="analysis-core" />
-      <envs />
     </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
@@ -1511,6 +1533,18 @@
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="analysis-core" />
+      <envs />
+    </configuration>
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="filePath" />
@@ -1641,6 +1675,7 @@
       <workItem from="1513412445211" duration="637000" />
       <workItem from="1513844406443" duration="400000" />
       <workItem from="1513959266439" duration="1890000" />
+      <workItem from="1515399892842" duration="4126000" />
     </task>
     <servers />
   </component>
@@ -1653,7 +1688,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="244429000" />
+    <option name="totallyTimeSpent" value="249312000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1666,6 +1701,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1920" y="-133" width="1920" height="1080" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1679,10 +1715,10 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882273" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20854022" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1410129" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19648562" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19009584" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21778488" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1691,37 +1727,14 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21778488" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882273" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3285568" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882273" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14534289" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21550672" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1869,14 +1882,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/result/priority-graph.jelly">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/index.jelly">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1905,7 +1910,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1913,7 +1917,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" column="37" lean-forward="false" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1921,7 +1924,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2029,14 +2031,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/origin.jelly">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="41" lean-forward="false" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/types.jelly">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -2069,18 +2063,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/result/priorities-summary.jelly">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/result/trend-summary.jelly">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
+        <state relative-caret-position="75">
           <caret line="5" column="33" lean-forward="false" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/result/trend-summary.jelly">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/data-tables.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="33" lean-forward="false" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
+        <state relative-caret-position="-24">
+          <caret line="11" column="32" lean-forward="false" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
           <folding />
         </state>
       </provider>
@@ -2093,18 +2087,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/bootstrap-customized/bootstrap-customized.css">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hudson/plugins/analysis/core/BuildResult/origin.jelly">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="142" column="13" lean-forward="false" selection-start-line="142" selection-start-column="13" selection-end-line="142" selection-end-column="13" />
+        <state relative-caret-position="45">
+          <caret line="3" column="41" lean-forward="false" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/data-tables.js">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/result/priorities-summary.jelly">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="32" lean-forward="false" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
+        <state relative-caret-position="75">
+          <caret line="5" column="33" lean-forward="false" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/bootstrap-customized/bootstrap-customized.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="33" column="1" lean-forward="false" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/result/priority-graph.jelly">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="65" lean-forward="false" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="65" />
           <folding />
         </state>
       </provider>

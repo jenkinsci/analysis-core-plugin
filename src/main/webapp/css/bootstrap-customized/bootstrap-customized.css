@@ -29,31 +29,8 @@
 }
 
 .bar-graph {
-    position: relative;
-    display: block;
-    padding: 0.7rem 0;
-    margin-top: -2.8px;
-    margin-bottom: -4px;
-    background-color: transparent;
-    border: none;
-}
-
-.bar-graph__right {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-}
-
-.bar-graph__left {
-    position: absolute;
-    top: -9.8px;
-    bottom: -9px;
-    left: 0;
-    display: block;
-    background-color: #f7f7f7;
+    float: left;
+    color: transparent;
 }
 
 .left {

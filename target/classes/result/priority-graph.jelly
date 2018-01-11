@@ -5,15 +5,15 @@
     <j:set var="normal" value="${container.numberOfNormalAnnotations}"/>
     <j:set var="low" value="${container.numberOfLowAnnotations}"/>
 
-    <div class="bar-graph bar-graph__right" title="${container.toolTip}">
+    <div title="${container.toolTip}">
         <j:if test="${high > 0}">
-            <span class="bar-graph__left priority-high priority-high--hover" style="width:${high / max * 100}%"/>
+            <span class="bar-graph priority-high priority-high--hover" style="width:${high / max * 100}%">.</span>
         </j:if>
         <j:if test="${normal > 0}">
-            <span class="bar-graph__left priority-normal priority-normal--hover" style="width:${normal / max * 100}%"/>
+            <span class="bar-graph priority-normal priority-normal--hover" style="width:${normal / max * 100}%">.</span>
         </j:if>
         <j:if test="${low > 0}">
-            <span class="bar-graph__left priority-low priority-low--hover" style="width:${low / max * 100}%"/>
+            <span class="bar-graph priority-low priority-low--hover" style="width:${low / max * 100}%">.</span>
         </j:if>
     </div>
 
