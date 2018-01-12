@@ -1,37 +1,47 @@
-<!-- Section header -->
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
-  xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
 
-  <st:header name="Content-Type" value="text/html;charset=UTF-8" />
-  <j:set var="annotations" value="${it.container.annotations}" />
-  <table class="pane sortable" id="fixed">
-    <tr>
-      <td class="pane-header">${%File}</td>
-      <td class="pane-header">${%Line}</td>
-      <td class="pane-header">${%Priority}</td>
-      <td class="pane-header">${%Type}</td>
-      <td class="pane-header">${%Category}</td>
-    </tr>
-    <tbody>
-      <j:forEach var="warning" items="${annotations}">
-        <tr>
-          <td class="pane" id="file">${warning.shortFileName}</td>
-          <td class="pane" id="line">
-            <j:choose>
-              <j:when test="${warning.primaryLineNumber &lt; 1}">
-                -
-              </j:when>
-              <j:otherwise>
-                ${warning.primaryLineNumber}
-              </j:otherwise>
-            </j:choose>
-          </td>
-          <td class="pane" id="priority">${warning.priority.localizedString} </td>
-          <td class="pane" id="type">${warning.type} </td>
-          <td class="pane" id="category">${warning.category} </td>
-        </tr>
-      </j:forEach>
-    </tbody>
-  </table>
+    <st:header name="Content-Type" value="text/html;charset=UTF-8"/>
+    <j:set var="annotations" value="${it.container.annotations}"/>
+    <table class="table table-hover table-striped" id="fixed">
+        <colgroup>
+            <col class="col-width-5"/>
+            <col class="col-width-1"/>
+            <col class="col-width-1"/>
+            <col class="col-width-3"/>
+            <col class="col-width-2"/>
+        </colgroup>
+        <thead>
+            <tr>
+                <th>${%File}</th>
+                <th>${%Line}</th>
+                <th>${%Priority}</th>
+                <th>${%Type}</th>
+                <th>${%Category}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <j:forEach var="warning" items="${annotations}">
+                <tr>
+                    <td id="file">${warning.shortFileName}</td>
+                    <td id="line">
+                        <j:choose>
+                            <j:when test="${warning.primaryLineNumber &lt; 1}">
+                                -
+                            </j:when>
+                            <j:otherwise>
+                                ${warning.primaryLineNumber}
+                            </j:otherwise>
+                        </j:choose>
+                    </td>
+                    <td id="priority">${warning.priority.localizedString}</td>
+                    <td id="type">${warning.type}</td>
+                    <td id="category">${warning.category}</td>
+                </tr>
+            </j:forEach>
+        </tbody>
+    </table>
+    <script type="text/javascript" src="${resURL}/plugin/analysis-core/js/jQuery-noConflict.js"/>
+
 </j:jelly>

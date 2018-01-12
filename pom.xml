@@ -11,10 +11,14 @@
   <artifactId>analysis-core</artifactId>
   <packaging>hpi</packaging>
   <name>Static Analysis Utilities</name>
-  <version>1.94-SNAPSHOT</version>
+  <version>1.93-SNAPSHOT</version>
   <description>This plug-in provides utilities for the static code analysis plug-ins.</description>
 
   <url>http://wiki.jenkins-ci.org/x/CwDgAQ</url>
+
+  <properties>
+    <jenkins.version>2.73.3</jenkins.version>
+  </properties>
 
   <dependencies>
     <dependency>

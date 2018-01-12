@@ -1,20 +1,27 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
-  xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form"
-  xmlns:i="jelly:fmt" xmlns:result="/result">
-  <l:layout norefresh="true">
+         xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form"
+         xmlns:i="jelly:fmt" xmlns:result="/result">
+    <l:layout title="abstract-detail" norefresh="true">
+        <st:include it="${it.owner}" page="sidepanel.jelly"/>
 
-    <st:include it="${it.owner}" page="sidepanel.jelly" />
+        <l:main-panel>
+            <div class="fluid-container">
+                Test Abstract Annotations
+                <h3>${it.header}</h3>
 
-    <l:main-panel>
+                <div class="row py-3">
+                    <result:trend-summary/>
+                    <result:priorities-summary/>
+                </div>
 
-      <h1>${it.header}</h1>
+                <div class="row py-3">
+                    <result:main/>
+                </div>
 
-      <result:priorities-summary />
+            </div>
 
-      <result:main />
+        </l:main-panel>
 
-    </l:main-panel>
-
-  </l:layout>
+    </l:layout>
 </j:jelly>

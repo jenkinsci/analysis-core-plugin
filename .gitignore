@@ -1,5 +1,2 @@
-target
-*.eml
-.idea
-.DS_Store
-/work
+target/*
+.idea/workspace.xml

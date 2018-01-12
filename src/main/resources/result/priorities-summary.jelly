@@ -1,32 +1,57 @@
-<!--
-  Section header
--->
-<j:jelly xmlns:j="jelly:core">
+<?jelly escape-by-default='true'?>
+<!-- Section header -->
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">${%Summary}
+                    <i class="fa fa fa-sun-o icon-right fa-2x" aria-hidden="true"/>
+                </h5>
 
-  <h2>${%Summary}</h2>
-  <table class="pane" id="priority.summary">
-    <tr>
-      <td class="pane-header">${%Total}</td>
-      <j:forEach var="priority" items="${it.priorities}">
-        <td class="pane-header">${priority.longLocalizedString}</td>
-      </j:forEach>
-    </tr>
-    <tbody>
-      <tr>
-        <td class="pane" id="all-priorities">${it.numberOfAnnotations}</td>
-        <j:forEach var="priority" items="${it.priorities}">
-          <td class="pane">
-            <div id="${priority.name()}">
-              <j:if test="${it.getNumberOfAnnotations(priority) == 0}">
-                0
-              </j:if>
-              <j:if test="${it.getNumberOfAnnotations(priority) != 0}">
-                <a href="${priority}">${it.getNumberOfAnnotations(priority)}</a>
-              </j:if>
+                <div style="display: none">
+                    <j:forEach var="priority" items="${it.priorities}">
+                        <div id="${priority.name()}">
+                            <j:if test="${it.getNumberOfAnnotations(priority) == 0}">
+                                0
+                            </j:if>
+                            <j:if test="${it.getNumberOfAnnotations(priority) != 0}">
+                                <span id="${priority}">${it.getNumberOfAnnotations(priority)}</span>
+                            </j:if>
+                        </div>
+                    </j:forEach>
+                </div>
+                <div class="graph-size">
+                    <canvas id="doughnut-priorities-summary" class="graph-cursor-pointer" width="100" height="100"/>
+                </div>
+                <!--<table class="table table-hover" id="priority.summary">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                <!--<th>${%Total}</th>-->
+                <!--<j:forEach var="priority" items="${it.priorities}">-->
+                <!--<th>${priority.longLocalizedString}</th>-->
+                <!--</j:forEach>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody>-->
+                <!--<tr>-->
+                <!--<td id="all-priorities">${it.numberOfAnnotations}</td>-->
+                <!--<j:forEach var="priority" items="${it.priorities}">-->
+                <!--<td>-->
+                <!--<div id="${priority.name()}">-->
+                <!--<j:if test="${it.getNumberOfAnnotations(priority) == 0}">-->
+                <!--0-->
+                <!--</j:if>-->
+                <!--<j:if test="${it.getNumberOfAnnotations(priority) != 0}">-->
+                <!--<a href="${priority}">${it.getNumberOfAnnotations(priority)}</a>-->
+                <!--</j:if>-->
+                <!--</div>-->
+                <!--</td>-->
+                <!--</j:forEach>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+                <!--</table>-->
             </div>
-          </td>
-        </j:forEach>
-      </tr>
-    </tbody>
-  </table>
+        </div>
+    </div>
+
 </j:jelly>

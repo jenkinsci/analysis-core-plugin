@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.kohsuke:access-modifier-annotation:1.11">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/kohsuke/access-modifier-annotation/1.11/access-modifier-annotation-1.11.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/kohsuke/access-modifier-annotation/1.11/access-modifier-annotation-1.11-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/kohsuke/access-modifier-annotation/1.11/access-modifier-annotation-1.11-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

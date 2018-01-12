@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.jenkins-ci.main.maven:maven3-interceptor-commons:1.11">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/jenkins-ci/main/maven/maven3-interceptor-commons/1.11/maven3-interceptor-commons-1.11.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/jenkins-ci/main/maven/maven3-interceptor-commons/1.11/maven3-interceptor-commons-1.11-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/jenkins-ci/main/maven/maven3-interceptor-commons/1.11/maven3-interceptor-commons-1.11-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

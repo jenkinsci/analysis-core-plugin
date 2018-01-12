@@ -1,0 +1,32 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:u="/util">
+    <st:header name="Content-Type" value="text/html;charset=UTF-8"/>
+    <j:forEach var="warning" items="${annotations.sortedAnnotations}">
+        <table class="table table-responsive table-hover table-striped" id="details">
+            <thead>
+                <tr>
+                    <th>
+                        <u:sourceLink it="${it}" warning="${warning}"/>,
+                        ${warning.type}, ${%Priority}: ${warning.priority.localizedString}
+                        <j:if test="${h.size2(warning.category) > 0}">
+                            , ${%Category}: ${warning.category}
+                        </j:if>
+                    </th>
+                </tr>
+            </thead>
+            <tr>
+                <td style="white-space: normal">
+                    <p>
+                        <b>
+                            <j:out value="${warning.message}"/>
+                        </b>
+                    </p>
+                    <p>
+                        <j:out value="${warning.toolTip}"/>
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </j:forEach>
+
+</j:jelly>

@@ -1,0 +1,96 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:u="/util">
+    <st:header name="Content-Type" value="text/html;charset=UTF-8"/>
+    <table class="table table-responsive table-responsive-block table-hover table-striped" id="warnings">
+        <colgroup>
+            <col class="col-width-1"/>
+            <col class="col-width-2"/>
+            <col class="col-width-2"/>
+            <col class="col-width-1"/>
+            <col class="col-width-2"/>
+            <col class="col-width-1"/>
+            <col class="col-width-1"/>
+            <col class="col-width-1"/>
+            <col class="col-width-1"/>
+        </colgroup>
+        <thead>
+            <tr>
+                <th class="no-sort">Details</th>
+                <th>${%File}</th>
+                <j:if test="${it.container.modules.size() > 1}">
+                    <th>${%Module}</th>
+                </j:if>
+                <j:if test="${it.container.packages.size() > 1}">
+                    <th>${it.container.packageCategoryName}</th>
+                </j:if>
+                <th>${%Priority}</th>
+                <th>${%Type}</th>
+                <th>${%Category}</th>
+                <th>${%Age}</th>
+                <th>${%Author}</th>
+                <th>${%commit-id}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <j:forEach var="warning" items="${it.container.sortedAnnotations}">
+                <tr>
+                    <td class="details-control">
+                        <div style="display: none">
+                            <span id="warning-message">${warning.message}</span>
+                            <span id="warning-toolTip">${warning.toolTip}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div tooltip="${warning.message}">
+                            <u:sourceLink it="${it}" warning="${warning}"/>
+                        </div>
+                    </td>
+                    <j:if test="${it.container.modules.size() > 1}">
+                        <td>
+                            <div tooltip="${warning.message}">
+                                <a href="module.${warning.moduleName.hashCode()}/">${warning.moduleName}</a>
+                            </div>
+                        </td>
+                    </j:if>
+                    <j:if test="${it.container.packages.size() > 1}">
+                        <td>
+                            <div tooltip="${warning.message}">
+                                <a href="package.${warning.packageName.hashCode()}/">${warning.packageName}</a>
+                            </div>
+                        </td>
+                    </j:if>
+                    <td>
+                        <div tooltip="${warning.message}">${warning.priority.localizedString}</div>
+                    </td>
+                    <td>
+                        <div tooltip="${warning.message}">${warning.type}</div>
+                    </td>
+                    <td>
+                        <div tooltip="${warning.message}">${warning.category}</div>
+                    </td>
+                    <td>
+                        <j:choose>
+                            <j:when test="${warning.build != 0}">
+                                <a href="${it.getBuildUrl(warning.build)}" class="model-link inside">
+                                    ${it.getAge(warning.build)}
+                                </a>
+                            </j:when>
+                            <j:otherwise>
+                                ${%N/A}
+                            </j:otherwise>
+                        </j:choose>
+                    </td>
+                    <td>
+                        <div tooltip="${it.container.escape(warning.authorDetails)}">
+                            <a href="author.${warning.author.hashCode()}/">${warning.author}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div tooltip="${warning.commitId}">${warning.commitDetails}</div>
+                    </td>
+                </tr>
+            </j:forEach>
+        </tbody>
+    </table>
+</j:jelly>
