@@ -1,6 +1,0 @@
-hudson.plugins.analysis.core.AbstractHealthDescriptor
-hudson.plugins.analysis.core.AbstractProjectAction
-hudson.plugins.analysis.core.AbstractResultAction
-hudson.plugins.analysis.core.BuildResult
-hudson.plugins.analysis.core.Thresholds
-hudson.plugins.analysis.util.model.AbstractAnnotation

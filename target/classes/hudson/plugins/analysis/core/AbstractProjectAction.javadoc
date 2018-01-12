@@ -1,3 +1,0 @@
-#Fri Dec 22 15:04:03 CET 2017
-getLastFinishedRun=\ Returns the last finished run.\n\n @return the last finished run or <code>null</code> if there is no\n         such run\n
-getLastFinishedBuild=\ Returns the last finished build.\n\n @return the last finished build or <code>null</code> if there is no\n         such build\n @deprecated use\n             {@link \#getLastFinishedRun()}\n

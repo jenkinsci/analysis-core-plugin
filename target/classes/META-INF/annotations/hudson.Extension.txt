@@ -1,3 +1,0 @@
-# informational; use java -jar sezpoz.jar to see authoritative contents
-hudson.plugins.analysis.core.GlobalSettings
-hudson.plugins.analysis.core.GlobalSettings$DescriptorImpl
