@@ -15,33 +15,36 @@
                 <th class="no-sort">${%Distribution}</th>
             </tr>
         </thead>
+
         <tbody>
-            <j:set var="max" value="${it.container.getUpperBound(it.container.categories)}"/>
-            <j:forEach var="container" items="${it.container.categories}">
-                <tr>
-                    <td>
-                        <j:set var="name" value="${container.name}"/>
-                        <j:if test="${name == '-'}">
-                            <j:set var="name" value="${%undefined}"/>
-                        </j:if>
-                        <a href="category.${container.name.hashCode()}/">
-                            ${name}
-                        </a>
-                    </td>
-                    <td>${container.numberOfAnnotations}
-                    </td>
-                    <td>
-                        <result:priority-graph/>
-                    </td>
-                </tr>
-            </j:forEach>
-            <tfoot>
+            <!--<j:set var="max" value="${it.container.getUpperBound(it.container.categories)}"/>-->
+            <!--<j:forEach var="container" items="${it.container.categories}">-->
+                <!--<tr>-->
+                    <!--<td>-->
+                        <!--<j:set var="name" value="${container.name}"/>-->
+                        <!--<j:if test="${name == '-'}">-->
+                            <!--<j:set var="name" value="${%undefined}"/>-->
+                        <!--</j:if>-->
+                        <!--<a href="category.${container.name.hashCode()}/">-->
+                            <!--${name}-->
+                        <!--</a>-->
+                    <!--</td>-->
+                    <!--<td>${container.numberOfAnnotations}-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<result:priority-graph/>-->
+                    <!--</td>-->
+                <!--</tr>-->
+            <!--</j:forEach>-->
+        </tbody>
+        <tfoot>
                 <tr>
                     <td>${%Total}</td>
                     <td>${it.container.numberOfAnnotations}</td>
                     <td/>
                 </tr>
             </tfoot>
-        </tbody>
     </table>
+
+
 </j:jelly>

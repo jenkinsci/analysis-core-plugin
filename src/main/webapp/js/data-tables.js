@@ -7,6 +7,17 @@
             + warningTooltip + '</div>';
     }
 
+    // $(document).ready(function () {
+    //     $('#categories').DataTable({
+    //         "order": [],
+    //         "pagingType": "numbers",
+    //         "columnDefs": [{
+    //             "targets": 'no-sort',
+    //             "orderable": false
+    //         }]
+    //     });
+    // });
+
     $('#modules').DataTable({
         "order": [],
         "pagingType": "numbers",
@@ -31,14 +42,14 @@
             "orderable": false
         }]
     });
-    $('#categories').DataTable({
-        "order": [],
-        "pagingType": "numbers",
-        "columnDefs": [{
-            "targets": 'no-sort',
-            "orderable": false
-        }]
-    });
+    // $('#categories').DataTable({
+    //     "order": [],
+    //     "pagingType": "numbers",
+    //     "columnDefs": [{
+    //         "targets": 'no-sort',
+    //         "orderable": false
+    //     }]
+    // });
     $('#authors').DataTable({
         "order": [],
         "pagingType": "numbers",

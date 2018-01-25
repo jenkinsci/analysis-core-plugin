@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="${resURL}/plugin/analysis-core/css/font-awesome470/font-awesome.css"/>
     <link rel="stylesheet" href="${resURL}/plugin/analysis-core/css/material-blue-grey.css"/>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.3/js/tether.min.js"/>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
@@ -43,7 +43,9 @@
 
                             <j:if test="${it.container.packages.size() > 1}">
                                 <li class="nav-item">
-                                    <a class="nav-link active" role="tab" data-toggle="tab" href="#packages1">${l.packages}</a>
+                                    <a class="nav-link active" role="tab" data-toggle="tab" href="#packages1">
+                                        ${l.packages}
+                                    </a>
                                 </li>
                             </j:if>
 
@@ -56,14 +58,17 @@
                             <j:if test="${it.useAuthors()}">
                                 <j:if test="${it.container.authors.size() > 1}">
                                     <li class="nav-item">
-                                        <a class="nav-link" role="tab" data-toggle="tab" href="#authors1">${l.authors}</a>
+                                        <a class="nav-link" role="tab" data-toggle="tab" href="#authors1">${l.authors}
+                                        </a>
                                     </li>
                                 </j:if>
                             </j:if>
 
                             <j:if test="${it.container.categories.size() > 1}">
                                 <li class="nav-item">
-                                    <a class="nav-link" role="tab" data-toggle="tab" href="#categories1">${l.categories}</a>
+                                    <a class="nav-link" role="tab" data-toggle="tab" href="#categories1">
+                                        ${l.categories}
+                                    </a>
                                 </li>
                             </j:if>
 
@@ -78,47 +83,6 @@
                                     <a class="nav-link" role="tab" data-toggle="tab" href="#warnings1">${l.warnings}</a>
                                 </li>
                             </j:if>
-
-                            <!--<j:if test="${it.useAuthors()}">-->
-                                <!--<li class="nav-item">-->
-                                    <!--<a class="nav-link" role="tab" data-toggle="tab" href="#origin1">${l.origin}</a>-->
-                                <!--</li>-->
-                            <!--</j:if>-->
-
-                            <!--<li class="nav-item">-->
-                                <!--<a class="nav-link" role="tab" data-toggle="tab" href="#details1">${l.details}</a>-->
-                            <!--</li>-->
-
-                            <!--<j:if test="${it.newWarnings.size() > 0}">-->
-                                <!--<li class="nav-item">-->
-                                    <!--<a class="nav-link" role="tab" data-toggle="tab" href="#new1">${l.new}</a>-->
-                                <!--</li>-->
-                            <!--</j:if>-->
-
-                            <!--<j:if test="${it.fixedWarnings.size() > 0}">-->
-                                <!--<li class="nav-item">-->
-                                    <!--<a class="nav-link" role="tab" data-toggle="tab" href="#fixed1">${l.fixed}</a>-->
-                                <!--</li>-->
-                            <!--</j:if>-->
-
-                            <!--<j:if test="${it.container.highAnnotations.size() > 0 and it.container.highAnnotations.size() != it.container.numberOfAnnotations}">-->
-                                <!--<li class="nav-item">-->
-                                    <!--<a class="nav-link" role="tab" data-toggle="tab" href="#high1">${l.high}</a>-->
-                                <!--</li>-->
-                            <!--</j:if>-->
-
-                            <!--<j:if test="${it.container.normalAnnotations.size() > 0 and it.container.normalAnnotations.size() != it.container.numberOfAnnotations}">-->
-                                <!--<li class="nav-item">-->
-                                    <!--<a class="nav-link" role="tab" data-toggle="tab" href="#normal1">${l.normal}</a>-->
-                                <!--</li>-->
-                            <!--</j:if>-->
-
-                            <!--<j:if test="${it.container.lowAnnotations.size() > 0 and it.container.lowAnnotations.size() != it.container.numberOfAnnotations}">-->
-                                <!--<li class="nav-item">-->
-                                    <!--<a class="nav-link" role="tab" data-toggle="tab" href="#low1">${l.low}</a>-->
-                                <!--</li>-->
-                            <!--</j:if>-->
-
                         </ul>
 
                         <div class="tab-content">
@@ -143,38 +107,49 @@
                             <div role="tabpanel" id="warnings1" class="tab-pane">
                                 <st:include it="${it}" page="warnings.jelly"/>
                             </div>
-                            <!--<div role="tabpanel" id="origin1" class="tab-pane">-->
-                                <!--<st:include it="${it}" page="origin.jelly"/>-->
-                            <!--</div>-->
-                            <!--<div role="tabpanel" id="details1" class="tab-pane">-->
-                                <!--<st:include it="${it}" page="all.jelly"/>-->
-                            <!--</div>-->
-                            <!--<div role="tabpanel" id="new1" class="tab-pane">-->
-                                <!--<st:include it="${it}" page="new.jelly"/>-->
-                            <!--</div>-->
-                            <!--<div role="tabpanel" id="fixed1" class="tab-pane">-->
-                                <!--<st:include it="${it}" page="fixed-table.jelly"/>-->
-                            <!--</div>-->
-                            <!--<div role="tabpanel" id="high1" class="tab-pane">-->
-                                <!--<st:include it="${it}" page="high.jelly"/>-->
-                            <!--</div>-->
-                            <!--<div role="tabpanel" id="normal1" class="tab-pane">-->
-                                <!--<st:include it="${it}" page="normal.jelly"/>-->
-                            <!--</div>-->
-                            <!--<div role="tabpanel" id="low1" class="tab-pane">-->
-                                <!--<st:include it="${it}" page="low.jelly"/>-->
-                            <!--</div>-->
                         </div>
 
                     </div>
                 </div>
             </div>
         </div>
-
     </j:if>
-    <script type="text/javascript" src="${resURL}/plugin/analysis-core/js/jQuery-noConflict.js"/>
-    <script type="text/javascript" src="${resURL}/plugin/analysis-core/js/data-tables.js"/>
-    <script type="text/javascript" src="${resURL}/plugin/analysis-core/js/doughnut-chart.js"/>
-    <script type="text/javascript" src="${resURL}/plugin/analysis-core/js/tabs.js"/>
+
+    <script src="${resURL}/plugin/analysis-core/js/jQuery-noConflict.js"/>
+    <script src="${resURL}/plugin/analysis-core/js/data-tables.js"/>
+    <script src="${resURL}/plugin/analysis-core/js/doughnut-chart.js"/>
+    <script src="${resURL}/plugin/analysis-core/js/tabs.js"/>
+
+    <div id="request"></div>
+    <script>
+        (function ($) {
+                <!--var jsonString = <st:bind value="${it}"/>-->
+
+                <!--jsonString.getJsonString(function(t) {-->
+                <!--document.getElementById('request').innerHTML = t.responseObject();-->
+
+                <!--var categoriesString = t.responseJSON;-->
+                <!--console.log(categoriesString);-->
+
+            $('#categories').DataTable({
+                "ajax": {
+                    url: '${resURL}/plugin/analysis-core/ajax/categories.json',
+                    dataSrc: ''
+                },
+                "columns": [
+                    { "data": "Category" },
+                    { "data": "Total" },
+                    { "data": "Distribution" }
+                ],
+                "order": [],
+                "pagingType": "numbers",
+                "columnDefs": [{
+                "targets": 'no-sort',
+                    "orderable": false
+                }]
+            });
+
+        })(jQuery);
+    </script>
 
 </j:jelly>

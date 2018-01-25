@@ -1,9 +1,7 @@
 package hudson.plugins.analysis.core; // NOPMD
 
 import javax.annotation.Nonnull;
-import java.io.File;
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,12 +13,18 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonWriter;
+
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.kohsuke.stapler.Stapler;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
+import org.kohsuke.stapler.bind.JavaScriptMethod;
 import org.kohsuke.stapler.export.Exported;
 import org.kohsuke.stapler.export.ExportedBean;
 
@@ -1609,6 +1613,44 @@ public abstract class BuildResult implements ModelObject, Serializable, Annotati
     @Override
     public String toString() {
         return getDisplayName() + " : " + getNumberOfAnnotations() + " annotations";
+    }
+
+    @JavaScriptMethod
+    public String getJsonString() throws FileNotFoundException {
+        JsonObject jsonString = Json.createObjectBuilder()
+                .add("data", Json.createArrayBuilder()
+                        .add(Json.createObjectBuilder()
+                                .add("Category", "Main Street2")
+                                .add("Total", "New York2")
+                                .add("Distribution", "11131"))
+                        .add(Json.createObjectBuilder()
+                                .add("Category", "Main Street3")
+                                .add("Total", "New York3")
+                                .add("Distribution", "11141"))
+                        .add(Json.createObjectBuilder()
+                                .add("Category", "Main Street4")
+                                .add("Total", "New York4")
+                                .add("Distribution", "111211"))
+                        .add(Json.createObjectBuilder()
+                                .add("Category", "Main Street5")
+                                .add("Total", "New York5")
+                                .add("Distribution", "11141")))
+                .build();
+
+        System.out.println(jsonString);
+
+        //write to file
+        OutputStream os = new FileOutputStream("src/main/webapp/ajax/categories.json");
+        JsonWriter jsonWriter = Json.createWriter(os);
+        /**
+         * We can get JsonWriter from JsonWriterFactory also
+         JsonWriterFactory factory = Json.createWriterFactory(null);
+         jsonWriter = factory.createWriter(os);
+         */
+        jsonWriter.writeObject(jsonString);
+        jsonWriter.close();
+
+        return "" + jsonString;
     }
 
     /**

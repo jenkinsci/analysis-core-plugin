@@ -23,6 +23,8 @@
     <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="datatables" level="application" />
     <orderEntry type="library" name="Chart.bundle" level="application" />
+    <orderEntry type="library" name="jquery-3.2.1" level="application" />
+    <orderEntry type="library" name="Maven: javax.json:javax.json-api:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:ant:1.1" level="project" />
     <orderEntry type="library" name="Maven: de.java2html:java2html:5.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.4" level="project" />
@@ -55,6 +57,8 @@
     <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:mailer:1.18" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:display-url-api:0.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.easymock:easymock:2.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.json:javax.json-api:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish:javax.json:1.0.4" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:matrix-project:1.7.1" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:junit:1.2" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:script-security:1.13" level="project" />
