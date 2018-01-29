@@ -20,38 +20,49 @@
                         </div>
                     </j:forEach>
                 </div>
-                <div class="graph-size">
-                    <canvas id="doughnut-priorities-summary" class="graph-cursor-pointer" width="100" height="100"/>
-                </div>
-                <!--<table class="table table-hover" id="priority.summary">-->
-                <!--<thead>-->
-                <!--<tr>-->
-                <!--<th>${%Total}</th>-->
-                <!--<j:forEach var="priority" items="${it.priorities}">-->
-                <!--<th>${priority.longLocalizedString}</th>-->
-                <!--</j:forEach>-->
-                <!--</tr>-->
-                <!--</thead>-->
-                <!--<tbody>-->
-                <!--<tr>-->
-                <!--<td id="all-priorities">${it.numberOfAnnotations}</td>-->
-                <!--<j:forEach var="priority" items="${it.priorities}">-->
-                <!--<td>-->
-                <!--<div id="${priority.name()}">-->
-                <!--<j:if test="${it.getNumberOfAnnotations(priority) == 0}">-->
-                <!--0-->
-                <!--</j:if>-->
-                <!--<j:if test="${it.getNumberOfAnnotations(priority) != 0}">-->
-                <!--<a href="${priority}">${it.getNumberOfAnnotations(priority)}</a>-->
-                <!--</j:if>-->
-                <!--</div>-->
-                <!--</td>-->
-                <!--</j:forEach>-->
-                <!--</tr>-->
-                <!--</tbody>-->
-                <!--</table>-->
+                <j:choose>
+                    <j:forEach var="priority" items="${it.priorities}">
+                        <div id="${priority.name()}">
+                            <j:when test="${it.getNumberOfAnnotations(priority) > 0}">
+                                <div class="graph-size">
+                                    <canvas id="doughnut-priorities-summary" class="graph-cursor-pointer" width="100" height="100"/>
+                                </div>
+                            </j:when>
+                        </div>
+                    </j:forEach>
+                    <j:otherwise>
+                        <table class="table table-hover" id="priority.summary">
+                            <thead>
+                                <tr>
+                                    <th>${%Total}</th>
+                                    <j:forEach var="priority" items="${it.priorities}">
+                                        <th>${priority.longLocalizedString}</th>
+                                    </j:forEach>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id="all-priorities">${it.numberOfAnnotations}</td>
+                                    <j:forEach var="priority" items="${it.priorities}">
+                                        <td>
+                                            <div id="${priority.name()}">
+                                                <j:if test="${it.getNumberOfAnnotations(priority) == 0}">
+                                                    0
+                                                </j:if>
+                                                <j:if test="${it.getNumberOfAnnotations(priority) != 0}">
+                                                    <a href="${priority}">${it.getNumberOfAnnotations(priority)}</a>
+                                                </j:if>
+                                            </div>
+                                        </td>
+                                    </j:forEach>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </j:otherwise>
+                </j:choose>
             </div>
         </div>
     </div>
+
 
 </j:jelly>

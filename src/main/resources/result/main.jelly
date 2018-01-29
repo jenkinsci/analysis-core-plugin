@@ -2,25 +2,29 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
          xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.3/css/tether.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
-          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
-          crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.css"/>
 
     <link rel="stylesheet" href="${resURL}/plugin/analysis-core/css/bootstrap-customized/bootstrap-customized.css"/>
     <link rel="stylesheet" href="${resURL}/plugin/analysis-core/css/font-awesome470/font-awesome.css"/>
     <link rel="stylesheet" href="${resURL}/plugin/analysis-core/css/material-blue-grey.css"/>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    <script>
+        var result =<st:bind value="${it}"/>
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.3/js/tether.min.js"/>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
-            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"/>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"/>
+
 
     <st:header name="Content-Type" value="text/html;charset=UTF-8"/>
     <j:set var="l" value="${it.container.labelProvider}"/>
@@ -116,40 +120,30 @@
     </j:if>
 
     <script src="${resURL}/plugin/analysis-core/js/jQuery-noConflict.js"/>
-    <script src="${resURL}/plugin/analysis-core/js/data-tables.js"/>
-    <script src="${resURL}/plugin/analysis-core/js/doughnut-chart.js"/>
-    <script src="${resURL}/plugin/analysis-core/js/tabs.js"/>
 
-    <div id="request"></div>
     <script>
         (function ($) {
-                <!--var jsonString = <st:bind value="${it}"/>-->
-
-                <!--jsonString.getJsonString(function(t) {-->
-                <!--document.getElementById('request').innerHTML = t.responseObject();-->
-
-                <!--var categoriesString = t.responseJSON;-->
-                <!--console.log(categoriesString);-->
-
             $('#categories').DataTable({
-                "ajax": {
-                    url: '${resURL}/plugin/analysis-core/ajax/categories.json',
-                    dataSrc: ''
-                },
-                "columns": [
-                    { "data": "Category" },
-                    { "data": "Total" },
-                    { "data": "Distribution" }
-                ],
                 "order": [],
                 "pagingType": "numbers",
                 "columnDefs": [{
-                "targets": 'no-sort',
+                    "targets": 'no-sort',
                     "orderable": false
                 }]
             });
-
         })(jQuery);
+
+        result.getAjaxValue("Hello Request", function(t) {
+            (function ($) {
+                console.log(t.responseObject().data);
+                var table = $('#categories').DataTable()
+                table.rows.add(t.responseObject().data).draw()
+            })(jQuery);
+        })
     </script>
+
+    <script src="${resURL}/plugin/analysis-core/js/data-tables.js"/>
+    <script src="${resURL}/plugin/analysis-core/js/doughnut-chart.js"/>
+    <script src="${resURL}/plugin/analysis-core/js/tabs.js"/>
 
 </j:jelly>

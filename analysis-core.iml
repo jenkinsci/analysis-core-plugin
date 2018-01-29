@@ -24,7 +24,6 @@
     <orderEntry type="library" name="datatables" level="application" />
     <orderEntry type="library" name="Chart.bundle" level="application" />
     <orderEntry type="library" name="jquery-3.2.1" level="application" />
-    <orderEntry type="library" name="Maven: javax.json:javax.json-api:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.jenkins-ci.plugins:ant:1.1" level="project" />
     <orderEntry type="library" name="Maven: de.java2html:java2html:5.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.4" level="project" />
@@ -296,5 +295,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.slf4j:log4j-over-slf4j:1.7.25" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.slf4j:jcl-over-slf4j:1.7.25" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.slf4j:slf4j-jdk14:1.7.25" level="project" />
+    <orderEntry type="library" name="jquery-3.3.1" level="application" />
+    <orderEntry type="library" name="popper" level="application" />
   </component>
 </module>
