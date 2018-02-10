@@ -1,23 +1,7 @@
 (function ($) {
-    function format() {
-        var warningMessage = $('#warning-message').text();
-        var warningTooltip = $('#warning-toolTip').text();
-
-        return '<div><strong>' + warningMessage + '</strong><br/>'
-            + warningTooltip + '</div>';
+    function format(message, tooltip) {
+        return '<div><strong>' + message + '</strong><br/>' + tooltip + '</div>';
     }
-
-    // $(document).ready(function () {
-    //     $('#categories').DataTable({
-    //         "order": [],
-    //         "pagingType": "numbers",
-    //         "columnDefs": [{
-    //             "targets": 'no-sort',
-    //             "orderable": false
-    //         }]
-    //     });
-    // });
-
     $('#modules').DataTable({
         "order": [],
         "pagingType": "numbers",
@@ -84,7 +68,7 @@
     });
 
     // Add event listener for opening and closing details
-    $('#warnings').find('tbody').on('click', 'td.details-control', function () {
+    $('#warnings').on('click', 'td.details-control', function () {
         var tr = $(this).closest('tr');
         var row = table.row(tr);
 
@@ -94,7 +78,7 @@
             tr.removeClass('shown');
         } else {
             // Open this row
-            row.child(format(tr.data('child-value'))).show();
+            row.child(format(tr.data('child-message'), tr.data('child-tooltip'))).show();
             tr.addClass('shown');
         }
     });

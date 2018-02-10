@@ -34,12 +34,8 @@
 
         <tbody>
             <j:forEach var="warning" items="${it.container.sortedAnnotations}">
-                <tr>
+                <tr data-child-message="${warning.message}" data-child-tooltip="${warning.toolTip}">
                     <td class="details-control">
-                        <div style="display: none">
-                            <span id="warning-message">${warning.message}</span>
-                            <span id="warning-toolTip">${warning.toolTip}</span>
-                        </div>
                     </td>
                     <td>
                         <div tooltip="${warning.message}">
