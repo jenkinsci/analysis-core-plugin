@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="${resURL}/plugin/analysis-core/css/material-blue-grey.css"/>
 
     <script>
-        var result =<st:bind value="${it}"/>
+        var result = <st:bind value="${it}"/>
     </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -47,7 +47,7 @@
 
                             <j:if test="${it.container.packages.size() > 1}">
                                 <li class="nav-item">
-                                    <a class="nav-link active" role="tab" data-toggle="tab" href="#packages1">
+                                    <a class="nav-link" role="tab" data-toggle="tab" href="#packages1">
                                         ${l.packages}
                                     </a>
                                 </li>

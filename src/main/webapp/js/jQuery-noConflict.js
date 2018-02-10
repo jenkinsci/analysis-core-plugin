@@ -1,3 +1,5 @@
+// http://jsfiddle.net/dgervalle/hhBc6/
+// http://www.softec.lu/site/DevelopersCorner/BootstrapPrototypeConflict
 jQuery.noConflict();
 if (Prototype.BrowserFeatures.ElementExtensions) {
     var disablePrototypeJS = function (method, pluginsToDisable) {
