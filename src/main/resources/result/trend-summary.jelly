@@ -3,16 +3,16 @@
     <div class="col-sm-6">
 
         <div class="card card-marg-bot">
-            <div class="card-body">
+            <div data-role="page" class="card-body">
 
-                <h5 class="card-title">${%Warnings Trend}
-                    <i class="fa fa-bell-o icon-right fa-2x" aria-hidden="true"/>
+                <!-- data-number...: get value for doughnut graph -->
+                <h5 id="number-warnings"
+                    data-number-of-new-warnings="${it.numberOfNewWarnings}"
+                    data-number-fixed-warnings="${it.numberOfFixedWarnings}"
+                    class="card-title">
+                    ${%Warnings Trend}
+                        <i class="fa fa-bell-o icon-right fa-2x" aria-hidden="true"/>
                 </h5>
-
-                <div style="display: none">
-                    <span id="numberOfNewWarnings">${it.numberOfNewWarnings}</span>
-                    <span id="numberOfFixedWarnings">${it.numberOfFixedWarnings}</span>
-                </div>
 
                 <j:choose>
                     <j:when test="${it.numberOfNewWarnings > 0}">
@@ -22,6 +22,7 @@
                     </j:when>
                     <j:when test="${it.numberOfFixedWarnings > 0}">
                         <div class="graph-size">
+                            <!--canvas node, to render the doughnut-chart-->
                             <canvas id="doughnut-trend-summary" class="graph-cursor-pointer" width="100" height="100"/>
                         </div>
                     </j:when>
@@ -61,5 +62,4 @@
             </div>
         </div>
     </div>
-
 </j:jelly>

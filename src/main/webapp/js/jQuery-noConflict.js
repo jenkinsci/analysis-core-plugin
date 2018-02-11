@@ -1,5 +1,10 @@
-// http://jsfiddle.net/dgervalle/hhBc6/
-// http://www.softec.lu/site/DevelopersCorner/BootstrapPrototypeConflict
+/**
+ *
+ * @summary solves the bootstrap with prototypejs conflict
+ * @link http://jsfiddle.net/dgervalle/hhBc6/
+ * @link http://www.softec.lu/site/DevelopersCorner/BootstrapPrototypeConflict
+ */
+
 jQuery.noConflict();
 if (Prototype.BrowserFeatures.ElementExtensions) {
     var disablePrototypeJS = function (method, pluginsToDisable) {

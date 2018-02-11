@@ -1,73 +1,52 @@
+/**
+ * @file Initialising DataTables
+ * @author Cornelia Christof <cchristo@hm.edu>
+ */
+
 (function ($) {
+    /**
+     *
+     * @summary Formatting code, that is shown in warnings table, by clicking the details plus icon
+     * @param message
+     * @param tooltip
+     * @link https://datatables.net/examples/api/row_details.html
+     * @returns {string}
+     */
     function format(message, tooltip) {
         return '<div><strong>' + message + '</strong><br/>' + tooltip + '</div>';
     }
-    $('#modules').DataTable({
-        "order": [],
-        "pagingType": "numbers",
-        "columnDefs": [{
-            "targets": 'no-sort',
-            "orderable": false
-        }]
-    });
-    $('#packages').DataTable({
-        "order": [],
-        "pagingType": "numbers",
-        "columnDefs": [{
-            "targets": 'no-sort',
-            "orderable": false
-        }]
-    });
-    $('#files').DataTable({
-        "order": [],
-        "pagingType": "numbers",
-        "columnDefs": [{
-            "targets": 'no-sort',
-            "orderable": false
-        }]
-    });
-    // $('#categories').DataTable({
-    //     "order": [],
-    //     "pagingType": "numbers",
-    //     "columnDefs": [{
-    //         "targets": 'no-sort',
-    //         "orderable": false
-    //     }]
-    // });
-    $('#authors').DataTable({
-        "order": [],
-        "pagingType": "numbers",
-        "columnDefs": [{
-            "targets": 'no-sort',
-            "orderable": false
-        }]
-    });
-    $('#types').DataTable({
-        "order": [],
-        "pagingType": "numbers",
-        "columnDefs": [{
-            "targets": 'no-sort',
-            "orderable": false
-        }]
-    });
-    $('#origin').DataTable({
-        "order": [],
-        "pagingType": "numbers",
-        "columnDefs": [{
-            "targets": 'no-sort',
-            "orderable": false
-        }]
-    });
-    var table = $('#warnings').DataTable({
-        "order": [],
-        "pagingType": "numbers",
-        "columnDefs": [{
-            "targets": 'no-sort',
-            "orderable": false
+
+    /**
+     *
+     * @summary Initialise DataTable functions on all tables with the class display
+     * @link https://datatables.net/
+     */
+    $('table.display').DataTable({
+        'pagingType': 'numbers', // Page number button only
+        'columnDefs': [{
+            'targets': 'no-sort', // Columns with class 'no-sort' are not orderable
+            'orderable': false
         }]
     });
 
-    // Add event listener for opening and closing details
+    /**
+     *
+     * @summary Set variable table for initialising DataTable functions on table #warnings
+     */
+    var table = $('#warnings').DataTable({
+        'pagingType': 'numbers', // Page number button only
+        'columnDefs': [{
+            'targets': 'no-sort', // Columns with class 'no-sort' are not orderable
+            'orderable': false
+        }]
+    });
+
+    /**
+     *
+     * @summary Add event listener for opening and closing the warning details
+     * @event click
+     * @link https://datatables.net/examples/api/row_details.html
+     */
     $('#warnings').on('click', 'td.details-control', function () {
         var tr = $(this).closest('tr');
         var row = table.row(tr);
