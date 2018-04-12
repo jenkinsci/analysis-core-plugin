@@ -1,0 +1,478 @@
+package io.jenkins.plugins.analysis.core.model;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.Function;
+
+import org.junit.jupiter.api.Test;
+
+import edu.hm.hafner.analysis.Issue;
+import edu.hm.hafner.analysis.IssueBuilder;
+import edu.hm.hafner.analysis.Issues;
+
+import edu.hm.hafner.analysis.Priority;
+import static io.jenkins.plugins.analysis.core.model.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+
+class PropertyStatisticsTest {
+
+    /**
+     * Verifies that getTotal() returns the total number of issues if there is one issues
+     */
+    @Test
+    void shouldReturnTotalNumber() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setCategory("error").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        int actualTotal = statistics.getTotal();
+
+        assertThat(actualTotal).isEqualTo(issues.size());
+    }
+
+    /**
+     * Verifies that getTotal() returns the total number of issues if there is one issues
+     */
+    @Test
+    void shouldReturnTotalNumberMoreIssues() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setCategory("errorA").build());
+        issues.add(builder.setCategory("errorB").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        int actualTotal = statistics.getTotal();
+
+        assertThat(actualTotal).isEqualTo(2);
+    }
+
+    /**
+     * Verifies that getTotal() returns the total number of issues if there are no issues
+     */
+    @Test
+    void shouldReturnTotalNumberZero() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        int actualTotal = statistics.getTotal();
+
+        assertThat(actualTotal).isEqualTo(0);
+    }
+
+    /**
+     * Verifies that getProperty() returns the name of this property
+     */
+    @Test
+    void shouldReturnPropertyString() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        String actualProperty = statistics.getProperty();
+
+        assertThat(actualProperty).isEqualTo("category");
+    }
+
+    /**
+     * Verifies that getProperty() doesnt returns anything if there is no property
+     */
+    @Test
+    void shouldReturnEmptyPropertyString() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        PropertyStatistics statistics = new PropertyStatistics(issues, "", Function.identity());
+
+        String actualProperty = statistics.getProperty();
+
+        assertThat(actualProperty).isEmpty();
+    }
+
+    /**
+     * Verifies that getDisplayName() returns a display name for the specified property instance when key is valid
+     */
+    @Test
+    void shouldReturnDisplayNameString() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        String actualDisplayName = statistics.getDisplayName("name");
+
+        assertThat(actualDisplayName).isEqualTo("name");
+    }
+
+    /**
+     * Verifies that getDisplayName() returns nothing if key is an empty string
+     */
+    @Test
+    void shouldReturnEmptyDisplayNameString() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        String actualDisplayName = statistics.getDisplayName("");
+
+        assertThat(actualDisplayName).isEmpty();
+    }
+
+    /**
+     * Verifies that getKeys() returns one instances for this property
+     */
+    @Test
+    void shouldReturnKeys() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setCategory("key").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+        Set<String> str = new HashSet();
+        str.add("key");
+
+        Set<String> actualProperty = statistics.getKeys();
+
+        assertThat(actualProperty).isEqualTo(str);
+    }
+
+    /**
+     * Verifies that getKeys() returns all instances for this property
+     */
+    @Test
+    void shouldReturnAllKeys() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setCategory("keyA").build());
+        issues.add(builder.setCategory("keyB").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+        Set<String> str = new HashSet();
+        str.add("keyA");
+        str.add("keyB");
+
+        Set<String> actualProperty = statistics.getKeys();
+
+        assertThat(actualProperty).isEqualTo(str);
+    }
+
+    /**
+     * Verifies that getKeys() returns empty string if the instances for this property is empty
+     */
+    @Test
+    void shouldReturnEmptyStringKeys() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setCategory("").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+        Set<String> str = new HashSet();
+        str.add("");
+
+        Set<String> actualProperty = statistics.getKeys();
+
+        assertThat(actualProperty).isEqualTo(str);
+    }
+
+    /**
+     * Verifies that getKeys() returns nothing if there are no instances for this property
+     */
+    @Test
+    void shouldReturnEmptyKeys() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        Set<String> actualProperty = statistics.getKeys();
+
+        assertThat(actualProperty).isEmpty();
+    }
+
+    /**
+     * Verifies that getMax() returns zero if there are no issues
+     */
+    @Test
+    void shouldReturnMaxValueZero() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        int value = statistics.getMax();
+
+        assertThat(value).isEqualTo(0);
+    }
+
+    /**
+     * Verifies that getMax() returns one if there is one issues
+     */
+    @Test
+    void shouldReturnMaxValue() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        int value = statistics.getMax();
+
+        assertThat(value).isEqualTo(1);
+    }
+
+    /**
+     * Verifies that getMax() returns the maximum number of issues for each property instance
+     */
+    @Test
+    void shouldReturnMaxValueTwo() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setCategory("ab").setPackageName("P1").build());
+        issues.add(builder.setCategory("ab").setPackageName("P2").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        int value = statistics.getMax();
+
+        assertThat(value).isEqualTo(2);
+    }
+
+    /**
+     * Verifies that getMax() returns the maximum number of issues for each property instance
+     */
+    @Test
+    void shouldReturnMaxValueDifferentCategories() {
+        //Given
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setCategory("ab").setPackageName("P1").build());
+        issues.add(builder.setCategory("ab").setPackageName("P2").build());
+        issues.add(builder.setCategory("abc").setPackageName("P2").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        int value = statistics.getMax();
+
+        assertThat(value).isEqualTo(2);
+    }
+
+    /**
+     * Verifies that getCount() throw null pointer exception
+     */
+    @Test
+    void shouldReturnCountEmpty() {
+        //Given
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        assertThrows(NullPointerException.class, ()->statistics.getCount("key"));
+    }
+
+    /**
+     * Verifies that getCount() returns one if there is one issues for the specified property instance
+     */
+    @Test
+    void shouldReturnCountOne() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setCategory("key").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        long value = statistics.getCount("key");
+
+        assertThat(value).isEqualTo(1);
+    }
+
+    /**
+     * Verifies that getCount() returns the maximum number of issues for the specified property instance
+     */
+    @Test
+    void shouldReturnCountThree() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setCategory("key").build());
+        issues.add(builder.setCategory("key").setPackageName("P1").build());
+        issues.add(builder.setCategory("key").setPackageName("P2").build());
+        issues.add(builder.setCategory("key1").setPackageName("P1").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        long value = statistics.getCount("key");
+
+        assertThat(value).isEqualTo(3);
+    }
+
+    /**
+     * Verifies that getHighCount() returns the number of issues with Priority#HIGH
+     */
+    @Test
+    void shouldReturnHighCountOne() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setPriority(Priority.HIGH).setCategory("key").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        long value = statistics.getHighCount("key");
+
+        assertThat(value).isEqualTo(1);
+    }
+
+    /**
+     * Verifies that getHighCount() returns the number of issues with Priority#HIGH
+     */
+    @Test
+    void shouldReturnHighCountTwo() {
+        //Given
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setPriority(Priority.HIGH).setCategory("key").setOrigin("A").build());
+        issues.add(builder.setPriority(Priority.HIGH).setCategory("key").setOrigin("B").build());
+        issues.add(builder.setPriority(Priority.LOW).setCategory("key").setOrigin("B").build());
+        issues.add(builder.setPriority(Priority.NORMAL).setCategory("key").setOrigin("B").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        long value = statistics.getHighCount("key");
+
+        assertThat(value).isEqualTo(2);
+    }
+
+    /**
+     * Verifies that getHighCount() returns zero if there are not issues with Priority#HIGH
+     */
+    @Test
+    void shouldReturnHighCountZero() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setPriority(Priority.LOW).setCategory("key").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        long value = statistics.getHighCount("key");
+
+        assertThat(value).isEqualTo(0);
+    }
+
+    /**
+     * Verifies that getHighCount() throw null pointer exception
+     */
+    @Test
+    void shouldReturnHighCountException() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        assertThrows(NullPointerException.class, ()->statistics.getHighCount("key"));
+    }
+
+    /**
+     * Verifies that getNormalCount() returns the number of issues with Priority#NORMAL
+     */
+    @Test
+    void shouldReturnNormalCountOne() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setPriority(Priority.NORMAL).setCategory("key").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        long value = statistics.getNormalCount("key");
+
+        assertThat(value).isEqualTo(1);
+    }
+
+    /**
+     * Verifies that getNormalCount() returns the number of issues with Priority#NORMAL
+     */
+    @Test
+    void shouldReturnNormalCountTwo() {
+        //Given
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setPriority(Priority.NORMAL).setCategory("key").setOrigin("A").build());
+        issues.add(builder.setPriority(Priority.NORMAL).setCategory("key").setOrigin("B").build());
+        issues.add(builder.setPriority(Priority.LOW).setCategory("key").setOrigin("B").build());
+        issues.add(builder.setPriority(Priority.HIGH).setCategory("key").setOrigin("B").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        long value = statistics.getNormalCount("key");
+
+        assertThat(value).isEqualTo(2);
+    }
+
+    /**
+     * Verifies that getNormalCount() throw null pointer exception
+     */
+    @Test
+    void shouldReturnNormalCountException() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        assertThrows(NullPointerException.class, ()->statistics.getNormalCount("key"));
+    }
+
+    /**
+     * Verifies that getNormalCount() returns zero if there are not issues with Priority#NORMAL
+     */
+    @Test
+    void shouldReturnNormalCountZero() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setPriority(Priority.LOW).setCategory("key").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        long value = statistics.getNormalCount("key");
+
+        assertThat(value).isEqualTo(0);
+    }
+
+    /**
+     * Verifies that getLowCount() returns the number of issues with Priority#LOW
+     */
+    @Test
+    void shouldReturnLowCountOne() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setPriority(Priority.LOW).setCategory("key").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        long value = statistics.getLowCount("key");
+
+        assertThat(value).isEqualTo(1);
+    }
+
+    /**
+     * Verifies that getLowCount() throw null pointer exception
+     */
+    @Test
+    void shouldReturnLowCountException() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        assertThrows(NullPointerException.class, ()->statistics.getLowCount("key"));
+    }
+
+    /**
+     * Verifies that getLowCount() returns the number of issues with Priority#LOW
+     */
+    @Test
+    void shouldReturnLowCountTwo() {
+        //Given
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setPriority(Priority.LOW).setCategory("key").setOrigin("A").build());
+        issues.add(builder.setPriority(Priority.LOW).setCategory("key").setOrigin("B").build());
+        issues.add(builder.setPriority(Priority.NORMAL).setCategory("key").setOrigin("B").build());
+        issues.add(builder.setPriority(Priority.HIGH).setCategory("key").setOrigin("B").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        long value = statistics.getLowCount("key");
+
+        assertThat(value).isEqualTo(2);
+    }
+
+    /**
+     * Verifies that getLowCount() returns zero if there are not issues with Priority#LOW
+     */
+    @Test
+    void shouldReturnLowCountZero() {
+        final Issues<Issue> issues = new Issues<>();
+        IssueBuilder builder = new IssueBuilder();
+        issues.add(builder.setPriority(Priority.HIGH).setCategory("key").build());
+        PropertyStatistics statistics = new PropertyStatistics(issues, "category", Function.identity());
+
+        long value = statistics.getLowCount("key");
+
+        assertThat(value).isEqualTo(0);
+    }
+}
