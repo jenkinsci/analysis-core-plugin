@@ -249,14 +249,13 @@ class IssuesRecorderTest {
     void shouldNotBeOkIfHealthyIsNotLowerThanUnhealthy(){
         final Descriptor descriptor = new Descriptor();
         final int healthy = 2;
-        final int unhealthyEqual = 2;
-        int unhealthyLower = 1;
+        final int unhealthyEqual = healthy;
         final String expectedError = "Threshold &#039;healthy&#039; must be less than threshold &#039;unhealthy&#039;.";
 
         final FormValidation healthyValidationEqual = descriptor.doCheckHealthy(healthy, unhealthyEqual);
         final FormValidation unhealthyValidationEqual = descriptor.doCheckUnHealthy(healthy, unhealthyEqual);
-        final FormValidation unhealthyValidationHealthyLessUnhealthy = descriptor.doCheckUnHealthy(healthy, unhealthyLower);
-        final FormValidation healthyValidationHealthyLessUnhealthy = descriptor.doCheckHealthy(healthy, unhealthyLower);
+        final FormValidation unhealthyValidationHealthyLessUnhealthy = descriptor.doCheckUnHealthy(healthy, unhealthyEqual -1);
+        final FormValidation healthyValidationHealthyLessUnhealthy = descriptor.doCheckHealthy(healthy, unhealthyEqual - 1);
 
         assertThat(healthyValidationEqual).isError();
         assertThat(healthyValidationEqual).hasMessage(expectedError);
