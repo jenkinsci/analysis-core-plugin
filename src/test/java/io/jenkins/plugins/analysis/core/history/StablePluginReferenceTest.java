@@ -1,9 +1,8 @@
 package io.jenkins.plugins.analysis.core.history;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.assertj.core.api.AutoCloseableSoftAssertions;
 import org.junit.jupiter.api.Test;
@@ -80,9 +79,9 @@ class StablePluginReferenceTest {
     }
 
     private void runPermutations(final boolean withThreeBaselines) {
-        List<Result> results = Stream.of(Result.SUCCESS, Result.UNSTABLE, Result.FAILURE, Result.NOT_BUILT,
-                Result.ABORTED).collect(Collectors.toList());
-        List<Boolean> booleanValues = Stream.of(true, false).collect(Collectors.toList());
+        List<Result> results = Arrays.asList(Result.SUCCESS, Result.UNSTABLE, Result.FAILURE, Result.NOT_BUILT,
+                Result.ABORTED);
+        List<Boolean> booleanValues = Arrays.asList(true, false);
 
         try (AutoCloseableSoftAssertions softly = new AutoCloseableSoftAssertions()) {
             results.forEach(result -> results.forEach(
