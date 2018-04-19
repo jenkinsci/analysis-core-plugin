@@ -14,6 +14,9 @@ import static org.mockito.Mockito.*;
 import hudson.model.Result;
 import hudson.model.Run;
 
+/**
+ * PreviousRunReferenceTest to test PreviousRunReference.
+ */
 class PreviousRunReferenceTest extends ReferenceFinderTest {
 
     @Override
@@ -21,7 +24,9 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         return new PreviousRunReference(baseline, resultSelector, true);
     }
 
-    /* Test that there are no previous actions and stableRun is not build yet, with overallResultMusBeSuccess = false */
+    /**
+     * Test that there are no previous actions and stableRun is not build yet, with overallResultMusBeSuccess = false.
+     */
     @Test
     void notBuild_withAnyResult_shouldReturnNothing() {
 
@@ -35,7 +40,9 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         assertThat(resultAction).isEmpty();
     }
 
-    /* Test that there are no previous action and stableRun is not build yet, with overallResultMusBeSuccess = true*/
+    /**
+     * Test that there are no previous action and stableRun is not build yet, with overallResultMusBeSuccess = true.
+     */
     @Test
     void notBuild_withSuccessful_shouldReturnNothing() {
 
@@ -49,8 +56,9 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         assertThat(resultAction).isEmpty();
     }
 
-
-    /* Test that there are no previous action, with overallResultMusBeSuccess = true*/
+    /**
+     * Test that there are no previous action, with overallResultMusBeSuccess = true.
+     */
     @Test
     void noActions_withSuccessful_shouldReturnNothing() {
 
@@ -69,7 +77,9 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         assertThat(resultAction).isEmpty();
     }
 
-    /* Test that there are no previous action, with overallResultMusBeSuccess = false*/
+    /**
+     * Test that there are no previous action, with overallResultMusBeSuccess = false.
+     */
     @Test
     void noActions_withAnyResult_shouldReturnNothing() {
 
@@ -88,8 +98,9 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         assertThat(resultAction).isEmpty();
     }
 
-
-    /* Test that there is one unsuccesful previous action, with overallResultMusBeSuccess = true */
+    /**
+     * Test that there is one unsuccesful previous action, with overallResultMusBeSuccess = true.
+     */
     @Test
     void oneFalseAction_withSuccessful_shouldReturnNothing() {
 
@@ -117,7 +128,9 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         assertThat(resultAction).isEmpty();
     }
 
-    /* Test that there is one unsuccesful previous action, with overallResultMusBeSuccess = false */
+    /**
+     * Test that there is one unsuccesful previous action, with overallResultMusBeSuccess = false.
+     */
     @Test
     void oneFalseAction_withAnyResult_shouldReturnOne() {
         Run baseline = mock(Run.class);
@@ -147,7 +160,9 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         assertThat(resultAction).isEqualTo(Optional.of(action));
     }
 
-    /* Test that there is one succesful previous action, with overallResultMusBeSuccess = true */
+    /**
+     * Test that there is one succesful previous action, with overallResultMusBeSuccess = true.
+     */
     @Test
     void oneTrueAction_withSuccessful_shouldReturnOne() {
         Run baseline = mock(Run.class);
@@ -177,7 +192,9 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         assertThat(resultAction).isEqualTo(Optional.of(action));
     }
 
-    /* Test that there is one unstable previous action, with overallResultMusBeSuccess = false */
+    /**
+     * Test that there is one unstable previous action, with overallResultMusBeSuccess = false.
+     */
     @Test
     void oneUnstableAction_withAnyResult_shouldReturnOne() {
         Run baseline = mock(Run.class);
@@ -207,7 +224,9 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         assertThat(resultAction).isEqualTo(Optional.of(action));
     }
 
-    /*  Test that there is one unstable previous action, with overallResultMusBeSuccess = true */
+    /**
+     * Test that there is one unstable previous action, with overallResultMusBeSuccess = true.
+     */
     @Test
     void oneUnstableAction_withSuccessful_shouldReturnNothing() {
         Run baseline = mock(Run.class);
@@ -237,7 +256,9 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         assertThat(resultAction).isEmpty();
     }
 
-    /* Test that there are two succesful previous action, with overallResultMusBeSuccess = false */
+    /**
+     * Test that there are two succesful previous action, with overallResultMusBeSuccess = false.
+     */
     @Test
     void twoTrueAction_withAnyResult_shouldReturnTwo() {
         Run baseline = mock(Run.class);
@@ -270,7 +291,9 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
     }
 
 
-    /* Test that there are two previous action, with overallResultMusBeSuccess = false */
+    /**
+     * Test that there are two previous action, with overallResultMusBeSuccess = false.
+     */
     @Test
     void twoAction_withAnyResult_shouldReturnTwo() {
         Run baseline = mock(Run.class);
@@ -302,7 +325,9 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         assertThat(resultAction2).isEqualTo(Optional.of(action));
     }
 
-    /* Test that there are two previous action (FAILURE and SUCCESS), with overallResultMusBeSuccess = true */
+    /**
+     * Test that there are two previous action (FAILURE and SUCCESS), with overallResultMusBeSuccess = true.
+     */
     @Test
     void twoAction_withSuccessful_shouldReturnOne() {
         Run baseline = mock(Run.class);
@@ -334,7 +359,9 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         assertThat(resultAction2).isEqualTo(Optional.of(action));
     }
 
-    /* Test that there are two previous action (FAILURE and SUCCESS), with overallResultMusBeSuccess = true */
+    /**
+     * Test that there are two previous action (FAILURE and SUCCESS), with overallResultMusBeSuccess = true.
+     */
     @Test
     void twoFalseAction_withSuccessful_shouldReturnNothing() {
         Run baseline = mock(Run.class);
@@ -366,7 +393,9 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         assertThat(resultAction2).isEmpty();
     }
 
-    /* Test that there are 5 previous action (FAILURE and SUCCESS), with overallResultMusBeSuccess = true */
+    /**
+     * Test that there are 5 previous action (FAILURE and SUCCESS), with overallResultMusBeSuccess = true.
+     */
     @Test
     void allTypesOfAction_withSuccessful_shouldReturnOne() {
         Run baseline = mock(Run.class);
@@ -404,7 +433,9 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         assertThat(resultActionABORTED).isEmpty();
     }
 
-    /* Test that there are 5 previous action (FAILURE and SUCCESS), with overallResultMusBeSuccess = false */
+    /**
+     * Test that there are 5 previous action (FAILURE and SUCCESS), with overallResultMusBeSuccess = false.
+     */
     @Test
     void allTypesOfAction_withAnyResult_shouldReturnThree() {
         Run baseline = mock(Run.class);
@@ -442,7 +473,9 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         assertThat(resultActionABORTED).isEmpty();
     }
 
-    /* Test that there is one previous action with result null, with overallResultMusBeSuccess = false */
+    /**
+     * Test that there is one previous action with result null, with overallResultMusBeSuccess = false.
+     */
     @Test
     void oneNullAction_withAnyResult_shouldReturnNothing(){
         Run baseline = mock(Run.class);
@@ -464,7 +497,9 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         assertThat(resultAction).isEmpty();
     }
 
-    /* Test that there is one previous action with result null, with overallResultMusBeSuccess = true */
+    /**
+     * Test that there is one previous action with result null, with overallResultMusBeSuccess = true.
+     */
     @Test
     void oneNullAction_withSuccessful_shouldReturnNothing(){
         Run baseline = mock(Run.class);
