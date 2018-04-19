@@ -520,4 +520,5 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
 
         assertThat(resultAction).isEmpty();
     }
+
 }
