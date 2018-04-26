@@ -290,7 +290,6 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         assertThat(resultAction2).isEqualTo(Optional.of(action));
     }
 
-
     /**
      * Test that there are two previous action, with overallResultMusBeSuccess = false.
      */
