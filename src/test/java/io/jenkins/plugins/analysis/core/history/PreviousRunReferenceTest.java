@@ -16,9 +16,14 @@ import hudson.model.Run;
 
 /**
  * PreviousRunReferenceTest to test PreviousRunReference.
+ *
+ * @author Martin Weibel
  */
 class PreviousRunReferenceTest extends ReferenceFinderTest {
 
+    /**
+     * getReferenceFinder.
+     */
     @Override
     ReferenceFinder getReferenceFinder(final Run baseline, final ResultSelector resultSelector) {
         return new PreviousRunReference(baseline, resultSelector, true);
@@ -28,39 +33,35 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
      * Test that there are no previous actions and stableRun is not build yet, with overallResultMusBeSuccess = false.
      */
     @Test
-    void notBuild_withAnyResult_shouldReturnNothing() {
+    void notBuildWithAnyResultShouldReturnNothing() {
 
         Run<?, ?> baseline = mock(Run.class);
         ResultSelector selector = mock(ResultSelector.class);
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 false);
 
-        Optional<ResultAction> resultAction = previousRun.getReferenceAction();
-
-        assertThat(resultAction).isEmpty();
+        assertThat(previousRun.getReferenceAction()).isEmpty();
     }
 
     /**
      * Test that there are no previous action and stableRun is not build yet, with overallResultMusBeSuccess = true.
      */
     @Test
-    void notBuild_withSuccessful_shouldReturnNothing() {
+    void notBuildWithSuccessfulShouldReturnNothing() {
 
         Run<?, ?> baseline = mock(Run.class);
         ResultSelector selector = mock(ResultSelector.class);
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 true);
 
-        Optional<ResultAction> resultAction = previousRun.getReferenceAction();
-
-        assertThat(resultAction).isEmpty();
+        assertThat(previousRun.getReferenceAction()).isEmpty();
     }
 
     /**
      * Test that there are no previous action, with overallResultMusBeSuccess = true.
      */
     @Test
-    void noActions_withSuccessful_shouldReturnNothing() {
+    void noActionsWithSuccessfulShouldReturnNothing() {
 
         Run baseline = mock(Run.class);
         Run previousRunMock = mock(Run.class);
@@ -72,16 +73,14 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 true);
 
-        Optional<ResultAction> resultAction = previousRun.getReferenceAction();
-
-        assertThat(resultAction).isEmpty();
+        assertThat(previousRun.getReferenceAction()).isEmpty();
     }
 
     /**
      * Test that there are no previous action, with overallResultMusBeSuccess = false.
      */
     @Test
-    void noActions_withAnyResult_shouldReturnNothing() {
+    void noActionsWithAnyResultShouldReturnNothing() {
 
         Run baseline = mock(Run.class);
         Run previousRunMock = mock(Run.class);
@@ -93,16 +92,14 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 false);
 
-        Optional<ResultAction> resultAction = previousRun.getReferenceAction();
-
-        assertThat(resultAction).isEmpty();
+        assertThat(previousRun.getReferenceAction()).isEmpty();
     }
 
     /**
      * Test that there is one unsuccesful previous action, with overallResultMusBeSuccess = true.
      */
     @Test
-    void oneFalseAction_withSuccessful_shouldReturnNothing() {
+    void oneFalseActionWithSuccessfulShouldReturnNothing() {
 
         Run baseline = mock(Run.class);
         Run prevRun = mock(Run.class);
@@ -119,20 +116,18 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         AnalysisResult analysisResult = mock(AnalysisResult.class);
         when(action.getResult()).thenReturn(analysisResult);
 
-        PreviousRunReference stablePluginReference = new PreviousRunReference(baseline, resultSelector,
+        PreviousRunReference previousRun = new PreviousRunReference(baseline, resultSelector,
                 true);
 
-        Optional<ResultAction> resultAction = stablePluginReference.getReferenceAction();
-
+        assertThat(previousRun.getReferenceAction()).isEmpty();
         verify(resultSelector, times(1)).get(prevRun);
-        assertThat(resultAction).isEmpty();
     }
 
     /**
      * Test that there is one unsuccesful previous action, with overallResultMusBeSuccess = false.
      */
     @Test
-    void oneFalseAction_withAnyResult_shouldReturnOne() {
+    void oneFalseActionWithAnyResultShouldReturnOne() {
         Run baseline = mock(Run.class);
         Run previousRunMock = mock(Run.class);
         when(baseline.getPreviousBuild()).thenReturn(previousRunMock);
@@ -154,17 +149,15 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 false);
 
-        Optional<ResultAction> resultAction = previousRun.getReferenceAction();
-
+        assertThat(previousRun.getReferenceAction()).isEqualTo(Optional.of(action));
         verify(selector, times(2)).get(previousRunMock);
-        assertThat(resultAction).isEqualTo(Optional.of(action));
     }
 
     /**
      * Test that there is one succesful previous action, with overallResultMusBeSuccess = true.
      */
     @Test
-    void oneTrueAction_withSuccessful_shouldReturnOne() {
+    void oneTrueActionWithSuccessfulShouldReturnOne() {
         Run baseline = mock(Run.class);
         Run previousRunMock = mock(Run.class);
         when(baseline.getPreviousBuild()).thenReturn(previousRunMock);
@@ -186,17 +179,15 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 true);
 
-        Optional<ResultAction> resultAction = previousRun.getReferenceAction();
-
+        assertThat(previousRun.getReferenceAction()).contains(action);
         verify(selector, times(2)).get(previousRunMock);
-        assertThat(resultAction).isEqualTo(Optional.of(action));
     }
 
     /**
      * Test that there is one unstable previous action, with overallResultMusBeSuccess = false.
      */
     @Test
-    void oneUnstableAction_withAnyResult_shouldReturnOne() {
+    void oneUnstableActionWithAnyResultShouldReturnOne() {
         Run baseline = mock(Run.class);
         Run previousRunMock = mock(Run.class);
         when(baseline.getPreviousBuild()).thenReturn(previousRunMock);
@@ -218,17 +209,15 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 false);
 
-        Optional<ResultAction> resultAction = previousRun.getReferenceAction();
-
+        assertThat(previousRun.getReferenceAction()).contains(action);
         verify(selector, times(2)).get(previousRunMock);
-        assertThat(resultAction).isEqualTo(Optional.of(action));
     }
 
     /**
      * Test that there is one unstable previous action, with overallResultMusBeSuccess = true.
      */
     @Test
-    void oneUnstableAction_withSuccessful_shouldReturnNothing() {
+    void oneUnstableActionWithSuccessfulShouldReturnNothing() {
         Run baseline = mock(Run.class);
         Run previousRunMock = mock(Run.class);
         when(baseline.getPreviousBuild()).thenReturn(previousRunMock);
@@ -250,28 +239,26 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 true);
 
-        Optional<ResultAction> resultAction = previousRun.getReferenceAction();
-
+        assertThat(previousRun.getReferenceAction()).isEmpty();
         verify(selector, times(1)).get(previousRunMock);
-        assertThat(resultAction).isEmpty();
     }
 
     /**
      * Test that there are two succesful previous action, with overallResultMusBeSuccess = false.
      */
     @Test
-    void twoTrueAction_withAnyResult_shouldReturnTwo() {
+    void twoTrueActionWithAnyResultShouldReturnTwo() {
         Run baseline = mock(Run.class);
         Run previousRunMock = mock(Run.class);
         when(baseline.getPreviousBuild()).thenReturn(previousRunMock);
-        when(previousRunMock.getResult()).thenReturn(Result.SUCCESS, Result.SUCCESS);
+        when(previousRunMock.getResult()).thenReturn(Result.SUCCESS);
 
         ResultAction action = mock(ResultAction.class);
         when(action.isSuccessful()).thenReturn(true);
 
         AnalysisResult analysis = mock(AnalysisResult.class);
         when(action.getResult()).thenReturn(analysis);
-        when(analysis.getOverallResult()).thenReturn(Result.SUCCESS, Result.SUCCESS);
+        when(analysis.getOverallResult()).thenReturn(Result.SUCCESS);
 
         ResultSelector selector = mock(ResultSelector.class);
         when(selector.get(previousRunMock)).thenReturn(Optional.of(action));
@@ -282,30 +269,25 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 false);
 
-        Optional<ResultAction> resultAction1 = previousRun.getReferenceAction();
-        Optional<ResultAction> resultAction2 = previousRun.getReferenceAction();
-
+        assertThat(previousRun.getReferenceAction()).isEqualTo(Optional.of(action));
+        assertThat(previousRun.getReferenceAction()).isEqualTo(Optional.of(action));
         verify(selector, times(4)).get(previousRunMock);
-        assertThat(resultAction1).isEqualTo(Optional.of(action));
-        assertThat(resultAction2).isEqualTo(Optional.of(action));
     }
 
     /**
      * Test that there are two previous action, with overallResultMusBeSuccess = false.
      */
     @Test
-    void twoAction_withAnyResult_shouldReturnTwo() {
+    void twoActionWithAnyResultShouldReturnTwo() {
         Run baseline = mock(Run.class);
         Run previousRunMock = mock(Run.class);
         when(baseline.getPreviousBuild()).thenReturn(previousRunMock);
-        when(previousRunMock.getResult()).thenReturn(Result.FAILURE, Result.SUCCESS);
 
         ResultAction action = mock(ResultAction.class);
         when(action.isSuccessful()).thenReturn(true);
 
         AnalysisResult analysis = mock(AnalysisResult.class);
         when(action.getResult()).thenReturn(analysis);
-        when(analysis.getOverallResult()).thenReturn(Result.FAILURE, Result.SUCCESS);
 
         ResultSelector selector = mock(ResultSelector.class);
         when(selector.get(previousRunMock)).thenReturn(Optional.of(action));
@@ -316,30 +298,31 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 false);
 
-        Optional<ResultAction> resultAction1 = previousRun.getReferenceAction();
-        Optional<ResultAction> resultAction2 = previousRun.getReferenceAction();
+        when(previousRunMock.getResult()).thenReturn(Result.FAILURE);
+        when(analysis.getOverallResult()).thenReturn(Result.FAILURE);
+        assertThat(previousRun.getReferenceAction()).contains(action);
+
+        when(previousRunMock.getResult()).thenReturn(Result.SUCCESS);
+        when(analysis.getOverallResult()).thenReturn(Result.SUCCESS);
+        assertThat(previousRun.getReferenceAction()).contains(action);
 
         verify(selector, times(4)).get(previousRunMock);
-        assertThat(resultAction1).isEqualTo(Optional.of(action));
-        assertThat(resultAction2).isEqualTo(Optional.of(action));
     }
 
     /**
      * Test that there are two previous action (FAILURE and SUCCESS), with overallResultMusBeSuccess = true.
      */
     @Test
-    void twoAction_withSuccessful_shouldReturnOne() {
+    void twoActionWithSuccessfulShouldReturnOne() {
         Run baseline = mock(Run.class);
         Run previousRunMock = mock(Run.class);
         when(baseline.getPreviousBuild()).thenReturn(previousRunMock);
-        when(previousRunMock.getResult()).thenReturn(Result.FAILURE, Result.SUCCESS);
 
         ResultAction action = mock(ResultAction.class);
         when(action.isSuccessful()).thenReturn(true);
 
         AnalysisResult analysis = mock(AnalysisResult.class);
         when(action.getResult()).thenReturn(analysis);
-        when(analysis.getOverallResult()).thenReturn(Result.FAILURE, Result.SUCCESS);
 
         ResultSelector selector = mock(ResultSelector.class);
         when(selector.get(previousRunMock)).thenReturn(Optional.of(action));
@@ -350,30 +333,31 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 true);
 
-        Optional<ResultAction> resultAction1 = previousRun.getReferenceAction();
-        Optional<ResultAction> resultAction2 = previousRun.getReferenceAction();
+        when(previousRunMock.getResult()).thenReturn(Result.FAILURE);
+        when(analysis.getOverallResult()).thenReturn(Result.FAILURE);
+        assertThat(previousRun.getReferenceAction()).isEmpty();
+
+        when(previousRunMock.getResult()).thenReturn(Result.SUCCESS);
+        when(analysis.getOverallResult()).thenReturn(Result.SUCCESS);
+        assertThat(previousRun.getReferenceAction()).contains(action);
 
         verify(selector, times(3)).get(previousRunMock);
-        assertThat(resultAction1).isEmpty();
-        assertThat(resultAction2).isEqualTo(Optional.of(action));
     }
 
     /**
      * Test that there are two previous action (FAILURE and SUCCESS), with overallResultMusBeSuccess = true.
      */
     @Test
-    void twoFalseAction_withSuccessful_shouldReturnNothing() {
+    void twoFalseActionWithSuccessfulShouldReturnNothing() {
         Run baseline = mock(Run.class);
         Run previousRunMock = mock(Run.class);
         when(baseline.getPreviousBuild()).thenReturn(previousRunMock);
-        when(previousRunMock.getResult()).thenReturn(Result.FAILURE, Result.FAILURE);
 
         ResultAction action = mock(ResultAction.class);
         when(action.isSuccessful()).thenReturn(true);
 
         AnalysisResult analysis = mock(AnalysisResult.class);
         when(action.getResult()).thenReturn(analysis);
-        when(analysis.getOverallResult()).thenReturn(Result.FAILURE, Result.FAILURE);
 
         ResultSelector selector = mock(ResultSelector.class);
         when(selector.get(previousRunMock)).thenReturn(Optional.of(action));
@@ -384,30 +368,31 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 true);
 
-        Optional<ResultAction> resultAction1 = previousRun.getReferenceAction();
-        Optional<ResultAction> resultAction2 = previousRun.getReferenceAction();
+        when(previousRunMock.getResult()).thenReturn(Result.FAILURE);
+        when(analysis.getOverallResult()).thenReturn(Result.FAILURE);
+        assertThat(previousRun.getReferenceAction()).isEmpty();
+
+        when(previousRunMock.getResult()).thenReturn(Result.FAILURE);
+        when(analysis.getOverallResult()).thenReturn(Result.FAILURE);
+        assertThat(previousRun.getReferenceAction()).isEmpty();
 
         verify(selector, times(2)).get(previousRunMock);
-        assertThat(resultAction1).isEmpty();
-        assertThat(resultAction2).isEmpty();
     }
 
     /**
-     * Test that there are 5 previous action (FAILURE and SUCCESS), with overallResultMusBeSuccess = true.
+     * Test that there are 5 previous action (FAILURE, UNSTABLE, SUCCESS, NOT_BUILT and ABORTED), with overallResultMusBeSuccess = true.
      */
     @Test
-    void allTypesOfAction_withSuccessful_shouldReturnOne() {
+    void allTypesOfActionWithSuccessfulShouldReturnOne() {
         Run baseline = mock(Run.class);
         Run previousRunMock = mock(Run.class);
         when(baseline.getPreviousBuild()).thenReturn(previousRunMock);
-        when(previousRunMock.getResult()).thenReturn(Result.FAILURE, Result.UNSTABLE, Result.SUCCESS, Result.NOT_BUILT, Result.ABORTED);
 
         ResultAction action = mock(ResultAction.class);
         when(action.isSuccessful()).thenReturn(true);
 
         AnalysisResult analysis = mock(AnalysisResult.class);
         when(action.getResult()).thenReturn(analysis);
-        when(analysis.getOverallResult()).thenReturn(Result.FAILURE, Result.UNSTABLE, Result.SUCCESS, Result.NOT_BUILT, Result.ABORTED);
 
         ResultSelector selector = mock(ResultSelector.class);
         when(selector.get(previousRunMock)).thenReturn(Optional.of(action));
@@ -418,36 +403,44 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 true);
 
-        Optional<ResultAction> resultActionFAILURE = previousRun.getReferenceAction();
-        Optional<ResultAction> resultActionUNSTABLE = previousRun.getReferenceAction();
-        Optional<ResultAction> resultActionSUCCESS = previousRun.getReferenceAction();
-        Optional<ResultAction> resultActionNOT_BUILT = previousRun.getReferenceAction();
-        Optional<ResultAction> resultActionABORTED = previousRun.getReferenceAction();
+
+        when(previousRunMock.getResult()).thenReturn(Result.FAILURE);
+        when(analysis.getOverallResult()).thenReturn(Result.FAILURE);
+        assertThat(previousRun.getReferenceAction()).isEmpty();
+
+        when(previousRunMock.getResult()).thenReturn(Result.UNSTABLE);
+        when(analysis.getOverallResult()).thenReturn(Result.UNSTABLE);
+        assertThat(previousRun.getReferenceAction()).isEmpty();
+
+        when(previousRunMock.getResult()).thenReturn(Result.SUCCESS);
+        when(analysis.getOverallResult()).thenReturn(Result.SUCCESS);
+        assertThat(previousRun.getReferenceAction()).isEqualTo(Optional.of(action));
+
+        when(previousRunMock.getResult()).thenReturn(Result.NOT_BUILT);
+        when(analysis.getOverallResult()).thenReturn(Result.NOT_BUILT);
+        assertThat(previousRun.getReferenceAction()).isEmpty();
+
+        when(previousRunMock.getResult()).thenReturn(Result.ABORTED);
+        when(analysis.getOverallResult()).thenReturn(Result.ABORTED);
+        assertThat(previousRun.getReferenceAction()).isEmpty();
 
         verify(selector, times(6)).get(previousRunMock);
-        assertThat(resultActionFAILURE).isEmpty();
-        assertThat(resultActionUNSTABLE).isEmpty();
-        assertThat(resultActionSUCCESS).isEqualTo(Optional.of(action));
-        assertThat(resultActionNOT_BUILT).isEmpty();
-        assertThat(resultActionABORTED).isEmpty();
     }
 
     /**
-     * Test that there are 5 previous action (FAILURE and SUCCESS), with overallResultMusBeSuccess = false.
+     * Test that there are 5 previous action (FAILURE, UNSTABLE, SUCCESS, NOT_BUILT and ABORTED), with overallResultMusBeSuccess = false.
      */
     @Test
-    void allTypesOfAction_withAnyResult_shouldReturnThree() {
+    void allTypesOfActionWithAnyResultShouldReturnThree() {
         Run baseline = mock(Run.class);
         Run previousRunMock = mock(Run.class);
         when(baseline.getPreviousBuild()).thenReturn(previousRunMock);
-        when(previousRunMock.getResult()).thenReturn(Result.FAILURE, Result.UNSTABLE, Result.SUCCESS, Result.NOT_BUILT, Result.ABORTED);
 
         ResultAction action = mock(ResultAction.class);
         when(action.isSuccessful()).thenReturn(true);
 
         AnalysisResult analysis = mock(AnalysisResult.class);
         when(action.getResult()).thenReturn(analysis);
-        when(analysis.getOverallResult()).thenReturn(Result.FAILURE, Result.UNSTABLE, Result.SUCCESS, Result.NOT_BUILT, Result.ABORTED);
 
         ResultSelector selector = mock(ResultSelector.class);
         when(selector.get(previousRunMock)).thenReturn(Optional.of(action));
@@ -458,25 +451,34 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 false);
 
-        Optional<ResultAction> resultActionFAILURE = previousRun.getReferenceAction();
-        Optional<ResultAction> resultActionUNSTABLE = previousRun.getReferenceAction();
-        Optional<ResultAction> resultActionSUCCESS = previousRun.getReferenceAction();
-        Optional<ResultAction> resultActionNOT_BUILT = previousRun.getReferenceAction();
-        Optional<ResultAction> resultActionABORTED = previousRun.getReferenceAction();
+        when(previousRunMock.getResult()).thenReturn(Result.FAILURE);
+        when(analysis.getOverallResult()).thenReturn(Result.FAILURE);
+        assertThat(previousRun.getReferenceAction()).isEqualTo(Optional.of(action));
 
-        verify(selector, times(8)).get(previousRunMock);
-        assertThat(resultActionFAILURE).isEqualTo(Optional.of(action));
-        assertThat(resultActionUNSTABLE).isEqualTo(Optional.of(action));
-        assertThat(resultActionSUCCESS).isEqualTo(Optional.of(action));
-        assertThat(resultActionNOT_BUILT).isEmpty();
-        assertThat(resultActionABORTED).isEmpty();
+        when(previousRunMock.getResult()).thenReturn(Result.UNSTABLE);
+        when(analysis.getOverallResult()).thenReturn(Result.UNSTABLE);
+        assertThat(previousRun.getReferenceAction()).isEqualTo(Optional.of(action));
+
+        when(previousRunMock.getResult()).thenReturn(Result.SUCCESS);
+        when(analysis.getOverallResult()).thenReturn(Result.SUCCESS);
+        assertThat(previousRun.getReferenceAction()).isEqualTo(Optional.of(action));
+
+        when(previousRunMock.getResult()).thenReturn(Result.NOT_BUILT);
+        when(analysis.getOverallResult()).thenReturn(Result.NOT_BUILT);
+        assertThat(previousRun.getReferenceAction()).isEqualTo(Optional.of(action));
+
+        when(previousRunMock.getResult()).thenReturn(Result.ABORTED);
+        when(analysis.getOverallResult()).thenReturn(Result.ABORTED);
+        assertThat(previousRun.getReferenceAction()).isEqualTo(Optional.of(action));
+
+        verify(selector, times(10)).get(previousRunMock);
     }
 
     /**
      * Test that there is one previous action with result null, with overallResultMusBeSuccess = false.
      */
     @Test
-    void oneNullAction_withAnyResult_shouldReturnNothing(){
+    void oneNullActionWithAnyResultShouldReturnNothing(){
         Run baseline = mock(Run.class);
         Run previousRunMock = mock(Run.class);
         when(baseline.getPreviousBuild()).thenReturn(previousRunMock);
@@ -491,16 +493,14 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 false);
 
-        Optional<ResultAction> resultAction = previousRun.getReferenceAction();
-
-        assertThat(resultAction).isEmpty();
+        assertThat(previousRun.getReferenceAction()).isEmpty();
     }
 
     /**
      * Test that there is one previous action with result null, with overallResultMusBeSuccess = true.
      */
     @Test
-    void oneNullAction_withSuccessful_shouldReturnNothing(){
+    void oneNullActionWithSuccessfulShouldReturnNothing(){
         Run baseline = mock(Run.class);
         Run previousRunMock = mock(Run.class);
         when(baseline.getPreviousBuild()).thenReturn(previousRunMock);
@@ -515,8 +515,6 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 true);
 
-        Optional<ResultAction> resultAction = previousRun.getReferenceAction();
-
-        assertThat(resultAction).isEmpty();
+        assertThat(previousRun.getReferenceAction()).isEmpty();
     }
 }
