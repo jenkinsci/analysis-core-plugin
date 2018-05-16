@@ -144,7 +144,6 @@
      * Activate the tab that has been visited the last time. If there is no such tab, highlight the first one.
      */
     var detailsTabs = $('#tab-details');
-    detailsTabs.find('li:first-child a').tab('show');
     $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
         var activeTab = $(e.target).attr('href');
         localStorage.setItem('activeTab', activeTab);
@@ -156,7 +155,7 @@
             view.getTableModel(function (t) {
                 (function ($) {
                     var table = $('#issues').DataTable();
-                    table.rows.add(t.responseObject().data).draw()
+                    table.rows.add(t.responseObject().data).draw();
                 })(jQuery);
             });
         }
@@ -165,12 +164,14 @@
     var activeTab = localStorage.getItem('activeTab');
     if (activeTab) {
         detailsTabs.find('a[href="' + activeTab + '"]').tab('show');
+    } else {
+        detailsTabs.find('li:first-child a').tab('show');
     }
 
     /**
      * Stores the order of every table in the local storage of the browser.
      */
-    var tables = $('#statistics').find('table').not('#details');
+    var tables = $('#statistics').find('table').not('.details');
     tables.on('order.dt', function (e) {
         var table = $(e.target);
         var order = table.DataTable().order();
@@ -211,6 +212,7 @@
             }
         };
     }
+
 })(jQuery);
 
 
