@@ -4,7 +4,7 @@
   xmlns:i="jelly:fmt" xmlns:local="local" xmlns:u="/util">
   <st:header name="Content-Type" value="text/html;charset=UTF-8" />
   <j:forEach var="warning" items="${annotations.sortedAnnotations}">
-    <table class="pane" id="details">
+    <table class="pane details">
       <tr>
         <td class="pane-header">
           <u:sourceLink it="${it}" warning="${warning}"/>,
