@@ -6,7 +6,6 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.Set;
@@ -85,13 +84,20 @@ public class AffectedFilesResolver {
         }
     }
 
-    private boolean exists(final String file) {
-        try {
-            return Files.exists(Paths.get(file));
-        }
-        catch (InvalidPathException ignored) {
-            return false;
-        }
+    /**
+     * Returns the affected file in Jenkins' build folder.
+     *
+     * @param run
+     *         the run referencing the build folder
+     * @param issue
+     *         the issue in the affected file
+     *
+     * @return the file
+     */
+    public static File getTempFile(final Run<?, ?> run, final Issue issue) {
+        File buildDir = run.getParent().getBuildDir();
+        return new File(new File(new File(buildDir, String.valueOf(run.getNumber())), AFFECTED_FILES_FOLDER_NAME),
+                getTempName(issue.getFileName()));
     }
 
     private FilePath ensureThatBuildDirectoryExists(final FilePath jenkinsBuildRoot)
@@ -118,20 +124,13 @@ public class AffectedFilesResolver {
         return Integer.toHexString(fileName.hashCode()) + ".tmp";
     }
 
-    /**
-     * Returns the affected file in Jenkins' build folder.
-     *
-     * @param run
-     *         the run referencing the build folder
-     * @param issue
-     *         the issue in the affected file
-     *
-     * @return the file
-     */
-    public static File getTempFile(final Run<?, ?> run, final Issue issue) {
-        File buildDir = run.getParent().getBuildDir();
-
-        return new File(new File(buildDir, AFFECTED_FILES_FOLDER_NAME), getTempName(issue.getFileName()));
+    private boolean exists(final String file) {
+        try {
+            return new File(file).getAbsoluteFile().exists();
+        }
+        catch (InvalidPathException ignored) {
+            return false;
+        }
     }
 
     private void logExceptionToFile(final IOException exception, final FilePath masterFile,
