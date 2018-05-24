@@ -149,7 +149,7 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 false);
 
-        assertThat(previousRun.getReferenceAction()).isEqualTo(Optional.of(action));
+        assertThat(previousRun.getReferenceAction()).contains(action);
         verify(selector, times(2)).get(previousRunMock);
     }
 
@@ -247,7 +247,7 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
      * Test that there are two succesful previous action, with overallResultMusBeSuccess = false.
      */
     @Test
-    void twoTrueActionWithAnyResultShouldReturnTwo() {
+    void twoTrueActionWithAnyResultShouldReturnOne() {
         Run baseline = mock(Run.class);
         Run previousRunMock = mock(Run.class);
         when(baseline.getPreviousBuild()).thenReturn(previousRunMock);
@@ -269,9 +269,8 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         PreviousRunReference previousRun = new PreviousRunReference(baseline, selector,
                 false);
 
-        assertThat(previousRun.getReferenceAction()).isEqualTo(Optional.of(action));
-        assertThat(previousRun.getReferenceAction()).isEqualTo(Optional.of(action));
-        verify(selector, times(4)).get(previousRunMock);
+        assertThat(previousRun.getReferenceAction()).contains(action);
+        verify(selector, times(2)).get(previousRunMock);
     }
 
     /**
@@ -372,11 +371,7 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
         when(analysis.getOverallResult()).thenReturn(Result.FAILURE);
         assertThat(previousRun.getReferenceAction()).isEmpty();
 
-        when(previousRunMock.getResult()).thenReturn(Result.FAILURE);
-        when(analysis.getOverallResult()).thenReturn(Result.FAILURE);
-        assertThat(previousRun.getReferenceAction()).isEmpty();
-
-        verify(selector, times(2)).get(previousRunMock);
+        verify(selector, times(1)).get(previousRunMock);
     }
 
     /**
@@ -414,7 +409,7 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
 
         when(previousRunMock.getResult()).thenReturn(Result.SUCCESS);
         when(analysis.getOverallResult()).thenReturn(Result.SUCCESS);
-        assertThat(previousRun.getReferenceAction()).isEqualTo(Optional.of(action));
+        assertThat(previousRun.getReferenceAction()).contains(action);
 
         when(previousRunMock.getResult()).thenReturn(Result.NOT_BUILT);
         when(analysis.getOverallResult()).thenReturn(Result.NOT_BUILT);
@@ -517,4 +512,5 @@ class PreviousRunReferenceTest extends ReferenceFinderTest {
 
         assertThat(previousRun.getReferenceAction()).isEmpty();
     }
+
 }
