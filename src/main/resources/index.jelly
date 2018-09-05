@@ -1,3 +1,4 @@
 <div>
-  This plug-in provides utilities for the static code analysis plug-ins.
+  The analysis-core plug-in reached end-of-life. It is not supported anymore - all functionality has been integrated
+  into the <a href="https://plugins.jenkins.io/warnings/">Warnings plug-in</a>.
 </div>
