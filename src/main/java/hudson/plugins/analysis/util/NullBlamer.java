@@ -14,4 +14,4 @@ public class NullBlamer implements Blamer {
     public void blame(final Set<FileAnnotation> annotations) {
         // nothing to do
     }
-}
+}   
