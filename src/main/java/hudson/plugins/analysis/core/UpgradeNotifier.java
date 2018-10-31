@@ -27,6 +27,10 @@ public class UpgradeNotifier extends AdministrativeMonitor {
 
     /**
      * Depending on whether the user said "yes" or "no", send him to the right place.
+     *
+     * @param request  stapler request
+     * @param response stapler response
+     * @throws IOException if the request cannot be redirected
      */
     public void doAct(StaplerRequest request, StaplerResponse response) throws IOException {
         if (request.hasParameter("dismiss")) {
@@ -34,7 +38,7 @@ public class UpgradeNotifier extends AdministrativeMonitor {
             response.sendRedirect(request.getContextPath() + "/manage");
         }
         else if (request.hasParameter("help")) {
-            response.sendRedirect("https://plugins.jenkins.io/warnings");
+            response.sendRedirect("https://wiki.jenkins.io/x/1YTeCQ");
         }
     }
 }

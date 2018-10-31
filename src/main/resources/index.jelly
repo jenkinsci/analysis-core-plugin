@@ -1,4 +1,4 @@
 <div>
-  The analysis-core plug-in reached end-of-life. It is not supported anymore - all functionality has been integrated
-  into the <a href="https://plugins.jenkins.io/warnings/">Warnings plug-in</a>.
+  The analysis-core plug-in reached end-of-life. All functionality has been integrated
+  into the <a href="https://wiki.jenkins.io/x/1YTeCQ">Warnings Next Generation Plugin</a>.
 </div>
