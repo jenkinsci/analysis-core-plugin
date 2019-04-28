@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
+import org.kohsuke.stapler.interceptor.RequirePOST;
 
 import jenkins.model.Jenkins;
 
@@ -32,6 +33,7 @@ public class UpgradeNotifier extends AdministrativeMonitor {
      * @param response stapler response
      * @throws IOException if the request cannot be redirected
      */
+    @RequirePOST
     public void doAct(StaplerRequest request, StaplerResponse response) throws IOException {
         if (request.hasParameter("dismiss")) {
             disable(true);
