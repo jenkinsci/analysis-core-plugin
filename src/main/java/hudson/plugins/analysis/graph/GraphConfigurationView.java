@@ -24,6 +24,7 @@ import hudson.model.ModelObject;
 import hudson.plugins.analysis.core.AbstractHealthDescriptor;
 import hudson.plugins.analysis.core.BuildHistory;
 import hudson.util.Graph;
+import org.kohsuke.stapler.interceptor.RequirePOST;
 
 /**
  * Configuration properties of a trend graph.
@@ -169,6 +170,7 @@ public abstract class GraphConfigurationView implements ModelObject {
      * @param response
      *            Stapler response
      */
+    @RequirePOST
     public void doSave(final StaplerRequest request, final StaplerResponse response) {
         try {
             JSONObject formData = request.getSubmittedForm();

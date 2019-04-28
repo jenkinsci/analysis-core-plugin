@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.apache.commons.io.IOUtils;
+import org.kohsuke.stapler.StaplerProxy;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
@@ -13,11 +14,12 @@ import hudson.model.AbstractProject;
 
 import hudson.plugins.analysis.Messages;
 import hudson.plugins.analysis.core.BuildHistory;
+import org.kohsuke.stapler.interceptor.RequirePOST;
 
 /**
  * Configures the default values for the trend graph of this plug-in.
  */
-public class DefaultGraphConfigurationView extends GraphConfigurationView {
+public class DefaultGraphConfigurationView extends GraphConfigurationView implements StaplerProxy {
     private final String url;
 
     /**
@@ -40,6 +42,13 @@ public class DefaultGraphConfigurationView extends GraphConfigurationView {
         this.url = url;
 
         configuration.initializeFromFile(createDefaultsFile(job, pluginName));
+    }
+
+    @RequirePOST
+    @Override
+    public void doSave(StaplerRequest request, StaplerResponse response) {
+        getOwner().checkPermission(Job.CONFIGURE);
+        super.doSave(request, response);
     }
 
     /**
@@ -131,6 +140,12 @@ public class DefaultGraphConfigurationView extends GraphConfigurationView {
         finally {
             output.close();
         }
+    }
+
+    @Override
+    public Object getTarget() {
+        getOwner().checkPermission(Job.CONFIGURE);
+        return this;
     }
 }
 
