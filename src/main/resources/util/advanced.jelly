@@ -9,8 +9,8 @@
 
     <u:failed/>
 
-    <f:entry title="${%Detect modules}" description="${%description.detectModules}">
-      <f:checkbox name="shouldDetectModules" checked="${instance.shouldDetectModules}"/>
+    <f:entry description="${%description.detectModules}">
+      <f:checkbox title="${%Detect modules}" name="shouldDetectModules" checked="${instance.shouldDetectModules}"/>
     </f:entry>
 
     <u:health id="${id}"/>
