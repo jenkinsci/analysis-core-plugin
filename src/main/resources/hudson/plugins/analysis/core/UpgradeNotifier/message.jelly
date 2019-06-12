@@ -7,8 +7,7 @@
        href="https://github.com/jenkinsci/warnings-ng-plugin">Warnings Next Generation Plugin</a>.
     Please install the new plugin and convert your jobs, see
     <a href="https://github.com/jenkinsci/warnings-ng-plugin/blob/master/doc/Documentation.md"
-       style="text-decoration:underline !important;">documentation
-    </a>
+       style="text-decoration:underline !important;">documentation</a>
     for details.
     Once all of your jobs use the new post build actions (or pipeline steps) you can safely remove the following
     plugins:
