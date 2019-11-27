@@ -35,8 +35,8 @@
           <f:textbox name="parameterValue" value="${it.parameterValue}" />
         </f:entry>
 
-        <f:entry title="${%name.domain}" description="${%description.domain}">
-          <f:checkbox name="useBuildDateAsDomain" checked="${instance.useBuildDateAsDomain}"/>
+        <f:entry description="${%description.domain}">
+          <f:checkbox title="${%name.domain}" name="useBuildDateAsDomain" checked="${instance.useBuildDateAsDomain}"/>
         </f:entry>
 
         <st:include page="local-config.jelly" optional="true"/>

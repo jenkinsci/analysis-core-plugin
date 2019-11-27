@@ -130,16 +130,17 @@
             </tbody>
           </table>
         </f:entry>
-        <f:entry title="${%Use delta for new warnings}" description="${%description.useDeltaValues}">
-          <f:checkbox name="useDeltaValues" checked="${instance.useDeltaValues}" />
+        <f:entry description="${%description.useDeltaValues}">
+          <f:checkbox title="${%Use delta for new warnings}" name="useDeltaValues" checked="${instance.useDeltaValues}" />
         </f:entry>
-        <f:entry title="${%title.usePreviousBuildAsReference}" description="${%description.usePreviousBuildAsReference}">
-          <f:checkbox name="usePreviousBuildAsReference"
+        <f:entry description="${%description.usePreviousBuildAsReference}">
+          <f:checkbox title="${%title.usePreviousBuildAsReference}" name="usePreviousBuildAsReference"
             checked="${instance.usePreviousBuildAsReference}" />
         </f:entry>
-        <f:entry title="${%Only use stable builds as reference}"
+        <f:entry
           description="${%description.onlyUseStableBuildsAsReference}">
-          <f:checkbox name="useStableBuildAsReference" checked="${instance.useStableBuildAsReference}" />
+          <f:checkbox title="${%Only use stable builds as reference}"
+            name="useStableBuildAsReference" checked="${instance.useStableBuildAsReference}" />
         </f:entry>
       </f:optionalBlock>
     </table>
